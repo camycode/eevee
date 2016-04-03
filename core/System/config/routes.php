@@ -43,6 +43,14 @@ return [
         'action' => 'RoleController@postRole',
         'permission' => 'role.post',
     ],
+    'get@roles' => [
+        'action' => 'RoleController@getRoles',
+        'permission' => 'role.get',
+    ],
+    'get@role' => [
+        'action' => 'RoleController@getRole',
+        'permission' => 'role.get',
+    ],
 
     // 系统
     'post@system/install' => [

@@ -21,4 +21,18 @@ class RoleController extends Controller
 
     }
 
+    public function getRoles(Context $context)
+    {
+        $model = new Role();
+
+        return $context->response($model->getRoles($context->params()));
+    }
+
+    public function getRole(Context $context)
+    {
+        $model = new Role();
+
+        return $context->response($model->getRole($context->params('role_id')));
+    }
+
 }

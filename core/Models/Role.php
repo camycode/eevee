@@ -94,6 +94,20 @@ class Role extends Model
 
     }
 
+    /**
+     * 获取角色组
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
+    public function getRoles($params)
+    {
+        $roles = $this->selector('ROLE', $params);
+        
+        return status('success', $roles);
+    }
+
 
     /**
      * 生成角色权限关系记录

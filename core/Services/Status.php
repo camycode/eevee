@@ -30,7 +30,7 @@ class Status
      * @param int /string     $status 状态编码或别名
      * @param [array/string] $data   返回的数据
      *
-     * @return \Core\Models\Result 返回结果对象
+     * @return \Core\Models\Status 返回结果对象
      */
     public static function make($status, $data = null)
     {
