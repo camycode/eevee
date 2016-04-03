@@ -1,1 +1,0 @@
-define({  "name": "eevee",  "version": "0.0.1",  "description": "API文档",  "title": "Eevee API文档",  "url": "",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-04-03T14:32:52.383Z",    "url": "http://apidocjs.com",    "version": "0.15.1"  }});
