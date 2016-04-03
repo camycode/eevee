@@ -1,4 +1,4 @@
 *.log
 .idea
-documents
-apidoc
+/documents
+/apidoc

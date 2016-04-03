@@ -13,7 +13,21 @@ use Validator;
 
 class User extends Model
 {
-    protected $user;
+    protected $data;
+
+    /**
+     * 绑定用户资源操作数据
+     *
+     * @param $data
+     *
+     * @return $this
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
 
     /**
      * 添加用户
@@ -21,47 +35,100 @@ class User extends Model
      * 用户创建依赖于角色，采用外键约束,
      * 故在用户创建之前，应对角色信息进行验证。
      *
-     * @param array $data 用户信息
+     * @return Status
      *
-     * @return \Core\Models\Status
      */
-    public function addUser($data)
+    public function addUser()
     {
-        $this->initializeUser($data);
 
-        if (($validateResult = $this->validateUser()) !== true) {
-            return status('validateError', $validateResult);
+        if (($result = $this->validateUser()) !== true) {
+            return status('validateError', $result);
         }
 
-        if ($this->validateRole() === false) {
-            return status('roleNotExists');
-        }
+        $this->initializeUser();
 
-        $result = $this->transaction(function () {
+        $status = $this->transaction(function () {
 
             $this->processPassword();
 
-            if ($this->resource('USER')->insert($this->user)) {
-                return $this->getUser($this->user['id']);
-            };
+            $status = $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
 
-            return status('addUserError');
+
+            if ($status->code != 200) exception('updateUserRoleRelationshipError');
+
+            unset($this->data['role']);
+
+            $this->resource('USER')->insert($this->data);
+
+
+            return $this->getUser($this->data['id']);
+
 
         });
 
-        return $result;
+        return $status;
     }
 
     public function updateUser($user_id, $data)
     {
+
     }
 
-    // 删除用户
-    // 使用事务删除用户，处理用户与角色的关系，
-    // 删除成功返回 True。
-    public function deleteUser($params, $remove = false)
+    /**
+     * 更新用户和角色的关系
+     *
+     * @param string $user_id
+     * @param array /string $role_id
+     *
+     * @return Status
+     */
+    protected function updateUserRoleRelationship($user_id, $role)
     {
+        $resource = $this->resource('L:ROLERELATIONSHIP');
+
+        $data = $this->generateUserRoleRelationshipRows($user_id, $role);
+
+        if ($data === false) exception('roleShouldBeStringOrArray');
+
+        $status = $this->transaction(function () use ($resource, $user_id, $data) {
+
+            $resource->where('user_id', $user_id)->delete();
+
+            $resource->insert($data);
+
+            return status('success');
+        });
+
+        return $status;
     }
+
+    /**
+     * 生成用户和角色关系数组
+     *
+     * @param $user_id
+     * @param $role
+     *
+     * @return array|bool
+     */
+    protected function generateUserRoleRelationshipRows($user_id, $role)
+    {
+        if (is_string($role)) {
+            return array('user_id' => $user_id, 'role_id' => $role);
+        }
+
+        if (is_array($role)) {
+            $data = array();
+
+            foreach ($role as $item) {
+                array_push($data, array('user_id' => $user_id, 'role_id' => $item));
+            }
+
+            return $data;
+        }
+
+        return false;
+    }
+
 
     /**
      * 获取用户.
@@ -82,7 +149,7 @@ class User extends Model
      * @param string $username 用户名
      * @param bool $password 显示密码
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     public function getUserByUsername($username, $password = false)
     {
@@ -92,10 +159,10 @@ class User extends Model
     /**
      * 通过邮箱获取用户.
      *
-     * @param sting $email 邮箱
+     * @param string $email 邮箱
      * @param bool $password 显示密码
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     public function getUserByEmail($email, $password = false)
     {
@@ -107,7 +174,7 @@ class User extends Model
      *
      * @param string $token 用户Token
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     public function getUserByToken($token)
     {
@@ -127,7 +194,7 @@ class User extends Model
      * @param mixed $vlaue
      * @param bool $password
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     protected function getUserRow($field, $vlaue, $password = false)
     {
@@ -136,6 +203,20 @@ class User extends Model
         if (!$user) {
             return status('userDoesNotExist', $user);
         }
+
+        $items = $this->resource('L:ROLERELATIONSHIP')->where('user_id', $user->id)->get();
+
+        $roles = array();
+
+        foreach ($items as $item) {
+
+            $status = (new Role())->getRole($item->role_id);
+            
+            if ($status->code == 200) array_push($roles, $status->data);
+
+        }
+
+        $user->role = $roles;
 
         if (!$password) {
             unset($user->password);
@@ -149,7 +230,7 @@ class User extends Model
      *
      * @param array $params 用户获取条件配置参数
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     public function getUsers($params)
     {
@@ -186,21 +267,21 @@ class User extends Model
      * 保存用户Token，如果数据库不存在则添加，否则更新记录。
      *
      * @param string $row .app_id
-     * @param stinrg $row .user_id
+     * @param string $row .user_id
      * @param string $row .user_token
      *
      * @return mixed
      */
     protected function saveUserToken($row)
     {
-        $table = $this->resource('USERTOKEN');
+        $resource = $this->resource('USERTOKEN');
 
-        $where = $table->where('app_id', $row['app_id'])->where('user_id', $row['user_id']);
+        $query = $resource->where('app_id', $row['app_id'])->where('user_id', $row['user_id']);
 
-        if ($where->first()) {
-            $result = $table->update($row);
+        if ($query->first()) {
+            $result = $resource->update($row);
         } else {
-            $result = $table->insert($row);
+            $result = $resource->insert($row);
         }
 
         return $result ? $row['user_token'] : false;
@@ -210,10 +291,10 @@ class User extends Model
      * 初始化用户
      * 合并配置文件新用户设置，设置时间戳.
      *
-     * @param array $user
      * @param bool $post
+     *
      */
-    protected function initializeUser($user, $post = true)
+    protected function initializeUser($post = true)
     {
         $initialized = [
             'id' => $this->id(),
@@ -225,7 +306,7 @@ class User extends Model
 
         $this->timestamps($initialized, $post);
 
-        $this->user = array_merge($initialized, $user);
+        $this->data = array_merge($initialized, $this->data);
     }
 
     /**
@@ -252,22 +333,12 @@ class User extends Model
             if (isset($rule[$field])) unset($rule[$field]);
         }
 
-        $validator = Validator::make($this->user, $rule);
+        $validator = Validator::make($this->data, $rule);
 
         if ($validator->fails()) {
             return $validator->errors();
         }
 
-        return true;
-    }
-
-    /**
-     * 校验添加的用户所属角色是否存在.
-     *
-     * @return bool
-     */
-    protected function validateRole()
-    {
         return true;
     }
 
@@ -289,7 +360,7 @@ class User extends Model
      */
     protected function processPassword()
     {
-        $this->user['password'] = $this->encryptPassword($this->user['password']);
+        $this->data['password'] = $this->encryptPassword($this->data['password']);
     }
 
     /**

@@ -82,7 +82,7 @@ class AuthController extends Controller
 
         $userModel = new User();
 
-        $result = $userModel->addUser($data);
+        $result = $userModel->setData($data)->addUser();
 
         return $context->response($result);
     }

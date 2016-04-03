@@ -2,7 +2,6 @@
 
 namespace Core\Models;
 
-use Core\Services\Status;
 use Validator;
 
 class Role extends Model
@@ -100,10 +99,11 @@ class Role extends Model
      */
     public function getRole($role_id)
     {
-
         $role_resource = $this->resource('ROLE');
 
         $role = $role_resource->where('id', $role_id)->first();
+
+        if (!$role) return status('roleDoesNotExist');
 
         $role->permissions = [];
 
@@ -113,7 +113,7 @@ class Role extends Model
 
         }
 
-        return $role ? status('success', $role) : status('roleDoesNotExist');
+        return status('success', $role);
 
     }
 
@@ -134,9 +134,10 @@ class Role extends Model
     /**
      * 获取角色权限组
      *
-     * @param $roe_id
+     * @param $role_id
      *
      * @return Status
+     *
      */
     public function getRolePermissions($role_id)
     {
@@ -310,14 +311,5 @@ class Role extends Model
 
     }
 
-    protected function postPermissions($user_id, $permissions)
-    {
-
-    }
-
-    protected function getPermissions($user_id, $permissions)
-    {
-
-    }
 
 }
