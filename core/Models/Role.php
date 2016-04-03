@@ -195,6 +195,28 @@ class Role extends Model
         return $status;
     }
 
+    /**
+     * 删除角色
+     *
+     * @param $role_id
+     *
+     * @return Status
+     */
+    public function deleteRole($role_id)
+    {
+        $resource = $this->resource('ROLE');
+
+        if (!$resource->where('id', $role_id)->first()) {
+            return status('roleDoesNotExsit');
+        }
+
+        if ($resource->where('id', $role_id)->delete()) {
+            return status('success', message('deleteRoleSuccess'));
+        }
+
+        return status('unknownDatabaseError');
+    }
+
 
     /**
      * 生成角色权限关系记录

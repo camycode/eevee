@@ -8,4 +8,6 @@ return [
     'roleHasExist' => '该角色已存在',
     'databaseOperateError' => '数据库操作异常',
     'updateRolePermissionsError' => '更新角色权限失败,可能权限有重复',
+    'deleteRoleSuccess' => '用户删除成功',
+    'roleDoesNotExsit' => '用户不存在',
 ];

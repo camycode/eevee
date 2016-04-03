@@ -1,11 +1,13 @@
 <?php
 
 return [
-      'success'                   => 200,
-      'invildUserToken'           => 1001,
-      'validateError'             => 1002,
-      'databaseOperateError'      => 1003,
-      'permissionsFileMissed'     => 1004,
-      'userDoesNotExist'          => 2001,
-      'invialidAccountOrUsername' => 2002,
+    'success' => 200,
+    'invildUserToken' => 1001,
+    'databaseOperateError' => 1003,
+    'permissionsFileMissed' => 1004,
+    'unknownDatabaseError' => 1005,
+    'validateError' => 2001,
+    'userDoesNotExist' => 2002,
+    'invialidAccountOrUsername' => 2003,
+    'roleDoesNotExsit' => 3001,
 ];

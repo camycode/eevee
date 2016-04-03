@@ -55,6 +55,10 @@ return [
         'action' => 'RoleController@putRole',
         'permission' => 'role.put',
     ],
+    'delete@role' => [
+        'action' => 'RoleController@deleteRole',
+        'permission' => 'role.put',
+    ],
 
     // 系统
     'post@system/install' => [
