@@ -12,14 +12,28 @@ use Core\Services\Context;
 class AuthController extends Controller
 {
     /**
-     * 用户登录,需要提供POST参数.
+     * @apiGroup Auth
      *
-     * @param string mode     登录方式
+     * @api {post} /api/login?mode 用户登录
      *
-     * @param string username 用户名
-     * @param stirng password 密码
-     * @param string email    邮箱
-     * @param string capture  验证码
+     * @apiDescription 用户登录有两种方式,用户名登录或邮箱登录,
+     * 通过设置mode值`username`(默认)和`email`实现.
+     *
+     * @apiParam {string} [username]  用户名
+     * @apiParam {string} password  用户密码
+     * @apiParam {string} [email]   用户邮箱
+     *
+     *
+     * @apiParamExample {curl} 请求示例:
+     *     post /api/login?mode=username
+     *     {
+     *       "username": "root",
+     *       "password": "something"
+     *     }
+     * @apiSuccessExample {json} 操作成功:
+     *
+     *
+     *
      */
     public function login(Context $context)
     {
@@ -62,11 +76,7 @@ class AuthController extends Controller
         return $context->status('success', $user);
     }
 
-    /**
-     * 用户注册.
-     *
-     * @param Context $context
-     */
+
     public function register(Context $context)
     {
         $data = $context->data();
