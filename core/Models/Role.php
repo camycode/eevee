@@ -2,6 +2,7 @@
 
 namespace Core\Models;
 
+use Core\Services\Status;
 use Validator;
 
 class Role extends Model
@@ -68,13 +69,26 @@ class Role extends Model
      * 获取角色
      *
      * @param string $role_id
+     *
+     * @return Status
      */
     public function getRole($role_id)
     {
 
-        $resource = $this->resource('ROLE');
+        $role_resource = $this->resource('ROLE');
 
-        $role = $resource->where('id', $role_id)->first();
+        $role = $role_resource->where('id', $role_id)->first();
+
+        $permission_resource = $this->resource('L:PERMISSIONRELATIONSHIP');
+
+
+        $role->permissions = [];
+
+        foreach ($permission_resource->where('role_id', $role_id)->get() as $item) {
+
+            array_push($role->permissions, $item->permission_id);
+
+        }
 
         return $role ? status('success', $role) : status('roleDoesNotExist');
 
@@ -93,16 +107,14 @@ class Role extends Model
     {
         $rows = [];
 
+        $permissions = $permissions == '' ? [] : $permissions;
+
         foreach ($permissions as $permission_id) {
 
             $row = [
                 'role_id' => $role_id,
                 'permission_id' => $permission_id,
             ];
-
-            if (!$this->validatePermissionID($row)) {
-                return false;
-            }
 
             array_push($rows, $row);
         }
@@ -128,7 +140,7 @@ class Role extends Model
 
         $rule = [
             'name' => "required|unique:$table",
-            'permissions' => 'required|array',
+            'permissions' => 'sometimes|array',
         ];
 
         foreach ($ignore as $field) {
@@ -152,23 +164,6 @@ class Role extends Model
 
 
     /**
-     * 验证权限组 ID
-     *
-     * @param array $data
-     *
-     * @return bool
-     */
-    protected function validatePermissionID($data)
-    {
-        return true;
-
-//        return Validator::make($data, [
-//            'permission_id' => 'alpha_dash',
-//        ])->fails();
-
-    }
-
-    /**
      * 角色初始化
      *
      * @param bool $post
@@ -184,6 +179,8 @@ class Role extends Model
         ];
 
         $this->timestamps($initialized, $post);
+
+        print_r($this->data);
 
         $this->data = array_merge($initialized, $this->data);
 
