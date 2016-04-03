@@ -30,7 +30,6 @@ class AuthController extends Controller
      *       "username": "root",
      *       "password": "something"
      *     }
-     * @apiSuccessExample {json} 操作成功:
      *
      *
      *
