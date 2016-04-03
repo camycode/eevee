@@ -28,6 +28,18 @@ if (!function_exists('result')) {
     {
         return trans("status.$message");
     }
+
+    /**
+     * 响应异常操作
+     *
+     * @param $message
+     *
+     * @throws Exception
+     */
+    function exception($message)
+    {
+        throw new \Exception(message($message));
+    }
 }
 
 

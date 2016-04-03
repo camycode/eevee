@@ -42,17 +42,9 @@ class Role extends Model
 
             $role_resource = $this->resource('ROLE');
 
-            $permission_relation_resource = $this->resource('L:PERMISSIONRELATIONSHIP');
+            $status = $this->updateRolePermisssions($this->data['id'], $this->data['permissions']);
 
-            $role_permission_relation_rows = $this->generaRolePermissionRelationRows($this->data['id'], $this->data['permissions']);
-
-            if ($role_permission_relation_rows === false) {
-                return status('illegalPermission');
-            }
-
-            if (count($role_permission_relation_rows) > 0) {
-                $permission_relation_resource->insert($role_permission_relation_rows);
-            }
+            if ($status->code != 200) exception('updateRolePermissionsError');
 
             unset($this->data['permissions']);
 
@@ -63,6 +55,40 @@ class Role extends Model
         });
 
         return $result;
+    }
+
+    /**
+     * 更新角色权限
+     *
+     * 更新时会替换角色原有权限.
+     *
+     * @param string $role_id
+     * @param array $permissions
+     *
+     * @return Status
+     */
+    public function updateRolePermisssions($role_id, $permissions)
+    {
+        $resource = $this->resource('L:PERMISSIONRELATIONSHIP');
+
+        $data = $this->generaRolePermissionRelationRows($role_id, $permissions);
+
+        if (count($data) == 0) {
+            return status('success');
+        }
+
+        $status = $this->transaction(function () use ($resource, $role_id, $data) {
+
+            $resource->where('role_id', $role_id)->delete();
+
+            $resource->insert($data);
+
+            return status('success');
+        });
+
+        return $status;
+
+
     }
 
     /**
@@ -79,12 +105,9 @@ class Role extends Model
 
         $role = $role_resource->where('id', $role_id)->first();
 
-        $permission_resource = $this->resource('L:PERMISSIONRELATIONSHIP');
-
-
         $role->permissions = [];
 
-        foreach ($permission_resource->where('role_id', $role_id)->get() as $item) {
+        foreach ($this->getRolePermissions($role_id)->data as $item) {
 
             array_push($role->permissions, $item->permission_id);
 
@@ -104,8 +127,72 @@ class Role extends Model
     public function getRoles($params)
     {
         $roles = $this->selector('ROLE', $params);
-        
+
         return status('success', $roles);
+    }
+
+    /**
+     * 获取角色权限组
+     *
+     * @param $roe_id
+     *
+     * @return Status
+     */
+    public function getRolePermissions($role_id)
+    {
+        $permission_resource = $this->resource('L:PERMISSIONRELATIONSHIP');
+
+        $permissions = $permission_resource->where('role_id', $role_id)->get();
+
+        return status('success', $permissions);
+    }
+
+    /**
+     * 更新角色
+     *
+     * @param $role_id
+     *
+     * @return Status
+     */
+    public function updateRole($role_id)
+    {
+        $resource = $this->resource('ROLE');
+
+        $origin = $resource->where('id', $role_id)->first();
+
+        if (!$origin) {
+            return status('roleDoesNotExist');
+        }
+
+        $ignore = [];
+
+        if (isset($this->data['name']) && $this->data['name'] == $origin->name) {
+            array_push($ignore, 'name');
+        }
+
+
+        if (($result = $this->validateRole($ignore)) !== true) {
+            return status('validateRoleError', $result);
+        }
+
+        $this->initializeRole(false);
+
+
+        $status = $this->transaction(function () use ($role_id, $resource) {
+
+            $status = $this->updateRolePermisssions($role_id, $this->data['permissions']);
+
+            if ($status->code != 200) exception('updateRolePermissionsError');
+
+            unset($this->data['id']);
+            unset($this->data['permissions']);
+
+            $resource->where('id', $role_id)->update($this->data);
+
+            return $this->getRole($role_id);
+        });
+
+        return $status;
     }
 
 
@@ -190,11 +277,12 @@ class Role extends Model
             'status' => config('site.role.default_status', 0),
             'permissions' => [],
             'source' => 'eevee',
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
-        $this->timestamps($initialized, $post);
+        if ($post) $initialized['created_at'] = date('Y-m-d H:i:s');
 
-        print_r($this->data);
+        $this->timestamps($initialized, $post);
 
         $this->data = array_merge($initialized, $this->data);
 

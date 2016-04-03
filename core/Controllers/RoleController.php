@@ -14,25 +14,23 @@ class RoleController extends Controller
 
     public function postRole(Context $context)
     {
-
-        $model = new Role();
-
-        return $context->response($model->setData($context->data())->addRole());
-
+        return $context->response((new Role())->setData($context->data())->addRole());
     }
 
     public function getRoles(Context $context)
     {
-        $model = new Role();
-
-        return $context->response($model->getRoles($context->params()));
+        return $context->response((new Role())->getRoles($context->params()));
     }
 
     public function getRole(Context $context)
     {
-        $model = new Role();
-
-        return $context->response($model->getRole($context->params('role_id')));
+        return $context->response((new Role())->getRole($context->params('role_id')));
     }
 
+    public function putRole(Context $context)
+    {
+        $status = (new Role())->setData($context->data())->updateRole($context->params('role_id'));
+
+        return $context->response($status);
+    }
 }
