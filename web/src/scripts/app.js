@@ -5,12 +5,12 @@ define(['angularAMD', 'angularRoute','./layout'], function(angularAMD) {
     //用于改变state时跳至顶部
     $uiViewScrollProvider.useAnchorScroll();
     // 默认进入先重定向
-    $urlRouterProvider.otherwise('index');
+    $urlRouterProvider.otherwise('home');
 
     $stateProvider
-      .state('index', angularAMD.route({
-        url: '/index',
-        templateUrl: 'templates/index.html',
+      .state('home', angularAMD.route({
+        url: '/home',
+        templateUrl: 'views/home.html',
         // controller: 'posts',
         // controllerUrl: 'controllers/posts'
       }))
