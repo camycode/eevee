@@ -31,7 +31,8 @@ class UserController extends Controller
     }
 
 
-    public function delete()
+    public function deleteUser(Context $context)
     {
+        return $context->response((new User())->deleteUser($context->params('user_id')));
     }
 }

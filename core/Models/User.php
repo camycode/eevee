@@ -120,61 +120,25 @@ class User extends Model
         return $status;
     }
 
+
     /**
-     * 更新用户和角色的关系
+     * 获取用户组.
      *
-     * @param string $user_id
-     * @param array /string $role_id
+     * @param array $params 用户获取条件配置参数
      *
      * @return Status
      */
-    protected function updateUserRoleRelationship($user_id, $role)
+    public function getUsers($params)
     {
-        $resource = $this->resource('L:ROLERELATIONSHIP');
-
-        $data = $this->generateUserRoleRelationshipRows($user_id, $role);
-
-        if ($data === false) exception('roleShouldBeStringOrArray');
-
-        $status = $this->transaction(function () use ($resource, $user_id, $data) {
-
-            $resource->where('user_id', $user_id)->delete();
-
-            $resource->insert($data);
-
-            return status('success');
-        });
-
-        return $status;
-    }
-
-    /**
-     * 生成用户和角色关系数组
-     *
-     * @param $user_id
-     * @param $role
-     *
-     * @return array|bool
-     */
-    protected function generateUserRoleRelationshipRows($user_id, $role)
-    {
-        if (is_string($role)) {
-            return array('user_id' => $user_id, 'role_id' => $role);
-        }
-
-        if (is_array($role)) {
-            $data = array();
-
-            foreach ($role as $item) {
-                array_push($data, array('user_id' => $user_id, 'role_id' => $item));
+        $users = $this->selector('USER', $params);
+        if ($users && !isset($params['count'])) {
+            foreach ($users as $k => $v) {
+                unset($users[$k]->password);
             }
-
-            return $data;
         }
 
-        return false;
+        return status('success', $users);
     }
-
 
     /**
      * 获取用户.
@@ -234,6 +198,87 @@ class User extends Model
     }
 
     /**
+     * 删除用户
+     *
+     * @param string $user_id 用户ID
+     * @return Status
+     */
+    public function deleteUser($user_id)
+    {
+        $resource = $this->resource('USER');
+
+        
+        if (!$resource->where('id', $user_id)->first()) {
+            return status('userDoesNotExsit');
+        }
+
+        $resource->where('id', $user_id)->delete();
+
+        return status('success');
+
+    }
+
+    /**
+     * 验证用户密码
+     *
+     * @param string $origin 原始密码
+     * @param string $password 加密后的用户密码
+     *
+     * @return bool
+     */
+    public function authPassword($origin, $password)
+    {
+        return $this->encryptPassword($origin) == $password;
+    }
+
+
+    /**
+     * 生成用户Token，存放在数据库中.
+     *
+     * @param object $user 用户对象
+     * @param string $app_id 应用ID
+     *
+     * @return string
+     */
+    public function generateUserToken($user, $app_id)
+    {
+        $row = [
+            'app_id' => $app_id,
+            'user_id' => $user->id,
+            'user_token' => sha1(uniqid($user->password)),
+        ];
+
+        return $this->saveUserToken($row);
+    }
+
+    /**
+     * 生成用户和角色关系数组
+     *
+     * @param $user_id
+     * @param $role
+     *
+     * @return array|bool
+     */
+    protected function generateUserRoleRelationshipRows($user_id, $role)
+    {
+        if (is_string($role)) {
+            return array('user_id' => $user_id, 'role_id' => $role);
+        }
+
+        if (is_array($role)) {
+            $data = array();
+
+            foreach ($role as $item) {
+                array_push($data, array('user_id' => $user_id, 'role_id' => $item));
+            }
+
+            return $data;
+        }
+
+        return false;
+    }
+
+    /**
      * 获取用户记录.
      *
      * @param string $field
@@ -271,42 +316,33 @@ class User extends Model
         return status('success', $user);
     }
 
+
     /**
-     * 获取用户组.
+     * 更新用户和角色的关系
      *
-     * @param array $params 用户获取条件配置参数
+     * @param string $user_id
+     * @param array /string $role_id
      *
      * @return Status
      */
-    public function getUsers($params)
+    protected function updateUserRoleRelationship($user_id, $role)
     {
-        $users = $this->selector('USER', $params);
-        if ($users && !isset($params['count'])) {
-            foreach ($users as $k => $v) {
-                unset($users[$k]->password);
-            }
-        }
+        $resource = $this->resource('L:ROLERELATIONSHIP');
 
-        return status('success', $users);
-    }
+        $data = $this->generateUserRoleRelationshipRows($user_id, $role);
 
-    /**
-     * 生成用户Token，存放在数据库中.
-     *
-     * @param object $user 用户对象
-     * @param string $app_id 应用ID
-     *
-     * @return string
-     */
-    public function generateUserToken($user, $app_id)
-    {
-        $row = [
-            'app_id' => $app_id,
-            'user_id' => $user->id,
-            'user_token' => sha1(uniqid($user->password)),
-        ];
+        if ($data === false) exception('roleShouldBeStringOrArray');
 
-        return $this->saveUserToken($row);
+        $status = $this->transaction(function () use ($resource, $user_id, $data) {
+
+            $resource->where('user_id', $user_id)->delete();
+
+            $resource->insert($data);
+
+            return status('success');
+        });
+
+        return $status;
     }
 
     /**
@@ -386,18 +422,6 @@ class User extends Model
         return true;
     }
 
-    /**
-     * 验证用户密码
-     *
-     * @param string $origin 原始密码
-     * @param string $password 加密后的用户密码
-     *
-     * @return bool
-     */
-    public function authPassword($origin, $password)
-    {
-        return $this->encryptPassword($origin) == $password;
-    }
 
     /**
      * 处理用户密码

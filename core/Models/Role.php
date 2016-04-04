@@ -93,6 +93,20 @@ class Role extends Model
     }
 
     /**
+     * 获取角色组
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
+    public function getRoles($params)
+    {
+        $roles = $this->selector('ROLE', $params);
+
+        return status('success', $roles);
+    }
+
+    /**
      * 获取角色
      *
      * @param string $role_id
@@ -119,19 +133,6 @@ class Role extends Model
 
     }
 
-    /**
-     * 获取角色组
-     *
-     * @param array $params
-     *
-     * @return Status
-     */
-    public function getRoles($params)
-    {
-        $roles = $this->selector('ROLE', $params);
-
-        return status('success', $roles);
-    }
 
     /**
      * 获取角色权限组
@@ -178,16 +179,20 @@ class Role extends Model
             return status('validateRoleError', $result);
         }
 
-        $this->initializeRole(false);
+        $this->timestamps($this->data, true);
 
 
         $status = $this->transaction(function () use ($role_id, $resource) {
 
-            $status = $this->updateRolePermisssions($role_id, $this->data['permissions']);
+            if (isset($this->data['permissions'])) {
 
-            if ($status->code != 200) exception('updateRolePermissionsError');
+                $status = $this->updateRolePermisssions($role_id, $this->data['permissions']);
+
+                if ($status->code != 200) exception('updateRolePermissionsError');
+            }
 
             unset($this->data['id']);
+
             unset($this->data['permissions']);
 
             $resource->where('id', $role_id)->update($this->data);
@@ -213,11 +218,10 @@ class Role extends Model
             return status('roleDoesNotExsit');
         }
 
-        if ($resource->where('id', $role_id)->delete()) {
-            return status('success', message('deleteRoleSuccess'));
-        }
+        $resource->where('id', $role_id)->delete();
 
-        return status('unknownDatabaseError');
+        return status('success');
+
     }
 
 
@@ -292,10 +296,9 @@ class Role extends Model
     /**
      * 角色初始化
      *
-     * @param bool $post
-     * @internal param array $role
+     * @internal param bool $post
      */
-    protected function initializeRole($post = true)
+    protected function initializeRole()
     {
 
         $initialized = [
@@ -307,10 +310,8 @@ class Role extends Model
         ];
 
         $initialized['parent'] = $initialized['id'];
-
-        if ($post) $initialized['created_at'] = date('Y-m-d H:i:s');
-
-        $this->timestamps($initialized, $post);
+        
+        $this->timestamps($initialized, true);
 
         $this->data = array_merge($initialized, $this->data);
 

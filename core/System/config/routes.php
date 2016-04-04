@@ -25,48 +25,49 @@ return [
     // 用户模块
     'post@user' => [
         'action' => 'UserController@postUser',
-        'permission' => 'user.post',
-        'type' => true,
-        'field' => 'type',
+        'permission' => 'USER_POST',
     ],
     'get@users' => [
         'action' => 'UserController@getUsers',
-        'permission' => 'user.get',
+        'permission' => 'USER_GET',
     ],
     'get@user' => [
         'action' => 'UserController@getUser',
-        'permission' => 'user.get',
+        'permission' => 'USER_GET',
     ],
     'put@user' => [
         'action' => 'UserController@putUser',
-        'permission' => 'USER.PUT',
+        'permission' => 'USER_PUT',
+    ],
+    'delete@user' => [
+        'action' => 'UserController@deleteUser',
+        'permission' => 'USER_DELETE',
     ],
 
     // 角色模块
     'post@role' => [
         'action' => 'RoleController@postRole',
-        'permission' => 'role.post',
+        'permission' => 'ROLE_POST',
     ],
     'get@roles' => [
         'action' => 'RoleController@getRoles',
-        'permission' => 'role.get',
+        'permission' => 'ROLE_GET',
     ],
     'get@role' => [
         'action' => 'RoleController@getRole',
-        'permission' => 'role.get',
+        'permission' => 'ROLE_GET',
     ],
     'put@role' => [
         'action' => 'RoleController@putRole',
-        'permission' => 'role.put',
+        'permission' => 'ROLE_PUT',
     ],
     'delete@role' => [
         'action' => 'RoleController@deleteRole',
-        'permission' => 'role.put',
+        'permission' => 'ROLE_DELETE',
     ],
 
     // 系统
     'post@system/install' => [
         'action' => 'SystemController@install',
-        'permission' => 'root',
     ],
 ];
