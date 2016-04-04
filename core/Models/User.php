@@ -1,16 +1,16 @@
 <?php
 
-/**
- * 用户模型
- * 定义了用户表相关的操作。
- *
- * @author 古月(2016/03)
- */
-
 namespace Core\Models;
+
 
 use Validator;
 
+
+/**
+ * 用户模型,定义了用户资源相关的操作。
+ *
+ * @author 古月(2016/03)
+ */
 class User extends Model
 {
     protected $data;
@@ -66,6 +66,14 @@ class User extends Model
         return $status;
     }
 
+    /**
+     * 更新用户
+     *
+     * @param $user_id
+     * @example
+     *
+     * @return Status
+     */
     public function updateUser($user_id)
     {
         $resource = $this->resource('USER');
@@ -207,7 +215,7 @@ class User extends Model
     {
         $resource = $this->resource('USER');
 
-        
+
         if (!$resource->where('id', $user_id)->first()) {
             return status('userDoesNotExsit');
         }
