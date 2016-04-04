@@ -27,6 +27,8 @@ class Role extends Model
     /**
      * 添加角色
      *
+     * 成功返回角色对象,包含角色的权限信息.
+     *
      * @return \Core\Models\Status
      */
     public function addRole()
@@ -295,6 +297,7 @@ class Role extends Model
      */
     protected function initializeRole($post = true)
     {
+
         $initialized = [
             'id' => $this->id(),
             'status' => config('site.role.default_status', 0),
@@ -302,6 +305,8 @@ class Role extends Model
             'source' => 'eevee',
             'updated_at' => date('Y-m-d H:i:s'),
         ];
+
+        $initialized['parent'] = $initialized['id'];
 
         if ($post) $initialized['created_at'] = date('Y-m-d H:i:s');
 

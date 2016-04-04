@@ -24,7 +24,7 @@ return [
 
     // 用户模块
     'post@user' => [
-        'action' => 'UserController@post',
+        'action' => 'UserController@postUser',
         'permission' => 'user.post',
         'type' => true,
         'field' => 'type',
@@ -36,6 +36,10 @@ return [
     'get@user' => [
         'action' => 'UserController@getUser',
         'permission' => 'user.get',
+    ],
+    'put@user' => [
+        'action' => 'UserController@putUser',
+        'permission' => 'USER.PUT',
     ],
 
     // 角色模块

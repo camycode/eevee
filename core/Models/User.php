@@ -53,25 +53,71 @@ class User extends Model
 
             $status = $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
 
-
             if ($status->code != 200) exception('updateUserRoleRelationshipError');
 
             unset($this->data['role']);
 
             $this->resource('USER')->insert($this->data);
 
-
             return $this->getUser($this->data['id']);
-
 
         });
 
         return $status;
     }
 
-    public function updateUser($user_id, $data)
+    public function updateUser($user_id)
     {
+        $resource = $this->resource('USER');
 
+        $origin = $resource->where('id', $user_id)->first();
+
+        if (!$origin) {
+            return status('userDoesNotExist');
+        }
+
+        $ignore = ['password'];
+
+        if (!isset($this->data['username']) || $this->data['username'] == $origin->username) {
+            array_push($ignore, 'username');
+        }
+
+        if (!isset($this->data['email']) || $this->data['email'] == $origin->email) {
+            array_push($ignore, 'email');
+        }
+
+        if (!isset($this->data['role'])) {
+            array_push($ignore, 'role');
+        }
+
+        if (($result = $this->validateUser($ignore)) !== true) {
+            return status('validateError', $result);
+        }
+
+
+        $this->timestamps($this->data, false);
+
+        $status = $this->transaction(function () use ($resource, $user_id) {
+
+            if (isset($this->data['role'])) {
+
+                $status = $this->updateUserRoleRelationship($user_id, $this->data['role']);
+
+                if ($status->code != 200) {
+                    exception('updateUserRoleRelationshipError');
+                }
+
+            }
+            if (isset($this->data['role'])) unset($this->data['role']);
+
+            $resource->where('id', $user_id)->update($this->data);
+
+
+            return $this->getUser($user_id);
+
+        });
+
+        return $status;
     }
 
     /**
@@ -211,7 +257,7 @@ class User extends Model
         foreach ($items as $item) {
 
             $status = (new Role())->getRole($item->role_id);
-            
+
             if ($status->code == 200) array_push($roles, $status->data);
 
         }
@@ -291,10 +337,8 @@ class User extends Model
      * 初始化用户
      * 合并配置文件新用户设置，设置时间戳.
      *
-     * @param bool $post
-     *
      */
-    protected function initializeUser($post = true)
+    protected function initializeUser()
     {
         $initialized = [
             'id' => $this->id(),
@@ -304,7 +348,7 @@ class User extends Model
             'source' => 'eevee',
         ];
 
-        $this->timestamps($initialized, $post);
+        $this->timestamps($initialized, true);
 
         $this->data = array_merge($initialized, $this->data);
     }

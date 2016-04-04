@@ -11,7 +11,7 @@
 
 namespace Core\Services;
 
-use Request;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class Context
@@ -30,18 +30,15 @@ class Context
 
         // $this->guset = $request->guest;
     }
+
     /**
      * 获取GET参数.
      *
      * @return array GET请求参数
      */
-    public function params($field = false, $default = false)
+    public function params($field = null, $default = null)
     {
-        if ($field !== false) {
-            return isset($_GET[$field]) ? $_GET[$field] : $default;
-        }
-
-        return $_GET;
+        return $this->request->query($field, $default);
     }
 
     /**
@@ -53,8 +50,7 @@ class Context
      */
     public function header($header, $require = false)
     {
-        // $value = $this->request->header($header);
-        $value = 'ra';
+         $value = $this->request->header($header);
 
         if (!$value && $require) {
             throw new \Exception("The request header $header is required.", 1);
@@ -69,9 +65,9 @@ class Context
      *
      * @return array 请求数据数组
      */
-    public function data($field = false, $default = false)
+    public function data($field = null, $default = null)
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = $this->request->json()->all();
 
         if ($field) {
             return isset($data[$field]) ? $data[$field] : $default;
@@ -91,8 +87,8 @@ class Context
      * 响应函数
      * 以JSON格式输出。
      *
-     * @param string $result     响应结果
-     * @param int    $statusCode HTTP状态码
+     * @param string $result 响应结果
+     * @param int $statusCode HTTP状态码
      *
      * @return Response
      */
@@ -100,5 +96,5 @@ class Context
     {
         return response(json_encode($result), $statusCode)->header('Content-Type', 'application/json');
     }
-    
+
 }

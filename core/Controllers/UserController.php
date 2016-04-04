@@ -3,28 +3,24 @@
 namespace Core\Controllers;
 
 use Core\Models\User;
-use Core\Services\Status;
 use Core\Services\Context;
 
 class UserController extends Controller
 {
-    public function postUser(Context $context, Status $status)
+    public function postUser(Context $context)
     {
-        $user = new User();
-        $user->data($context->data())->add();
+        return $context->response((new User())->setData($context->data())->addUser());
     }
 
-    public function putUser()
+    public function putUser(Context $context)
     {
+        return $context->response((new User())->setData($context->data())->updateUser($context->params('user_id')));
     }
 
     public function getUser(Context $context)
     {
-        $model = new User();
 
-        $result = $model->getUser($context->params('user_id'));
-
-        return $context->response($result);
+        return $context->response((new User())->getUser($context->params('user_id')));
     }
 
     public function getUsers(Context $context)
@@ -33,6 +29,7 @@ class UserController extends Controller
 
         return $context->response($model->getUsers($context->params()));
     }
+
 
     public function delete()
     {
