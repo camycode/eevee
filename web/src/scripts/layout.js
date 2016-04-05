@@ -7,8 +7,7 @@ define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
       duration: 200,
       easing: 'swing'
     },
-    onClickAfter: function(e, submenu) {
-      console.log(e);
+    onClickAfter: function(e, submenu) {∫
       $('#layout-sidebar .menu .item').removeClass('active');
       $(e.target).parents('.item').addClass('active');
     }
@@ -21,8 +20,8 @@ define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
   });
 
   // 配置semantic下拉菜单
-
   $('.ui.selection.dropdown').dropdown();
+
   $('.ui.menu .ui.dropdown').dropdown({
     on: 'hover'
   });

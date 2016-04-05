@@ -1,5 +1,6 @@
 define(['angularAMD', 'angularRoute','./layout'], function(angularAMD) {
-  var app = angular.module("Govel", ['ui.router']);
+  
+  var app = angular.module("eevee", ['ui.router']);
 
   app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
     //用于改变state时跳至顶部
