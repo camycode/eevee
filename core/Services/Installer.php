@@ -180,6 +180,7 @@ class Installer
         $data = array(
             'id' => md5('root'),
             'name' => message('root'),
+            'status' => 1,
             'permissions' => $permissions,
         );
 
