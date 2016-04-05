@@ -42,7 +42,7 @@ class User extends Model
     {
 
         if (($result = $this->validateUser()) !== true) {
-            return status('validateError', $result);
+            return status('validateFailed', $result);
         }
 
         $this->initializeUser();
@@ -99,7 +99,7 @@ class User extends Model
         }
 
         if (($result = $this->validateUser($ignore)) !== true) {
-            return status('validateError', $result);
+            return status('validateFailed', $result);
         }
 
         $this->timestamps($this->data, false);
@@ -231,7 +231,7 @@ class User extends Model
      */
     public function putUserPassword($user_id, $origin_password, $new_password)
     {
-        
+
     }
 
     /**

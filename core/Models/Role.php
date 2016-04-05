@@ -30,12 +30,12 @@ class Role extends Model
      *
      * 成功返回角色对象,包含角色的权限信息.
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     public function addRole()
     {
         if (($validateResult = $this->validateRole()) !== true) {
-            return status('validateError', $validateResult);
+            return status('validateFailed', $validateResult);
         }
 
         $this->initializeRole();
@@ -75,18 +75,21 @@ class Role extends Model
         $origin = $resource->where('id', $role_id)->first();
 
         if (!$origin) {
+            
             return status('roleDoesNotExist');
         }
 
         $ignore = [];
 
         if (isset($this->data['name']) && $this->data['name'] == $origin->name) {
+
             array_push($ignore, 'name');
         }
 
 
         if (($result = $this->validateRole($ignore)) !== true) {
-            return status('validateRoleError', $result);
+
+            return status('validateFailed', $result);
         }
 
         $this->timestamps($this->data, false);
