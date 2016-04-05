@@ -25,7 +25,7 @@ function status($status, $data = null)
  */
 function message($message)
 {
-    return trans("status.$message");
+    return trans("messages.$message");
 }
 
 /**
