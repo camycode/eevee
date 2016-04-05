@@ -2,7 +2,7 @@
 
 namespace Core\Models;
 
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class Role extends Model
 {

@@ -12,13 +12,12 @@ return [
     'get@version' => [
         'action' => 'SystemController@version',
     ],
-    // 登录
-    'post@login' => [
+
+    // 认证模块
+    'post@auth/login' => [
         'action' => 'AuthController@login',
     ],
-
-    // 注册
-    'post@register' => [
+    'post@auth/register' => [
         'action' => 'AuthController@register',
     ],
 
