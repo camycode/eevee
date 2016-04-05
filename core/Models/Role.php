@@ -250,9 +250,7 @@ class Role extends Model
 
             $outScopePermissions = array_diff($permissions, $permissionsScope);
 
-            if (count($outScopePermissions) > 0) {
-                return status('permissionOutOfScope');
-            }
+            if (count($outScopePermissions) > 0) return status('permissionOutOfScope');
 
         }
 
