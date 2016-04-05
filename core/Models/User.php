@@ -81,24 +81,29 @@ class User extends Model
         $origin = $resource->where('id', $user_id)->first();
 
         if (!$origin) {
+
             return status('userDoesNotExist');
         }
 
         $ignore = ['password'];
 
         if (!isset($this->data['username']) || $this->data['username'] == $origin->username) {
+
             array_push($ignore, 'username');
         }
 
         if (!isset($this->data['email']) || $this->data['email'] == $origin->email) {
+
             array_push($ignore, 'email');
         }
 
         if (!isset($this->data['role'])) {
+
             array_push($ignore, 'role');
         }
 
         if (($result = $this->validateUser($ignore)) !== true) {
+
             return status('validateFailed', $result);
         }
 
@@ -213,13 +218,13 @@ class User extends Model
 
 
         if (!$resource->where('id', $user_id)->first()) {
+
             return status('userDoesNotExsit');
         }
 
         $resource->where('id', $user_id)->delete();
 
         return status('success');
-
     }
 
     /**
@@ -278,13 +283,16 @@ class User extends Model
     protected function generateUserRoleRelationshipRows($user_id, $role)
     {
         if (is_string($role)) {
+
             return array('user_id' => $user_id, 'role_id' => $role);
         }
 
         if (is_array($role)) {
+
             $data = array();
 
             foreach ($role as $item) {
+
                 array_push($data, array('user_id' => $user_id, 'role_id' => $item));
             }
 
@@ -325,9 +333,7 @@ class User extends Model
 
         $user->role = $roles;
 
-        if (!$password) {
-            unset($user->password);
-        }
+        if (!$password) unset($user->password);
 
         return status('success', $user);
     }
@@ -377,8 +383,10 @@ class User extends Model
         $query = $resource->where('app_id', $row['app_id'])->where('user_id', $row['user_id']);
 
         if ($query->first()) {
+
             $result = $resource->update($row);
         } else {
+
             $result = $resource->insert($row);
         }
 
@@ -426,12 +434,14 @@ class User extends Model
         ];
 
         foreach ($ignore as $field) {
+
             if (isset($rule[$field])) unset($rule[$field]);
         }
 
         $validator = Validator::make($this->data, $rule);
 
         if ($validator->fails()) {
+            
             return $validator->errors();
         }
 
