@@ -16,6 +16,7 @@ class CreatePermissionsRelationshipsTable extends Migration
             $table->string('role_id');
             $table->string('permission_id');
             $table->primary(['role_id', 'permission_id']);
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 

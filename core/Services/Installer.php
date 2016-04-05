@@ -94,7 +94,7 @@ class Installer
     /**
      * 迁移数据表.
      */
-    public function migrate()
+    protected function migrate()
     {
         $this->result['migrate'] = '';
 
@@ -104,7 +104,7 @@ class Installer
     /**
      * 注册系统资源.
      */
-    public function registerResources()
+    protected function registerResources()
     {
         $resources = $this->getResources();
 
@@ -136,7 +136,7 @@ class Installer
     /**
      * 注册权限.
      */
-    public function registerPermissions()
+    protected function registerPermissions()
     {
 
         $permissions = $this->getPermissions();
@@ -169,7 +169,7 @@ class Installer
     /**
      * 注册超级管理员角色.
      */
-    public function registerRootRole()
+    protected function registerRootRole()
     {
         $permissions = [];
 
@@ -178,11 +178,13 @@ class Installer
         }
 
         $data = array(
-            'id' => md5('root'),
+            'id' => (new Model())->id(),
             'name' => message('root'),
             'status' => 1,
             'permissions' => $permissions,
         );
+
+        $data['parent'] = $data['id'];
 
 
         if ($role = (new Model())->resource('ROLE')->where('id', $data['id'])->first()) {
@@ -196,7 +198,6 @@ class Installer
             $this->result['register_root_role'] = $root->data;
         }
 
-
         return $this->registerGuestRole();
 
     }
@@ -204,7 +205,7 @@ class Installer
     /**
      * 注册访客角色.
      */
-    public function registerGuestRole()
+    protected function registerGuestRole()
     {
         $data = array(
             'name' => message('guest')
@@ -228,6 +229,7 @@ class Installer
      */
     protected function registerAdministrator()
     {
+
 
         $this->params['root']['status'] = 1;
         $this->params['root']['role'] = $this->result['register_root_role']->id;

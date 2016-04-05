@@ -44,13 +44,15 @@ class Role extends Model
 
             $role_resource = $this->resource('ROLE');
 
-            $status = $this->updateRolePermisssions($this->data, $this->data['permissions']);
-
-            if ($status->code != 200) return $status;
+            $permissions = $this->data['permissions'];
 
             unset($this->data['permissions']);
 
             $role_resource->insert($this->data);
+
+            $status = $this->updateRolePermisssions($this->data, $permissions);
+
+            if ($status->code != 200) return $status;
 
             return $this->getRole($this->data['id']);
 
@@ -147,6 +149,26 @@ class Role extends Model
 
     }
 
+    /**
+     * 删除角色
+     *
+     * @param $role_id
+     *
+     * @return Status
+     */
+    public function deleteRole($role_id)
+    {
+        $resource = $this->resource('ROLE');
+
+        if (!$resource->where('id', $role_id)->first()) {
+            return status('roleDoesNotExsit');
+        }
+
+        $resource->where('parent', $role_id)->delete();
+
+        return status('success');
+
+    }
 
     /**
      * 获取角色权限组
@@ -200,27 +222,6 @@ class Role extends Model
 
     }
 
-
-    /**
-     * 删除角色
-     *
-     * @param $role_id
-     *
-     * @return Status
-     */
-    public function deleteRole($role_id)
-    {
-        $resource = $this->resource('ROLE');
-
-        if (!$resource->where('id', $role_id)->first()) {
-            return status('roleDoesNotExsit');
-        }
-
-        $resource->where('id', $role_id)->delete();
-
-        return status('success');
-
-    }
 
     /**
      * 更新角色权限
