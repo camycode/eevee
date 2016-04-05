@@ -34,10 +34,10 @@ class RoleController extends Controller
      *      "created_at": "2016-04-03 13:57:33",
      *      "updated_at": "2016-04-03 13:57:33",
      *      "permissions": [
-     *          "POST.DELETE",
-     *          "POST.GET",
-     *          "POST.POST",
-     *          "POST.PUT"
+     *          "POST_DELETE",
+     *          "POST_GET",
+     *          "POST_POST",
+     *          "POST_PUT"
      *          ]
      *      }
      * }
@@ -79,4 +79,10 @@ class RoleController extends Controller
     {
         return $context->response((new Role())->deleteRole($context->params('role_id')));
     }
+
+    public function getPermissions(Context $context)
+    {
+        return $context->response((new Role())->getRolePermissions($context->params('role_id'),$context->params('archive')));
+    }
+
 }

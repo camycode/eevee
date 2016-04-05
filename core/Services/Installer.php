@@ -248,6 +248,6 @@ class Installer
 
     protected static function getPermissionResourceID($permission)
     {
-        return strtoupper(explode('.', $permission)[0]);
+        return strtoupper(explode('_', $permission)[0]);
     }
 }

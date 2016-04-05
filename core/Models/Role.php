@@ -160,7 +160,7 @@ class Role extends Model
      *
      * @return Status
      */
-    public function getRolePermission($role_id, $archive = false)
+    public function getRolePermissions($role_id, $archive = false)
     {
 
         $items = $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->get();
@@ -171,21 +171,21 @@ class Role extends Model
 
         $permissions = array();
 
+
         foreach ($items as $item) {
 
+
             if ($permission = $this->resource('PERMISSION')->where('id', $item->permission_id)->first()) {
+
                 array_push($permissions, $permission);
             }
         }
 
         $result = array();
 
+        foreach ($permissions as $item) {
 
-        $unique_items = array_unique($permissions);
-
-        foreach ($unique_items as $item) {
-
-            if ($resource = $this->resource('RESOURCE')->where('id', $item->resource_id)) {
+            if ($resource = $this->resource('RESOURCE')->where('id', $item->resource_id)->first()) {
                 $result[$resource->id]['name'] = $resource->name;
                 $result[$resource->id]['parent'] = $resource->parent;
                 $result[$resource->id]['description'] = $resource->description;
