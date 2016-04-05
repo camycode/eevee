@@ -223,6 +223,18 @@ class User extends Model
     }
 
     /**
+     * 更改用户密码
+     *
+     * @param string $user_id
+     * @param string $origin_password
+     * @param string $new_password
+     */
+    public function putUserPassword($user_id, $origin_password, $new_password)
+    {
+        
+    }
+
+    /**
      * 验证用户密码
      *
      * @param string $origin 原始密码
