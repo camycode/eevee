@@ -339,7 +339,7 @@ class Role extends Model
             'id' => $this->id(),
             'status' => config('site.role.default_status', 0),
             'permissions' => [],
-            'source' => 'eevee',
+            'source' => 'EEVEE',
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 

@@ -2,6 +2,8 @@
 
 namespace Core\Services;
 
+
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Core\Models\User;
 use Core\Models\Role;
@@ -9,25 +11,58 @@ use Core\Models\Model;
 
 class Installer
 {
-    public static function install()
+
+
+    protected $root;
+
+    protected $guest;
+
+    protected $params;
+
+    protected $database;
+
+    protected $resources;
+
+    protected $permissions;
+
+    protected $administrator;
+
+    protected $pass;
+
+    protected $result;
+
+
+    public function __construct()
     {
-        return [
-            'register:resources' => self::registerResources(),
-            'register:permissions' => self::registerPermissions(),
-            'post:role:guest' => '',
-            'post:role:root' => '',
-            'post:administrator' => '',
-        ];
+        $this->params = array(
+            'databse' => array(
+                'host' => '',
+                'port' => '3306',
+                'prefix' => 'eevee_',
+                'account' => 'fourever',
+                'password' => 'fourever',
+            ),
+            'root' => array(
+                'username' => 'root',
+                'password' => 'HelloEEVEE',
+                'email' => 'root@eevee.io'
+            ),
+        );
+
+        $this->pass = true;
+
+        $this->result = array();
     }
 
     /**
-     * 检查特定文件夹是否有读写权限.
-     *
-     * @return bool
+     * 开始安装程序
      */
-    protected function checkStorageFolderPermission()
+    public function install()
     {
+        return $this->testDatabaseConnection();
+
     }
+
 
     /**
      * 测试数据库服务器链接.
@@ -39,8 +74,11 @@ class Installer
      *
      * @return bool
      */
-    protected function testDatabaseConnection($database)
+    protected function testDatabaseConnection()
     {
+        $this->result['test_database_connection'] = '';
+
+        return $this->createDatabase();
     }
 
     /**
@@ -54,8 +92,11 @@ class Installer
      *
      * @return bool
      */
-    protected function createDatabase($database)
+    protected function createDatabase()
     {
+        $this->result['create_database'] = '';
+
+        return $this->migrate();
     }
 
     /**
@@ -63,18 +104,19 @@ class Installer
      */
     public function migrate()
     {
+        $this->result['migrate'] = '';
+
+        return $this->registerResources();
     }
 
     /**
      * 注册系统资源.
      */
-    public static function registerResources()
+    public function registerResources()
     {
-        $status = null;
+        $resources = $this->getResources();
 
-        $resources = self::getResources();
-
-        $table = with(new Model())->table('RESOURCE');
+        $table = (new Model())->table('RESOURCE');
 
         $rule = [
             'id' => "required|unique:$table",
@@ -85,34 +127,29 @@ class Installer
 
             $validator = Validator::make($row, $rule);
 
-            if ($validator->fails()) {
+            if ($validator->fails()) continue;
 
-                $status[$row['id']] = $validator->errors();
-
-                continue;
-            }
-
-            $resource = with(new Model())->resource('RESOURCE');
+            $resource = (new Model())->resource('RESOURCE');
 
             $resource->insert($row);
 
-            $status[$row['id']] = 'success';
-
         }
 
-        return $status;
+        $this->result['register_resources'] = (new Model())->resource('RESOURCE')->get();
+
+
+        return $this->registerPermissions();
     }
 
     /**
      * 注册权限.
      */
-    public static function registerPermissions()
+    public function registerPermissions()
     {
-        $status = null;
 
-        $permissions = self::getPermissions();
+        $permissions = $this->getPermissions();
 
-        $table = with(new Model())->table('PERMISSION');
+        $table = (new Model())->table('PERMISSION');
 
         $rule = [
             'id' => "required|unique:$table",
@@ -123,37 +160,67 @@ class Installer
 
             $validator = Validator::make($row, $rule);
 
-            if ($validator->fails()) {
+            if ($validator->fails()) continue;
 
-                $status[$row['id']] = $validator->errors();
-
-                continue;
-            }
-
-            $resource = with(new Model())->resource('PERMISSION');
+            $resource = (new Model())->resource('PERMISSION');
 
             $resource->insert($row);
 
-            $status[$row['id']] = 'success';
-
         }
 
-        return $status;
+        $this->result['register_permissions'] = (new Model())->resource('PERMISSION')->get();
+
+        return $this->registerRootRole();
+
     }
 
     /**
      * 注册超级管理员角色.
      */
-    public static function registerRootRole()
+    public function registerRootRole()
     {
-        return 'register root user';
+        $permissions = [];
+
+        foreach ($this->result['register_permissions'] as $permission) {
+            array_push($permissions, $permission->id);
+        }
+
+        $data = array(
+            'id' => md5('root'),
+            'name' => message('root'),
+            'permissions' => $permissions,
+        );
+
+
+        if ($role = (new Model())->resource('ROLE')->where('id', $data['id'])->first()) {
+
+            $this->result['register_root_role'] = $this->root = $role;
+
+        } else {
+
+            $root = (new Role())->setData($data)->addRole();
+
+            $this->result['register_root_role'] = $this->root = $root->data;
+        }
+
+        return $this->registerGuestRole();
+
     }
 
     /**
      * 注册访客角色.
      */
-    public static function registerGuestRole()
+    public function registerGuestRole()
     {
+        $data = array(
+            'name' => message('guest')
+        );
+
+        $guest = (new Role())->setData($data)->addRole();
+
+        $this->result['register_root_role'] = $this->guest = $guest;
+
+        return $this->registerAdministrator();
     }
 
     /**
@@ -165,14 +232,32 @@ class Installer
      *
      * @return $user
      */
-    protected static function registerAdministrator($user)
+    protected function registerAdministrator()
     {
+        $this->params['root']['status'] = 1;
+        $this->params['root']['role'] = $this->root->id;
+        $this->params['root']['source'] = 'EEVEE';
+
+        $administrator = (new User())->setData($this->params['root'])->addUser();
+
+        $this->result['register_administrator'] = $administrator;
+
+        return $this->installEnd();
+    }
+
+
+    protected function installEnd()
+    {
+        
+        Storage::put('/storage/install.lock', json_encode($this->result));
+
+        return $this->result;
     }
 
     /**
      * 读取资源配置文件.
      */
-    protected static function getResources()
+    protected function getResources()
     {
         $defaultResources = config('resources');
 
@@ -185,7 +270,7 @@ class Installer
      * @param array $resources
      * @return array
      */
-    protected static function generateResourceRows($resources)
+    protected function generateResourceRows($resources)
     {
         $result = [];
 
@@ -199,7 +284,7 @@ class Installer
             $row['id'] = strtoupper($resource);
             $row['name'] = is_array(trans("resources.$resource")) ? trans("resources.$resource.name") : trans("resources.$resource");
             $row['description'] = is_array(trans("resources.$resource")) ? trans("resources.$resource.description") : '';
-            $row['source'] = 'eevee';
+            $row['source'] = 'EEVEE';
 
             array_push($result, $row);
         }
@@ -208,19 +293,19 @@ class Installer
     }
 
     /**
-     * 获取系统权限列表.
+     * 获取系统预设权限列表.
      */
-    protected static function getPermissions()
+    protected function getPermissions()
     {
-        $defaultPermissions = config('permissions');
+        $permissions = config('permissions');
 
-        return self::generatePermissionRows($defaultPermissions);
+        return $this->generatePermissionRows($permissions);
     }
 
     /**
      * 生成权限可插入的数据库记录.
      */
-    protected static function generatePermissionRows($permissions)
+    protected function generatePermissionRows($permissions)
     {
         $result = [];
 
@@ -238,7 +323,7 @@ class Installer
             $row['resource_id'] = self::getPermissionResourceID($permission);
             $row['name'] = is_array(trans("permissions.$permission")) ? trans("permissions.$permission.name") : trans("permissions.$permission");
             $row['description'] = is_array(trans("permissions.$permission")) ? trans("permissions.$permission.description") : '';
-            $row['source'] = 'eevee';
+            $row['source'] = 'EEVEE';
 
             array_push($result, $row);
         }
@@ -246,7 +331,7 @@ class Installer
         return $result;
     }
 
-    protected static function getPermissionResourceID($permission)
+    protected function getPermissionResourceID($permission)
     {
         return strtoupper(explode('_', $permission)[0]);
     }
