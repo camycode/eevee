@@ -10,4 +10,5 @@ return [
     'updateRolePermissionsError' => '更新角色权限失败,可能权限有重复',
     'deleteRoleSuccess' => '用户删除成功',
     'roleDoesNotExsit' => '用户不存在',
+    'systemHasInstalled' => '系统已安装',
 ];

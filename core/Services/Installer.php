@@ -3,31 +3,19 @@
 namespace Core\Services;
 
 
-use Illuminate\Support\Facades\Storage;
-use Validator;
 use Core\Models\User;
 use Core\Models\Role;
 use Core\Models\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class Installer
 {
 
 
-    protected $root;
-
-    protected $guest;
+    protected $pass;
 
     protected $params;
-
-    protected $database;
-
-    protected $resources;
-
-    protected $permissions;
-
-    protected $administrator;
-
-    protected $pass;
 
     protected $result;
 
@@ -44,7 +32,7 @@ class Installer
             ),
             'root' => array(
                 'username' => 'root',
-                'password' => 'HelloEEVEE',
+                'password' => 'Helloworld',
                 'email' => 'root@eevee.io'
             ),
         );
@@ -59,6 +47,10 @@ class Installer
      */
     public function install()
     {
+        if (Storage::has('/storage/install.lock')) {
+            return message('systemHasInstalled');
+        }
+
         return $this->testDatabaseConnection();
 
     }
@@ -194,14 +186,15 @@ class Installer
 
         if ($role = (new Model())->resource('ROLE')->where('id', $data['id'])->first()) {
 
-            $this->result['register_root_role'] = $this->root = $role;
+            $this->result['register_root_role'] = $role;
 
         } else {
 
             $root = (new Role())->setData($data)->addRole();
 
-            $this->result['register_root_role'] = $this->root = $root->data;
+            $this->result['register_root_role'] = $root->data;
         }
+
 
         return $this->registerGuestRole();
 
@@ -218,7 +211,7 @@ class Installer
 
         $guest = (new Role())->setData($data)->addRole();
 
-        $this->result['register_root_role'] = $this->guest = $guest;
+        $this->result['register_guest_role'] = $this->guest = $guest;
 
         return $this->registerAdministrator();
     }
@@ -234,8 +227,9 @@ class Installer
      */
     protected function registerAdministrator()
     {
+
         $this->params['root']['status'] = 1;
-        $this->params['root']['role'] = $this->root->id;
+        $this->params['root']['role'] = $this->result['register_root_role']->id;
         $this->params['root']['source'] = 'EEVEE';
 
         $administrator = (new User())->setData($this->params['root'])->addUser();
@@ -248,7 +242,7 @@ class Installer
 
     protected function installEnd()
     {
-        
+
         Storage::put('/storage/install.lock', json_encode($this->result));
 
         return $this->result;
