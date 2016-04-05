@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         $password = $context->data('password');
 
-        $app_id = $context->header('X-APP-ID', true);
+        $app_id = 'app_id';
 
         $model = new User();
 
@@ -59,7 +59,7 @@ class AuthController extends Controller
 
         // 验证密码
         if ($result->code != 200 || !$model->authPassword($password, $result->data->password)) {
-            return $context->status('invialidAccountOrUsername');
+            return $context->response(status('invialidAccountOrUsername'));
         }
 
 
@@ -67,24 +67,20 @@ class AuthController extends Controller
 
         // 生成 Token
         if (!($user->user_token = $model->generateUserToken($user, $app_id))) {
-            return $context->status('generateUserTokenError');
+            return $context->response(status('generateUserTokenError'));
         };
 
         unset($user->password);
 
-        return $context->status('success', $user);
+        return $context->response(status('success', $user));
     }
 
 
     public function register(Context $context)
     {
-        $data = $context->data();
+        $status = (new User())->setData($context->data())->addUser();
 
-        $userModel = new User();
-
-        $result = $userModel->addUser($data);
-
-        return $context->response($result);
+        return $context->response($status);
     }
 
     // 忘记密码

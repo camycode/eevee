@@ -6,8 +6,9 @@ return [
     'userDoesNotExist' => '该用户不存在',
     'invialidAccountOrUsername' => '账户或密码不正确',
     'roleHasExist' => '该角色已存在',
-    'databaseOperateError' => '数据库操作异常',
-    'updateRolePermissionsError' => '更新角色权限失败,可能权限有重复',
+    'databaseOperateError' => '事务异常',
+    'updateRolePermissionsError' => '编辑角色权限错误.',
     'deleteRoleSuccess' => '用户删除成功',
     'roleDoesNotExsit' => '用户不存在',
+    'systemHasInstalled' => '系统已安装',
 ];

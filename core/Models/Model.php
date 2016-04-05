@@ -125,16 +125,23 @@ class Model extends DB
         DB::beginTransaction();
 
         try {
-            $result = $callback($this);
 
-            DB::commit();
+            $status = $callback($this);
+
+            if (!isset($status->code) || $status->code == 200) {
+                DB::commit();
+            } else {
+                DB::rollBack();
+            }
+
         } catch (\Exception $e) {
+
             DB::rollBack();
 
             return status(1003, $e->getMessage());
         }
 
-        return $result;
+        return $status;
     }
 
     /**

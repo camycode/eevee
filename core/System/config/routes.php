@@ -12,57 +12,65 @@ return [
     'get@version' => [
         'action' => 'SystemController@version',
     ],
-    // 登录
-    'post@login' => [
+
+    // 认证模块
+    'post@auth/login' => [
         'action' => 'AuthController@login',
     ],
-
-    // 注册
-    'post@register' => [
+    'post@auth/register' => [
         'action' => 'AuthController@register',
     ],
 
     // 用户模块
     'post@user' => [
-        'action' => 'UserController@post',
-        'permission' => 'user.post',
-        'type' => true,
-        'field' => 'type',
+        'action' => 'UserController@postUser',
+        'permission' => 'USER_POST',
     ],
     'get@users' => [
         'action' => 'UserController@getUsers',
-        'permission' => 'user.get',
+        'permission' => 'USER_GET',
     ],
     'get@user' => [
         'action' => 'UserController@getUser',
-        'permission' => 'user.get',
+        'permission' => 'USER_GET',
+    ],
+    'put@user' => [
+        'action' => 'UserController@putUser',
+        'permission' => 'USER_PUT',
+    ],
+    'delete@user' => [
+        'action' => 'UserController@deleteUser',
+        'permission' => 'USER_DELETE',
     ],
 
     // 角色模块
     'post@role' => [
         'action' => 'RoleController@postRole',
-        'permission' => 'role.post',
+        'permission' => 'ROLE_POST',
     ],
     'get@roles' => [
         'action' => 'RoleController@getRoles',
-        'permission' => 'role.get',
+        'permission' => 'ROLE_GET',
     ],
     'get@role' => [
         'action' => 'RoleController@getRole',
-        'permission' => 'role.get',
+        'permission' => 'ROLE_GET',
     ],
     'put@role' => [
         'action' => 'RoleController@putRole',
-        'permission' => 'role.put',
+        'permission' => 'ROLE_PUT',
     ],
     'delete@role' => [
         'action' => 'RoleController@deleteRole',
-        'permission' => 'role.put',
+        'permission' => 'ROLE_DELETE',
+    ],
+    'get@role/permissions' => [
+        'action' => 'RoleController@getPermissions',
+        'permission' => 'ROLE_GET',
     ],
 
     // 系统
     'post@system/install' => [
         'action' => 'SystemController@install',
-        'permission' => 'root',
     ],
 ];

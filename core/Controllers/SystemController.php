@@ -13,14 +13,7 @@ class SystemController extends Controller
      */
     public function version(Context $context)
     {
-        if(trans('permissions.user.ok')!=''){
-            echo 'Hello';
-        }else{
-            echo 'world';
-        }
-
-//        return response('EEVEE 1.0');
-
+        return response('EEVEE 1.0');
     }
 
     /**
@@ -40,6 +33,6 @@ class SystemController extends Controller
      */
     public function install(Context $context)
     {
-        return $context->response(status('success', Installer::install()));
+        return $context->response(status('success', (new Installer($context->data()))->install()));
     }
 }

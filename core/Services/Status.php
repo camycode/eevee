@@ -104,7 +104,7 @@ class Status
      */
     protected static function getMessage($status)
     {
-        return trans('status.' . self::getStatusName($status));
+        return message(self::getStatusName($status));
     }
 
     /**
