@@ -53,7 +53,7 @@ class User extends Model
 
             $status = $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
 
-            if ($status->code != 200) exception('updateUserRoleRelationshipError');
+            if ($status->code != 200) return status('updateUserRoleRelationshipError');
 
             unset($this->data['role']);
 
@@ -102,7 +102,6 @@ class User extends Model
             return status('validateError', $result);
         }
 
-
         $this->timestamps($this->data, false);
 
         $status = $this->transaction(function () use ($resource, $user_id) {
@@ -111,15 +110,12 @@ class User extends Model
 
                 $status = $this->updateUserRoleRelationship($user_id, $this->data['role']);
 
-                if ($status->code != 200) {
-                    exception('updateUserRoleRelationshipError');
-                }
+                if ($status->code != 200) return status('updateUserRoleRelationshipError');
 
             }
             if (isset($this->data['role'])) unset($this->data['role']);
 
             $resource->where('id', $user_id)->update($this->data);
-
 
             return $this->getUser($user_id);
 
