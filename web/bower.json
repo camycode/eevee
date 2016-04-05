@@ -28,6 +28,6 @@
     "multiselect": "lou/multi-select#~0.9.12",
     "semantic": "^2.1.8",
     "angularAMD": "^0.2.1",
-    "domReady": "requirejs/domReady#^2.0.1",
+    "domReady": "requirejs/domReady#^2.0.1"
   }
 }
