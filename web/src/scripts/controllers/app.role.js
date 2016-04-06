@@ -1,12 +1,33 @@
-define(['app', 'jquery'], function(app) {
+define([
+  'app',
+  '../models/role',
+  '../services/typing',
+], function(app) {
 
-  return ['$scope', 'RoleEditor', function($scope, RoleEditor) {
-    $scope.title = "用户管理";
+  return ['$scope', 'role', 'typing', function($scope, role, typing) {
 
-    RoleEditor.init($scope);
+
+    $scope.roles = null;
+
+
+    role.useRoleEditor($scope);
+
+    role.getRoles()
+      .success(function(response) {
+        if (response.code == 200) {
+          $scope.roles = response.data;
+        } else {
+          typing.warning(response.message);
+        }
+      })
+      .error(function(response) {
+        typing.error(response);
+      });
+
     $scope.openRoleEditor = function() {
-      RoleEditor.open();
-      //   $('#pre-selected-options').multiSelect();
+
+      role.openRoleEditor();
+
     }
 
   }];

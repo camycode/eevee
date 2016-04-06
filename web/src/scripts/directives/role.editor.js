@@ -6,12 +6,17 @@ define(['app','jquery'], function(app) {
       restrict: 'A',
       replace: true,
       scope: {},
-      templateUrl: 'views/editors/user.editor.html',
+      templateUrl: 'views/editors/role.editor.html',
       controller: ['$scope', function($scope) {
+
         $scope.title = "编辑用户";
+
         $scope.closePostEditor = function() {
+
           $("#role-editor").addClass('animated slideOutRight');
+
         };
+
       }]
     };
 

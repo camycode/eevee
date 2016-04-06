@@ -4,7 +4,7 @@
  * @author 古月
  */
 
-define(['app', 'layer'], function(app, layer) {
+define(['app'], function(app) {
 
   app.factory('typing', function() {
 
@@ -15,24 +15,14 @@ define(['app', 'layer'], function(app, layer) {
        * @param  string message
        */
       message: function(message) {
-        layer.open({
-          content: message,
-          shade: false,
-          style: 'text-align:center;border:none;',
-          time: 1.5
-        });
+        alert(message);
       },
       /**
        * 答应警告消息
        * @param  string message
        */
       warning: function(message) {
-        layer.open({
-          content: message,
-          shade: false,
-          style: 'text-align:center;border:none;',
-          time: 1.5
-        });
+        alert(message);
       },
       /**
        * 打印错误消息

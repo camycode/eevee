@@ -1,26 +1,40 @@
 /**
  * Posts 控制器
  */
-define(['app', '../models/user', '../services/storage', 'css!../../css/pages/login'], function(eevee) {
-  return ['$scope', '$state', 'user', 'storage', 'storage', function($scope, $state, user, storage) {
+define([
+    'app',
+    '../models/user',
+    '../services/storage',
+    '../services/typing',
+    'css!../../css/pages/login'
+  ],
+  function(app) {
 
-    $scope.account = null;
-    $scope.password = null;
+    return ['$scope', '$state', 'user', 'storage', 'typing', function($scope, $state, user, storage, typing) {
 
-    $scope.login = function() {
+      $scope.account = null;
+      $scope.password = null;
 
-      user.login({
-          account: $scope.account,
-          password: $scope.password
-        })
-        .success(function(response) {
+      $scope.login = function() {
 
-          if (response.code == 200) {
-            $state.go('app.post');
-          }
+        user.login({
+            account: $scope.account,
+            password: $scope.password
+          })
+          .success(function(response) {
 
-        });
-    };
+            if (response.code == 200) {
 
-  }];
-});
+              $state.go('app.post');
+
+            } else {
+
+              typing.warning(response.message);
+
+            }
+
+          });
+      };
+
+    }];
+  });
