@@ -12,7 +12,6 @@
 namespace Core\Services;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class Context
 {
@@ -22,11 +21,9 @@ class Context
 
     public $guest;
 
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-
-        $this->response = $response;
 
         // $this->guset = $request->guest;
     }

@@ -112,6 +112,19 @@ class Model extends DB
 
 
     /**
+     * 过滤掉数据的多余字段
+     *
+     * @param  array $fields
+     * @param  array $data
+     *
+     * @return array
+     */
+    public function fillable($fields, $data)
+    {
+        return $data;
+    }
+
+    /**
      * 数据库事务处理
      *
      * 在闭包函数中使用`DB`或`Eloquent`作数据库,监听闭包函数异常,操作数据库事务.
