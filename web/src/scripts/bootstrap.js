@@ -32,12 +32,6 @@ require.config({
     },
     'angularRoute': {
       deps: ['angular']
-    },
-    'slimScroll': {
-      deps: ['jquery']
-    },
-    'navgoco': {
-      deps: ['jquery']
     }
   },
   // 程序启动

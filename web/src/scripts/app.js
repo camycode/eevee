@@ -1,4 +1,4 @@
-define(['angularAMD', 'angularRoute'], function(angularAMD) {
+define(['angularAMD', 'angularRoute','jquery'], function(angularAMD) {
 
   var app = angular.module("eevee", ['ui.router']);
 

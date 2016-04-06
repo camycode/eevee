@@ -1,5 +1,5 @@
 define(['app'], function(app) {
-  app.directive('medias', function($http, $compile) {
+  app.directive('media', function($http, $compile) {
     return {
       restrict: 'A',
       replace: true,

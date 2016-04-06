@@ -26,4 +26,5 @@ define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
   $('.ui.menu .ui.dropdown').dropdown({
     on: 'hover'
   });
+
 });
