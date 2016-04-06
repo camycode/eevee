@@ -9,6 +9,8 @@ class Role extends Model
 
     protected $data = [];
 
+    protected $fields = [];
+
 
     /**
      * 绑定角色数据
@@ -22,6 +24,11 @@ class Role extends Model
         $this->data = $data;
 
         return $this;
+    }
+
+    public function getdata()
+    {
+
     }
 
 
@@ -40,13 +47,10 @@ class Role extends Model
 
         return $this->transaction(function () {
 
-            $permissions = $this->data['permissions'];
 
-            unset($this->data['permissions']);
+            $this->resource('ROLE')->insert($this->guard($this->fields,'id'));
 
-            $this->resource('ROLE')->insert($this->data);
-
-            $this->updateRolePermisssions($this->data, $permissions);
+            $this->updateRolePermisssions($this->data, $this->data['permissions']);
 
             return $this->getRole($this->data['id']);
 
@@ -177,16 +181,20 @@ class Role extends Model
      */
     public function getRolePermissions($role_id, $archive = false)
     {
+        $items = resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
 
-        $items = $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
+        return $archive ? $this->getRolePermissionsArchive($items) : status('success',$items);
 
-        if (!$archive) return status('success', $items);
+    }
+
+
+    protected function getRolePermissionsArchive($items){
 
         $permissions = array();
 
         foreach ($items as $item) {
 
-            if ($permission = $this->resource('PERMISSION')->where('id', $item)->first()) {
+            if ($permission = resource('PERMISSION')->where('id', $item)->first()) {
 
                 array_push($permissions, $permission);
             }
@@ -196,7 +204,7 @@ class Role extends Model
 
         foreach ($permissions as $item) {
 
-            if ($resource = $this->resource('RESOURCE')->where('id', $item->resource_id)->first()) {
+            if ($resource = resource('RESOURCE')->where('id', $item->resource_id)->first()) {
 
                 $result[$resource->id]['name'] = $resource->name;
                 $result[$resource->id]['parent'] = $resource->parent;
@@ -211,7 +219,6 @@ class Role extends Model
         }
 
         return status('success', $result);
-
     }
 
 
@@ -229,19 +236,16 @@ class Role extends Model
 
         $permissions = array_unique($permissions);
 
-        $data = $this->generaRolePermissionRelationships($role['id'], $permissions);
+        $relationships = $this->generaRolePermissionRelationships($role['id'], $permissions);
 
-        if (count($data) == 0) return;
+        $parent = resource('ROLE')->where('id', '<>', $role['id'])->where('id', $role['parent'])->value('id');
 
-        $roleParent = $this->resource('ROLE')->where('id', '<>', $role['id'])->where('id', $role['parent'])->first();
+        if ($parent) {
 
-        if ($roleParent) {
+            if (array_diff($permissions, resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $parent)->lists('permission_id'))) {
 
-            $permissionsScope = $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $roleParent->id)->lists('permission_id');
-
-            $outScopePermissions = array_diff($permissions, $permissionsScope);
-
-            if (count($outScopePermissions) > 0) exception('permissionOutOfScope');
+                exception('permissionOutOfScope');
+            }
 
         }
 
@@ -251,7 +255,7 @@ class Role extends Model
 
         $roleChildren = $this->resource('ROLE')->where('id', '<>', $role['id'])->where('parent', $role['id'])->lists('id');
 
-        $this->transaction(function () use ($role, $data, $roleChildren, $deletePermissions) {
+        $this->transaction(function () use ($role, $relationships, $roleChildren, $deletePermissions) {
 
             foreach ($roleChildren as $child) {
 
@@ -263,7 +267,7 @@ class Role extends Model
 
             $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
 
-            $this->resource('L:PERMISSIONRELATIONSHIP')->insert($data);
+            $this->resource('L:PERMISSIONRELATIONSHIP')->insert($relationships);
 
         });
 
@@ -342,6 +346,14 @@ class Role extends Model
             ]);
 
         }
+
+    }
+
+    protected function validateRoleParent(){
+
+    }
+
+    protected function validateRolePermissons(){
 
     }
 
