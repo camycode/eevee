@@ -94,7 +94,7 @@ class Context
      */
     public function response($result = '', $statusCode = 200)
     {
-        return response(json_encode($result), $statusCode)->header('Content-Type', 'application/json')->header('Access-Control-Allow-Origin','*');
+        return response(json_encode($result), $statusCode)->header('Content-Type', 'application/json');
     }
 
 }
