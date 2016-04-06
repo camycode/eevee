@@ -1,6 +1,7 @@
 <?php
 
 use Core\Services\Status;
+use Core\Exceptions\StatusException;
 
 /**
  * 返回操作结果集,包含状态码,响应消息和响应数据.
@@ -19,7 +20,7 @@ function status($status, $data = null)
 /**
  * 获取响应消息
  *
- * @param sting $message
+ * @param string $message
  *
  * @return string
  */
@@ -29,15 +30,17 @@ function message($message)
 }
 
 /**
- * 响应异常操作
+ * 响应异常状态操作
  *
- * @param $message
  *
- * @throws Exception
+ * @param array $status
+ * @param mixed $data
+ *
+ * @throws StatusException
  */
-function exception($message)
+function exception($status, $data = null)
 {
-    throw new \Exception(message($message));
+    throw new StatusException(status($status, $data));
 }
 
 /**

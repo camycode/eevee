@@ -1,4 +1,5 @@
 define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
+  
   // 垂直导航栏
   $('#layout-sidebar .menu').navgoco({
     openClass: 'active',
@@ -8,7 +9,6 @@ define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
       easing: 'swing'
     },
     onClickAfter: function(e, submenu) {
-      console.log(e);
       $('#layout-sidebar .menu .item').removeClass('active');
       $(e.target).parents('.item').addClass('active');
     }
@@ -21,9 +21,10 @@ define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
   });
 
   // 配置semantic下拉菜单
-
   $('.ui.selection.dropdown').dropdown();
+
   $('.ui.menu .ui.dropdown').dropdown({
     on: 'hover'
   });
+
 });

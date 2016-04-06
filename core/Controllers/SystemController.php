@@ -2,9 +2,9 @@
 
 namespace Core\Controllers;
 
-use Core\Models\Selector;
 use Core\Services\Context;
 use Core\Services\Installer;
+
 
 class SystemController extends Controller
 {
@@ -13,6 +13,7 @@ class SystemController extends Controller
      */
     public function version(Context $context)
     {
+
         return response('EEVEE 1.0');
     }
 

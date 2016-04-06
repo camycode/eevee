@@ -10,13 +10,27 @@ $layout_header_brand_width: 210px;
 // layout 正文 header 高度
 $layout_wrapper_header_height: 95px;
 
-// layout父容器
+// layout 父容器
 html,
 body,
 #layout {
   height: 100%;
   overflow: hidden;
 }
+
+#container{
+  height:100%;
+}
+
+// // layout 遮罩层
+// #layout-mask{
+//   background: #DADADA;
+//   position: fixed;
+//   z-index: 9999998;
+//   width: 100%;
+//   height: 100%;
+// }
+
 #layout-header {
   position: fixed;
   width: 100%;
@@ -27,6 +41,8 @@ body,
     width: $layout_header_brand_width;
   }
 }
+
+// layout 侧边栏
 #layout-sidebar {
   position: fixed;
   top: 0;
@@ -100,6 +116,8 @@ body,
     }
   }
 }
+
+// layout 占位容器
 #layout-placeholder {
   width: 100%;
   height: 100%;
@@ -108,6 +126,8 @@ body,
   padding-left: $layout_header_brand_width;
   overflow: hidden;
 }
+
+// layout 视图容器
 #layout-view {
   position: relative;
   background: rgb(237, 236, 236);
@@ -289,9 +309,6 @@ body,
   }
   .cover {
     position: absolute;
-
-    //   width: 100%;
-    //   height: 100%;
     top: 0;
     left: 0;
     background: #333;
@@ -299,7 +316,8 @@ body,
   }
 }
 
-// ***条目样式***
+
+// 条目样式
 .layout.items {
   margin-top: 0;
   margin-bottom: 15px;

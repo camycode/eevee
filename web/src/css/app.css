@@ -6,6 +6,10 @@ body,
   overflow: hidden;
 }
 
+#container {
+  height: 100%;
+}
+
 #layout-header {
   position: fixed;
   width: 100%;

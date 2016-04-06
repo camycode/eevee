@@ -6,7 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreatePermissionsRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133758_create_permissions_relationships_table.php',
+    'CreateAppsTable' => $baseDir . '/core/System/database/migrations/2016_04_05_140137_create_apps_table.php',
+    'CreatePermissionsRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133768_create_permissions_relationships_table.php',
     'CreatePermissionsTable' => $baseDir . '/core/System/database/migrations/2016_03_16_160109_create_permissions_table.php',
     'CreateResoucesTable' => $baseDir . '/core/System/database/migrations/2016_03_17_1412079_create_resouces_table.php',
     'CreateRolesRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133628_create_roles_relationships_table.php',

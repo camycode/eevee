@@ -30,12 +30,15 @@ class Role extends Model
      *
      * 成功返回角色对象,包含角色的权限信息.
      *
-     * @return \Core\Models\Status
+     * @return Status
      */
     public function addRole()
     {
-        if (($validateResult = $this->validateRole()) !== true) {
-            return status('validateError', $validateResult);
+        $result = $this->validateRole();
+
+        if ($result !== true) {
+
+            return status('validateFailed', $result);
         }
 
         $this->initializeRole();
@@ -75,18 +78,21 @@ class Role extends Model
         $origin = $resource->where('id', $role_id)->first();
 
         if (!$origin) {
+
             return status('roleDoesNotExist');
         }
 
         $ignore = [];
 
         if (isset($this->data['name']) && $this->data['name'] == $origin->name) {
+
             array_push($ignore, 'name');
         }
 
 
         if (($result = $this->validateRole($ignore)) !== true) {
-            return status('validateRoleError', $result);
+
+            return status('validateFailed', $result);
         }
 
         $this->timestamps($this->data, false);
@@ -161,6 +167,7 @@ class Role extends Model
         $resource = $this->resource('ROLE');
 
         if (!$resource->where('id', $role_id)->first()) {
+
             return status('roleDoesNotExsit');
         }
 
@@ -183,16 +190,11 @@ class Role extends Model
 
         $items = $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
 
-
-        if (!$archive) {
-            return status('success', $items);
-        }
+        if (!$archive) return status('success', $items);
 
         $permissions = array();
 
-
         foreach ($items as $item) {
-
 
             if ($permission = $this->resource('PERMISSION')->where('id', $item)->first()) {
 
@@ -362,11 +364,9 @@ class Role extends Model
     /**
      * 角色初始化
      *
-     * @internal param bool $post
      */
     protected function initializeRole()
     {
-
         $initialized = [
             'id' => $this->id(),
             'status' => config('site.role.default_status', 0),
