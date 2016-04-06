@@ -229,7 +229,7 @@ class Role extends Model
 
         $permissions = array_unique($permissions);
 
-        $data = $this->generaRolePermissionRelationRows($role['id'], $permissions);
+        $data = $this->generaRolePermissionRelationships($role['id'], $permissions);
 
         if (count($data) == 0) return;
 
@@ -278,7 +278,7 @@ class Role extends Model
      *
      * @return array|bool
      */
-    protected function generaRolePermissionRelationRows($role_id, $permissions)
+    protected function generaRolePermissionRelationships($role_id, $permissions)
     {
         $rows = [];
 
