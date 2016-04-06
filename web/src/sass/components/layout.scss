@@ -10,13 +10,27 @@ $layout_header_brand_width: 210px;
 // layout 正文 header 高度
 $layout_wrapper_header_height: 95px;
 
-// layout父容器
+// layout 父容器
 html,
 body,
 #layout {
   height: 100%;
   overflow: hidden;
 }
+
+body > div{
+  height:100%;
+}
+
+// // layout 遮罩层
+// #layout-mask{
+//   background: #DADADA;
+//   position: fixed;
+//   z-index: 9999998;
+//   width: 100%;
+//   height: 100%;
+// }
+
 #layout-header {
   position: fixed;
   width: 100%;
@@ -27,6 +41,8 @@ body,
     width: $layout_header_brand_width;
   }
 }
+
+// layout 侧边栏
 #layout-sidebar {
   position: fixed;
   top: 0;

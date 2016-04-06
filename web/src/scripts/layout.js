@@ -1,4 +1,5 @@
 define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
+  
   // 垂直导航栏
   $('#layout-sidebar .menu').navgoco({
     openClass: 'active',
@@ -7,7 +8,7 @@ define(['jquery', 'slimScroll', 'navgoco', 'semantic'], function($) {
       duration: 200,
       easing: 'swing'
     },
-    onClickAfter: function(e, submenu) {∫
+    onClickAfter: function(e, submenu) {
       $('#layout-sidebar .menu .item').removeClass('active');
       $(e.target).parents('.item').addClass('active');
     }

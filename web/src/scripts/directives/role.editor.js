@@ -6,7 +6,7 @@ define(['app','jquery'], function(app) {
       restrict: 'A',
       replace: true,
       scope: {},
-      templateUrl: 'views/roles/editor.html',
+      templateUrl: 'views/editors/user.editor.html',
       controller: ['$scope', function($scope) {
         $scope.title = "编辑用户";
         $scope.closePostEditor = function() {

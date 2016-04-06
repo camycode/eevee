@@ -1,0 +1,68 @@
+<div id="layout">
+  <div id="layout-header" class="ui menu">
+    <div class="header item">EEVEE</div>
+    <a class="item"><i class="sidebar icon"></i></a>
+    <div class="right menu">
+      <a class="item"><i class="grid layout icon"></i></a>
+      <a class="item"><i class="mail outline icon"></i></a>
+
+      <div class="ui dropdown item" tabindex="0">
+        <img src="images/photos/bob.jpeg" alt="" class="ui avatar image">
+        <i class="dropdown icon"></i>
+        <div class="menu transition hidden" tabindex="-1">
+          <div class="item">个人信息</div>
+          <div class="item">面板</div>
+          <div class="divider"></div>
+          <div class="item">退出登录</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 边栏导航 -->
+  <aside id="layout-sidebar">
+
+    <ul class="ui vertical menu">
+      <li class="item">
+        <a href="#"><i class="dashboard icon"></i>面板</a>
+      </li>
+      <li class="item">
+        <a href="#/app/post"><i class="edit icon"></i></i>文章</a>
+      </li>
+      <li class="item">
+        <a href="#/app/term"><i class="block layout icon"></i>分类</a>
+      </li>
+      <li class="item">
+        <a href="#/app/media"><i class="video play icon"></i>多媒体</a>
+      </li>
+      <li class="item">
+        <a href="#/app/user"><i class="user icon"></i>用户</a>
+      </li>
+      <li class="item">
+        <a href="#/app/role"><i class="spy icon"></i>角色</a>
+      </li>
+      <li class="item">
+        <a class="" href="#"><i class="setting icon"></i>配置</a>
+        <ul>
+          <li class="item"><a href="#/app/configs/site">网站</a></li>
+          <li class="item"><a href="#/app/configs/email">邮箱</a></li>
+          <li class="item"><a href="#/app/configs/media">多媒体</a></li>
+        </ul>
+      </li>
+      <!-- <li class="item">
+          <a href="#"><i class="area chart icon"></i></i>统计</a>
+      </li> -->
+      <li class="item">
+        <a href="#"><i class="area info icon"></i></i>帮助</a>
+      </li>
+    </ul>
+
+  </aside>
+
+  <!-- 中间区域 -->
+
+  <section id="layout-placeholder">
+    <div id="layout-view" ui-view></div>
+
+  </section>
+</div>
