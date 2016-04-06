@@ -6,7 +6,7 @@ body,
   overflow: hidden;
 }
 
-body > div {
+#container {
   height: 100%;
 }
 

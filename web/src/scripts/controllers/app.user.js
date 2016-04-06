@@ -1,12 +1,6 @@
-/**
- * Users 控制器
- */
 
-define([
-  'app',
-  '../models/user'
-],
-function(app){
+define(['app','../models/user'],function(app){
+
     return ['$scope','user',function($scope,user) {
 
       $scope.title = "用户管理";
@@ -16,8 +10,9 @@ function(app){
       $scope.openUserEditor = function() {
 
           user.openUserEditor();
-          
+
       }
 
     }];
+    
 });

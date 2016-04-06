@@ -1,6 +1,6 @@
 define(['app'],function(app) {
 
-    app.factory('ajax', ['$http', function($http) {
+  return  app.factory('ajax', ['$http', function($http) {
 
 
       var host = 'http://localhost:7800';
@@ -40,4 +40,5 @@ define(['app'],function(app) {
       return ajax;
 
     }]);
+
   });

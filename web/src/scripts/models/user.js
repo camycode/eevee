@@ -10,9 +10,9 @@ define([
     '../services/ajax',
     '../directives/user.editor'
   ],
-  function(app) {
+  function(app, $) {
 
-    app.factory('user', ['$compile','ajax',function($compile,ajax) {
+    app.factory('user', ['$compile', 'ajax', function($compile, ajax) {
 
       return {
         /**
@@ -23,10 +23,10 @@ define([
         isLogin: function() {
 
         },
-        setUserEditor:function($scope){
+        setUserEditor: function($scope) {
           $('#layout-view').append($compile($('<div user.editor></div>'))($scope));
         },
-        openUserEditor:function(){
+        openUserEditor: function() {
           $("#user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
         },
         login: function(params) {
@@ -37,4 +37,5 @@ define([
 
 
     }]);
+    
   });
