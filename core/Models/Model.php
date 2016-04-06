@@ -2,7 +2,7 @@
 
 namespace Core\Models;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class Model extends DB
 {
@@ -41,12 +41,20 @@ class Model extends DB
      */
     public function table($resource)
     {
+        $resource = strtoupper($resource);
+
         if (key_exists($resource, $this->resources)) {
+
             return $this->resources[$resource];
+
         } elseif (key_exists('L:' . $resource, $this->resources)) {
+
             return $this->resources['L:' . $resource];
+
         } else {
+
             throw new \Exception("Resource table: $resource does not exist.");
+
         }
     }
 

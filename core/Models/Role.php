@@ -2,13 +2,13 @@
 
 namespace Core\Models;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class Role extends Model
 {
 
     protected $data = [];
+
 
     /**
      * 绑定角色数据
@@ -34,34 +34,24 @@ class Role extends Model
      */
     public function addRole()
     {
-        $result = $this->validateRole();
-
-        if ($result !== true) {
-
-            return status('validateFailed', $result);
-        }
+        $this->validateRole();
 
         $this->initializeRole();
 
-        $result = $this->transaction(function () {
-
-            $role_resource = $this->resource('ROLE');
+        return $this->transaction(function () {
 
             $permissions = $this->data['permissions'];
 
             unset($this->data['permissions']);
 
-            $role_resource->insert($this->data);
+            $this->resource('ROLE')->insert($this->data);
 
-            $status = $this->updateRolePermisssions($this->data, $permissions);
-
-            if ($status->code != 200) return $status;
+            $this->updateRolePermisssions($this->data, $permissions);
 
             return $this->getRole($this->data['id']);
 
         });
 
-        return $result;
     }
 
     /**
@@ -234,16 +224,14 @@ class Role extends Model
      * @param array $permissions
      * @return Status
      */
-    protected function updateRolePermisssions($role, $permissions)
+    protected function updateRolePermisssions(array $role, array $permissions)
     {
 
         $permissions = array_unique($permissions);
 
         $data = $this->generaRolePermissionRelationRows($role['id'], $permissions);
 
-        if (count($data) == 0) {
-            return status('success');
-        }
+        if (count($data) == 0) return;
 
         $roleParent = $this->resource('ROLE')->where('id', '<>', $role['id'])->where('id', $role['parent'])->first();
 
@@ -253,7 +241,7 @@ class Role extends Model
 
             $outScopePermissions = array_diff($permissions, $permissionsScope);
 
-            if (count($outScopePermissions) > 0) return status('permissionOutOfScope');
+            if (count($outScopePermissions) > 0) exception('permissionOutOfScope');
 
         }
 
@@ -263,7 +251,7 @@ class Role extends Model
 
         $roleChildren = $this->resource('ROLE')->where('id', '<>', $role['id'])->where('parent', $role['id'])->lists('id');
 
-        $status = $this->transaction(function () use ($role, $data, $roleChildren, $deletePermissions) {
+        $this->transaction(function () use ($role, $data, $roleChildren, $deletePermissions) {
 
             foreach ($roleChildren as $child) {
 
@@ -277,11 +265,8 @@ class Role extends Model
 
             $this->resource('L:PERMISSIONRELATIONSHIP')->insert($data);
 
-            return status('success');
-
         });
 
-        return $status;
     }
 
 
@@ -320,9 +305,7 @@ class Role extends Model
      *
      * @param array $ignore 忽略验证字段
      *
-     * @return mixed
-     *
-     * @throws \Exception
+     * @throws StatusException
      */
     protected function validateRole($ignore = [])
     {
@@ -348,16 +331,18 @@ class Role extends Model
         $validator = Validator::make($this->data, $rule, $messages);
 
         if ($validator->fails()) {
-            return $validator->errors();
+
+            exception('validateFailed', $validator->errors());
         }
 
-        if (!$this->resource('ROLE')->where('id', $this->data['parent'])->first() && Storage::has('/storage/install.lock')) {
-            return [
+        if (!$this->resource('ROLE')->where('id', $this->data['parent'])->first() && $this->resource('ROLE')->first()) {
+
+            exception('validateFailed', [
                 'parent' => message('parentRoleDoesNotExist'),
-            ];
+            ]);
+
         }
 
-        return true;
     }
 
 
