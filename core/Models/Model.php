@@ -140,6 +140,20 @@ class Model extends DB
     }
 
     /**
+     * 忽略数组字段
+     *
+     * @param array &$rule
+     * @param array $fields
+     */
+    public function ignore(&$rule, $fields)
+    {
+        foreach ($fields as $field) {
+            
+            if (isset($rule[$field])) unset($rule[$field]);
+        }
+    }
+
+    /**
      * 数据库事务处理
      *
      * 在闭包函数中使用`DB`或`Eloquent`作数据库,监听闭包函数异常,操作数据库事务.
