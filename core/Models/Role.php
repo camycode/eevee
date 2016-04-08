@@ -177,7 +177,7 @@ class Role extends Model
      */
     public function getRolePermissions($role_id, $archive = false)
     {
-        $items = resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
+        $items = $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
 
         return $archive ? $this->getRolePermissionsArchive($items) : status('success', $items);
 
@@ -198,7 +198,7 @@ class Role extends Model
 
         foreach ($items as $item) {
 
-            if ($permission = resource('PERMISSION')->where('id', $item)->first()) {
+            if ($permission = $this->resource('PERMISSION')->where('id', $item)->first()) {
 
                 array_push($permissions, $permission);
             }
@@ -208,7 +208,7 @@ class Role extends Model
 
         foreach ($permissions as $item) {
 
-            if ($resource = resource('RESOURCE')->where('id', $item->resource_id)->first()) {
+            if ($resource = $this->resource('RESOURCE')->where('id', $item->resource_id)->first()) {
 
                 $result[$resource->id]['name'] = $resource->name;
                 $result[$resource->id]['parent'] = $resource->parent;
@@ -386,7 +386,7 @@ class Role extends Model
     protected function validateRolePermissons($parent_id, array $permissions)
     {
 
-        if (array_diff($permissions, resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $parent_id)->lists('permission_id'))) {
+        if (array_diff($permissions, $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $parent_id)->lists('permission_id'))) {
 
             exception('permissionOutOfScope');
         }
