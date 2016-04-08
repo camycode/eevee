@@ -127,8 +127,16 @@ class Model extends DB
      *
      * @return array
      */
-    public function fillable($fields, $data)
+    public function fillable(array &$data, array $fields, array $ignore)
     {
+        $fields = array_diff($fields, $ignore);
+
+        foreach ($data as $k => $v) {
+            if (!in_array($k, $fields)) {
+                unset($data[$k]);
+            }
+        }
+        
         return $data;
     }
 
