@@ -126,7 +126,7 @@ class Model extends DB
      *
      * @return array
      */
-    public function filter(array &$data, array $fields, array $ignore)
+    public function filter(array &$data, array $fields, array $ignore = [])
     {
         $fields = array_diff($fields, $ignore);
 
@@ -148,7 +148,7 @@ class Model extends DB
     public function ignore(&$rule, $fields)
     {
         foreach ($fields as $field) {
-            
+
             if (isset($rule[$field])) unset($rule[$field]);
         }
     }
