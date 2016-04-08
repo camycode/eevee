@@ -2,6 +2,7 @@
 
 namespace Core\Models;
 
+use Core\Exceptions\StatusException;
 use Core\Services\Status;
 use Illuminate\Support\Facades\Validator;
 
@@ -287,7 +288,7 @@ class Role extends Model
      *
      * @throws StatusException
      */
-    protected function validateRole($ignore = [])
+    protected function validateRole(array $ignore = [])
     {
         $table = $this->table('ROLE');
 
