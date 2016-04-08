@@ -41,23 +41,22 @@ class Model extends DB
      */
     public function table($resource)
     {
-        $resource = strtoupper($resource);
-
-        if (key_exists($resource, $this->resources)) {
-
-            return $this->resources[$resource];
-
-        } elseif (key_exists('L:' . $resource, $this->resources)) {
-
-            return $this->resources['L:' . $resource];
-
-        } else {
-
-            throw new \Exception("Resource table: $resource does not exist.");
-
-        }
+        return $this->resourceInfo($resource, 'table');
     }
 
+    /**
+     * 获取资源数据表字段
+     *
+     * @param $resource
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function fields($resource)
+    {
+        return $this->resourceInfo($resource, 'fields');
+    }
 
     /**
      * 资源查询构造器.
@@ -127,7 +126,7 @@ class Model extends DB
      *
      * @return array
      */
-    public function fillable(array &$data, array $fields, array $ignore)
+    public function filter(array &$data, array $fields, array $ignore)
     {
         $fields = array_diff($fields, $ignore);
 
@@ -136,7 +135,7 @@ class Model extends DB
                 unset($data[$k]);
             }
         }
-        
+
         return $data;
     }
 
@@ -187,5 +186,34 @@ class Model extends DB
             $data['created_at'] = date('Y-m-d H:i:s');
         }
         $data['updated_at'] = date('Y-m-d H:i:s');
+    }
+
+    /**
+     * 获取资源信息
+     *
+     * @param string $resource
+     * @param string $key
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    protected function resourceInfo($resource, $key)
+    {
+        $resource = strtoupper($resource);
+
+        if (key_exists($resource, $this->resources)) {
+
+            return isset($this->resources[$resource][$key]) ? $this->resources[$resource][$key] : '';
+
+        } elseif (key_exists('L:' . $resource, $this->resources)) {
+
+            return isset($this->resources['L:' . $resource][$key]) ? $this->resources['L:' . $resource][$key] : '';
+
+        } else {
+
+            throw new \Exception("Resource table: $resource does not exist.");
+
+        }
     }
 }

@@ -1,19 +1,60 @@
 <?php
 
 return [
-  'LOG' => '-',
-  'USER' => 'users',
-  'ROLE' => 'roles',
-  'POST' => 'posts',
-  'TERM' => 'terms',
-  'FILE' => 'files',
-  'FOLDER' => 'folders',
-  'SYSTEM' => '-',
-  'MESSAGE' => 'messages',
-  'RESOURCE' => 'resources',
-  'PERMISSION' => 'permissions',
-  'USERTOKEN' => 'user_tokens',
-  'L:TERMRELATIONSHIP' => 'terms_relationships',
-  'L:ROLERELATIONSHIP' => 'roles_relationships',
-  'L:PERMISSIONRELATIONSHIP' => 'permissions_relationships',
+    'USER'=>[
+      'table'=>'users',
+      'fields'=>[],
+    ],
+    'ROLE'=>[
+        'table'=>'roles',
+        'fields'=>[],
+    ],
+    'POST'=>[
+        'table'=>'posts',
+        'fields'=>[],
+    ],
+    'TERM'=>[
+        'table'=>'terms',
+        'fields'=>[],
+    ],
+    'FILE'=>[
+        'table'=>'files',
+        'fields'=>[],
+    ],
+    'FOLDER'=>[
+        'table'=>'folders',
+        'fields'=>[],
+    ],
+    'SYSTEM'=>[
+        'table'=>'',
+        'fields'=>[],
+    ],
+    'MESSAGE'=>[
+        'table'=>'messages',
+        'fields'=>[],
+    ],
+    'RESOURCE'=>[
+        'table'=>'resources',
+        'fields'=>[],
+    ],
+    'PERMISSION'=>[
+        'table'=>'permissions',
+        'fields'=>[],
+    ],
+    'USERTOKEN'=>[
+        'table'=>'user_tokens',
+        'fields'=>[],
+    ],
+    'L:TERMRELATIONSHIP'=>[
+        'table'=>'terms_relationships',
+        'fields'=>[],
+    ],
+    'L:ROLERELATIONSHIP'=>[
+        'table'=>'roles_relationships',
+        'fields'=>[],
+    ],
+    'L:PERMISSIONRELATIONSHIP'=>[
+        'table'=>'permissions_relationships',
+        'fields'=>[],
+    ],
 ];

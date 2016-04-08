@@ -47,10 +47,9 @@ class Role extends Model
 
         return $this->transaction(function () {
 
-
-            $this->resource('ROLE')->insert($this->guard($this->fields,'id'));
-
             $this->updateRolePermisssions($this->data, $this->data['permissions']);
+            
+            $this->resource('ROLE')->insert($this->data);
 
             return $this->getRole($this->data['id']);
 
