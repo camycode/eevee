@@ -11,7 +11,7 @@ class Role extends Model
     protected $data = [];
 
     protected $fields = [];
-    
+
     /**
      * 绑定角色数据
      *
@@ -43,11 +43,13 @@ class Role extends Model
 
             $this->updateRolePermisssions($this->data, $this->data['permissions']);
 
-            $this->filter($this->data, $this->fields['ROLE']);
+            $this->filter($this->data, $this->fields('ROLE'));
 
             $this->resource('ROLE')->insert($this->data);
 
-            return $this->getRole($this->data['id']);
+            $role = $this->getRole($this->data['id']);
+
+            return $role;
 
         });
 
@@ -78,35 +80,29 @@ class Role extends Model
             array_push($ignore, 'name');
         }
 
-
-        if (($result = $this->validateRole($ignore)) !== true) {
-
-            return status('validateFailed', $result);
-        }
+        $this->validateRole($ignore);
 
         $this->timestamps($this->data, false);
 
-        $status = $this->transaction(function () use ($origin, $resource) {
+        return $this->transaction(function () use ($origin, $resource) {
 
             if (isset($this->data['permissions'])) {
 
                 $origin->parent = $origin->parent == $this->data['parent'] ? $origin->parent : $this->data['parent'];
 
-                $status = $this->updateRolePermisssions((array)$origin, $this->data['permissions']);
+                $this->updateRolePermisssions((array)$origin, (array)$this->data['permissions']);
 
-                if ($status->code != 200) return $status;
             }
 
-            unset($this->data['id']);
-
-            unset($this->data['permissions']);
+            $this->filter($this->data, $this->fields('ROLE', ['id']));
 
             $resource->where('id', $origin->id)->update($this->data);
 
-            return $this->getRole($origin->id);
+            $role = $this->getRole($origin->id);
+
+            return $role;
         });
 
-        return $status;
     }
 
     /**
@@ -243,7 +239,9 @@ class Role extends Model
 
             $relationships = $this->generaRolePermissionRelationships($role['id'], $permissions);
 
-            $this->updateRoleChildrenPermissionsWithDeletedPermissions($role['id'], $permissions);
+            $this->validateRolePermissons($role['parent'], $permissions);
+
+            $this->updateRoleChildrenPermissions($role['id'], $permissions);
 
             $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
 
@@ -295,7 +293,6 @@ class Role extends Model
 
         $rule = [
             'name' => "required|unique:$table",
-            'parent' => 'required',
             'permissions' => 'sometimes|array',
         ];
 
@@ -311,10 +308,15 @@ class Role extends Model
         $validator = Validator::make($this->data, $rule, $messages);
 
         if ($validator->fails()) {
+
             exception('validateFailed', $validator->errors());
         }
 
-        $this->validateRoleParent($this->data['parent']);
+        if (isset($this->data['parent'])) {
+
+            $this->validateRoleParent($this->data['parent']);
+        }
+
 
     }
 
@@ -359,7 +361,7 @@ class Role extends Model
      * @param array $permissions
      *
      */
-    protected function updateRoleChildrenPermissionsWithDeletedPermissions($role_id, array $permissions)
+    protected function updateRoleChildrenPermissions($role_id, array $permissions)
     {
         $children = $this->resource('ROLE')->where('id', '<>', $role_id)->where('parent', $role_id)->lists('id');
 
@@ -387,7 +389,7 @@ class Role extends Model
 
         if (array_diff($permissions, $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $parent_id)->lists('permission_id'))) {
 
-            exception('permissionOutOfScope');
+            exception('invalidPermissions');
         }
 
     }

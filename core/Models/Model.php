@@ -41,7 +41,7 @@ class Model extends DB
      */
     public function table($resource)
     {
-        return $this->resourceInfo($resource, 'table');
+        return $this->getResourceInfo($resource, 'table');
     }
 
     /**
@@ -55,7 +55,7 @@ class Model extends DB
      */
     public function fields($resource)
     {
-        return $this->resourceInfo($resource, 'fields');
+        return $this->getResourceInfo($resource, 'fields');
     }
 
     /**
@@ -159,8 +159,9 @@ class Model extends DB
      * 在闭包函数中使用`DB`或`Eloquent`作数据库,监听闭包函数异常,操作数据库事务.
      *
      * @param $callback
-     *
      * @return mixed 闭包函数的返回结果,或者是操作事务操作失败信息(1003)
+     *
+     * @throws \Exception
      */
     public function transaction($callback)
     {
@@ -170,17 +171,13 @@ class Model extends DB
 
             $status = $callback($this);
 
-            if (!isset($status->code) || $status->code == 200) {
-                DB::commit();
-            } else {
-                DB::rollBack();
-            }
+            DB::commit();
 
         } catch (\Exception $e) {
 
             DB::rollBack();
 
-            return status(1003, $e->getMessage());
+            throw $e;
         }
 
         return $status;
@@ -212,7 +209,7 @@ class Model extends DB
      *
      * @throws \Exception
      */
-    protected function resourceInfo($resource, $key)
+    protected function getResourceInfo($resource, $key)
     {
         $resource = strtoupper($resource);
 
