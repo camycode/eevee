@@ -10,9 +10,7 @@ class Role extends Model
 {
 
     protected $data = [];
-
-    protected $fields = [];
-
+    
     /**
      * 绑定角色数据
      *
