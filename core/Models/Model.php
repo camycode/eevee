@@ -4,7 +4,7 @@ namespace Core\Models;
 
 use Illuminate\Support\Facades\DB;
 
-class Model extends DB
+class Model
 {
     /**
      * 资源数据表.

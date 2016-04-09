@@ -10,7 +10,7 @@ class Role extends Model
 {
 
     protected $data = [];
-    
+
     /**
      * 绑定角色数据
      *
@@ -177,7 +177,6 @@ class Role extends Model
 
     }
 
-
     /**
      * 获取角色权限资源归档
      *
@@ -234,7 +233,9 @@ class Role extends Model
 
         $permissions = array_unique($permissions);
 
+
         $this->transaction(function () use ($role, $permissions) {
+
 
             $relationships = $this->generaRolePermissionRelationships($role['id'], $permissions);
 
@@ -242,9 +243,9 @@ class Role extends Model
 
             $this->updateRoleChildrenPermissions($role['id'], $permissions);
 
-            $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
+            resource('PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
 
-            $this->resource('L:PERMISSIONRELATIONSHIP')->insert($relationships);
+            resource('PERMISSIONRELATIONSHIP')->insert($relationships);
 
         });
 
