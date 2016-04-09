@@ -63,9 +63,8 @@ class Role extends Model
      */
     public function updateRole($role_id)
     {
-        $resource = $this->resource('ROLE');
 
-        $origin = $resource->where('id', $role_id)->first();
+        $origin = $this->resource('ROLE')->where('id', $role_id)->first();
 
         if (!$origin) {
 
@@ -83,7 +82,7 @@ class Role extends Model
 
         $this->timestamps($this->data, false);
 
-        return $this->transaction(function () use ($origin, $resource) {
+        return $this->transaction(function () use ($origin) {
 
             if (isset($this->data['permissions'])) {
 
@@ -95,11 +94,12 @@ class Role extends Model
 
             $this->filter($this->data, $this->fields('ROLE', ['id']));
 
-            $resource->where('id', $origin->id)->update($this->data);
+            $this->resource('ROLE')->where('id', $origin->id)->update($this->data);
 
             $role = $this->getRole($origin->id);
 
             return $role;
+            
         });
 
     }
