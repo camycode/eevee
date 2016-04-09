@@ -2,9 +2,9 @@
 
 namespace Core\Models;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
-class Model extends DB
+class Model
 {
     /**
      * 资源数据表.
@@ -41,15 +41,22 @@ class Model extends DB
      */
     public function table($resource)
     {
-        if (key_exists($resource, $this->resources)) {
-            return $this->resources[$resource];
-        } elseif (key_exists('L:' . $resource, $this->resources)) {
-            return $this->resources['L:' . $resource];
-        } else {
-            throw new \Exception("Resource table: $resource does not exist.");
-        }
+        return $this->getResourceInfo($resource, 'table');
     }
 
+    /**
+     * 获取资源数据表字段
+     *
+     * @param $resource
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function fields($resource)
+    {
+        return $this->getResourceInfo($resource, 'fields');
+    }
 
     /**
      * 资源查询构造器.
@@ -119,9 +126,31 @@ class Model extends DB
      *
      * @return array
      */
-    public function fillable($fields, $data)
+    public function filter(array &$data, array $fields, array $ignore = [])
     {
+        $fields = array_diff($fields, $ignore);
+
+        foreach ($data as $k => $v) {
+            if (!in_array($k, $fields)) {
+                unset($data[$k]);
+            }
+        }
+
         return $data;
+    }
+
+    /**
+     * 忽略数组字段
+     *
+     * @param array &$rule
+     * @param array $fields
+     */
+    public function ignore(&$rule, $fields)
+    {
+        foreach ($fields as $field) {
+
+            if (isset($rule[$field])) unset($rule[$field]);
+        }
     }
 
     /**
@@ -130,8 +159,9 @@ class Model extends DB
      * 在闭包函数中使用`DB`或`Eloquent`作数据库,监听闭包函数异常,操作数据库事务.
      *
      * @param $callback
-     *
      * @return mixed 闭包函数的返回结果,或者是操作事务操作失败信息(1003)
+     *
+     * @throws \Exception
      */
     public function transaction($callback)
     {
@@ -141,17 +171,13 @@ class Model extends DB
 
             $status = $callback($this);
 
-            if (!isset($status->code) || $status->code == 200) {
-                DB::commit();
-            } else {
-                DB::rollBack();
-            }
+            DB::commit();
 
         } catch (\Exception $e) {
 
             DB::rollBack();
 
-            return status(1003, $e->getMessage());
+            throw $e;
         }
 
         return $status;
@@ -171,5 +197,34 @@ class Model extends DB
             $data['created_at'] = date('Y-m-d H:i:s');
         }
         $data['updated_at'] = date('Y-m-d H:i:s');
+    }
+
+    /**
+     * 获取资源信息
+     *
+     * @param string $resource
+     * @param string $key
+     *
+     * @return string
+     *
+     * @throws \Exception
+     */
+    protected function getResourceInfo($resource, $key)
+    {
+        $resource = strtoupper($resource);
+
+        if (key_exists($resource, $this->resources)) {
+
+            return isset($this->resources[$resource][$key]) ? $this->resources[$resource][$key] : '';
+
+        } elseif (key_exists('L:' . $resource, $this->resources)) {
+
+            return isset($this->resources['L:' . $resource][$key]) ? $this->resources['L:' . $resource][$key] : '';
+
+        } else {
+
+            throw new \Exception("Resource table: $resource does not exist.");
+
+        }
     }
 }

@@ -98,9 +98,10 @@ class Status
      * 状态消息存放在本地化文件中，
      * 状态消息不存在，返回状态名称.
      *
-     * @param string $key 状态名称
-     *
+     * @param $status
+     * 
      * @return string 状态消息
+     *
      */
     protected static function getMessage($status)
     {
