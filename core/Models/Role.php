@@ -40,7 +40,7 @@ class Role extends Model
 
         return $this->transaction(function () {
 
-            $this->updateRolePermisssions($this->data, $this->data['permissions']);
+            $this->updateRolePermisssions($this->data, (array)$this->data['permissions']);
 
             $this->filter($this->data, $this->fields('ROLE'));
 
@@ -99,7 +99,7 @@ class Role extends Model
             $role = $this->getRole($origin->id);
 
             return $role;
-            
+
         });
 
     }
@@ -243,9 +243,9 @@ class Role extends Model
 
             $this->updateRoleChildrenPermissions($role['id'], $permissions);
 
-            resource('PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
+            $this->resource('PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
 
-            resource('PERMISSIONRELATIONSHIP')->insert($relationships);
+            $this->resource('PERMISSIONRELATIONSHIP')->insert($relationships);
 
         });
 
@@ -293,7 +293,6 @@ class Role extends Model
 
         $rule = [
             'name' => "required|unique:$table",
-            'permissions' => 'sometimes|array',
         ];
 
         $this->ignore($rule, $ignore);
@@ -301,7 +300,6 @@ class Role extends Model
         $messages = [
             'name.required' => message('roleIsRequired'),
             'name.unique' => message('roleHasExist'),
-            'permissions.array' => message('permissionsMustBeArray'),
             'parent.required' => message('roleParentIsRequired'),
         ];
 
@@ -310,6 +308,13 @@ class Role extends Model
         if ($validator->fails()) {
 
             exception('validateFailed', $validator->errors());
+        }
+
+        if (isset($this->data['permissions']) && !is_array($this->data['permissions'])) {
+
+            exception('validateFailed', [
+                'permissions' => message('permissionsMustBeArray'),
+            ]);
         }
 
         if (isset($this->data['parent'])) {
