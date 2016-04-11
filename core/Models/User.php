@@ -41,29 +41,26 @@ class User extends Model
     public function addUser()
     {
 
-        if (($result = $this->validateUser()) !== true) {
-            return status('validateFailed', $result);
-        }
+        $this->validateUser();
 
         $this->initializeUser();
 
-        $status = $this->transaction(function () {
+        return $this->transaction(function () {
 
             $this->processPassword();
 
-            $status = $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
+            $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
 
-            if ($status->code != 200) return status('updateUserRoleRelationshipError');
-
-            unset($this->data['role']);
+            $this->filter($this->data, $this->fields('ROLE'));
 
             $this->resource('USER')->insert($this->data);
 
-            return $this->getUser($this->data['id']);
+            $user = $this->getUser($this->data['id']);
+
+            return $user;
 
         });
 
-        return $status;
     }
 
     /**
@@ -97,28 +94,18 @@ class User extends Model
             array_push($ignore, 'email');
         }
 
-        if (!isset($this->data['role'])) {
-
-            array_push($ignore, 'role');
-        }
-
-        if (($result = $this->validateUser($ignore)) !== true) {
-
-            return status('validateFailed', $result);
-        }
+        $this->validateUser($ignore);
 
         $this->timestamps($this->data, false);
 
-        $status = $this->transaction(function () use ($resource, $user_id) {
+        return $this->transaction(function () use ($resource, $user_id) {
 
             if (isset($this->data['role'])) {
 
-                $status = $this->updateUserRoleRelationship($user_id, $this->data['role']);
-
-                if ($status->code != 200) return status('updateUserRoleRelationshipError');
-
+                $this->updateUserRoleRelationship($user_id, $this->data['role']);
             }
-            if (isset($this->data['role'])) unset($this->data['role']);
+            
+            $this->filter($this->data, $this->fields('ROLE'), ['id']);
 
             $resource->where('id', $user_id)->update($this->data);
 
@@ -126,7 +113,6 @@ class User extends Model
 
         });
 
-        return $status;
     }
 
 
@@ -280,7 +266,7 @@ class User extends Model
      *
      * @return array|bool
      */
-    protected function generateUserRoleRelationshipRows($user_id, $role)
+    protected function generateUserRoleRelationships($user_id, $role)
     {
         if (is_string($role)) {
 
@@ -299,7 +285,7 @@ class User extends Model
             return $data;
         }
 
-        return false;
+        exception('roleShouldBeStringOrArray');
     }
 
     /**
@@ -351,20 +337,16 @@ class User extends Model
     {
         $resource = $this->resource('L:ROLERELATIONSHIP');
 
-        $data = $this->generateUserRoleRelationshipRows($user_id, $role);
+        $data = $this->generateUserRoleRelationships($user_id, $role);
 
-        if ($data === false) exception('roleShouldBeStringOrArray');
-
-        $status = $this->transaction(function () use ($resource, $user_id, $data) {
+        return $this->transaction(function () use ($resource, $user_id, $data) {
 
             $resource->where('user_id', $user_id)->delete();
 
             $resource->insert($data);
 
-            return status('success');
         });
 
-        return $status;
     }
 
     /**
@@ -433,19 +415,15 @@ class User extends Model
             'role' => 'required',
         ];
 
-        foreach ($ignore as $field) {
-
-            if (isset($rule[$field])) unset($rule[$field]);
-        }
+        $this->ignore($rule, $ignore);
 
         $validator = Validator::make($this->data, $rule);
 
         if ($validator->fails()) {
-            
-            return $validator->errors();
+
+            return exception('validateFailed', $validator->errors());
         }
 
-        return true;
     }
 
 
