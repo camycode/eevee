@@ -1,26 +1,26 @@
 html,
 body,
-#layout {
+#app-layout {
   height: 100%;
   overflow: hidden;
 }
 
-#container {
+#app-container {
   height: 100%;
 }
 
-#layout-header {
+#app-layout-header {
   position: fixed;
   width: 100%;
   height: 55px;
   z-index: 999999;
   border-radius: 0;
 }
-#layout-header .header {
+#app-layout-header .header {
   width: 210px;
 }
 
-#layout-sidebar {
+#app-layout-sidebar {
   position: fixed;
   top: 0;
   padding-top: 55px;
@@ -29,22 +29,22 @@ body,
   z-index: 999998;
   overflow: scroll;
 }
-#layout-sidebar .menu {
+#app-layout-sidebar .menu {
   width: 210px;
   height: 100%;
   padding: 0;
   border-radius: 0;
   border-top: none;
 }
-#layout-sidebar .menu .item {
+#app-layout-sidebar .menu .item {
   background: none;
   list-style: none;
   padding: 0;
 }
-#layout-sidebar .menu .item:before {
+#app-layout-sidebar .menu .item:before {
   height: 0 !important;
 }
-#layout-sidebar .menu .item > a {
+#app-layout-sidebar .menu .item > a {
   color: #333;
   display: block;
   width: 100%;
@@ -52,43 +52,43 @@ body,
   line-height: 50px;
   padding-left: 30px;
 }
-#layout-sidebar .menu .item > a:hover {
+#app-layout-sidebar .menu .item > a:hover {
   background: #F4F4F4;
 }
-#layout-sidebar .menu .item i.icon {
+#app-layout-sidebar .menu .item i.icon {
   margin-right: 5px;
 }
-#layout-sidebar .menu .item.active > a {
+#app-layout-sidebar .menu .item.active > a {
   background: #F4F4F4;
 }
-#layout-sidebar .menu .item.active span:after {
+#app-layout-sidebar .menu .item.active span:after {
   content: '\25cc';
 }
-#layout-sidebar .menu .item span {
+#app-layout-sidebar .menu .item span {
   position: absolute;
   right: 25px;
 }
-#layout-sidebar .menu .item span:after {
+#app-layout-sidebar .menu .item span:after {
   content: '\25be';
   font-size: 18px;
 }
-#layout-sidebar .menu .item ul {
+#app-layout-sidebar .menu .item ul {
   padding: 0;
 }
-#layout-sidebar .menu .item ul .item {
+#app-layout-sidebar .menu .item ul .item {
   padding: 0;
 }
-#layout-sidebar .menu .item ul .item a {
+#app-layout-sidebar .menu .item ul .item a {
   height: 30px;
   line-height: 30px;
   padding-left: 50px;
   background: #fff;
 }
-#layout-sidebar .menu .item ul .item.active a {
+#app-layout-sidebar .menu .item ul .item.active a {
   background: #F4F4F4;
 }
 
-#layout-placeholder {
+#app-layout-placeholder {
   width: 100%;
   height: 100%;
   position: relative;
@@ -97,7 +97,7 @@ body,
   overflow: hidden;
 }
 
-#layout-view {
+#app-layout-view {
   position: relative;
   background: #edecec;
   width: 100%;
@@ -105,13 +105,13 @@ body,
   overflow: hidden;
 }
 
-.layout.wrapper {
+.app-layout.wrapper {
   position: relative;
   height: 100%;
   padding-top: 95px;
 }
 
-.layout.header {
+.app-layout.header {
   position: absolute;
   z-index: 999999;
   height: 95px;
@@ -122,32 +122,32 @@ body,
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.layout.content {
+.app-layout.content {
   height: 100%;
   overflow-y: scroll;
   padding: 20px 30px;
 }
-.layout.content .item.title {
+.app-layout.content .item.title {
   font-size: 21px;
   margin-left: -1px;
 }
 
-.layout.menu {
+.app-layout.menu {
   margin-bottom: 3px;
 }
-.layout.menu > .item {
+.app-layout.menu > .item {
   padding-left: 7px !important;
 }
 
-.handle.item {
+.app-handle.item {
   padding: 0 !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
-.handle.item:last-child {
+.app-handle.item:last-child {
   margin-right: 5px !important;
 }
-.handle.item i.icon {
+.app-handle.item i.icon {
   display: block;
   width: 25px;
   height: 25px;
@@ -155,32 +155,32 @@ body,
   margin: 0 !important;
   border-radius: 20px;
 }
-.handle.item i.icon:hover {
+.app-handle.item i.icon:hover {
   background: #D4D4D5;
 }
 
-.layout.table {
+.app-layout.table {
   margin-top: 0;
   border-radius: 0;
 }
-.layout.table th {
+.app-layout.table th {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
 }
 
-.table.no-border th,
-.table.no-border td {
+.app-table.no-border th,
+.app-table.no-border td {
   border: none !important;
 }
 
-.handles {
+.app-handles {
   margin-bottom: 5px;
   font-size: 12px;
 }
-.handles .right {
+.app-handles .right {
   float: right;
 }
-.handles .handle.item {
+.app-handles .handle.item {
   float: left;
   height: 32px;
   line-height: 32px;
@@ -189,7 +189,7 @@ body,
   font-weight: bold;
 }
 
-.handle.button, .handle.buttons {
+.app-handle.button {
   border: 1px solid #DBDBDB;
   background: #F3F3F3;
   border-radius: 3px;
@@ -198,7 +198,7 @@ body,
   font-size: 12px;
 }
 
-.handle.buttons .button {
+.app-handle.buttons .button {
   background: none;
   line-height: 1;
   padding: 22px;
@@ -206,50 +206,50 @@ body,
   font-size: 12px;
   border-radius: 0 !important;
 }
-.handle.buttons .button:hover {
+.app-handle.buttons .button:hover {
   background: #D4D4D5;
 }
-.handle.buttons .dropdown {
+.app-handle.buttons .dropdown {
   padding-left: 5px;
   padding-right: 7px;
 }
 
-.handle.paging .button {
+.app-handle.paging .button {
   padding-left: 10px;
   padding-right: 10px;
 }
-.handle.paging .button:first-child {
+.app-handle.paging .button:first-child {
   border-right: 1px solid #DBDBDB;
 }
-.handle.paging .button:last-child {
+.app-handle.paging .button:last-child {
   padding-left: 9px;
   margin-right: -3px;
 }
 
-.table.click {
+.app-table.click {
   width: 100%;
 }
-.table.click tbody tr {
+.app-table.click tbody tr {
   position: relative;
 }
-.table.click tbody tr td {
+.app-table.click tbody tr td {
   border-width: 3px !important;
   border-color: rgba(255, 255, 255, 0) !important;
   border-style: none none !important;
 }
-.table.click tbody tr td:first-child {
+.app-table.click tbody tr td:first-child {
   border-left-style: solid !important;
 }
-.table.click tbody tr:hover {
+.app-table.click tbody tr:hover {
   background: rgba(230, 230, 230, 0.35) !important;
 }
-.table.click tbody tr.click {
+.app-table.click tbody tr.click {
   background: rgba(230, 230, 230, 0.65) !important;
 }
-.table.click tbody tr.click td {
+.app-table.click tbody tr.click td {
   border-color: #2196f3 !important;
 }
-.table.click .cover {
+.app-table.click .cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -257,11 +257,11 @@ body,
   z-index: 999999;
 }
 
-.layout.items {
+.app-layout.items {
   margin-top: 0;
   margin-bottom: 15px;
 }
-.layout.items .item {
+.app-layout.items .item {
   position: relative;
   background: #fff;
   margin: 0;
@@ -272,25 +272,25 @@ body,
   font-size: 13px;
   color: #9CACC3;
 }
-.layout.items .item a {
+.app-layout.items .item a {
   color: #9CACC3;
 }
-.layout.items .item:hover {
+.app-layout.items .item:hover {
   background: #e7edf3;
 }
-.layout.items .item .image img {
+.app-layout.items .item .image img {
   border-radius: 5px;
 }
-.layout.items .item div.float {
+.app-layout.items .item div.float {
   position: absolute;
   top: 15px;
   right: 20px;
   text-align: right;
 }
-.layout.items .item div.float a {
+.app-layout.items .item div.float a {
   margin-left: 15px;
 }
-.layout.items .item div.float .post-status {
+.app-layout.items .item div.float .post-status {
   display: inline-block;
   text-align: center;
   background: #5AC169;
@@ -298,6 +298,6 @@ body,
   border-radius: 5px;
   color: #fff;
 }
-.layout.items .item .header {
+.app-layout.items .item .header {
   font-size: 15px;
 }

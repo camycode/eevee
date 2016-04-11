@@ -13,12 +13,12 @@ $layout_wrapper_header_height: 95px;
 // layout 父容器
 html,
 body,
-#layout {
+#app-layout {
   height: 100%;
   overflow: hidden;
 }
 
-#container{
+#app-container{
   height:100%;
 }
 
@@ -31,7 +31,7 @@ body,
 //   height: 100%;
 // }
 
-#layout-header {
+#app-layout-header {
   position: fixed;
   width: 100%;
   height: $layout_header_height;
@@ -43,7 +43,7 @@ body,
 }
 
 // layout 侧边栏
-#layout-sidebar {
+#app-layout-sidebar {
   position: fixed;
   top: 0;
   padding-top: $layout_header_height;
@@ -118,7 +118,7 @@ body,
 }
 
 // layout 占位容器
-#layout-placeholder {
+#app-layout-placeholder {
   width: 100%;
   height: 100%;
   position: relative;
@@ -128,7 +128,7 @@ body,
 }
 
 // layout 视图容器
-#layout-view {
+#app-layout-view {
   position: relative;
   background: rgb(237, 236, 236);
   width: 100%;
@@ -137,14 +137,14 @@ body,
 }
 
 // 布局容器
-.layout.wrapper {
+.app-layout.wrapper {
   position: relative;
   height: 100%;
   padding-top: $layout_wrapper_header_height;
 }
 
 // 布局头部
-.layout.header {
+.app-layout.header {
   position: absolute;
   z-index: 999999;
   height: $layout_wrapper_header_height;
@@ -156,7 +156,7 @@ body,
 }
 
 // 布局正文
-.layout.content {
+.app-layout.content {
   height: 100%;
   overflow-y: scroll;
   padding: 20px 30px;
@@ -168,7 +168,7 @@ body,
 }
 
 // 页面正文选项
-.layout.menu {
+.app-layout.menu {
   margin-bottom: 3px;
   >.item {
     padding-left: 7px !important;
@@ -177,7 +177,7 @@ body,
 
 // ***辅助样式***
 // 页面正文操作标签
-.handle.item {
+.app-handle.item {
   padding: 0 !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
@@ -198,7 +198,7 @@ body,
 }
 
 // 页面正文表格
-.layout.table {
+.app-layout.table {
   margin-top: 0;
   border-radius: 0;
   th {
@@ -208,7 +208,7 @@ body,
 }
 
 // 内容无边栏的表格
-.table.no-border {
+.app-table.no-border {
   th,
   td {
     border: none !important;
@@ -217,7 +217,7 @@ body,
 
 // ***操作按钮***
 // 页面正文操作容器
-.handles {
+.app-handles {
   margin-bottom: 5px;
   font-size: 12px;
   .right {
@@ -236,7 +236,7 @@ body,
 }
 
 // 页面正文操作按钮
-.handle.button {
+.app-handle.button {
   border: 1px solid $border-color;
   background: #F3F3F3;
   border-radius: 3px;
@@ -246,8 +246,8 @@ body,
 }
 
 // 页面正文操作按钮组
-.handle.buttons {
-  @extend .button.handle;
+.app-handle.buttons {
+  //@extend .app-button.handle;
   .button {
     background: none;
     line-height: 1;
@@ -266,7 +266,7 @@ body,
 }
 
 // 页面正文操作分页
-.handle.paging {
+.app-handle.paging {
   .button {
     padding-left: 10px;
     padding-right: 10px;
@@ -281,7 +281,7 @@ body,
 }
 
 // ***表格列表***
-.table.click {
+.app-table.click {
   width: 100%;
 
   // 合并表格tr边框
@@ -318,7 +318,7 @@ body,
 
 
 // 条目样式
-.layout.items {
+.app-layout.items {
   margin-top: 0;
   margin-bottom: 15px;
   .item {

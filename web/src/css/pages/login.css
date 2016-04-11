@@ -1,4 +1,4 @@
-#page-login {
+#page-auth-login {
   position: fixed;
   z-index: 9999999;
   left: 0;
@@ -7,10 +7,10 @@
   height: 100%;
   background: #DADADA;
 }
-#page-login .grid {
+#page-auth-login .grid {
   height: 100%;
 }
-#page-login .column {
+#page-auth-login .column {
   max-width: 450px;
   top: -12%;
 }
