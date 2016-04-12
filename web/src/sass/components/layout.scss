@@ -137,14 +137,14 @@ body,
 }
 
 // 布局容器
-.app-layout.wrapper {
+.app-layout.app-wrapper {
   position: relative;
   height: 100%;
   padding-top: $layout_wrapper_header_height;
 }
 
 // 布局头部
-.app-layout.header {
+.app-layout.app-header {
   position: absolute;
   z-index: 999999;
   height: $layout_wrapper_header_height;
@@ -156,7 +156,7 @@ body,
 }
 
 // 布局正文
-.app-layout.content {
+.app-layout.app-content {
   height: 100%;
   overflow-y: scroll;
   padding: 20px 30px;
@@ -168,7 +168,7 @@ body,
 }
 
 // 页面正文选项
-.app-layout.menu {
+.app-layout.app-menu {
   margin-bottom: 3px;
   >.item {
     padding-left: 7px !important;
@@ -177,14 +177,14 @@ body,
 
 // ***辅助样式***
 // 页面正文操作标签
-.app-handle.item {
+.app-handle.app-item {
   padding: 0 !important;
   margin-right: 0 !important;
   margin-left: 0 !important;
   &:last-child {
     margin-right: 5px !important;
   }
-  i.icon {
+  i.app-icon {
     display: block;
     width: 25px;
     height: 25px;
@@ -198,7 +198,7 @@ body,
 }
 
 // 页面正文表格
-.app-layout.table {
+.app-layout.app-table {
   margin-top: 0;
   border-radius: 0;
   th {
@@ -208,7 +208,7 @@ body,
 }
 
 // 内容无边栏的表格
-.app-table.no-border {
+.app-table.app-no-border {
   th,
   td {
     border: none !important;
@@ -220,12 +220,12 @@ body,
 .app-handles {
   margin-bottom: 5px;
   font-size: 12px;
-  .right {
+  .app-right {
     float: right;
   }
 
   // 操作条目，用于显示文字信息等
-  .handle.item {
+  .app-handle.app-item {
     float: left;
     height: 32px;
     line-height: 32px;
@@ -236,7 +236,7 @@ body,
 }
 
 // 页面正文操作按钮
-.app-handle.button {
+.app-handle.app-button {
   border: 1px solid $border-color;
   background: #F3F3F3;
   border-radius: 3px;
@@ -246,7 +246,7 @@ body,
 }
 
 // 页面正文操作按钮组
-.app-handle.buttons {
+.app-handle.app-buttons {
   //@extend .app-button.handle;
   .button {
     background: none;
@@ -266,7 +266,7 @@ body,
 }
 
 // 页面正文操作分页
-.app-handle.paging {
+.app-handle.app-paging {
   .button {
     padding-left: 10px;
     padding-right: 10px;
@@ -281,7 +281,7 @@ body,
 }
 
 // ***表格列表***
-.app-table.click {
+.app-table.app-click {
   width: 100%;
 
   // 合并表格tr边框
