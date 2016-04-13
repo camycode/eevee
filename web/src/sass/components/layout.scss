@@ -18,8 +18,8 @@ body,
   overflow: hidden;
 }
 
-#app-container{
-  height:100%;
+#app-container {
+  height: 100%;
 }
 
 // // layout 遮罩层
@@ -66,7 +66,7 @@ body,
       &:before {
         height: 0 !important;
       }
-      >a {
+      > a {
         color: #333;
         display: block;
         width: 100%;
@@ -81,7 +81,7 @@ body,
         margin-right: 5px;
       }
       &.active {
-        >a {
+        > a {
           background: $c4;
         }
         span:after {
@@ -152,7 +152,7 @@ body,
   top: 0;
   left: 0;
   padding: 10px 30px;
-  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
 }
 
 // 布局正文
@@ -161,16 +161,16 @@ body,
   overflow-y: scroll;
   padding: 20px 30px;
   // 页面 title
-  .item.title{
-      font-size: 21px;
-      margin-left: -1px;
+  .item.title {
+    font-size: 21px;
+    margin-left: -1px;
   }
 }
 
 // 页面正文选项
 .app-layout.app-menu {
   margin-bottom: 3px;
-  >.item {
+  > .item {
     padding-left: 7px !important;
   }
 }
@@ -291,7 +291,7 @@ body,
       td {
         border-width: 3px !important;
         border-color: rgba(255, 255, 255, 0) !important;
-        border-style: none none!important;
+        border-style: none none !important;
         &:first-child {
           border-left-style: solid !important;
         }
@@ -316,9 +316,8 @@ body,
   }
 }
 
-
 // 条目样式
-.app-layout.items {
+.app-layout.app-items {
   margin-top: 0;
   margin-bottom: 15px;
   .item {
