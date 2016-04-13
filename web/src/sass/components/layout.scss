@@ -1,25 +1,143 @@
 @charset "utf-8";
+
 @import "colors";
+@import "variables";
 
-// layout header 高度
-$layout_header_height: 55px;
-
-// layout header logo 展示区域宽度
-$layout_header_brand_width: 210px;
-
-// layout 正文 header 高度
-$layout_wrapper_header_height: 95px;
-
-// layout 父容器
-html,
-body,
-#app-layout {
+html, body {
   height: 100%;
-  overflow: hidden;
 }
 
-#app-container {
-  height: 100%;
+.app {
+
+  &.layout {
+
+    height: 100%;
+    overflow: hidden;
+
+    &.header {
+      position: absolute;
+      z-index: 999999;
+      height: $layout_header_height;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 10px 30px;
+      //box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    }
+
+    &.container {
+      height: 100%;
+    }
+
+    &.sidebar {
+      position: fixed;
+      top: 0;
+      padding-top: $layout_header_height;
+      width: $layout_header_brand_width;
+      height: 100%;
+      z-index: 999998;
+      overflow: scroll;
+      .menu {
+        width: $layout_header_brand_width;
+        height: 100%;
+        padding: 0;
+        border-radius: 0;
+        border-top: none;
+        .item {
+          background: none;
+          list-style: none;
+          padding: 0;
+
+          // 去掉semantic自带的li.item的边线
+          &:before {
+            height: 0 !important;
+          }
+          > a {
+            color: #333;
+            display: block;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            &:hover {
+              background: $c4;
+            }
+            padding-left: 30px;
+          }
+          i.icon {
+            margin-right: 5px;
+          }
+          &.active {
+            > a {
+              background: $c4;
+            }
+            span:after {
+              content: '\25cc';
+            }
+          }
+          span {
+            position: absolute;
+            right: 25px;
+            &:after {
+              content: '\25be';
+              font-size: 18px;
+            }
+          }
+          ul {
+            padding: 0;
+            .item {
+              padding: 0;
+              a {
+                height: 30px;
+                line-height: 30px;
+                padding-left: 50px;
+                background: #fff;
+              }
+              &.active {
+                a {
+                  background: $c4;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.placeholder {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      padding-top: $layout_header_height;
+      padding-left: $layout_header_brand_width;
+      overflow: hidden;
+    }
+
+    &.view {
+      position: relative;
+      background: rgb(237, 236, 236);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    &.wrapper {
+      position: relative;
+      height: 100%;
+      padding-top: $layout_wrapper_header_height;
+    }
+
+    &.content {
+      height: 100%;
+      overflow-y: scroll;
+      padding: 20px 30px;
+      // 页面 title
+      .item.title {
+        font-size: 21px;
+        margin-left: -1px;
+      }
+    }
+
+  }
 }
 
 // // layout 遮罩层
@@ -31,141 +149,11 @@ body,
 //   height: 100%;
 // }
 
-#app-layout-header {
-  position: fixed;
-  width: 100%;
-  height: $layout_header_height;
-  z-index: 999999;
-  border-radius: 0;
-  .header {
-    width: $layout_header_brand_width;
-  }
-}
 
-// layout 侧边栏
-#app-layout-sidebar {
-  position: fixed;
-  top: 0;
-  padding-top: $layout_header_height;
-  width: $layout_header_brand_width;
-  height: 100%;
-  z-index: 999998;
-  overflow: scroll;
-  .menu {
-    width: $layout_header_brand_width;
-    height: 100%;
-    padding: 0;
-    border-radius: 0;
-    border-top: none;
-    .item {
-      background: none;
-      list-style: none;
-      padding: 0;
 
-      // 去掉semantic自带的li.item的边线
-      &:before {
-        height: 0 !important;
-      }
-      > a {
-        color: #333;
-        display: block;
-        width: 100%;
-        height: 50px;
-        line-height: 50px;
-        &:hover {
-          background: $c4;
-        }
-        padding-left: 30px;
-      }
-      i.icon {
-        margin-right: 5px;
-      }
-      &.active {
-        > a {
-          background: $c4;
-        }
-        span:after {
-          content: '\25cc';
-        }
-      }
-      span {
-        position: absolute;
-        right: 25px;
-        &:after {
-          content: '\25be';
-          font-size: 18px;
-        }
-      }
-      ul {
-        padding: 0;
-        .item {
-          padding: 0;
-          a {
-            height: 30px;
-            line-height: 30px;
-            padding-left: 50px;
-            background: #fff;
-          }
-          &.active {
-            a {
-              background: $c4;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// layout 占位容器
-#app-layout-placeholder {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  padding-top: $layout_header_height;
-  padding-left: $layout_header_brand_width;
-  overflow: hidden;
-}
-
-// layout 视图容器
-#app-layout-view {
-  position: relative;
-  background: rgb(237, 236, 236);
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-// 布局容器
-.app-layout.app-wrapper {
-  position: relative;
-  height: 100%;
-  padding-top: $layout_wrapper_header_height;
-}
-
-// 布局头部
-.app-layout.app-header {
-  position: absolute;
-  z-index: 999999;
-  height: $layout_wrapper_header_height;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding: 10px 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
-}
 
 // 布局正文
-.app-layout.app-content {
-  height: 100%;
-  overflow-y: scroll;
-  padding: 20px 30px;
-  // 页面 title
-  .item.title {
-    font-size: 21px;
-    margin-left: -1px;
-  }
-}
+
 
 // 页面正文选项
 .app-layout.app-menu {

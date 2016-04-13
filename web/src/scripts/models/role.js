@@ -13,7 +13,7 @@ define([
         return ajax.get('/api/roles');
       },
 
-      useRoleEditor: function($scope) {
+      setRoleEditor: function($scope) {
         $('#layout-view').append($compile($('<div role.editor></div>'))($scope));
       },
 

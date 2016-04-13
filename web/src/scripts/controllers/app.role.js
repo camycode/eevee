@@ -10,7 +10,7 @@ define([
     $scope.roles = null;
 
 
-    role.useRoleEditor($scope);
+    role.setRoleEditor($scope);
 
     role.getRoles()
       .success(function(response) {

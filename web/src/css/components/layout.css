@@ -1,26 +1,24 @@
-html,
-body,
-#app-layout {
+html, body {
+  height: 100%;
+}
+
+.app.layout {
   height: 100%;
   overflow: hidden;
 }
-
-#app-container {
+.app.layout.header {
+  position: absolute;
+  z-index: 999999;
+  height: 55px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px 30px;
+}
+.app.layout.container {
   height: 100%;
 }
-
-#app-layout-header {
-  position: fixed;
-  width: 100%;
-  height: 55px;
-  z-index: 999999;
-  border-radius: 0;
-}
-#app-layout-header .header {
-  width: 210px;
-}
-
-#app-layout-sidebar {
+.app.layout.sidebar {
   position: fixed;
   top: 0;
   padding-top: 55px;
@@ -29,22 +27,22 @@ body,
   z-index: 999998;
   overflow: scroll;
 }
-#app-layout-sidebar .menu {
+.app.layout.sidebar .menu {
   width: 210px;
   height: 100%;
   padding: 0;
   border-radius: 0;
   border-top: none;
 }
-#app-layout-sidebar .menu .item {
+.app.layout.sidebar .menu .item {
   background: none;
   list-style: none;
   padding: 0;
 }
-#app-layout-sidebar .menu .item:before {
+.app.layout.sidebar .menu .item:before {
   height: 0 !important;
 }
-#app-layout-sidebar .menu .item > a {
+.app.layout.sidebar .menu .item > a {
   color: #333;
   display: block;
   width: 100%;
@@ -52,43 +50,42 @@ body,
   line-height: 50px;
   padding-left: 30px;
 }
-#app-layout-sidebar .menu .item > a:hover {
+.app.layout.sidebar .menu .item > a:hover {
   background: #F4F4F4;
 }
-#app-layout-sidebar .menu .item i.icon {
+.app.layout.sidebar .menu .item i.icon {
   margin-right: 5px;
 }
-#app-layout-sidebar .menu .item.active > a {
+.app.layout.sidebar .menu .item.active > a {
   background: #F4F4F4;
 }
-#app-layout-sidebar .menu .item.active span:after {
+.app.layout.sidebar .menu .item.active span:after {
   content: '\25cc';
 }
-#app-layout-sidebar .menu .item span {
+.app.layout.sidebar .menu .item span {
   position: absolute;
   right: 25px;
 }
-#app-layout-sidebar .menu .item span:after {
+.app.layout.sidebar .menu .item span:after {
   content: '\25be';
   font-size: 18px;
 }
-#app-layout-sidebar .menu .item ul {
+.app.layout.sidebar .menu .item ul {
   padding: 0;
 }
-#app-layout-sidebar .menu .item ul .item {
+.app.layout.sidebar .menu .item ul .item {
   padding: 0;
 }
-#app-layout-sidebar .menu .item ul .item a {
+.app.layout.sidebar .menu .item ul .item a {
   height: 30px;
   line-height: 30px;
   padding-left: 50px;
   background: #fff;
 }
-#app-layout-sidebar .menu .item ul .item.active a {
+.app.layout.sidebar .menu .item ul .item.active a {
   background: #F4F4F4;
 }
-
-#app-layout-placeholder {
+.app.layout.placeholder {
   width: 100%;
   height: 100%;
   position: relative;
@@ -96,38 +93,24 @@ body,
   padding-left: 210px;
   overflow: hidden;
 }
-
-#app-layout-view {
+.app.layout.view {
   position: relative;
   background: #edecec;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-
-.app-layout.app-wrapper {
+.app.layout.wrapper {
   position: relative;
   height: 100%;
   padding-top: 95px;
 }
-
-.app-layout.app-header {
-  position: absolute;
-  z-index: 999999;
-  height: 95px;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding: 10px 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.app-layout.app-content {
+.app.layout.content {
   height: 100%;
   overflow-y: scroll;
   padding: 20px 30px;
 }
-.app-layout.app-content .item.title {
+.app.layout.content .item.title {
   font-size: 21px;
   margin-left: -1px;
 }
@@ -257,11 +240,11 @@ body,
   z-index: 999999;
 }
 
-.app-layout.items {
+.app-layout.app-items {
   margin-top: 0;
   margin-bottom: 15px;
 }
-.app-layout.items .item {
+.app-layout.app-items .item {
   position: relative;
   background: #fff;
   margin: 0;
@@ -272,25 +255,25 @@ body,
   font-size: 13px;
   color: #9CACC3;
 }
-.app-layout.items .item a {
+.app-layout.app-items .item a {
   color: #9CACC3;
 }
-.app-layout.items .item:hover {
+.app-layout.app-items .item:hover {
   background: #e7edf3;
 }
-.app-layout.items .item .image img {
+.app-layout.app-items .item .image img {
   border-radius: 5px;
 }
-.app-layout.items .item div.float {
+.app-layout.app-items .item div.float {
   position: absolute;
   top: 15px;
   right: 20px;
   text-align: right;
 }
-.app-layout.items .item div.float a {
+.app-layout.app-items .item div.float a {
   margin-left: 15px;
 }
-.app-layout.items .item div.float .post-status {
+.app-layout.app-items .item div.float .post-status {
   display: inline-block;
   text-align: center;
   background: #5AC169;
@@ -298,6 +281,6 @@ body,
   border-radius: 5px;
   color: #fff;
 }
-.app-layout.items .item .header {
+.app-layout.app-items .item .header {
   font-size: 15px;
 }
