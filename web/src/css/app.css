@@ -7,7 +7,7 @@ html, body {
   overflow: hidden;
 }
 .app.layout.header {
-  position: absolute;
+  position: fixed;
   z-index: 999999;
   height: 55px;
   width: 100%;
