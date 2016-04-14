@@ -3,6 +3,7 @@
 namespace Core\Exceptions;
 
 use Exception;
+use PDOException;
 use Core\Services\Context;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
@@ -29,7 +30,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-            return parent::report($e);
+        return parent::report($e);
     }
 
     /**
@@ -46,6 +47,10 @@ class Handler extends ExceptionHandler
 
             return (new Context($request))->response($e->status);
 
+        } else if ($e instanceof PDOException) {
+
+            return (new Context($request))->response(status('databaseException', $e->getMessage()));
+            
         } else {
 
             return parent::render($request, $e);
