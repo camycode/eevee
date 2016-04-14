@@ -3,7 +3,7 @@
 return [
     'USER'=>[
       'table'=>'users',
-      'fields'=>['id','username','email','role','status','avatar','source','password','created_at','updated_at'],
+      'fields'=>['id','username','email','status','avatar','source','password','created_at','updated_at'],
     ],
     'ROLE'=>[
         'table'=>'roles',

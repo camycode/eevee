@@ -186,17 +186,10 @@ class Installer
 
         $data['parent'] = $data['id'];
 
+        $status = (new Role())->setData($data)->addRole();
 
-        if ($role = (new Model())->resource('ROLE')->where('id', $data['id'])->first()) {
+        $this->result['register_root_role'] = $status->data;
 
-            $this->result['register_root_role'] = $role;
-
-        } else {
-
-            $root = (new Role())->setData($data)->addRole();
-
-            $this->result['register_root_role'] = $root->data;
-        }
 
         return $this->registerGuestRole();
 

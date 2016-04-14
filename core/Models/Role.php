@@ -40,11 +40,13 @@ class Role extends Model
 
         return $this->transaction(function () {
 
-            $this->updateRolePermisssions($this->data, (array)$this->data['permissions']);
+            $permissions = $this->data['permissions'];
 
             $this->filter($this->data, $this->fields('ROLE'));
 
             $this->resource('ROLE')->insert($this->data);
+
+            $this->updateRolePermisssions($this->data, $permissions);
 
             $role = $this->getRole($this->data['id']);
 
@@ -394,7 +396,10 @@ class Role extends Model
 
         if (array_diff($permissions, $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $parent_id)->lists('permission_id'))) {
 
-            exception('invalidPermissions');
+            if ($this->resource('L:PERMISSIONRELATIONSHIP')->first()) {
+
+                exception('invalidPermissions');
+            }
         }
 
     }

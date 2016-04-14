@@ -2,7 +2,8 @@
 
 namespace Core\Models;
 
-
+use Core\Events\UserCreated;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -51,13 +52,15 @@ class User extends Model
 
             $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
 
-            $this->filter($this->data, $this->fields('ROLE'));
+            $this->filter($this->data, $this->fields('USER'));
 
             $this->resource('USER')->insert($this->data);
 
-            $user = $this->getUser($this->data['id']);
+            $status = $this->getUser($this->data['id']);
 
-            return $user;
+            event(new UserCreated($status->data));
+
+            return $status;
 
         });
 
@@ -104,7 +107,7 @@ class User extends Model
 
                 $this->updateUserRoleRelationship($user_id, $this->data['role']);
             }
-            
+
             $this->filter($this->data, $this->fields('ROLE'), ['id']);
 
             $resource->where('id', $user_id)->update($this->data);
