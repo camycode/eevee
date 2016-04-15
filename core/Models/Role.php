@@ -70,7 +70,7 @@ class Role extends Model
 
         if (!$origin) {
 
-            return status('roleDoesNotExist');
+            exception('roleDoesNotExist');
         }
 
         $ignore = [];
