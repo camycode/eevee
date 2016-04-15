@@ -209,7 +209,7 @@ class RoleController extends Controller
     }
 
     /**
-     * @api {GET} /api/role?role_id  获取角色权限组
+     * @api {GET} /api/role/permissions?role_id  获取角色权限组
      *
      * @apiGroup Role
      *
