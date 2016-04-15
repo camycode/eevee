@@ -3,8 +3,10 @@ define(['angularAMD', 'angularRoute', 'jquery'], function (angularAMD) {
     var app = angular.module("eevee", ['ui.router']);
 
     app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
+
         //用于改变state时跳至顶部
         $uiViewScrollProvider.useAnchorScroll();
+
         // 默认进入先重定向
         $urlRouterProvider.otherwise('app');
 
@@ -74,5 +76,7 @@ define(['angularAMD', 'angularRoute', 'jquery'], function (angularAMD) {
 
 
     });
+
     return angularAMD.bootstrap(app);
+
 });
