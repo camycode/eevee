@@ -14,3 +14,6 @@
   max-width: 450px;
   top: -12%;
 }
+#page-auth-login .ui.stacked.segment {
+  margin-top: 10px;
+}
