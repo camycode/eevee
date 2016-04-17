@@ -249,10 +249,22 @@ class Role extends Model
 
             $this->resource('PERMISSIONRELATIONSHIP')->insert($relationships);
 
+            $this->updateRolePermissionAmount($role['id'], count($relationships));
+
         });
 
     }
 
+    /**
+     * 更新角色权限数
+     *
+     * @param string $role_id
+     * @param int $amount
+     */
+    protected function updateRolePermissionAmount($role_id, $amount)
+    {
+        $this->resource('ROLE')->where('id', $role_id)->update(['permission_id' => $amount]);
+    }
 
     /**
      * 生成角色权限关系记录
