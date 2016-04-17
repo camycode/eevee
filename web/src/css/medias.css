@@ -1,37 +1,25 @@
 /*
-Error: Undefined mixin 'animation-duration'.
-        on line 263 of /Users/Gu/php/eevee/web/src/sass/app.scss, in `animation-duration'
-        from line 263 of /Users/Gu/php/eevee/web/src/sass/app.scss
+Error: File to import not found or unreadable: ../components/colors.
+       Load paths:
+         /Users/Gu/php/eevee/web/src/sass
+         /Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets
+         Compass::SpriteImporter
+        on line 1 of /Users/Gu/php/eevee/web/src/sass/medias.scss
 
-258:   width: 100%;
-259:   height: 100%;
-260:   display: none;
-261:   z-index: 999;
-262:   margin-left: 0;
-263:   @include animation-duration(0.3s);
-264:   @include animation-delay(0.1s);
-265:   @include animation-iteration-count(slideInRight);
-266: }
+1: @import "../components/colors";
+2: 
+3: #medias{
+4:     padding-top: 52px;
+5:     .menu{
+6:         border-radius: 0;
 
 Backtrace:
-/Users/Gu/php/eevee/web/src/sass/app.scss:263:in `animation-duration'
-/Users/Gu/php/eevee/web/src/sass/app.scss:263
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:349:in `block in visit_mixin'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:98:in `block in with_mixin'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:98:in `with_mixin'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:347:in `visit_mixin'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:431:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:431:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:431:in `block in visit_rule'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:429:in `visit_rule'
+/Users/Gu/php/eevee/web/src/sass/medias.scss:1
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/import_node.rb:45:in `import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/import_node.rb:28:in `imported_file'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/import_node.rb:37:in `css_import?'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:311:in `visit_import'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:36:in `visit'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.21/lib/sass/stack.rb:79:in `block in with_base'
@@ -74,4 +62,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined mixin 'animation-duration'.\A         on line 263 of /Users/Gu/php/eevee/web/src/sass/app.scss, in `animation-duration'\A         from line 263 of /Users/Gu/php/eevee/web/src/sass/app.scss\A \A 258:   width: 100%;\A 259:   height: 100%;\A 260:   display: none;\A 261:   z-index: 999;\A 262:   margin-left: 0;\A 263:   @include animation-duration(0.3s);\A 264:   @include animation-delay(0.1s);\A 265:   @include animation-iteration-count(slideInRight);\A 266: }"; }
+  content: "Error: File to import not found or unreadable: ../components/colors.\A        Load paths:\A          /Users/Gu/php/eevee/web/src/sass\A          /Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets\A          Compass::SpriteImporter\A         on line 1 of /Users/Gu/php/eevee/web/src/sass/medias.scss\A \A 1: @import \"../components/colors\";\A 2: \A 3: #medias{\A 4:     padding-top: 52px;\A 5:     .menu{\A 6:         border-radius: 0;"; }

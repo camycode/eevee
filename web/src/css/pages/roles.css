@@ -13,10 +13,41 @@ html, body {
   width: 100%;
   top: 0;
   left: 0;
-  padding: 10px 30px;
+}
+.app.layout.header .brand {
+  width: 210px;
 }
 .app.layout.container {
   height: 100%;
+}
+.app.layout.placeholder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding-top: 55px;
+  padding-left: 210px;
+  overflow: hidden;
+}
+.app.layout.view {
+  position: relative;
+  background: #edecec;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.app.layout.wrapper {
+  position: relative;
+  height: 100%;
+  padding-top: 95px;
+}
+.app.layout.content {
+  height: 100%;
+  overflow-y: scroll;
+  padding: 20px 30px;
+}
+.app.layout.content .item.title {
+  font-size: 21px;
+  margin-left: -1px;
 }
 .app.layout.sidebar {
   position: fixed;
@@ -84,205 +115,6 @@ html, body {
 }
 .app.layout.sidebar .menu .item ul .item.active a {
   background: #F4F4F4;
-}
-.app.layout.placeholder {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  padding-top: 55px;
-  padding-left: 210px;
-  overflow: hidden;
-}
-.app.layout.view {
-  position: relative;
-  background: #edecec;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.app.layout.wrapper {
-  position: relative;
-  height: 100%;
-  padding-top: 95px;
-}
-.app.layout.content {
-  height: 100%;
-  overflow-y: scroll;
-  padding: 20px 30px;
-}
-.app.layout.content .item.title {
-  font-size: 21px;
-  margin-left: -1px;
-}
-
-.app-layout.app-menu {
-  margin-bottom: 3px;
-}
-.app-layout.app-menu > .item {
-  padding-left: 7px !important;
-}
-
-.app-handle.app-item {
-  padding: 0 !important;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-}
-.app-handle.app-item:last-child {
-  margin-right: 5px !important;
-}
-.app-handle.app-item i.app-icon {
-  display: block;
-  width: 25px;
-  height: 25px;
-  line-height: 26px;
-  margin: 0 !important;
-  border-radius: 20px;
-}
-.app-handle.app-item i.app-icon:hover {
-  background: #D4D4D5;
-}
-
-.app-layout.app-table {
-  margin-top: 0;
-  border-radius: 0;
-}
-.app-layout.app-table th {
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
-}
-
-.app-table.app-no-border th,
-.app-table.app-no-border td {
-  border: none !important;
-}
-
-.app-handles {
-  margin-bottom: 5px;
-  font-size: 12px;
-}
-.app-handles .app-right {
-  float: right;
-}
-.app-handles .app-handle.app-item {
-  float: left;
-  height: 32px;
-  line-height: 32px;
-  margin-right: 10px !important;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.app-handle.app-button {
-  border: 1px solid #DBDBDB;
-  background: #F3F3F3;
-  border-radius: 3px;
-  height: 32px;
-  overflow: hidden;
-  font-size: 12px;
-}
-
-.app-handle.app-buttons .button {
-  background: none;
-  line-height: 1;
-  padding: 22px;
-  padding-top: 10px;
-  font-size: 12px;
-  border-radius: 0 !important;
-}
-.app-handle.app-buttons .button:hover {
-  background: #D4D4D5;
-}
-.app-handle.app-buttons .dropdown {
-  padding-left: 5px;
-  padding-right: 7px;
-}
-
-.app-handle.app-paging .button {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.app-handle.app-paging .button:first-child {
-  border-right: 1px solid #DBDBDB;
-}
-.app-handle.app-paging .button:last-child {
-  padding-left: 9px;
-  margin-right: -3px;
-}
-
-.app-table.app-click {
-  width: 100%;
-}
-.app-table.app-click tbody tr {
-  position: relative;
-}
-.app-table.app-click tbody tr td {
-  border-width: 3px !important;
-  border-color: rgba(255, 255, 255, 0) !important;
-  border-style: none none !important;
-}
-.app-table.app-click tbody tr td:first-child {
-  border-left-style: solid !important;
-}
-.app-table.app-click tbody tr:hover {
-  background: rgba(230, 230, 230, 0.35) !important;
-}
-.app-table.app-click tbody tr.click {
-  background: rgba(230, 230, 230, 0.65) !important;
-}
-.app-table.app-click tbody tr.click td {
-  border-color: #2196f3 !important;
-}
-.app-table.app-click .cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #333;
-  z-index: 999999;
-}
-
-.app-layout.app-items {
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-.app-layout.app-items .item {
-  position: relative;
-  background: #fff;
-  margin: 0;
-  margin-top: 10px;
-  padding: 20px;
-  border-radius: 5px;
-  transition: background 0.2s;
-  font-size: 13px;
-  color: #9CACC3;
-}
-.app-layout.app-items .item a {
-  color: #9CACC3;
-}
-.app-layout.app-items .item:hover {
-  background: #e7edf3;
-}
-.app-layout.app-items .item .image img {
-  border-radius: 5px;
-}
-.app-layout.app-items .item div.float {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  text-align: right;
-}
-.app-layout.app-items .item div.float a {
-  margin-left: 15px;
-}
-.app-layout.app-items .item div.float .post-status {
-  display: inline-block;
-  text-align: center;
-  background: #5AC169;
-  padding: 2px 8px;
-  border-radius: 5px;
-  color: #fff;
-}
-.app-layout.app-items .item .header {
-  font-size: 15px;
 }
 
 #role-editor {
