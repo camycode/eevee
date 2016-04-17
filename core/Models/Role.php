@@ -2,8 +2,6 @@
 
 namespace Core\Models;
 
-use Core\Exceptions\StatusException;
-use Core\Services\Status;
 use Illuminate\Support\Facades\Validator;
 
 class Role extends Model
