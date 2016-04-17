@@ -427,6 +427,27 @@ class User extends Model
             return exception('validateFailed', $validator->errors());
         }
 
+        $this->validateRole((array)$this->data['role']);
+
+    }
+
+    /**
+     * 验证用户角色是否存在
+     *
+     * @param array $role
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    protected function validateRole(array $role)
+    {
+
+        foreach ($role as $role_id) {
+
+            if ((new Role())->getRole($role_id)->code != 200) {
+
+                exception('roleDoesNotExist');
+            }
+        }
     }
 
 
