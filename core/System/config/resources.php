@@ -25,9 +25,9 @@ return [
         'table'=>'folders',
         'fields'=>[],
     ],
-    'SYSTEM'=>[
-        'table'=>'',
-        'fields'=>[],
+    'CONFIG'=>[
+        'table'=>'configs',
+        'fields'=>['config_key','config_value','source'],
     ],
     'MESSAGE'=>[
         'table'=>'messages',

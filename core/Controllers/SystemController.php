@@ -2,8 +2,10 @@
 
 namespace Core\Controllers;
 
+use Core\Models\System;
 use Core\Services\Context;
 use Core\Services\Installer;
+use Illuminate\Support\Facades\Config;
 
 
 class SystemController extends Controller
@@ -36,4 +38,39 @@ class SystemController extends Controller
     {
         return $context->response(status('success', (new Installer($context->data()))->install()));
     }
+
+    public function postConfig(Context $context)
+    {
+        $key = $context->data('config_key');
+
+        $value = $context->data('config_value');
+
+        $source = $context->data('source');
+
+        return $context->response((new System())->addConfig($key, $value, $source));
+    }
+
+    public function getConfig(Context $context)
+    {
+        return $context->response((new System())->getConfig($context->params('config_key')));
+    }
+
+    public function putConfig(Context $context)
+    {
+        $key = $context->params('config_key');
+
+        $value = $context->data('config_value');
+
+        return $context->response((new System())->updateConfig($key, $value));
+    }
+
+    public function deleteConfig(Context $context)
+    {
+        $key = $context->params('config_key');
+
+        $source = $context->params('source');
+
+        return $context->response((new System())->deleteConfig($key, $source));
+    }
+
 }

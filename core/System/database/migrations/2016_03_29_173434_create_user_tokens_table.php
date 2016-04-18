@@ -22,4 +22,5 @@ class CreateUserTokensTable extends Migration
     {
         Schema::drop('user_tokens');
     }
+    
 }

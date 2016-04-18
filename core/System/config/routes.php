@@ -73,4 +73,22 @@ return [
     'post@system/install' => [
         'action' => 'SystemController@install',
     ],
+    // 系统设置
+    'post@config' => [
+        'action' => 'SystemController@postConfig',
+        'permission' => 'SYSTEM_CONFIG_POST',
+    ],
+    'put@config' => [
+        'action' => 'SystemController@putConfig',
+        'permission' => 'SYSTEM_CONFIG_PUT',
+    ],
+    'get@config' => [
+        'action' => 'SystemController@getConfig',
+        'permission' => 'SYSTEM_CONFIG_GET',
+    ],
+    'delete@config' => [
+        'action' => 'SystemController@deleteConfig',
+        'permission' => 'SYSTEM_CONFIG_DELETE',
+    ],
+
 ];

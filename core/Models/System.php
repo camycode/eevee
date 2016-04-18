@@ -17,7 +17,7 @@ class System extends Model
      *
      * @throws \Core\Exceptions\StatusException
      */
-    public function addConfig($key, $value, $source = '')
+    public function addConfig($key, $value, $source)
     {
         if ($this->resource('CONFIG')->insert(['config_key' => $key, 'config_value' => $value, 'source' => $source])) {
 
@@ -68,14 +68,28 @@ class System extends Model
         exception('configDoesNotExist');
     }
 
-    public function getConfigs($source = null, $prefix = null)
+    public function getConfigs($params)
     {
 
     }
 
-    public function deleteConfig($key, $value)
+    public function deleteConfig($key, $source)
     {
+        $resource = $this->resource('CONFIG');
 
+        if ($config = $resource->where('config_key', $key)->first()) {
+
+            if ($config->source = $source) {
+
+                $resource->where('config_key', $key)->delete();
+
+                return status('success');
+            }
+
+            return status('configDoesNotMatchTheSource');
+        }
+
+        return status('configDoesNotExsit');
     }
 
     public function getThemes()

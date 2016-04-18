@@ -7,15 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CreateAppsTable' => $baseDir . '/core/System/database/migrations/2016_03_05_140137_create_apps_table.php',
-    'CreateFilesTable' => $baseDir . '/core/System/database/migrations/2016_04_17_150225_create_files_table.php',
-    'CreateFoldersTable' => $baseDir . '/core/System/database/migrations/2016_04_17_150218_create_folders_table.php',
+    'CreateConfigsTable' => $baseDir . '/core/System/database/migrations/2016_04_18_141518_create_configs_table.php',
     'CreatePermissionsRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133768_create_permissions_relationships_table.php',
     'CreatePermissionsTable' => $baseDir . '/core/System/database/migrations/2016_03_16_160109_create_permissions_table.php',
     'CreateResoucesTable' => $baseDir . '/core/System/database/migrations/2016_03_17_1412079_create_resouces_table.php',
     'CreateRolesRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133628_create_roles_relationships_table.php',
     'CreateRolesTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130534_create_roles_table.php',
-    'CreateTermsRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_17_031635_create_terms_relationships_table.php',
-    'CreateTermsTable' => $baseDir . '/core/System/database/migrations/2016_03_17_031600_create_terms_table.php',
     'CreateUserTokensTable' => $baseDir . '/core/System/database/migrations/2016_03_29_173434_create_user_tokens_table.php',
     'CreateUsersTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130435_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/core/System/database/seeds/DatabaseSeeder.php',
