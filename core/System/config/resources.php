@@ -1,60 +1,48 @@
 <?php
 
 return [
-    'USER'=>[
-      'table'=>'users',
-      'fields'=>['id','username','email','status','avatar','source','password','created_at','updated_at'],
+    'APP' => [
+        'table' => 'apps',
+        'fields' => ['id', 'name', 'description', 'created_at', 'updated_at'],
     ],
-    'ROLE'=>[
-        'table'=>'roles',
-        'fields'=>['id','name','description','parent','source','status','created_at','updated_at'],
+    'USER' => [
+        'table' => 'users',
+        'fields' => ['id', 'username', 'email', 'status', 'avatar', 'source', 'password', 'created_at', 'updated_at'],
     ],
-    'POST'=>[
-        'table'=>'posts',
-        'fields'=>[],
+    'ROLE' => [
+        'table' => 'roles',
+        'fields' => ['id', 'name', 'description', 'parent', 'source', 'status', 'created_at', 'updated_at'],
     ],
-    'TERM'=>[
-        'table'=>'terms',
-        'fields'=>[],
+    'CONFIG' => [
+        'table' => 'configs',
+        'fields' => ['config_key', 'config_value', 'source'],
     ],
-    'FILE'=>[
-        'table'=>'files',
-        'fields'=>[],
+    'MESSAGE' => [
+        'table' => 'messages',
+        'fields' => [],
     ],
-    'FOLDER'=>[
-        'table'=>'folders',
-        'fields'=>[],
+    'RESOURCE' => [
+        'table' => 'resources',
+        'fields' => [],
     ],
-    'CONFIG'=>[
-        'table'=>'configs',
-        'fields'=>['config_key','config_value','source'],
+    'PERMISSION' => [
+        'table' => 'permissions',
+        'fields' => [],
     ],
-    'MESSAGE'=>[
-        'table'=>'messages',
-        'fields'=>[],
+    'USERTOKEN' => [
+        'table' => 'user_tokens',
+        'fields' => [],
     ],
-    'RESOURCE'=>[
-        'table'=>'resources',
-        'fields'=>[],
+    'L:TERMRELATIONSHIP' => [
+        'table' => 'terms_relationships',
+        'fields' => [],
     ],
-    'PERMISSION'=>[
-        'table'=>'permissions',
-        'fields'=>[],
+    'L:ROLERELATIONSHIP' => [
+        'table' => 'roles_relationships',
+        'fields' => [],
     ],
-    'USERTOKEN'=>[
-        'table'=>'user_tokens',
-        'fields'=>[],
-    ],
-    'L:TERMRELATIONSHIP'=>[
-        'table'=>'terms_relationships',
-        'fields'=>[],
-    ],
-    'L:ROLERELATIONSHIP'=>[
-        'table'=>'roles_relationships',
-        'fields'=>[],
-    ],
-    'L:PERMISSIONRELATIONSHIP'=>[
-        'table'=>'permissions_relationships',
-        'fields'=>[],
+    'L:PERMISSIONRELATIONSHIP' => [
+        'table' => 'permissions_relationships',
+        'fields' => [],
     ],
 ];
