@@ -41,7 +41,21 @@ class APP extends Model
     protected function validateApp()
     {
 
-    }
+        $table = $this->table('APP');
 
+        $rule = [
+            'app_id' => "required|unique:$table",
+            'app_name' => 'required|unique:$table'
+        ];
+
+
+        $validator = Validator::make($this->data, $rule);
+
+        if ($validator->fails()) {
+
+            return exception('validateFailed', $validator->errors());
+        }
+        
+    }
 
 }
