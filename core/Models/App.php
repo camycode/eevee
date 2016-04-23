@@ -4,13 +4,15 @@ namespace Core\Models;
 
 use Illuminate\Support\Facades\Validator;
 
-class APP extends Model
+class App extends Model
 {
     protected $data = [];
 
     public function setData($data)
     {
         $this->data = $data;
+
+        return $this;
     }
 
     /**
@@ -37,7 +39,7 @@ class APP extends Model
      */
     public function updateApp($app_id)
     {
-        $app = $this->getApp($app_id);
+        $app = $this->getApp($app_id)->data;
 
         $ignore = ['id'];
 
@@ -51,6 +53,8 @@ class APP extends Model
         $this->filter($this->data, $this->fields('APP'));
 
         $this->resource('APP')->where('id', $app_id)->update($this->data);
+
+        return $this->getApp($app_id);
     }
 
     /**
@@ -114,8 +118,8 @@ class APP extends Model
 
 
         $rule = [
-            'app_id' => "required|unique:$table",
-            'app_name' => 'required|unique:$table'
+            'id' => "required|unique:$table",
+            'name' => "required|unique:$table"
         ];
 
 

@@ -20,7 +20,26 @@ return [
     'post@auth/register' => [
         'action' => 'AuthController@register',
     ],
+    // 应用模块
+    'post@app' => [
+        'action' => 'AppController@postApp',
+    ],
 
+    'put@app' => [
+        'action' => 'AppController@putApp',
+    ],
+
+    'get@app' => [
+        'action' => 'AppController@getApp',
+    ],
+
+    'get@apps' => [
+        'action' => 'AppController@getApps',
+    ],
+
+    'delete@app' => [
+        'action' => 'AppController@deleteApp',
+    ],
     // 用户模块
     'post@user' => [
         'action' => 'UserController@postUser',
