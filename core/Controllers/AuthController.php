@@ -14,7 +14,7 @@ class AuthController extends Controller
     /**
      * @apiGroup Auth
      *
-     * @api {post} /api/login?mode 用户登录
+     * @api {post} /api/auth/login?mode 用户登录
      *
      * @apiDescription 用户登录有两种方式,用户名登录或邮箱登录,
      * 通过设置mode值`username`(默认)和`email`实现.
@@ -25,7 +25,7 @@ class AuthController extends Controller
      *
      *
      * @apiParamExample {curl} 请求示例:
-     *     post /api/login?mode=username
+     *     post /api/auth/login?mode=username
      *     {
      *       "username": "root",
      *       "password": "something"
@@ -75,7 +75,26 @@ class AuthController extends Controller
         return $context->response(status('success', $user));
     }
 
-
+    /**
+     * @apiGroup Auth
+     *
+     * @api {post} /api/auth/register 用户注册
+     *
+     * @apiParam {string} [username]  用户名
+     * @apiParam {string} password  用户密码
+     * @apiParam {string} [email]   用户邮箱
+     *
+     *
+     * @apiParamExample {curl} 请求示例:
+     *     post /api/auth/register
+     *     {
+     *       "username": "root",
+     *       "password": "something"
+     *     }
+     *
+     *
+     *
+     */
     public function register(Context $context)
     {
         $status = (new User())->setData($context->data())->addUser();
@@ -83,7 +102,26 @@ class AuthController extends Controller
         return $context->response($status);
     }
 
-    // 忘记密码
+    /**
+     * @apiGroup Auth
+     *
+     * @api {post} /api/auth/forgot 忘记密码
+     *
+     * @apiParam {string} [username]  用户名
+     * @apiParam {string} password  用户密码
+     * @apiParam {string} [email]   用户邮箱
+     *
+     *
+     * @apiParamExample {curl} 请求示例:
+     *     post /api/auth/register
+     *     {
+     *       "username": "root",
+     *       "password": "something"
+     *     }
+     *
+     *
+     *
+     */
     public function forgot()
     {
     }

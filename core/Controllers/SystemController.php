@@ -42,7 +42,7 @@ class SystemController extends Controller
     /**
      * @apiGroup System
      *
-     * @api {post} /api/config 添加系统设置
+     * @api {post} /api/system/config 添加系统设置
      *
      *
      * @apiParam {string} config_key    设置键值
@@ -51,7 +51,7 @@ class SystemController extends Controller
      *
      *
      * @apiParamExample {json} 请求示例:
-     * post /api/config
+     * post /api/system/config
      * {
      * "config_key":"system_site_title",
      * "config_value":"我的网站",
@@ -84,10 +84,10 @@ class SystemController extends Controller
     /**
      * @apiGroup System
      *
-     * @api {get} /api/config?config_key 获取系统设置
+     * @api {get} /api/system/config?config_key 获取系统设置
      *
      * @apiParamExample {json} 请求示例:
-     * get /api/config?config_key=system_site_title
+     * get /api/system/config?config_key=system_site_title
      *
      * @apiSuccessExample {json} 操作成功:
      * {
@@ -109,7 +109,7 @@ class SystemController extends Controller
     /**
      * @apiGroup System
      *
-     * @api {post} /api/config?config_key 编辑系统设置
+     * @api {post} /api/system/config?config_key 编辑系统设置
      *
      *
      * @apiParam {string} config_value  设置值
@@ -117,7 +117,7 @@ class SystemController extends Controller
      *
      *
      * @apiParamExample {json} 请求示例:
-     * put /api/config?config_key=system_site_title
+     * put /api/system/config?config_key=system_site_title
      * {
      * "config_value":"网站"
      * }
@@ -146,10 +146,10 @@ class SystemController extends Controller
     /**
      * @apiGroup System
      *
-     * @api {delete} /api/config?config_key 获取系统设置
+     * @api {delete} /api/system/config?config_key 获取系统设置
      *
      * @apiParamExample {json} 请求示例:
-     * delete /api/config?config_key=system_site_title
+     * delete /api/system/config?config_key=system_site_title
      *
      * @apiSuccessExample {json} 操作成功:
      * {
