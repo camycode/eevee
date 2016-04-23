@@ -39,6 +39,37 @@ class SystemController extends Controller
         return $context->response(status('success', (new Installer($context->data()))->install()));
     }
 
+    /**
+     * @apiGroup System
+     *
+     * @api {post} /api/config 添加系统设置
+     *
+     *
+     * @apiParam {string} config_key    设置键值
+     * @apiParam {string} config_value  设置值
+     * @apiParam {string} source        设置来源
+     *
+     *
+     * @apiParamExample {json} 请求示例:
+     * post /api/config
+     * {
+     * "config_key":"system_site_title",
+     * "config_value":"我的网站",
+     * "source":"EEVEE"
+     * }
+     *
+     * @apiSuccessExample {json} 操作成功:
+     * {
+     * "code": 200,
+     * "message": "操作成功",
+     * "data": {
+     *      "config_key": "system_site_title",
+     *      "config_value": "我的网站",
+     *      "source": "EEVEE"
+     *   }
+     * }
+     *
+     */
     public function postConfig(Context $context)
     {
         $key = $context->data('config_key');
@@ -50,11 +81,59 @@ class SystemController extends Controller
         return $context->response((new System())->addConfig($key, $value, $source));
     }
 
+    /**
+     * @apiGroup System
+     *
+     * @api {get} /api/config?config_key 获取系统设置
+     *
+     * @apiParamExample {json} 请求示例:
+     * get /api/config?config_key=system_site_title
+     *
+     * @apiSuccessExample {json} 操作成功:
+     * {
+     * "code": 200,
+     * "message": "操作成功",
+     * "data": {
+     *      "config_key": "system_site_title",
+     *      "config_value": "网站",
+     *      "source": "EEVEE"
+     *    }
+     * }
+     *
+     */
     public function getConfig(Context $context)
     {
         return $context->response((new System())->getConfig($context->params('config_key')));
     }
 
+    /**
+     * @apiGroup System
+     *
+     * @api {post} /api/config?config_key 编辑系统设置
+     *
+     *
+     * @apiParam {string} config_value  设置值
+     * @apiParam {string} source        设置来源
+     *
+     *
+     * @apiParamExample {json} 请求示例:
+     * put /api/config?config_key=system_site_title
+     * {
+     * "config_value":"网站"
+     * }
+     *
+     * @apiSuccessExample {json} 操作成功:
+     * {
+     * "code": 200,
+     * "message": "操作成功",
+     * "data": {
+     *      "config_key": "system_site_title",
+     *      "config_value": "网站",
+     *      "source": "EEVEE"
+     *    }
+     * }
+     *
+     */
     public function putConfig(Context $context)
     {
         $key = $context->params('config_key');
@@ -64,6 +143,22 @@ class SystemController extends Controller
         return $context->response((new System())->updateConfig($key, $value));
     }
 
+    /**
+     * @apiGroup System
+     *
+     * @api {delete} /api/config?config_key 获取系统设置
+     *
+     * @apiParamExample {json} 请求示例:
+     * delete /api/config?config_key=system_site_title
+     *
+     * @apiSuccessExample {json} 操作成功:
+     * {
+     * "code": 200,
+     * "message": "操作成功",
+     * "data": null
+     * }
+     *
+     */
     public function deleteConfig(Context $context)
     {
         $key = $context->params('config_key');

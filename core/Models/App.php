@@ -36,6 +36,8 @@ class App extends Model
      * 更新APP
      *
      * @param string $app_id
+     * 
+     * @return Status
      */
     public function updateApp($app_id)
     {
