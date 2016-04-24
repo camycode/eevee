@@ -70,8 +70,6 @@ define(['angularAMD', 'angularRoute', 'jquery'], function (angularAMD) {
             .state('app.configs_media', angularAMD.route({
                 url: '/configs/media',
                 templateUrl: 'views/configs/media.html',
-                // controller: 'roles',
-                // controllerUrl: 'controllers/roles'
             }));
 
 
