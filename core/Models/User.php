@@ -408,11 +408,10 @@ class User extends Model
     /**
      * 校验用户，校验成功返回true，否则返回错误信息数组.
      *
-     * @param array $ignore 忽略的验证的字段
+     * @param array $ignore     忽略的验证的字段
+     * @param bool $password
      *
-     * @return mixed
-     *
-     * @throws \Exception
+     * @throws \Core\Exceptions\StatusException
      */
     protected function validateUser($ignore = [], $password = false)
     {
@@ -429,7 +428,7 @@ class User extends Model
                 'email' => "required|email|unique:$table|max:255",
                 'role' => 'required',
             ]);
-            
+
         }
 
         $this->ignore($rule, $ignore);
@@ -438,7 +437,7 @@ class User extends Model
 
         if ($validator->fails()) {
 
-            return exception('validateFailed', $validator->errors());
+             exception('validateFailed', $validator->errors());
         }
 
         $this->validateRole((array)$this->data['role']);
