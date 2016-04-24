@@ -225,7 +225,14 @@ class User extends Model
      */
     public function putUserPassword($user_id, $origin_password, $new_password)
     {
+        $user = $this->getUser($user_id)->data;
 
+        if ($this->processPassword($origin_password) != $user->password) {
+
+            exception('TheOriginPasswordIsInvilad');
+        }
+
+        $this->resource('USER')->where('id', $user_id)->update(['password' => $new_password]);
     }
 
     /**
@@ -407,16 +414,23 @@ class User extends Model
      *
      * @throws \Exception
      */
-    protected function validateUser($ignore = [])
+    protected function validateUser($ignore = [], $password = false)
     {
         $table = $this->table('USER');
 
         $rule = [
-            'username' => "required|unique:$table|max:255",
-            'password' => 'required|min:6',
-            'email' => "required|email|unique:$table|max:255",
-            'role' => 'required',
+            'password' => 'required|min:6'
         ];
+
+        if (!$password) {
+
+            array_merge($rule, [
+                'username' => "required|unique:$table|max:255",
+                'email' => "required|email|unique:$table|max:255",
+                'role' => 'required',
+            ]);
+            
+        }
 
         $this->ignore($rule, $ignore);
 
