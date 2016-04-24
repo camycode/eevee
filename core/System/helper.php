@@ -53,7 +53,12 @@ function d($var)
     die(json_encode($var));
 }
 
-
-function asset_url(){
-
+/**
+ * 生成插件和主题静态资源链接
+ *
+ * @param atring $path
+ */
+function asset($path)
+{
+    d(__DIR__);
 }
