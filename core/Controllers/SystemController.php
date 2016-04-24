@@ -19,16 +19,9 @@ class SystemController extends Controller
         return response('EEVEE 1.0');
     }
 
-    /**
-     * 获取系统环境信息.
-     *
-     * @return string $info.host            域名
-     * @return string $info.system          操作系统
-     * @return string $info.php_version     php版本
-     * @return string $info.server_software 服务器引擎
-     */
-    public function info()
+    public function asset(Context $context)
     {
+//        echo file_get_contents(__DIR__.'/AppController.php');
     }
 
     /**
@@ -167,5 +160,6 @@ class SystemController extends Controller
 
         return $context->response((new System())->deleteConfig($key, $source));
     }
+
 
 }

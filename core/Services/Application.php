@@ -115,13 +115,12 @@ class Application extends Lumen
 
         $this->group(['prefix' => 'api/plugin', 'middleware' => 'auth', 'namespace' => 'Plugin'], function () {
 
-            $this->registerPluginsRoutes();
+//            $this->registerPluginsRoutes();
 
         });
 
 
     }
-
 
 
     protected function registerPluginsRoutes()

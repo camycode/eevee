@@ -92,6 +92,9 @@ return [
     'post@system/install' => [
         'action' => 'SystemController@install',
     ],
+    'get@asset' => [
+        'action' => 'SystemController@asset',
+    ],
     // 系统设置
     'post@system/config' => [
         'action' => 'SystemController@postConfig',

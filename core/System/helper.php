@@ -54,4 +54,6 @@ function d($var)
 }
 
 
+function asset_url(){
 
+}
