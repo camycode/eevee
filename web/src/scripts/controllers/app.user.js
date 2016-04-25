@@ -1,18 +1,20 @@
+define([
+        '../models/user'
+    ],
+    function () {
 
-define(['app','../models/user'],function(app){
+        return ['$scope', 'user', function ($scope, user) {
 
-    return ['$scope','user',function($scope,user) {
+            $scope.title = "用户管理";
 
-      $scope.title = "用户管理";
+            user.setUserEditor($scope);
 
-      user.setUserEditor($scope);
+            $scope.openUserEditor = function () {
 
-      $scope.openUserEditor = function() {
+                user.openUserEditor();
 
-          user.openUserEditor();
+            }
 
-      }
+        }];
 
-    }];
-    
-});
+    });

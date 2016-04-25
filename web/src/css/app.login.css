@@ -1,4 +1,4 @@
-#page-auth-login {
+#page-login {
   position: fixed;
   z-index: 9999999;
   left: 0;
@@ -7,13 +7,13 @@
   height: 100%;
   background: #DADADA;
 }
-#page-auth-login .grid {
+#page-login .grid {
   height: 100%;
 }
-#page-auth-login .column {
+#page-login .column {
   max-width: 450px;
   top: -12%;
 }
-#page-auth-login .ui.stacked.segment {
+#page-login .ui.stacked.segment {
   margin-top: 10px;
 }

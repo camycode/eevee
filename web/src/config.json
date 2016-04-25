@@ -1,9 +1,62 @@
 {
   "routes": {
+    "login": {
+      "url": "/login",
+      "templateUrl": "views/login.html",
+      "controllerUrl": "controllers/login"
+    },
     "app": {
       "url": "/app",
-      "templateUrl": "views/app.html",
+      "templateUrl": "views/app.layout.html",
       "controllerUrl": "controllers/app.layout"
+    },
+    "app.post": {
+      "url": "/post",
+      "templateUrl": "views/app.post.html",
+      "controllerUrl": "controllers/app.post"
+    },
+    "app.term": {
+      "url": "/term",
+      "templateUrl": "views/app.term.html",
+      "controllerUrl": "controllers/app.term"
+    },
+    "app.media": {
+      "url": "/media",
+      "templateUrl": "views/app.media.html",
+      "controllerUrl": "controllers/app.media"
+    },
+    "app.user": {
+      "url": "/user",
+      "templateUrl": "views/app.user.html",
+      "controllerUrl": "controllers/app.user"
+    },
+    "app.role": {
+      "url": "/role",
+      "templateUrl": "views/app.role.html",
+      "controllerUrl": "controllers/app.role"
+    },
+    "app.configs-site": {
+      "url": "/configs/site",
+      "templateUrl": "views/configs/site.html"
+    },
+    "app.configs-email": {
+      "url": "/configs/email",
+      "templateUrl": "views/configs/email.html"
+    },
+    "app.dashboard": {
+      "url": "/dashboard",
+      "templateUrl": "views/app.dashboard.html",
+      "controllerUrl": "controllers/app.dashboard"
+    },
+    "app.plugins": {
+      "url": "/plugins",
+      "templateUrl": "views/app.plugin.html",
+      "controllerUrl": "controllers/app.plugins"
+    },
+    "app.themes": {
+      "url": "/themes",
+      "templateUrl": "views/app.theme.html",
+      "controllerUrl": "controllers/app.themes"
     }
   }
 }

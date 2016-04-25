@@ -1,6 +1,6 @@
-<div class="app layout">
+<div id="eevee-layout" class="page">
 
-    <div class="app layout header ui menu">
+    <div id="eevee-header" class="ui menu">
         <div class="item brand">EEVEE</div>
         <a class="item"><i class="sidebar icon"></i></a>
         <div class="right menu">
@@ -20,8 +20,7 @@
         </div>
     </div>
 
-    <!-- 边栏导航 -->
-    <aside class="app layout sidebar" sidebar>
+    <aside id="eevee-sidebar" class="sidebar" sidebar>
 
         <ul class="ui vertical menu">
             <li class="item">
@@ -43,6 +42,12 @@
                 <a href="#/app/role"><i class="spy icon"></i>角色</a>
             </li>
             <li class="item">
+                <a href="#/app/themes"><i class="paint brush icon"></i>主题</a>
+            </li>
+            <li class="item">
+                <a href="#/app/plugins"><i class="puzzle icon"></i>插件</a>
+            </li>
+            <li class="item">
                 <a class="" href="#"><i class="setting icon"></i>配置</a>
                 <ul>
                     <li class="item"><a href="#/app/configs/site">网站</a></li>
@@ -50,9 +55,6 @@
                     <li class="item"><a href="#/app/configs/media">多媒体</a></li>
                 </ul>
             </li>
-            <!-- <li class="item">
-                <a href="#"><i class="area chart icon"></i></i>统计</a>
-            </li> -->
             <li class="item">
                 <a href="#"><i class="area info icon"></i></i>帮助</a>
             </li>
@@ -60,10 +62,9 @@
 
     </aside>
 
-    <!-- 中间区域 -->
+    <section id="eevee-placeholder">
 
-    <section class="app layout placeholder">
-
-        <div class="app layout view" ui-view></div>
+        <div id="eevee-view" ui-view></div>
     </section>
+
 </div>

@@ -1,12 +1,14 @@
+@charset "UTF-8";
+
+@import "compass";
+
 @charset "utf-8";
 
-// 底色
+// background
 $c1: #EDECEC;
 
 // header
 $c2:#2196f3;
-
-// $c2: #F44336;
 
 // sidebar
 $c3: #fff;
@@ -17,5 +19,10 @@ $c4: #F4F4F4;
 // sidebar hover
 $c5: #fff;
 
-// border
 $border-color: #DBDBDB;
+
+$layout_header_height: 55px;
+
+$layout_header_brand_width: 210px;
+
+$layout_wrapper_header_height: 95px;

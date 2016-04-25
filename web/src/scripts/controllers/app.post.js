@@ -1,12 +1,12 @@
 /**
  * Posts 控制器
  */
-define(['app'],function(app){
-    app.controller('posts', ['$scope', '$state', 'PostEditor',function($scope, $state,PostEditor) {
-      PostEditor.init($scope);
-      $scope.title = "文章";
-      $scope.openPostEditor = function(){
-          PostEditor.open();
-      }
-    }]);
+define(['css!../../css/app.post'], function () {
+
+    return ['$scope', '$state', function ($scope, $state) {
+
+        $scope.title = "文章";
+
+    }];
+
 });

@@ -28,15 +28,14 @@ gulp.task('browser', function () {
 
     watch('./src/sass/**/*.scss', gulp.series('compass'));
 
-    watch(['./src/scripts/[^bower]*/**/*.js', './src/scripts/*.js', './src/index.html', './src/views/**/*.html', './src/images/**/*.*'], browserSync.reload);
+    watch(['./src/config.json','./src/scripts/[^bower]*/**/*.js', './src/scripts/*.js', './src/index.html', './src/views/**/*.html', './src/images/**/*.*'], browserSync.reload);
 
     return browserSync.init({
         server: {
-            baseDir: "./src/"
+            baseDir: "./"
         },
         port: 8080,
-        startPath: '#home'
-        // proxy: "qsq.com/shark/src#home"
+        startPath: 'src/#/login'
     });
     
 });

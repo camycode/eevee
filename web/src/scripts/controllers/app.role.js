@@ -1,8 +1,7 @@
 define([
-  'app',
   '../models/role',
   '../services/typing',
-], function(app) {
+], function() {
 
   return ['$scope', 'role', 'typing', function($scope, role, typing) {
 

@@ -1,16 +1,19 @@
-define(['app', 'nestable'], function(app) {
+define([
+        'nestable'
+    ],
+    function () {
 
-  return ['$scope', '$state', function($scope, $state) {
+        return ['$scope', '$state', function ($scope, $state) {
 
-    $scope.title = "分类目录";
+            $scope.title = "分类目录";
 
-    // 配置拖动排序
-    $('#terms-list').nestable({});
+            // 配置拖动排序
+            $('#terms-list').nestable({});
 
-    $scope.editTerm = function() {
-      return false;
-    }
+            $scope.editTerm = function () {
+                return false;
+            }
 
-  }];
+        }];
 
-});
+    });

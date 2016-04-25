@@ -1,0 +1,19 @@
+#role-editor {
+  width: 50%;
+}
+#role-editor .content.block {
+  padding: 20px 40px;
+}
+#role-editor .ms-container {
+  width: 100%;
+}
+#role-editor .ms-container .ms-list {
+  min-height: 300px !important;
+  height: auto !important;
+}
+#role-editor li.ms-optgroup-label {
+  color: #131313 !important;
+}
+#role-editor li.ms-elem-selectable {
+  color: #9A9A9A !important;
+}

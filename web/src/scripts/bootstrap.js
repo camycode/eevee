@@ -9,6 +9,8 @@ require.config({
         'angular': './vendor/angular/angular',
         'angularRoute': './vendor/angular-ui-router/release/angular-ui-router.min',
         'angularAMD': './vendor/angularAMD/angularAMD.min',
+        'text' : 'vendor/requirejs-plugins/lib/text',
+        'json': 'vendor/requirejs-plugins/src/json',
         'domReady': './vendor/domReady/domReady',
         'semantic': './vendor/semantic/dist/semantic.min',
         'slimScroll': './vendor/jQuery-slimScroll/jquery.slimscroll.min',
@@ -29,7 +31,7 @@ require.config({
     // 不兼容模块定义
     shim: {
         'angularAMD': {
-            deps: ['angular']
+            deps: ['angularRoute']
         },
         'angular': {
             exports: 'angular'
