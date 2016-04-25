@@ -19,6 +19,32 @@ class PluginController extends Controller
 
     }
 
+    public function getLocalPlugins(Context $context)
+    {
+        $plugins = [];
+
+        $directories = Storage::directories('/plugins');
+
+        foreach ($directories as $dir) {
+            $configPath = base_path($dir . '/config.php');
+            if (file_exists($configPath)) {
+
+                $config = require($configPath);
+
+                if (!is_array($config)) {
+                    exception('pluginConfigFileShouldReturnArray', ['path' => $configPath]);
+                }
+
+                $config['ident]'] = $dir;
+
+                array_push($plugins, $config);
+            }
+        }
+
+        return $context->response(status('success', $plugins));
+    }
+
+
     public function deletePlugin(Context $context)
     {
 
@@ -33,5 +59,5 @@ class PluginController extends Controller
     {
 
     }
-    
+
 }

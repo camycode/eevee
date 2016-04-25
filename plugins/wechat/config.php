@@ -21,8 +21,8 @@ return [
             'icon' => '',
             'image' => '',
             'url' => '',
-            'templateUrl' => asset(''),
-            'controllerUrl' => asset(''),
+            'templateUrl' => '',
+            'controllerUrl' => '',
             'permissions' => '',
             'children' => [],
         ]

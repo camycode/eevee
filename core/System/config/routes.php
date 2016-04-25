@@ -112,5 +112,9 @@ return [
         'action' => 'SystemController@deleteConfig',
         'permission' => 'SYSTEM_CONFIG_DELETE',
     ],
-
+    // 插件
+    'get@local/plugins' => [
+        'action' => 'PluginController@getLocalPlugins',
+        'permission' => 'USER_GET',
+    ],
 ];
