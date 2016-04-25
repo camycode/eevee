@@ -16,7 +16,7 @@ class SystemController extends Controller
     public function version(Context $context)
     {
 
-        return response('EEVEE 1.0');
+        return response('EEVEE 1.0.0');
     }
 
     public function asset(Context $context)
