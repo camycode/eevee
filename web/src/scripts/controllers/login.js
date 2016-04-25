@@ -5,7 +5,7 @@ define([
         '../models/user',
         '../services/storage',
         '../services/typing',
-        'css!../../css/pages/login'
+        'css!../../css/login'
     ],
     function () {
 
