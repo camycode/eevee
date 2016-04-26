@@ -2,7 +2,7 @@ define([
   'app',
   'jquery',
   'ajax',
-  '../directives/role.editor'
+  'role.editor'
 ], function(app, $) {
 
   app.factory('role', ['$compile', 'ajax', function($compile, ajax) {

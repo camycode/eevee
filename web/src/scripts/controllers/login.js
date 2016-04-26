@@ -2,9 +2,9 @@
  * Posts 控制器
  */
 define([
-        '../models/user',
-        '../services/storage',
-        '../services/typing',
+        'user',
+        'storage',
+        'typing',
         'css!../../css/login'
     ],
     function () {
@@ -13,6 +13,7 @@ define([
 
             $scope.account = null;
             $scope.password = null;
+
 
             $scope.login = function () {
 
@@ -28,7 +29,7 @@ define([
 
                         } else {
 
-                            typing.warning(response.message);
+                            typing.tip(response.message,'#account');
 
                         }
 

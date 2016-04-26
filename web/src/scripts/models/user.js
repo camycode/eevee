@@ -7,8 +7,8 @@
 define([
     'app',
     'jquery',
-    '../services/ajax',
-    '../directives/user.editor'
+    'ajax',
+    'user.editor'
   ],
   function(app, $) {
 

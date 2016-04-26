@@ -15,10 +15,15 @@ require.config({
         'navgoco': './vendor/navgoco/src/jquery.navgoco.min',
         'nestable': './vendor/Nestable/jquery.nestable',
         'pace': './vendor/PACE/pace.min',
+        'layer': './vendor/layer/src/layer',
         'app': './app',
+        'user': './models/user',
         'url': './services/url',
         'ajax': './services/ajax',
-        'typing': './services/typing'
+        'typing': './services/typing',
+        'storage': './services/storage',
+        'role.editor': './directives/role.editor',
+        'user.editor': './directives/user.editor'
     },
 
     map: {
@@ -39,14 +44,18 @@ require.config({
         },
         'pace': {
             deps: ['css!./vendor/PACE/themes/blue/pace-theme-minimal']
+        },
+        'layer': {
+            deps: ['css!./vendor/layer/skin/layer'],
+            exports: 'layer'
         }
     },
 
     urlArgs: "bust=" + (new Date()).getTime()
-    
+
 });
 
-define(['pace'],function (pace) {
+define(['pace'], function (pace) {
 
     pace.start({
         restartOnPushState: true,
