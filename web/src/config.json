@@ -10,6 +10,11 @@
       "templateUrl": "views/app.layout.html",
       "controllerUrl": "controllers/app.layout"
     },
+    "app.dashboard": {
+      "url": "/dashboard",
+      "templateUrl": "views/app.dashboard.html",
+      "controllerUrl": "controllers/app.dashboard"
+    },
     "app.post": {
       "url": "/post",
       "templateUrl": "views/app.post.html",
@@ -41,11 +46,6 @@
     "app.configs-email": {
       "url": "/configs/email",
       "templateUrl": "views/configs/email.html"
-    },
-    "app.dashboard": {
-      "url": "/dashboard",
-      "templateUrl": "views/app.dashboard.html",
-      "controllerUrl": "controllers/app.dashboard"
     },
     "app.plugin": {
       "url": "/plugin",

@@ -6,15 +6,49 @@
  * @author 古月(Gue@lehu.io)
  */
 define([
-    '../directives/sidebar',
-    'css!../../css/app.layout'
+        'jquery',
+        'navgoco',
+        'semantic',
+        'slimScroll',
+        '../directives/sidebar',
+        'css!../../css/app.layout'
     ],
-    function(){
+    function ($) {
 
-    return ['$scope', '$state',function($scope, $state) {
+        return ['$scope', '$state', function ($scope, $state) {
 
-      $scope.title = "用户登录";
+            // 垂直导航栏
 
-    }];
+            $('#layout-sidebar .menu').navgoco({
+                openClass: 'active',
+                accordion: true,
+                slide: {
+                    duration: 200,
+                    easing: 'swing'
+                },
+                onClickAfter: function (e, submenu) {
+                    $('#layout-sidebar .menu .item').removeClass('active');
+                    $(e.target).parents('.item').addClass('active');
+                }
+            });
 
-});
+
+            // 导航栏滚动体
+
+            $('#layout-sidebar .menu').slimScroll({
+                height: '100%'
+            });
+
+            // 配置头部导航菜单
+
+            $('.ui.selection.dropdown').dropdown();
+
+
+            $('.ui.menu .ui.dropdown').dropdown({
+                on: 'hover'
+            });
+
+
+        }];
+
+    });

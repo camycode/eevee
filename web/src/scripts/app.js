@@ -13,7 +13,7 @@ define([
 
             $uiViewScrollProvider.useAnchorScroll();
 
-            $urlRouterProvider.otherwise('app');
+            $urlRouterProvider.otherwise('/app/dashboard');
 
             var routes = config.routes || [];
 

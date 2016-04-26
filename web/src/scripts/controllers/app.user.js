@@ -1,5 +1,6 @@
 define([
-        '../models/user'
+        '../models/user',
+        'css!../../css/app.user'
     ],
     function () {
 
