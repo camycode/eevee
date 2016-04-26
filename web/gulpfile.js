@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var browserSync = require('browser-sync').create()
+var browserSync = require('browser-sync').create();
 var watch = require('gulp-watch');
 var compass = require('gulp-compass');
 var plumber = require('gulp-plumber');
@@ -19,7 +19,6 @@ gulp.task('compass', function () {
             console.log(error);
         })
         .pipe(browserSync.stream());
-
 });
 
 // browser sync
@@ -34,13 +33,14 @@ gulp.task('browser', function () {
         server: {
             baseDir: "./"
         },
-        port: 8080,
-        startPath: 'src/#/login'
+        port: 7000,
+        startPath: '/src#login'
     });
-    
 });
 
 // 开启服务
 gulp.task('default', gulp.series('browser'), function (callback) {
     callback();
 });
+
+

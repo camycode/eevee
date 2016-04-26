@@ -1,24 +1,42 @@
-define(['angularAMD', 'json!../config.json', 'jquery'], function (angularAMD,config) {
+define([
+        'angularAMD',
+        'json!../config.json',
+        'jquery',
+        'css!./vendor/semantic/dist/semantic.min',
+        'css!./vendor/animate.css/animate.min.css'
+    ],
+    function (angularAMD, config) {
 
-    var app = angular.module("eevee", ['ui.router']);
+        var app = angular.module("eevee", ['ui.router']);
 
-    app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
+        app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
 
-        //用于改变state时跳至顶部
-        $uiViewScrollProvider.useAnchorScroll();
+            $uiViewScrollProvider.useAnchorScroll();
 
-        // 默认进入先重定向
-        $urlRouterProvider.otherwise('app');
+            $urlRouterProvider.otherwise('app');
 
-        var routes = config.routes || [];
+            var routes = config.routes || [];
 
-        // 路由定义
-        for (var i in routes) {
-            $stateProvider.state(i, angularAMD.route(routes[i]));
-        }
+            for (var i in routes) {
+                $stateProvider.state(i, angularAMD.route(routes[i]));
+            }
+
+        });
+
+        // app.config(['$httpProvider', function ($httpProvider) {
+        //     $httpProvider.interceptors.push(function () {
+        //         return {
+        //             'request': function (config) {
+        //                 return config;
+        //             },
+        //             'response': function (response) {
+        //                 return response
+        //             }
+        //         };
+        //     });
+        // }]);
+
+
+        return angularAMD.bootstrap(app);
 
     });
-
-    return angularAMD.bootstrap(app);
-
-});

@@ -1,0 +1,43 @@
+/*
+Error: Invalid US-ASCII character "\xE7"
+        on line 4 of editor.scss
+
+1: @import "../globals";
+2: @import "compass";
+3: 
+4: // 编辑器内容
+5: .editor {
+6:   background: #fafafa;
+7:   height: 100%;
+8: 
+9:   > .menu {
+
+Backtrace:
+editor.scss:4
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1299:in `rescue in block in find_encoding_error'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1296:in `block in find_encoding_error'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1295:in `each'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1295:in `each_with_index'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1295:in `find_encoding_error'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:904:in `check_sass_encoding'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:433:in `check_encoding!'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:389:in `_to_tree'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:295:in `render_with_sourcemap'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:209:in `each'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin.rb:82:in `update_stylesheets'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:363:in `watch_or_update'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/base.rb:52:in `parse'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/base.rb:19:in `parse!'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/bin/scss:13:in `<top (required)>'
+/usr/local/bin/scss:23:in `load'
+/usr/local/bin/scss:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid US-ASCII character \"\xE7\"\A         on line 4 of editor.scss\A \A 1: @import \"../globals\";\A 2: @import \"compass\";\A 3: \A 4: // 编辑器内容\A 5: .editor {\A 6:   background: #fafafa;\A 7:   height: 100%;\A 8: \A 9:   > .menu {"; }
