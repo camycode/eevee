@@ -20,15 +20,14 @@
       "templateUrl": "views/app.term.html",
       "controllerUrl": "controllers/app.term"
     },
-    "app.media": {
-      "url": "/media",
-      "templateUrl": "views/app.media.html",
-      "controllerUrl": "controllers/app.media"
-    },
     "app.user": {
       "url": "/user",
       "templateUrl": "views/app.user.html",
       "controllerUrl": "controllers/app.user"
+    },
+    "app.media": {
+      "url": "/media",
+      "templateUrl": "views/app.media.html"
     },
     "app.role": {
       "url": "/role",
@@ -48,15 +47,15 @@
       "templateUrl": "views/app.dashboard.html",
       "controllerUrl": "controllers/app.dashboard"
     },
-    "app.plugins": {
-      "url": "/plugins",
+    "app.plugin": {
+      "url": "/plugin",
       "templateUrl": "views/app.plugin.html",
-      "controllerUrl": "controllers/app.plugins"
+      "controllerUrl": "controllers/app.plugin"
     },
-    "app.themes": {
-      "url": "/themes",
+    "app.theme": {
+      "url": "/theme",
       "templateUrl": "views/app.theme.html",
-      "controllerUrl": "controllers/app.themes"
+      "controllerUrl": "controllers/app.theme"
     }
   }
 }

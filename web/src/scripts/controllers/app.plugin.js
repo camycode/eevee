@@ -1,9 +1,9 @@
 /**
- * app.plugins action
+ * app.plugin action
  */
 define(
     [
-        'css!../../css/app.plugins'
+        'css!../../css/app.plugin'
     ],
     function () {
 

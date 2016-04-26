@@ -2,7 +2,7 @@
 
 @import "globals";
 
-#pages-app.plugin{
+#pages-app.role{
 
 }
   
