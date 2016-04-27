@@ -19,7 +19,7 @@ define([
 
             // 垂直导航栏
 
-            $('#layout-sidebar .menu').navgoco({
+            $('#eevee-sidebar .menu').navgoco({
                 openClass: 'active',
                 accordion: true,
                 slide: {
@@ -27,7 +27,7 @@ define([
                     easing: 'swing'
                 },
                 onClickAfter: function (e, submenu) {
-                    $('#layout-sidebar .menu .item').removeClass('active');
+                    $('#eevee-sidebar .menu .item').removeClass('active');
                     $(e.target).parents('.item').addClass('active');
                 }
             });
@@ -35,9 +35,9 @@ define([
 
             // 导航栏滚动体
 
-            $('#layout-sidebar .menu').slimScroll({
-                height: '100%'
-            });
+            // $('#eevee-sidebar .menu').slimScroll({
+            //     height: '100%'
+            // });
 
             // 配置头部导航菜单
 
