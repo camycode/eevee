@@ -396,7 +396,7 @@ class User extends Model
             'id' => $this->id(),
             'role' => config('site.user.role', 'member'),
             'status' => config('site.user.status', 0),
-            'avatar' => config('site.user.avatar', '/web/images/avatar.png'),
+            'avatar' => config('site.user.avatar', 'images/avatar.png'),
             'source' => 'eevee',
         ];
 
@@ -408,7 +408,7 @@ class User extends Model
     /**
      * 校验用户，校验成功返回true，否则返回错误信息数组.
      *
-     * @param array $ignore     忽略的验证的字段
+     * @param array $ignore 忽略的验证的字段
      * @param bool $password
      *
      * @throws \Core\Exceptions\StatusException
@@ -437,7 +437,7 @@ class User extends Model
 
         if ($validator->fails()) {
 
-             exception('validateFailed', $validator->errors());
+            exception('validateFailed', $validator->errors());
         }
 
         $this->validateRole((array)$this->data['role']);

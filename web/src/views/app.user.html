@@ -45,9 +45,7 @@
             <th>头像</th>
             <th>用户名</th>
             <th>邮箱</th>
-            <th>手机号码</th>
             <th>状态</th>
-            <th>角色</th>
             <th>日期</th>
         </tr>
         </thead>
@@ -59,30 +57,24 @@
             <th>头像</th>
             <th>用户名</th>
             <th>邮箱</th>
-            <th>手机号码</th>
             <th>状态</th>
-            <th>角色</th>
             <th>日期</th>
         </tr>
         </tfoot>
         <tbody>
-        <tr>
+        <tr ng-repeat="user in users">
             <td class="">
                 <input type="checkbox">
             </td>
             <td>
-                <img src="images/photos/bob.jpeg" class="avatar" alt="">
+                <img src="{{ user.avatar }}" class="avatar" alt="">
             </td>
             <td>
-                bob
+                {{ user.username }}
             </td>
-            <td class="right aligned collapsing">bob@gmail.com</td>
-            <td>18817788733</td>
-            <td>管理员</td>
-            <td>
-                <span class="status">正常</span>
-            </td>
-            <td>2016-01-04 15:26</td>
+            <td class="right aligned collapsing">{{ user.email }}</td>
+            <td>{{ user.status }}</td>
+            <td>{{ user.created_at }}</td>
         </tr>
         <tr class="">
             <td>
@@ -95,8 +87,6 @@
                 乔布斯
             </td>
             <td class="right aligned">jobs@qq.com</td>
-            <td>18817788733</td>
-            <td>管理员</td>
             <td>正常</td>
             <td>2016-01-04 15:26</td>
         </tr>
