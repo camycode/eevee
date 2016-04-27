@@ -1,9 +1,9 @@
 /**
- * app.themes action
+ * app.plugin action
  */
 define(
     [
-        'css!../../css/app.theme'
+        'css!../../../css/config/site'
     ],
     function () {
 
@@ -12,4 +12,4 @@ define(
         }];
 
     });
-  
+

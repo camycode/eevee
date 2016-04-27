@@ -39,13 +39,15 @@
       "templateUrl": "views/app.role.html",
       "controllerUrl": "controllers/app.role"
     },
-    "app.configs-site": {
-      "url": "/configs/site",
-      "templateUrl": "views/configs/site.html"
+    "app.config-site": {
+      "url": "/config/site",
+      "templateUrl": "views/config/site.html",
+      "controllerUrl": "controllers/config/site"
+
     },
     "app.configs-email": {
-      "url": "/configs/email",
-      "templateUrl": "views/configs/email.html"
+      "url": "/config/email",
+      "templateUrl": "views/config/email.html"
     },
     "app.plugin": {
       "url": "/plugin",
