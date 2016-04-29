@@ -3,7 +3,6 @@
 namespace Core\Models;
 
 use Core\Events\UserCreated;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
 

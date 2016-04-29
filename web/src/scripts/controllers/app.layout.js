@@ -11,7 +11,7 @@ define([
         'semantic',
         'slimScroll',
         '../directives/sidebar',
-        'css!../../css/app.layout'
+        'css!../../css/app'
     ],
     function ($) {
 

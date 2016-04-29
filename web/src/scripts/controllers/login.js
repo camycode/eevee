@@ -20,8 +20,8 @@ define([
                 user.login({
                         account: $scope.account,
                         password: $scope.password
-                    })
-                    .success(function (response) {
+                    },
+                    function (response) {
 
                         if (response.code == 200) {
 
@@ -29,7 +29,7 @@ define([
 
                         } else {
 
-                            typing.tip(response.message,'#account');
+                            typing.tip(response.message, '#account');
 
                         }
 
@@ -37,4 +37,5 @@ define([
             };
 
         }];
+
     });

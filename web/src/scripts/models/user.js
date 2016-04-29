@@ -29,13 +29,13 @@ define([
                  * @param $scope
                  */
                 setUserEditor: function ($scope) {
-                    $('#layout-view').append($compile($('<div user.editor></div>'))($scope));
+                    $('#eevee-view').append($compile($('<div user.editor></div>'))($scope));
                 },
                 /**
                  * 打开用户编辑器
                  */
                 openUserEditor: function () {
-                    $("#user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+                    $("#app-user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
                 },
                 /**
                  * 用户登录
@@ -44,8 +44,18 @@ define([
                  *
                  * @returns $http
                  */
-                login: function (params) {
-                    return ajax.post('/api/auth/login', params);
+                login: function (params, success, error) {
+                    ajax.post('/api/auth/login', params)
+                        .success(function (response) {
+                            if (typeof success == 'function') {
+                                success(response);
+                            }
+                        })
+                        .error(function (response) {
+                            if (typeof error == 'function') {
+                                error(response);
+                            }
+                        });
                 },
                 /**
                  * 获取用户组

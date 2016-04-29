@@ -32,6 +32,7 @@
     "requirejs": "^2.2.0",
     "requirejs-plugins": "^1.0.3",
     "require-css": "^0.1.8",
-    "PACE": "pace#^1.0.2"
+    "PACE": "pace#^1.0.2",
+    "toastr": "^2.1.2"
   }
 }
