@@ -63,6 +63,12 @@ define([
                 isLogin: function () {
                     return storage.has('APP_LOGIN_USER');
                 },
+                logout: function (callback) {
+                    storage.remove('APP_LOGIN_USER');
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                },
                 /**
                  * 获取用户组
                  */

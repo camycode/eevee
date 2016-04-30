@@ -26,7 +26,6 @@ define([
             }
 
             // 垂直导航栏
-
             $('#eevee-sidebar .menu').navgoco({
                 openClass: 'active',
                 accordion: true,
@@ -41,20 +40,22 @@ define([
             });
 
 
-            // 导航栏滚动体
 
-            // $('#eevee-sidebar .menu').slimScroll({
-            //     height: '100%'
-            // });
 
             // 配置头部导航菜单
-
             $('.ui.selection.dropdown').dropdown();
-
-
+            
             $('.ui.menu .ui.dropdown').dropdown({
-                on: 'hover'
+                on: 'click'
             });
+
+            $scope.logout = function () {
+
+                user.logout(function () {
+                    url.redirect('/login');
+                });
+
+            }
 
 
         }];

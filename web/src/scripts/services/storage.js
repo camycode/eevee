@@ -27,6 +27,9 @@ define([
                 },
                 has: function (key) {
                     return typeof localStorage[key] != 'undefined';
+                },
+                remove: function (key) {
+                    localStorage.removeItem(key);
                 }
             };
 
