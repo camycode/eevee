@@ -27,7 +27,7 @@ body {
 
   #eevee-header {
     position: fixed;
-    z-index: 999;
+    z-index: 999999;
     height: $layout_header_height;
     width: 100%;
     top: 0;
@@ -41,6 +41,7 @@ body {
 
     .user.panel {
       width: 136px;
+      z-index: 999999;
     }
 
   }

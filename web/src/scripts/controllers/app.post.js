@@ -1,12 +1,22 @@
 /**
  * Posts 控制器
  */
-define(['css!../../css/app.post'], function () {
+define([
+        'media',
+        'css!../../css/app.post'
+    ],
+    function () {
 
-    return ['$scope', '$state', function ($scope, $state) {
+        return ['$scope', 'media', function ($scope, media) {
 
-        $scope.title = "文章";
+            $scope.title = "文章";
 
-    }];
+            media.config($scope);
 
-});
+            $scope.openMediaModal = function () {
+                media.open($scope);
+            };
+
+        }];
+
+    });

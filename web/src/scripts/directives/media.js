@@ -3,7 +3,7 @@
  */
 define([
         'app',
-        'css!../css/directives/media'
+        'css!../../css/directives/media'
     ],
     function (app) {
 

@@ -20,13 +20,13 @@ require.config({
         'app': './app',
         'user': './models/user',
         'role': './models/role',
+        'media': './models/media',
         'url': './services/url',
         'ajax': './services/ajax',
         'typing': './services/typing',
         'storage': './services/storage',
         'role.editor': './directives/role.editor',
         'user.editor': './directives/user.editor',
-        'media': './directives/media',
     },
 
     map: {
