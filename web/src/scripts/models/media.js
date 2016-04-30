@@ -16,9 +16,9 @@ define([
             type: 1,
             title: false,
             shadeClose: true,
-            shade: 0.3,
+            shade: 0.4,
             maxmin: false,
-            area: ['80%', '80%']
+            area: ['90%', '80%']
         };
 
         return {
