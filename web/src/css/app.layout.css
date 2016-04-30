@@ -26,6 +26,8 @@ body > .wrapper {
   width: 100%;
   top: 0;
   left: 0;
+  border-radius: 0;
+  border-style: solid none;
 }
 #eevee-layout #eevee-header .brand {
   width: 210px;

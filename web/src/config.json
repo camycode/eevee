@@ -32,7 +32,9 @@
     },
     "app.media": {
       "url": "/media",
-      "templateUrl": "views/app.media.html"
+      "templateUrl": "views/app.media.html",
+      "controllerUrl": "controllers/app.media"
+
     },
     "app.role": {
       "url": "/role",

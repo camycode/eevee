@@ -1,5 +1,6 @@
 define([
-        'nestable'
+        'nestable',
+        'css!../../css/app.term'
     ],
     function () {
 

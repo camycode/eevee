@@ -25,7 +25,8 @@ require.config({
         'typing': './services/typing',
         'storage': './services/storage',
         'role.editor': './directives/role.editor',
-        'user.editor': './directives/user.editor'
+        'user.editor': './directives/user.editor',
+        'media': './directives/media',
     },
 
     map: {
