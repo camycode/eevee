@@ -1,3 +1,6 @@
 #directive-role-editor {
   width: 500px;
 }
+#directive-role-editor .block {
+  overflow-y: scroll;
+}
