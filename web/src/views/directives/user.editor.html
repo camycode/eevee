@@ -1,4 +1,4 @@
-<div id="app-user-editor" class="view slide">
+<div id="directive-user-editor" class="view slide">
 
     <div class="view title ui secondary menu">
         <div class="item">
@@ -7,7 +7,7 @@
 
         <div class="right menu">
             <div class="item label">
-                <i class="icon checkmark"></i>
+                <i class="icon checkmark" ng-click="editUser()"></i>
             </div>
             <div class="item label">
                 <i class="icon share" ng-click="closePostEditor()"></i>
@@ -20,28 +20,20 @@
             <div class="ui form">
                 <div class="field">
                     <label>用户名</label>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" ng-model="user.username">
                 </div>
                 <div class="field">
                     <label>初始密码</label>
-                    <input type="password" placeholder="">
+                    <input type="password" placeholder="" ng-model="user.password">
                 </div>
                 <div class="field">
                     <label>邮箱</label>
-                    <input type="text" placeholder="">
-                </div>
-                <div class="field">
-                    <label>电话</label>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" ng-model="user.email">
                 </div>
                 <div class="field">
                     <label>角色名</label>
-                    <select id='pre-selected-options'>
-                        <option value='elem_1' selected>elem 1</option>
-                        <option value='elem_2'>elem 2</option>
-                        <option value='elem_3'>elem 3</option>
-                        <option value='elem_4'>elem 4</option>
-                        <option value='elem_5'>elem 5</option>
+                    <select ng-model="user.role">
+                        <option ng-repeat="role in roles" value="{{ role.id }}">{{ role.name }}</option>
                     </select>
                 </div>
             </div>

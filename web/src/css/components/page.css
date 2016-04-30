@@ -38,7 +38,7 @@
   float: left;
   display: block;
   line-height: 36px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .page.handles > .right > .paginations > span {
   padding: 3px 10px;
@@ -55,4 +55,8 @@
 }
 .page.handles > .right > .paging .button {
   padding: 10px 10px;
+}
+
+.button.save {
+  font-size: 13px;
 }

@@ -6,7 +6,7 @@ define(['app', '../directives/role.editor', 'jquery'], function (app) {
                 $('#eevee-view').append($compile($('<div role.editor></div>'))($scope));
             },
             open: function () {
-                $("#app-role-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+                $("#directive-role-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
 
             }
         }

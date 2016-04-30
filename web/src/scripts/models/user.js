@@ -8,11 +8,12 @@ define([
         'app',
         'jquery',
         'ajax',
+        'storage',
         'user.editor'
     ],
     function (app, $) {
 
-        app.factory('user', ['$compile', 'ajax', function ($compile, ajax) {
+        app.factory('user', ['$compile', 'ajax', 'storage', function ($compile, ajax, storage) {
 
             return {
                 /**
@@ -35,7 +36,7 @@ define([
                  * 打开用户编辑器
                  */
                 openUserEditor: function () {
-                    $("#app-user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+                    $("#directive-user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
                 },
                 /**
                  * 用户登录
@@ -48,6 +49,7 @@ define([
                     ajax.post('/api/auth/login', params)
                         .success(function (response) {
                             if (typeof success == 'function') {
+                                storage.set('APP_LOGIN_USER', JSON.stringify(response.data));
                                 success(response);
                             }
                         })
@@ -57,11 +59,25 @@ define([
                             }
                         });
                 },
+
+                isLogin: function () {
+                    return storage.has('APP_LOGIN_USER');
+                },
                 /**
                  * 获取用户组
                  */
                 getUsers: function (params) {
                     return ajax.get('/api/users', params);
+                },
+                /**
+                 * 添加用户
+                 *
+                 * @param data Object
+                 *
+                 * @returns $http
+                 */
+                postUser: function (data) {
+                    return ajax.post('/api/user', data)
                 }
 
             };

@@ -10,12 +10,20 @@ define([
         'navgoco',
         'semantic',
         'slimScroll',
+        'user',
+        'url',
         '../directives/sidebar',
         'css!../../css/app'
     ],
     function ($) {
 
-        return ['$scope', '$state', function ($scope, $state) {
+        return ['$scope', '$state', 'user', 'url', function ($scope, $state, user, url) {
+
+            if (!user.isLogin()) {
+                url.redirect('/login');
+            } else {
+                $('#eevee-layout').show();
+            }
 
             // 垂直导航栏
 

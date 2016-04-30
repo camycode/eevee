@@ -4,7 +4,22 @@
  * @author 古月
  */
 
-define(['app', 'layer'], function (app, layer) {
+define(['app', 'jquery', 'layer', 'toastr'], function (app, $, layer, toastr) {
+
+    var toastrDefaultOption = {
+        "closeButton": false,
+        "debug": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
 
     app.factory('typing', function () {
 
@@ -12,18 +27,43 @@ define(['app', 'layer'], function (app, layer) {
             /**
              * 打印消息
              *
-             * @param  string message
+             * @param  message
              */
-            message: function (message) {
-                layer.msg(message);
+            message: function (message, title, option) {
+
+                title = title || '';
+                option = option || {};
+
+                toastr.options = $.extend(toastrDefaultOption, option);
+
+                toastr.success(message, title);
             },
+
+            success: function (message, title, option) {
+
+                title = title || '';
+                option = option || {};
+
+                toastr.options = $.extend(toastrDefaultOption, option);
+
+                toastr.success(message, title);
+            },
+
             /**
              * 答应警告消息
              * @param  string message
              */
-            warning: function (message) {
-                layer.msg(message);
+            warning: function (message, title, option) {
+
+                title = title || '';
+                option = option || {};
+
+                toastr.options = $.extend(toastrDefaultOption, option);
+
+                toastr.warning(message, title);
             },
+
+            
             tip: function (message, selector) {
 
                 layer.tips(message, selector, {
@@ -37,8 +77,16 @@ define(['app', 'layer'], function (app, layer) {
              *
              * @param  message message
              */
-            error: function (message) {
-                alert('接口错误： ' + message);
+            error: function (message, title, option) {
+
+                title = title || '';
+
+                option = option || {};
+
+                toastr.options = $.extend(toastrDefaultOption, option);
+
+                toastr.error(message, title);
+
             },
             /**
              * 设置页面 title

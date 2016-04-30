@@ -10,6 +10,7 @@ define([
 
     role.setRoleEditor($scope);
 
+    
     role.getRoles()
       .success(function(response) {
         if (response.code == 200) {
@@ -18,15 +19,17 @@ define([
           typing.warning(response.message);
         }
       })
-      .error(function(response) {
-        typing.error(response);
+      .error(function() {
+        typing.error('网络错误');
       });
+
 
     $scope.openRoleEditor = function() {
 
       role.openRoleEditor();
 
     }
+
 
   }];
 

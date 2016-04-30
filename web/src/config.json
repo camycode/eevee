@@ -47,7 +47,8 @@
     },
     "app.configs-email": {
       "url": "/config/email",
-      "templateUrl": "views/config/email.html"
+      "templateUrl": "views/config/email.html",
+      "controllerUrl": "controllers/config/email"
     },
     "app.plugin": {
       "url": "/plugin",

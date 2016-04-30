@@ -17,6 +17,7 @@ body > .wrapper {
 #eevee-layout {
   height: 100%;
   overflow: hidden;
+  display: none;
 }
 #eevee-layout #eevee-header {
   position: fixed;
@@ -151,7 +152,7 @@ body > .wrapper {
   float: left;
   display: block;
   line-height: 36px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .page.handles > .right > .paginations > span {
   padding: 3px 10px;
@@ -168,6 +169,10 @@ body > .wrapper {
 }
 .page.handles > .right > .paging .button {
   padding: 10px 10px;
+}
+
+.button.save {
+  font-size: 13px;
 }
 
 .view.slide {

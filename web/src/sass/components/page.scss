@@ -54,7 +54,7 @@
       float: left;
       display: block;
       line-height: 36px;
-      margin-right: 5px;
+      margin-right: 10px;
 
       > span {
         padding: 3px 10px;
@@ -80,4 +80,8 @@
 
   }
 
+}
+
+.button.save {
+  font-size: 13px;
 }

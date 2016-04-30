@@ -14,10 +14,12 @@ require.config({
         'slimScroll': './vendor/jQuery-slimScroll/jquery.slimscroll.min',
         'navgoco': './vendor/navgoco/src/jquery.navgoco.min',
         'nestable': './vendor/Nestable/jquery.nestable',
-        'pace': './vendor/PACE/pace.min',
         'layer': './vendor/layer/src/layer',
+        'pace': './vendor/PACE/pace.min',
+        'toastr': './vendor/toastr/toastr.min',
         'app': './app',
         'user': './models/user',
+        'role': './models/role',
         'url': './services/url',
         'ajax': './services/ajax',
         'typing': './services/typing',
@@ -48,6 +50,9 @@ require.config({
         'layer': {
             deps: ['css!./vendor/layer/skin/layer'],
             exports: 'layer'
+        },
+        'toastr': {
+            deps: ['jquery', 'css!./vendor/toastr/toastr.min']
         }
     },
 
