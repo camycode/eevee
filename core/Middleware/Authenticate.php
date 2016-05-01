@@ -15,9 +15,11 @@ use Core\Models\Model;
 class Authenticate
 {
 
-    protected $request;
+    protected $user_id;
 
-    protected $visitor;
+    protected $permissions;
+
+    protected $request;
 
     /**
      * 权限验证中间件.
@@ -27,13 +29,11 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        $this->visitor = new \stdClass();
-
         $this->request = $request;
 
         $this->auth();
 
-        return $next($request);
+        return $next($this->request);
 
     }
 
@@ -68,13 +68,15 @@ class Authenticate
 
         if ($user_token && $record) {
 
-            $this->visitor->user_id = $record->user_id;
+            $this->user_id = $record->user_id;
 
         } else {
-            $this->visitor->user_id = null;
+            $this->user_id = null;
         }
 
-        $this->visitor->permissions = $this->getUserPermissions($this->visitor->user_id);
+        $this->request->vistor = $this->user_id;
+        
+        $this->permissions = $this->getUserPermissions($this->user_id);
 
         $this->authPermissions();
     }
@@ -123,14 +125,14 @@ class Authenticate
 
         if (is_string($permission)) {
 
-            if (in_array($permission, $this->visitor->permissions)) {
+            if (in_array($permission, $this->permissions)) {
 
                 return true;
             }
 
         } else if (is_array($permission)) {
 
-            if (!array_diff($permission, $this->visitor->permissions)) {
+            if (!array_diff($permission, $this->permissions)) {
 
                 return true;
             }
