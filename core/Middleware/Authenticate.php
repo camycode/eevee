@@ -44,7 +44,7 @@ class Authenticate
      */
     protected function auth()
     {
-        $app_id = $this->request->header('X-APP-ID');
+        $app_id = $this->request->header('X-App-ID');
 
         if (!$app_id || !(new Model())->resource('APP')->where('id', $app_id)->first()) {
 
@@ -62,7 +62,7 @@ class Authenticate
      */
     protected function authUserToken($app_id)
     {
-        $user_token = $this->request->header('X-USER-TOKEN');
+        $user_token = $this->request->header('X-User-Token');
 
         $record = (new Model())->resource('USERTOKEN')->where('app_id', $app_id)->where('user_token', $user_token)->first();
 
@@ -155,7 +155,8 @@ class Authenticate
      */
     protected function getRequestPermission()
     {
-        $route = strtolower($this->request->method()) . '@' . ltrim($this->request->getPathInfo(), '/api/');
+
+        $route = strtolower($this->request->method()) . '@' . str_replace('/api/', '', $this->request->getPathInfo());
 
         $routes = config('routes');
 

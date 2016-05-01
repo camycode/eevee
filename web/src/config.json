@@ -1,4 +1,7 @@
 {
+
+  "app_id":"app_id",
+
   "routes": {
     "login": {
       "url": "/login",

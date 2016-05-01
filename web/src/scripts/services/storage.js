@@ -23,10 +23,10 @@ define([
                     localStorage.setItem(key, value);
                 },
                 get: function (key) {
-                    return localStroage[key] == 'undefined' ? undefined : localStroage[key];
+                    return localStorage[key] == 'undefined' ? undefined : localStorage[key];
                 },
                 has: function (key) {
-                    return typeof localStorage[key] != 'undefined';
+                    return typeof localStorage[key] != 'undefined' && localStorage[key] != 'null';
                 },
                 remove: function (key) {
                     localStorage.removeItem(key);
