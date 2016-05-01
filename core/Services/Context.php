@@ -47,7 +47,7 @@ class Context
      */
     public function header($header, $require = false)
     {
-         $value = $this->request->header($header);
+        $value = $this->request->header($header);
 
         if (!$value && $require) {
             throw new \Exception("The request header $header is required.", 1);
