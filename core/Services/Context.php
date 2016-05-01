@@ -18,14 +18,10 @@ class Context
     public $request;
 
     public $response;
-
-    public $vistor;
-
+    
     public function __construct(Request $request)
     {
         $this->request = $request;
-
-        $this->vistor = $request->vistor;
     }
 
     /**

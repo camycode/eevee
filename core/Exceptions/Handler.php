@@ -43,8 +43,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($e instanceof StatusException) {
 
+        if ($e instanceof StatusException) {
+            
             return (new Context($request))->response($e->status);
 
         } else if ($e instanceof PDOException) {
