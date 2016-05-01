@@ -30,7 +30,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         $this->request = $request;
-        
+
         $this->auth();
 
         return $next($this->request);
@@ -74,7 +74,7 @@ class Authenticate
             $this->user_id = null;
         }
 
-        $this->request->vistor = $this->user_id;
+        $this->request->visitor = $this->user_id;
 
         $this->permissions = $this->getUserPermissions($this->user_id);
 
