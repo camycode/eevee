@@ -243,9 +243,9 @@ class Role extends Model
 
             $this->updateRoleChildrenPermissions($role['id'], $permissions);
 
-            $this->resource('PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
+            $this->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role['id'])->delete();
 
-            $this->resource('PERMISSIONRELATIONSHIP')->insert($relationships);
+            $this->resource('L:PERMISSIONRELATIONSHIP')->insert($relationships);
 
             $this->updateRolePermissionAmount($role['id'], count($relationships));
 
@@ -261,7 +261,7 @@ class Role extends Model
      */
     protected function updateRolePermissionAmount($role_id, $amount)
     {
-        $this->resource('ROLE')->where('id', $role_id)->update(['permission_id' => $amount]);
+        $this->resource('ROLE')->where('id', $role_id)->update(['permission_amount' => $amount]);
     }
 
     /**

@@ -44,6 +44,10 @@ class Authenticate
      */
     protected function auth()
     {
+        if ($this->request->getPathInfo() == '/api/system/install') {
+            return true;
+        }
+
         $app_id = $this->request->header('X-App-ID');
 
         if (!$app_id || !(new Model())->resource('APP')->where('id', $app_id)->first()) {

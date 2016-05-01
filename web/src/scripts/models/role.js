@@ -9,14 +9,6 @@ define([
 
         return {
 
-            /**
-             * 获取角色组
-             *
-             * @return $http
-             */
-            getRoles: function () {
-                return ajax.get('/api/roles');
-            },
 
             /**
              * 配置角色编辑器
@@ -53,6 +45,22 @@ define([
              */
             putRole: function (role_id, data) {
                 return ajax.put('/api/role?role_id=' + role_id, data);
+            },
+            /**
+             * 获取角色组
+             *
+             * @return $http
+             */
+            getRoles: function () {
+                return ajax.get('/api/roles');
+            },
+            /**
+             * 获取角色权限组
+             *
+             * @return $http
+             */
+            getRolePermissions: function () {
+
             }
 
         };

@@ -7,7 +7,7 @@ return [
     ],
     'USER' => [
         'table' => 'users',
-        'fields' => ['id', 'username', 'email', 'status', 'avatar', 'source', 'password', 'created_at', 'updated_at'],
+        'fields' => ['id', 'username', 'email', 'role', 'status', 'avatar', 'source', 'password', 'created_at', 'updated_at'],
     ],
     'ROLE' => [
         'table' => 'roles',
@@ -37,12 +37,8 @@ return [
         'table' => 'terms_relationships',
         'fields' => [],
     ],
-    'L:ROLERELATIONSHIP' => [
-        'table' => 'roles_relationships',
-        'fields' => [],
-    ],
     'L:PERMISSIONRELATIONSHIP' => [
         'table' => 'permissions_relationships',
-        'fields' => [],
+        'fields' => ['role_id', 'permission_id'],
     ],
 ];

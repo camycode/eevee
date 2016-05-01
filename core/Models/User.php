@@ -49,8 +49,6 @@ class User extends Model
 
             $this->processPassword();
 
-            $this->updateUserRoleRelationship($this->data['id'], $this->data['role']);
-
             $this->filter($this->data, $this->fields('USER'));
 
             $this->resource('USER')->insert($this->data);
@@ -102,12 +100,7 @@ class User extends Model
 
         return $this->transaction(function () use ($resource, $user_id) {
 
-            if (isset($this->data['role'])) {
-
-                $this->updateUserRoleRelationship($user_id, $this->data['role']);
-            }
-
-            $this->filter($this->data, $this->fields('ROLE'), ['id']);
+            $this->filter($this->data, $this->fields('USER'), ['id']);
 
             $resource->where('id', $user_id)->update($this->data);
 
@@ -314,49 +307,11 @@ class User extends Model
             return status('userDoesNotExist', $user);
         }
 
-        $items = $this->resource('L:ROLERELATIONSHIP')->where('user_id', $user->id)->get();
-
-        $roles = array();
-
-        foreach ($items as $item) {
-
-            $status = (new Role())->getRole($item->role_id);
-
-            if ($status->code == 200) array_push($roles, $status->data);
-
-        }
-
-        $user->role = $roles;
-
         if (!$password) unset($user->password);
 
         return status('success', $user);
     }
 
-
-    /**
-     * 更新用户和角色的关系
-     *
-     * @param string $user_id
-     * @param array /string $role_id
-     *
-     * @return Status
-     */
-    protected function updateUserRoleRelationship($user_id, $role)
-    {
-        $resource = $this->resource('L:ROLERELATIONSHIP');
-
-        $data = $this->generateUserRoleRelationships($user_id, $role);
-
-        return $this->transaction(function () use ($resource, $user_id, $data) {
-
-            $resource->where('user_id', $user_id)->delete();
-
-            $resource->insert($data);
-
-        });
-
-    }
 
     /**
      * 保存用户Token，如果数据库不存在则添加，否则更新记录。

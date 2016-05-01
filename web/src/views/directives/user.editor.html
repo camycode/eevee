@@ -33,17 +33,9 @@
                 <div class="field">
                     <label>角色</label>
 
-                    <div class="ui middle aligned divided list">
-                        <div ng-repeat="role in roles" class="item">
-                            <div class="right floated content">
-                                <div class="ui button" {{ role.id }}>选择</div>
-                            </div>
-                            <div class="content">
-                                {{ role.name }}
-                            </div>
-                        </div>
-                    </div>
-
+                    <select class="ui dropdown" ng-model="user.role">
+                        <option ng-repeat="role in roles" value="{{ role.id }}">{{ role.name }}</option>
+                    </select>
                 </div>
             </div>
         </div>

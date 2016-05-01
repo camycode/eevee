@@ -11,4 +11,6 @@ return [
     'deleteRoleSuccess' => '用户删除成功',
     'roleDoesNotExsit' => '用户不存在',
     'systemHasInstalled' => '系统已安装',
+    'guest' => '访客',
+    'root' => '超级管理员',
 ];

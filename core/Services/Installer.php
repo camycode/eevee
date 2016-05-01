@@ -201,6 +201,7 @@ class Installer
     protected function registerGuestRole()
     {
         $data = array(
+            'id' => 'guest',
             'name' => message('guest')
         );
 

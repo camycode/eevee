@@ -27,6 +27,8 @@ define([
                         permissions: []
                     };
 
+                    $scope.permissions = [];
+
 
                     $scope.editRole = function () {
 
