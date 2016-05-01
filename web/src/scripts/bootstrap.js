@@ -27,6 +27,7 @@ require.config({
         'storage': './services/storage',
         'role.editor': './directives/role.editor',
         'user.editor': './directives/user.editor',
+        'user.detail': './directives/user.detail',
     },
 
     map: {

@@ -62,7 +62,7 @@
         </tr>
         </tfoot>
         <tbody>
-        <tr ng-repeat="user in users">
+        <tr ng-repeat="user in users" ng-click="openUserDetailModal(user.id)">
             <td class="">
                 <input type="checkbox">
             </td>

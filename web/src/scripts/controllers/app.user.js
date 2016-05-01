@@ -13,6 +13,8 @@ define([
 
             user.setUserEditor($scope);
 
+            user.setUserDetail($scope);
+
             $scope.openUserEditor = function () {
 
                 user.openUserEditor();
@@ -24,6 +26,10 @@ define([
                 $scope.users.unshift(data);
             });
 
+            $scope.openUserDetailModal = function (user_id) {
+                user.openUserDetail(user_id);
+            };
+
             user.getUsers()
                 .success(function (response) {
 
@@ -34,7 +40,7 @@ define([
                     }
 
                 })
-                .error(function (response) {
+                .error(function () {
 
                     typing.error('网络错误');
 

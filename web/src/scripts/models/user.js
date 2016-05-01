@@ -9,7 +9,8 @@ define([
         'jquery',
         'ajax',
         'storage',
-        'user.editor'
+        'user.editor',
+        'user.detail',
     ],
     function (app, $) {
 
@@ -39,6 +40,16 @@ define([
                  */
                 openUserEditor: function () {
                     $("#directive-user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+                },
+                setUserDetail: function ($scope) {
+                    $('#eevee-view').append($compile($('<div user.detail></div>'))($scope));
+
+                },
+                /**
+                 * 打开用户编辑器
+                 */
+                openUserDetail: function () {
+                    $("#directive-user-detail").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
                 },
                 /**
                  * 用户登录

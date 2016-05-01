@@ -1,0 +1,21 @@
+#directive-user-detail {
+  width: 960px;
+  box-shadow: 10px 10px 7px 8px #333;
+}
+#directive-user-detail .block {
+  height: 100%;
+  padding: 0;
+}
+#directive-user-detail #tab {
+  height: 100%;
+  margin: 0;
+}
+#directive-user-detail #tab > div {
+  height: 100%;
+}
+#directive-user-detail #tab .vertical {
+  height: 100%;
+  padding-right: 0;
+  margin: 0;
+  width: 120px;
+}
