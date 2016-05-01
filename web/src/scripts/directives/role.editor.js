@@ -4,6 +4,7 @@
 define([
         'app',
         'role',
+        'user',
         'typing',
         'css!../css/directives/role.editor'
     ],
@@ -16,7 +17,7 @@ define([
                 replace: true,
                 scope: {},
                 templateUrl: 'views/directives/role.editor.html',
-                controller: ['$scope', 'role', 'typing', function ($scope, role, typing) {
+                controller: ['$scope', 'role', 'user', 'typing', function ($scope, role, user, typing) {
 
                     $scope.title = "编辑用户";
 
@@ -29,18 +30,30 @@ define([
 
                     $scope.permissions = [];
 
+                    role.getRolePermissions(user.info().role)
+                        .success(function (response) {
+                            if (response.code == 200) {
+                                $scope.permissions = response.data;
+                            } else {
+                                typing.warning(response.message);
+                            }
+                        })
+                        .error(function () {
+                            typing.error('网络错误');
+                        });
+
 
                     $scope.editRole = function () {
 
                         role.postRole($scope.role)
                             .success(function (response) {
 
-                                if(response.code == 200){
+                                if (response.code == 200) {
                                     typing.success('成功添加角色');
-                                }else{
+                                } else {
                                     typing.warning(response.message);
                                 }
-                                
+
                             })
                             .error(function () {
 

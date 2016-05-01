@@ -22,175 +22,26 @@
                     <label>角色名</label>
                     <input type="text" placeholder="" ng-model="role.name">
                 </div>
-                <div class="field">
-                    <label>标识符</label>
-                    <input type="text" placeholder="" ng-model="role.id">
-                </div>
+                <!--<div class="field">-->
+                    <!--<label>标识符</label>-->
+                    <!--<input type="text" placeholder="" ng-model="role.id">-->
+                <!--</div>-->
                 <div class="field">
                     <label>描述</label>
                     <textarea rows="2" cols="3" ng-model="role.description"></textarea>
                 </div>
                 <div class="field">
                     <label>分配权限</label>
-                    <div class="ui middle aligned divided list">
-                        <div class="item">
+                    <div class="ui middle aligned divided list" ng-repeat="item in permissions">
+                        <p class="ui horizontal divider header">
+                            {{ item.name }}
+                        </p>
+                        <div class="item" ng-repeat="permission in item.permissions">
                             <div class="right floated content">
-                                <div class="ui button">Add</div>
+                                <div class="ui button icon"><i class="plus icon"></i></div>
                             </div>
                             <div class="content">
-                                Lena
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lindsay
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Mark
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Molly
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lena
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lindsay
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Mark
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Molly
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lena
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lindsay
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Mark
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Molly
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lena
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lindsay
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Mark
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Molly
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lena
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Lindsay
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Mark
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="right floated content">
-                                <div class="ui button">Add</div>
-                            </div>
-                            <div class="content">
-                                Molly
+                                {{ permission.name }}
                             </div>
                         </div>
                     </div>

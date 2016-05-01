@@ -49,7 +49,9 @@ define([
                     ajax.post('/api/auth/login', params)
                         .success(function (response) {
                             if (typeof success == 'function') {
+
                                 storage.set('APP_LOGIN_USER', JSON.stringify(response.data));
+
                                 success(response);
                             }
                         })
@@ -63,8 +65,13 @@ define([
                 isLogin: function () {
                     return storage.has('APP_LOGIN_USER');
                 },
+                info: function () {
+                    return JSON.parse(storage.get('APP_LOGIN_USER'));
+                },
                 logout: function (callback) {
+
                     storage.remove('APP_LOGIN_USER');
+
                     if (typeof callback == 'function') {
                         callback();
                     }

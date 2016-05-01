@@ -90,21 +90,16 @@ class Authenticate
      */
     protected function getUserPermissions($user_id)
     {
-        $permissions = [];
 
         if ($user_id) {
 
-            $roles = (new Model())->resource('L:ROLERELATIONSHIP')->where('user_id', $user_id)->lists('role_id');
+            $role_id = (new Model())->resource('USER')->where('id', $user_id)->value('role');
 
-            foreach ($roles as $role) {
-
-                $permissions = array_merge($permissions, (new Model())->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role)->lists('permission_id'));
-
-            }
+            $permissions = (new Model())->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
 
         } else {
 
-            $permissions = array_merge($permissions, $this->getGuestPermissions());
+            $permissions = $this->getGuestPermissions();
 
         }
 
@@ -126,7 +121,7 @@ class Authenticate
     protected function authPermissions()
     {
         $permission = $this->getRequestPermission();
-
+        
         if (is_string($permission)) {
 
             if (in_array($permission, $this->permissions)) {

@@ -59,8 +59,8 @@ define([
              *
              * @return $http
              */
-            getRolePermissions: function () {
-
+            getRolePermissions: function (role_id) {
+                return ajax.get('/api/role/permissions?role_id=' + role_id + '&archive=true');
             }
 
         };
