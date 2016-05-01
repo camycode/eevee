@@ -9,7 +9,7 @@ define([
 
             $scope.title = "用户管理";
 
-            $scope.users = null;
+            $scope.users = [];
 
             user.setUserEditor($scope);
 
@@ -17,7 +17,12 @@ define([
 
                 user.openUserEditor();
 
-            }
+            };
+
+
+            $(document).unbind('eevee.post.user').bind('eevee.post.user', function (e, data) {
+                $scope.users.unshift(data);
+            });
 
             user.getUsers()
                 .success(function (response) {
@@ -32,7 +37,7 @@ define([
                 .error(function (response) {
 
                     typing.error('网络错误');
-                    
+
                 });
 
         }];

@@ -30,7 +30,9 @@ define([
                  * @param $scope
                  */
                 setUserEditor: function ($scope) {
+
                     $('#eevee-view').append($compile($('<div user.editor></div>'))($scope));
+
                 },
                 /**
                  * 打开用户编辑器

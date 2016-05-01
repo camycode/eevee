@@ -15,19 +15,20 @@ define([
             return {
                 restrict: 'A',
                 replace: true,
-                scope: {},
                 templateUrl: 'views/directives/user.editor.html',
                 controller: ['$scope', 'role', 'user', 'typing', function ($scope, role, user, typing) {
                     $scope.title = "编辑用户";
 
                     $scope.roles = [];
 
-                    $scope.user = {
+                    var init = {
                         'username': '',
                         'password': '',
                         'email': '',
                         'role': 'guest'
                     };
+
+                    $scope.user = $.extend({}, init);
 
                     role.getRoles()
                         .success(function (response) {
@@ -48,15 +49,22 @@ define([
                         $("#directive-user-editor").addClass('animated slideOutRight');
                     };
 
+
                     $scope.editUser = function () {
 
-                        console.log($scope.user);
                         user.postUser($scope.user)
                             .success(function (response) {
 
                                 if (response.code == 200) {
-                                    typing.success('用户添加成功');
+
                                     closeUserEditor();
+
+                                    typing.success('用户添加成功');
+
+                                    $.event.trigger('eevee.post.user', response.data);
+
+                                    $scope.user = init;
+
                                 } else {
                                     typing.warning(response.message);
                                 }
