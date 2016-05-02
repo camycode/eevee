@@ -21,14 +21,15 @@ define([
 
                     $scope.title = "编辑用户";
 
-                    $scope.role = {
-                        id: '',
+                    var init = {
                         name: '',
                         description: '',
                         permissions: []
                     };
 
-                    $scope.permissions = [];
+                    $scope.role = init;
+
+                    $scope.permissions = {};
 
                     role.getRolePermissions(user.info().role)
                         .success(function (response) {
@@ -43,13 +44,27 @@ define([
                         });
 
 
-                    $scope.editRole = function () {
+                    $scope.submitRole = function () {
+
+                        $scope.role.parent = user.info().role;
 
                         role.postRole($scope.role)
                             .success(function (response) {
 
                                 if (response.code == 200) {
-                                    typing.success('成功添加角色');
+
+                                    typing.success('角色添加成功');
+
+                                    $scope.$emit('app.role.posted', response.data);
+
+                                    $scope.role = init;
+                                    
+                                } else if (response.code == 2001) {
+
+                                    for (var i in response.data) {
+                                        typing.warning(response.data[i][0]);
+                                    }
+
                                 } else {
                                     typing.warning(response.message);
                                 }
@@ -60,6 +75,33 @@ define([
                                 typing.error('网络错误');
 
                             });
+                    };
+
+                    $scope.clickPermission = function (index, permission_id) {
+
+                        if (typeof $scope.permissions[index] != 'undefined') {
+                            for (var i in $scope.permissions[index].permissions) {
+                                if ($scope.permissions[index].permissions[i].id == permission_id) {
+                                    if (typeof $scope.permissions[index].permissions[i].checked == 'undefined') {
+
+                                        $scope.permissions[index].permissions[i].checked = 'primary';
+                                        $scope.permissions[index].permissions[i].icon = 'checkmark';
+                                        $scope.role.permissions.push(permission_id);
+
+                                    } else {
+
+                                        delete $scope.permissions[index].permissions[i].checked;
+                                        delete $scope.permissions[index].permissions[i].icon;
+                                        for (var i in $scope.role.permissions) {
+                                            if ($scope.role.permissions[i] == permission_id) {
+                                                $scope.role.permissions.splice(i, 1);
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
                     };
 
 

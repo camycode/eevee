@@ -305,6 +305,7 @@ class Role extends Model
 
         $rule = [
             'name' => "required|unique:$table",
+            'parent' => 'required',
         ];
 
         $this->ignore($rule, $ignore);

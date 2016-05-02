@@ -7,7 +7,7 @@
 
         <div class="right menu">
             <div class="item label">
-                <i class="icon checkmark" ng-click="editRole()"></i>
+                <i class="icon checkmark" ng-click="submitRole()"></i>
             </div>
             <div class="item label">
                 <i class="icon share" ng-click="closePostEditor()"></i>
@@ -23,8 +23,8 @@
                     <input type="text" placeholder="" ng-model="role.name">
                 </div>
                 <!--<div class="field">-->
-                    <!--<label>标识符</label>-->
-                    <!--<input type="text" placeholder="" ng-model="role.id">-->
+                <!--<label>标识符</label>-->
+                <!--<input type="text" placeholder="" ng-model="role.id">-->
                 <!--</div>-->
                 <div class="field">
                     <label>描述</label>
@@ -32,13 +32,16 @@
                 </div>
                 <div class="field">
                     <label>分配权限</label>
-                    <div class="ui middle aligned divided list" ng-repeat="item in permissions">
+                    <div class="ui middle aligned divided list" ng-repeat="(index,item) in permissions">
                         <p class="ui horizontal divider header">
                             {{ item.name }}
                         </p>
                         <div class="item" ng-repeat="permission in item.permissions">
                             <div class="right floated content">
-                                <div class="ui button icon"><i class="plus icon"></i></div>
+                                <div class="ui button icon {{ permission.checked }}"
+                                     ng-click="clickPermission(index,permission.id)">
+                                    <i class="icon {{ permission.icon || 'plus' }}"></i>
+                                </div>
                             </div>
                             <div class="content">
                                 {{ permission.name }}
