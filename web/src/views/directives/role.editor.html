@@ -32,6 +32,7 @@
                 </div>
                 <div class="field">
                     <label>分配权限</label>
+                    <div ng-hide="loadPermissionsDone" class="ui active centered small inline loader"></div>
                     <div class="ui middle aligned divided list" ng-repeat="(index,item) in permissions">
                         <p class="ui horizontal divider header">
                             {{ item.name }}

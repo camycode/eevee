@@ -35,6 +35,7 @@ define([
                         .success(function (response) {
                             if (response.code == 200) {
                                 $scope.permissions = response.data;
+                                $scope.loadPermissionsDone = true;
                             } else {
                                 typing.warning(response.message);
                             }
@@ -58,7 +59,7 @@ define([
                                     $scope.$emit('app.role.posted', response.data);
 
                                     $scope.role = init;
-                                    
+
                                 } else if (response.code == 2001) {
 
                                     for (var i in response.data) {
