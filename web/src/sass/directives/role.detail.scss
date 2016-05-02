@@ -1,0 +1,23 @@
+
+
+#directive-role-detail{
+  width: 960px;
+  box-shadow: 10px 10px 7px 8px #333;
+  .block{
+    height: 100%;
+    padding: 0;
+  }
+  #tab{
+    height: 100%;
+    margin: 0;
+    >div{
+      height: 100%;
+    }
+    .vertical{
+      height: 100%;
+      padding-right: 0;
+      margin: 0;
+      width: 120px;
+    }
+  }
+}

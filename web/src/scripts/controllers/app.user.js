@@ -23,8 +23,8 @@ define([
 
 
             $scope.openUserDetailModal = function (user_id) {
-                // user.openUserDetail(user_id);
-                $scope.$emit('app.user.putting', user_id);
+                user.openUserDetail(user_id);
+                // $scope.$emit('app.user.putting', user_id);
             };
 
             $scope.$on('app.user.posted', function (e, data) {
