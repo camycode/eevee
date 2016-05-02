@@ -50,6 +50,10 @@ define([
                     };
 
 
+                    $scope.$on('app.user.putting', function (e, data) {
+                        console.log(data);
+                    });
+
                     $scope.editUser = function () {
 
                         user.postUser($scope.user)
@@ -61,7 +65,7 @@ define([
 
                                     typing.success('用户添加成功');
 
-                                    $.event.trigger('eevee.post.user', response.data);
+                                    $scope.$emit('app.user.posted', response.data);
 
                                     $scope.user = init;
 

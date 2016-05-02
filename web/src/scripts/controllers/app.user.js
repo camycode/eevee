@@ -22,13 +22,14 @@ define([
             };
 
 
-            $(document).unbind('eevee.post.user').bind('eevee.post.user', function (e, data) {
+            $scope.openUserDetailModal = function (user_id) {
+                // user.openUserDetail(user_id);
+                $scope.$emit('app.user.putting', user_id);
+            };
+
+            $scope.$on('app.user.posted', function (e, data) {
                 $scope.users.unshift(data);
             });
-
-            $scope.openUserDetailModal = function (user_id) {
-                user.openUserDetail(user_id);
-            };
 
             user.getUsers()
                 .success(function (response) {
