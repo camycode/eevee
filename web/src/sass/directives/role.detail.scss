@@ -1,13 +1,18 @@
 
 #directive-role-detail {
-  width: 840px;
+  width: 800px;
   box-shadow: 10px 10px 7px 8px #333;
   .block {
     height: 100%;
-    padding: 25px;
+    padding: 0;
   }
 
   .definition.table {
+    border-style: solid none solid none;
+    &:first-child {
+      border-top: none;
+    }
+    border-radius: 0;
     td:first-child {
       width: 150px;
       text-align: left;
