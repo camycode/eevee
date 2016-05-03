@@ -7,7 +7,7 @@
     padding: 25px;
   }
 
-  .definition.table{
+  .definition.table {
     td:first-child {
       width: 150px;
       text-align: left;
@@ -31,6 +31,10 @@
     td:first-child {
       background: none;
     }
+  }
+
+  #no-permissions {
+    text-align: center;
   }
 
 }

@@ -73,7 +73,10 @@
 
             <div ng-hide="loadPermissionsDone" class="ui active centered small inline loader"></div>
 
-            <div ng-repeat="(index,item) in permissions">
+
+            <p id="no-permissions" ng-hide="hasPermissions">无分配权限</p>
+
+            <div ng-show="loadPermissionsDone" ng-repeat="(index,item) in permissions">
                 <h4 class="ui horizontal divider header"></h4>
 
                 <table class="ui definition table">
@@ -114,6 +117,7 @@
 
 
             </div>
+
         </div>
     </div>
 

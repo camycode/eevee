@@ -21,11 +21,16 @@ define(
 
                     $scope.permissions = {};
 
+                    $scope.loadPermissionsDone = false;
+
+                    $scope.hasPermissions = true;
+
                     var closeUserEditor = function () {
                         $('#directive-role-detail').addClass('animated slideOutRight');
                     };
 
                     $scope.$on('app.role.detail.show', function (e, role_id) {
+
                         $('#directive-role-detail').hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
 
                         role.getRole(role_id)
@@ -40,13 +45,29 @@ define(
                                 typing.error('网络错误');
                             });
 
+                        $scope.loadPermissionsDone = false;
+                        $scope.hasPermissions = true;
+
                         role.getRolePermissions(role_id)
                             .success(function (response) {
+
+                                $scope.loadPermissionsDone = true;
+
                                 if (response.code == 200) {
+
                                     $scope.permissions = response.data;
+                                    // 判断返回的对象是否有属性
+                                    for (var _ in response.data) {
+                                        return;
+                                    }
+
+                                    $scope.hasPermissions = false;
+
+
                                 } else {
                                     typing.warning(response.message);
                                 }
+
                             })
                             .error(function () {
                                 typing.error('网络错误');

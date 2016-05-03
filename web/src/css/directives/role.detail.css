@@ -27,3 +27,6 @@
 #directive-role-detail .permissions.table td:first-child {
   background: none;
 }
+#directive-role-detail #no-permissions {
+  text-align: center;
+}
