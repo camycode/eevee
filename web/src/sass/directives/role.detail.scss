@@ -1,10 +1,36 @@
 
-
-#directive-role-detail{
-  width: 960px;
+#directive-role-detail {
+  width: 840px;
   box-shadow: 10px 10px 7px 8px #333;
-  .block{
+  .block {
     height: 100%;
-    //padding: 0 20px;
+    padding: 25px;
   }
+
+  .definition.table{
+    td:first-child {
+      width: 150px;
+      text-align: left;
+    }
+  }
+
+  .permissions.wrap {
+    padding: 0;
+  }
+
+  .permissions.table {
+    border-radius: 0;
+    border: none;
+    th:first-child {
+      pointer-events: none;
+      background: #F9FAFB;
+      font-weight: 400;
+      box-shadow: none;
+      color: #212121;
+    }
+    td:first-child {
+      background: none;
+    }
+  }
+
 }
