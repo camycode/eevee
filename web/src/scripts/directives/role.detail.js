@@ -35,17 +35,20 @@ define(
 
                         role.getRole(role_id)
                             .success(function (response) {
+
                                 if (response.code == 200) {
                                     $scope.role = response.data;
                                 } else {
                                     typing.warning(response.message);
                                 }
+                                
                             })
                             .error(function () {
                                 typing.error('网络错误');
                             });
 
                         $scope.loadPermissionsDone = false;
+
                         $scope.hasPermissions = true;
 
                         role.getRolePermissions(role_id)
@@ -56,6 +59,7 @@ define(
                                 if (response.code == 200) {
 
                                     $scope.permissions = response.data;
+
                                     // 判断返回的对象是否有属性
                                     for (var _ in response.data) {
                                         return;
