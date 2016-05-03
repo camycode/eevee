@@ -3,8 +3,6 @@
  */
 define([
         'app',
-        'role',
-        'user',
         'typing',
         'css!../css/directives/user.editor'
     ],
@@ -45,16 +43,19 @@ define([
                         });
 
                     var closeUserEditor = function () {
-
                         $("#directive-user-editor").addClass('animated slideOutRight');
                     };
 
+                    var openUserEditor = function () {
+                        $("#directive-user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+                    };
 
-                    $scope.$on('app.user.putting', function (e, data) {
-                        console.log(data);
+
+                    $scope.$on('app.user.editor.show', function (e, data) {
+                        openUserEditor();
                     });
 
-                    $scope.editUser = function () {
+                    $scope.submitUser = function () {
 
                         user.postUser($scope.user)
                             .success(function (response) {
@@ -82,10 +83,8 @@ define([
 
                     };
 
-                    $scope.closePostEditor = function () {
-
+                    $scope.closeUserEditor = function () {
                         closeUserEditor();
-
                     };
 
                 }]

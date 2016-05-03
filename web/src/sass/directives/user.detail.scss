@@ -1,23 +1,29 @@
 
-
-#directive-user-detail{
-  width: 960px;
+#directive-user-detail {
+  width: 560px;
   box-shadow: 10px 10px 7px 8px #333;
-  .block{
+
+  .block {
     height: 100%;
     padding: 0;
   }
-  #tab{
-    height: 100%;
-    margin: 0;
-    >div{
-      height: 100%;
+
+  .definition.table {
+    border-style: none none solid none;
+    border-radius: 0;
+    td{
+      text-align: center;
     }
-    .vertical{
-      height: 100%;
-      padding-right: 0;
-      margin: 0;
-      width: 120px;
+
+    td:first-child {
+      width: 100px;
+      text-align: center;
     }
+
+    .avatar{
+      max-width: 100px;
+      border-radius: 10px;
+    }
+
   }
 }

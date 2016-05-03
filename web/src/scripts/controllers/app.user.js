@@ -1,6 +1,7 @@
 define([
+        'role',
+        'user',
         'typing',
-        '../models/user',
         'css!../../css/app.user'
     ],
     function () {
@@ -16,15 +17,12 @@ define([
             user.setUserDetail($scope);
 
             $scope.openUserEditor = function () {
-
-                user.openUserEditor();
-
+                $scope.$emit('app.user.editor.show');
             };
 
 
             $scope.openUserDetailView = function (user_id) {
-                user.openUserDetail(user_id);
-                // $scope.$emit('app.user.putting', user_id);
+                $scope.$emit('app.user.detail.show', user_id);
             };
 
             $scope.$on('app.user.posted', function (e, data) {

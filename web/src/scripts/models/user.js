@@ -18,38 +18,20 @@ define([
 
             return {
                 /**
-                 * 判断用否是否登录
-                 *
-                 * @return bool
-                 */
-                isLogin: function () {
-
-                },
-                /**
                  * 配置用户编辑器
                  *
                  * @param $scope
                  */
                 setUserEditor: function ($scope) {
-
                     $('#eevee-view').append($compile($('<div user.editor></div>'))($scope));
-
                 },
                 /**
-                 * 打开用户编辑器
+                 * 配置用户详情弹窗
+                 *
+                 * @param $scope
                  */
-                openUserEditor: function () {
-                    $("#directive-user-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
-                },
                 setUserDetail: function ($scope) {
                     $('#eevee-view').append($compile($('<div user.detail></div>'))($scope));
-
-                },
-                /**
-                 * 打开用户编辑器
-                 */
-                openUserDetail: function () {
-                    $("#directive-user-detail").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
                 },
                 /**
                  * 用户登录
@@ -74,13 +56,27 @@ define([
                             }
                         });
                 },
-
+                /**
+                 * 判断用户是否登录
+                 *
+                 * @return bool
+                 */
                 isLogin: function () {
                     return storage.has('APP_LOGIN_USER');
                 },
+                /**
+                 * 获取用户登录信息
+                 *
+                 * @return Object
+                 */
                 info: function () {
                     return JSON.parse(storage.get('APP_LOGIN_USER'));
                 },
+                /**
+                 * 用户注销登录
+                 *
+                 * @param callback
+                 */
                 logout: function (callback) {
 
                     storage.remove('APP_LOGIN_USER');
@@ -104,6 +100,16 @@ define([
                  */
                 postUser: function (data) {
                     return ajax.post('/api/user', data)
+                },
+                /**
+                 * 获取用户
+                 *
+                 * @param user_id string
+                 *
+                 * @returns $http
+                 */
+                getUser: function (user_id) {
+                    return ajax.get('/api/user', {user_id: user_id});
                 }
 
             };
