@@ -1,14 +1,12 @@
 define([
     'app',
     'jquery',
-    'ajax',
-    'role.editor'
+    'ajax'
 ], function (app, $) {
 
     app.factory('role', ['$compile', 'ajax', function ($compile, ajax) {
 
         return {
-
 
             /**
              * 配置角色编辑器
@@ -18,12 +16,13 @@ define([
             setRoleEditor: function ($scope) {
                 $('#eevee-view').append($compile($('<div role.editor></div>'))($scope));
             },
-
             /**
-             * 打开角色编辑器
+             * 配置角色详情显示
+             *
+             * @param $scope
              */
-            openRoleEditor: function () {
-                $("#directive-role-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+            setRoleDetail: function ($scope) {
+                $('#eevee-view').append($compile($('<div role.detail></div>'))($scope));
             },
             /**
              * 添加角色
@@ -52,7 +51,15 @@ define([
              * @return $http
              */
             getRoles: function (params) {
-                return ajax.get('/api/roles',params);
+                return ajax.get('/api/roles', params);
+            },
+            /**
+             * 获取角色
+             *
+             * @return $http
+             */
+            getRole: function (role_id) {
+                return ajax.get('/api/role?role_id=' + role_id);
             },
             /**
              * 获取角色权限组

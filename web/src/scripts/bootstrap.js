@@ -26,6 +26,7 @@ require.config({
         'typing': './services/typing',
         'storage': './services/storage',
         'role.editor': './directives/role.editor',
+        'role.detail': './directives/role.detail',
         'user.editor': './directives/user.editor',
         'user.detail': './directives/user.detail',
     },

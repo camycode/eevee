@@ -14,23 +14,88 @@
 
     <div class="view content">
         <div class="block">
-            <div id="tab" class="ui grid">
-                <div class="ui secondary vertical pointing menu">
-                    <a class="active item">
-                        资料
-                    </a>
-                    <a class="item">
-                        统计
-                    </a>
-                    <a class="item">
-                        日志
-                    </a>
-                </div>
+            <!--<div id="tab" class="ui grid">-->
+            <!--<div class="ui secondary vertical pointing menu">-->
+            <!--<a class="active item">-->
+            <!--资料-->
+            <!--</a>-->
+            <!--<a class="item">-->
+            <!--统计-->
+            <!--</a>-->
+            <!--<a class="item">-->
+            <!--日志-->
+            <!--</a>-->
+            <!--</div>-->
 
-                <div class="twelve wide stretched column">
+            <!--<div class="twelve wide stretched column">-->
 
-                        This is an stretched grid column. This segment will always match the tab height
-                </div>
+            <!---->
+            <!--</div>-->
+            <!--</div>-->
+            <table class="ui definition small table">
+                <tbody>
+                <tr>
+                    <td>角色名</td>
+                    <td>{{ role.name }}</td>
+                </tr>
+                <tr>
+                    <td>状态</td>
+                    <td>{{ role.status }}</td>
+                </tr>
+                <tr>
+                    <td>描述</td>
+                    <td>{{ role.description || '-' }}</td>
+                </tr>
+                <tr>
+                    <td>权限数量</td>
+                    <td>{{ role.permission_amount }}</td>
+                </tr>
+                <tr>
+                    <td>用户数量</td>
+                    <td>{{ role.user_amount }}</td>
+                </tr>
+                <tr>
+                    <td>创建时间</td>
+                    <td>{{ role.created_at }}</td>
+                </tr>
+                <tr>
+                    <td>最近更新时间</td>
+                    <td>{{ role.updated_at }}</td>
+                </tr>
+                <tr>
+                    <td>来源</td>
+                    <td>{{ role.source }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h4 class="ui horizontal divider header">拥有权限</h4>
+
+            <div ng-hide="loadPermissionsDone" class="ui active centered small inline loader"></div>
+
+            <div ng-repeat="(index,item) in permissions">
+                <h4 class="ui horizontal divider header">{{ item.name }}</h4>
+                <table class="ui celled small table">
+
+                    <thead>
+                    <tr>
+                        <th>权限名</th>
+                        <th>标识符</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="permission in item.permissions">
+                        <td>{{ permission.name }}</td>
+                        <td>{{ permission.id }}</td>
+                        <td>{{permission.description || '-' }}</td>
+                    </tr>
+                    </tbody>
+
+
+                </table>
+
             </div>
         </div>
     </div>

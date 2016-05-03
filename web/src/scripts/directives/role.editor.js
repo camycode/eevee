@@ -15,7 +15,6 @@ define([
             return {
                 restrict: 'A',
                 replace: true,
-                scope: {},
                 templateUrl: 'views/directives/role.editor.html',
                 controller: ['$scope', 'role', 'user', 'typing', function ($scope, role, user, typing) {
 
@@ -116,8 +115,11 @@ define([
                         }
                     };
 
+                    $scope.$on('app.role.editor.show', function (e, data) {
+                        $("#directive-role-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+                    });
 
-                    $scope.closePostEditor = function () {
+                    $scope.closeRoleEditor = function () {
 
                         $("#directive-role-editor").addClass('animated slideOutRight');
 

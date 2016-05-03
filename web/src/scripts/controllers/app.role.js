@@ -1,4 +1,6 @@
 define([
+    'role.editor',
+    'role.detail',
     '../models/role',
     '../services/typing'
 ], function () {
@@ -10,6 +12,7 @@ define([
 
         role.setRoleEditor($scope);
 
+        role.setRoleDetail($scope);
 
         var sort = {
             name: null,
@@ -57,18 +60,32 @@ define([
         };
 
 
-        getRoles();
+        getRoles({
+            order: 'updated_at:desc'
+        });
+
+
+        $scope.openRoleDetailView = function (role_id) {
+
+            $scope.$emit('app.role.detail.show', role_id);
+        };
 
 
         $scope.$on('app.role.posted', function (e, data) {
-            $scope.roles.unshift(data);
+            if (sortField != 'updated_at' && sortRule != 'desc') {
+                sortRule = 'desc';
+                getRoles({
+                    order: 'updated_at:desc'
+                });
+            } else {
+                $scope.roles.unshift(data);
+            }
         });
 
 
         $scope.openRoleEditor = function () {
 
-            role.openRoleEditor();
-
+            $scope.$emit('app.role.editor.show');
         }
 
 
