@@ -7,12 +7,14 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
 
         var app_id = config.app_id;
 
-        var user_token = null;
+        var getUserToken = function () {
 
-        if (storage.has('APP_LOGIN_USER')) {
+            if (storage.has('APP_LOGIN_USER')) {
 
-            user_token = JSON.parse(storage.get('APP_LOGIN_USER')).user_token;
-        }
+                return JSON.parse(storage.get('APP_LOGIN_USER')).user_token;
+            }
+            return null;
+        };
 
         var ajax = {
             config: {
@@ -20,7 +22,7 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-App-ID': app_id,
-                    'X-User-Token': user_token
+                    'X-User-Token': null
                 }
             },
             get: function (url, params) {
@@ -28,6 +30,7 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
                 ajax.config.method = 'get';
                 ajax.config.url = host + url;
                 ajax.config.params = params;
+                ajax.config.headers['X-User-Token'] = getUserToken();
 
                 return $http(ajax.config);
 
@@ -39,6 +42,8 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
                 ajax.config.method = 'post';
                 ajax.config.url = host + url;
                 ajax.config.data = data;
+                ajax.config.headers['X-User-Token'] = getUserToken();
+
 
                 return $http(ajax.config);
             }
