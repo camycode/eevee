@@ -27,6 +27,8 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
             },
             get: function (url, params) {
 
+                params = params || {};
+
                 ajax.config.method = 'get';
                 ajax.config.url = host + url;
                 ajax.config.params = params;

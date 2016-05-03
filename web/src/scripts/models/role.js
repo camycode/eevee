@@ -51,8 +51,8 @@ define([
              *
              * @return $http
              */
-            getRoles: function () {
-                return ajax.get('/api/roles');
+            getRoles: function (params) {
+                return ajax.get('/api/roles',params);
             },
             /**
              * 获取角色权限组

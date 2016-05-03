@@ -67,7 +67,7 @@ define([
 
                                     $scope.$emit('app.user.posted', response.data);
 
-                                    $scope.user = init;
+                                    $scope.user = $.extend({}, init);
 
                                 } else {
                                     typing.warning(response.message);

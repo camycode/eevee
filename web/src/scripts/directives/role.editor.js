@@ -27,7 +27,8 @@ define([
                         permissions: []
                     };
 
-                    $scope.role = init;
+
+                    $scope.role = $.extend({}, init);
 
                     $scope.permissions = {};
 
@@ -58,7 +59,17 @@ define([
 
                                     $scope.$emit('app.role.posted', response.data);
 
-                                    $scope.role = init;
+                                    $scope.role = $.extend({}, init);
+
+                                    for (var ident in $scope.permissions) {
+                                        for (var i in $scope.permissions[ident].permissions) {
+
+                                            $scope.permissions[ident].permissions[i].checked = null;
+                                            $scope.permissions[ident].permissions[i].icon = null;
+
+                                        }
+                                    }
+
 
                                 } else if (response.code == 2001) {
 
@@ -83,7 +94,7 @@ define([
                         if (typeof $scope.permissions[index] != 'undefined') {
                             for (var i in $scope.permissions[index].permissions) {
                                 if ($scope.permissions[index].permissions[i].id == permission_id) {
-                                    if (typeof $scope.permissions[index].permissions[i].checked == 'undefined') {
+                                    if (typeof $scope.permissions[index].permissions[i].checked == 'undefined' && !$scope.permissions[index].permissions[i].checked) {
 
                                         $scope.permissions[index].permissions[i].checked = 'primary';
                                         $scope.permissions[index].permissions[i].icon = 'checkmark';
