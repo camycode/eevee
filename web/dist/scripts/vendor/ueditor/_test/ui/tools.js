@@ -1,1 +1,65 @@
-!function(){function t(){for(var t in window.UEDITOR_CONFIG)"string"==typeof window.UEDITOR_CONFIG[t]&&(window.UEDITOR_CONFIG[t]=window.UEDITOR_CONFIG[t].replace("_test/tools/br/",""));var e=baidu.editor.ui,n=document.createElement("div");document.body.appendChild(n),n.id="editor";var o=new UE.ui.Editor({UEDITOR_HOME_URL:"../../../",autoFloatEnabled:!0});setTimeout(function(){te.dom.push(n),te.obj.push(e),te.obj.push(o),QUnit.readyFlag=1},20),stop(),QUnit.readyFlag=0,document.getElementsByClassName=function(t){for(var e=[],n=new RegExp("\\b"+t+"\\b"),o=this.getElementsByTagName("*"),i=0;i<o.length;i++){var a=o[i].className;n.test(a)&&e.push(o[i])}return e}}var e=function(){if(te&&te.dom&&te.dom.length)for(var t=0;t<te.dom.length;t++)te.dom[t]&&te.dom[t].parentNode&&te.dom[t].parentNode.removeChild(te.dom[t]);te.dom=[],te.obj=[]},n=QUnit.testStart,o=QUnit.testDone;QUnit.testStart=function(){n.apply(this,arguments),t()},QUnit.testDone=function(){e(),o.apply(this,arguments)}}();
+/**
+ * Created by JetBrains PhpStorm.
+ * User: dongyancen
+ * Date: 12-4-12
+ * Time: 下午1:26
+ * To change this template use File | Settings | File Templates.
+ */
+(function() {
+    function mySetup() {
+        for (var config in window.UEDITOR_CONFIG) {
+            if (typeof(window.UEDITOR_CONFIG[config]) == 'string')
+                window.UEDITOR_CONFIG[config] = window.UEDITOR_CONFIG[config].replace('_test/tools/br/', '');
+        }
+
+        var ui = baidu.editor.ui;
+        var div = document.createElement('div');
+        document.body.appendChild(div);
+        div.id = 'editor';
+        var ue = new UE.ui.Editor({'UEDITOR_HOME_URL':'../../../','autoFloatEnabled':true});
+        setTimeout(function(){
+            te.dom.push(div);
+            te.obj.push(ui);
+            te.obj.push( ue );
+            QUnit.readyFlag =1;
+        },20);
+        stop();
+        QUnit.readyFlag =0;
+        document.getElementsByClassName = function(eleClassName) {
+            var getEleClass = [];//定义一个数组
+            var myclass = new RegExp("\\b" + eleClassName + "\\b");//创建一个正则表达式对像
+            var elem = this.getElementsByTagName("*");//获取文档里所有的元素
+            for (var h = 0; h < elem.length; h++) {
+                var classes = elem[h].className;//获取class对像
+                if (myclass.test(classes)) getEleClass.push(elem[h]);//正则比较，取到想要的CLASS对像
+            }
+            return getEleClass;//返回数组
+        }
+    }
+
+    var _d = function() {
+        if (te) {
+            if (te.dom && te.dom.length) {
+                for (var i = 0; i < te.dom.length; i++) {
+                    if (te.dom[i] && te.dom[i].parentNode)
+                        te.dom[i].parentNode.removeChild(te.dom[i]);
+                }
+
+            }
+        }
+
+        te.dom = [];
+        te.obj = [];
+    }
+
+    var s = QUnit.testStart,d = QUnit.testDone;
+    QUnit.testStart = function() {
+        s.apply(this, arguments);
+        mySetup();
+    };
+    QUnit.testDone = function() {
+        _d();
+        d.apply(this, arguments);
+    }
+
+})()

@@ -1,1 +1,174 @@
-UE.plugins.link=function(){function e(e){var t=e.startContainer,n=e.endContainer;(t=domUtils.findParentByTagName(t,"a",!0))&&e.setStartBefore(t),(n=domUtils.findParentByTagName(n,"a",!0))&&e.setEndAfter(n)}function t(t,n,a){var o=t.cloneRange(),i=a.queryCommandValue("link");e(t=t.adjustmentBoundary());var r=t.startContainer;if(1==r.nodeType&&i&&(r=r.childNodes[t.startOffset],r&&1==r.nodeType&&"A"==r.tagName&&/^(?:https?|ftp|file)\s*:\s*\/\//.test(r[browser.ie?"innerText":"textContent"])&&(r[browser.ie?"innerText":"textContent"]=utils.html(n.textValue||n.href))),(!o.collapsed||i)&&(t.removeInlineStyle("a"),o=t.cloneRange()),o.collapsed){var s=t.document.createElement("a"),l="";n.textValue?(l=utils.html(n.textValue),delete n.textValue):l=utils.html(n.href),domUtils.setAttributes(s,n),r=domUtils.findParentByTagName(o.startContainer,"a",!0),r&&domUtils.isInNodeEndBoundary(o,r)&&t.setStartAfter(r).collapse(!0),s[browser.ie?"innerText":"textContent"]=l,t.insertNode(s).selectNode(s)}else t.applyInlineStyle("a",n)}UE.commands.unlink={execCommand:function(){var t,n=this.selection.getRange();(!n.collapsed||domUtils.findParentByTagName(n.startContainer,"a",!0))&&(t=n.createBookmark(),e(n),n.removeInlineStyle("a").moveToBookmark(t).select())},queryCommandState:function(){return!this.highlight&&this.queryCommandValue("link")?0:-1}},UE.commands.link={execCommand:function(e,n){var a;n._href&&(n._href=utils.unhtml(n._href,/[<">]/g)),n.href&&(n.href=utils.unhtml(n.href,/[<">]/g)),n.textValue&&(n.textValue=utils.unhtml(n.textValue,/[<">]/g)),t(a=this.selection.getRange(),n,this),a.collapse().select(!0)},queryCommandValue:function(){var e,t=this.selection.getRange();if(!t.collapsed){t.shrinkBoundary();var n=3!=t.startContainer.nodeType&&t.startContainer.childNodes[t.startOffset]?t.startContainer.childNodes[t.startOffset]:t.startContainer,a=3==t.endContainer.nodeType||0==t.endOffset?t.endContainer:t.endContainer.childNodes[t.endOffset-1],o=t.getCommonAncestor();if(e=domUtils.findParentByTagName(o,"a",!0),!e&&1==o.nodeType)for(var i,r,s,l=o.getElementsByTagName("a"),d=0;s=l[d++];)if(i=domUtils.getPosition(s,n),r=domUtils.getPosition(s,a),(i&domUtils.POSITION_FOLLOWING||i&domUtils.POSITION_CONTAINS)&&(r&domUtils.POSITION_PRECEDING||r&domUtils.POSITION_CONTAINS)){e=s;break}return e}return e=t.startContainer,e=1==e.nodeType?e:e.parentNode,e&&(e=domUtils.findParentByTagName(e,"a",!0))&&!domUtils.isInNodeEndBoundary(t,e)?e:void 0},queryCommandState:function(){var e=this.selection.getRange().getClosedNode(),t=e&&("edui-faked-video"==e.className||-1!=e.className.indexOf("edui-upload-video"));return t?-1:0}}};
+/**
+ * 超链接
+ * @file
+ * @since 1.2.6.1
+ */
+
+/**
+ * 插入超链接
+ * @command link
+ * @method execCommand
+ * @param { String } cmd 命令字符串
+ * @param { Object } options   设置自定义属性，例如：url、title、target
+ * @example
+ * ```javascript
+ * editor.execCommand( 'link', '{
+ *     url:'ueditor.baidu.com',
+ *     title:'ueditor',
+ *     target:'_blank'
+ * }' );
+ * ```
+ */
+/**
+ * 返回当前选中的第一个超链接节点
+ * @command link
+ * @method queryCommandValue
+ * @param { String } cmd 命令字符串
+ * @return { Element } 超链接节点
+ * @example
+ * ```javascript
+ * editor.queryCommandValue( 'link' );
+ * ```
+ */
+
+/**
+ * 取消超链接
+ * @command unlink
+ * @method execCommand
+ * @param { String } cmd 命令字符串
+ * @example
+ * ```javascript
+ * editor.execCommand( 'unlink');
+ * ```
+ */
+
+UE.plugins['link'] = function(){
+    function optimize( range ) {
+        var start = range.startContainer,end = range.endContainer;
+
+        if ( start = domUtils.findParentByTagName( start, 'a', true ) ) {
+            range.setStartBefore( start );
+        }
+        if ( end = domUtils.findParentByTagName( end, 'a', true ) ) {
+            range.setEndAfter( end );
+        }
+    }
+
+
+    UE.commands['unlink'] = {
+        execCommand : function() {
+            var range = this.selection.getRange(),
+                bookmark;
+            if(range.collapsed && !domUtils.findParentByTagName( range.startContainer, 'a', true )){
+                return;
+            }
+            bookmark = range.createBookmark();
+            optimize( range );
+            range.removeInlineStyle( 'a' ).moveToBookmark( bookmark ).select();
+        },
+        queryCommandState : function(){
+            return !this.highlight && this.queryCommandValue('link') ?  0 : -1;
+        }
+
+    };
+    function doLink(range,opt,me){
+        var rngClone = range.cloneRange(),
+            link = me.queryCommandValue('link');
+        optimize( range = range.adjustmentBoundary() );
+        var start = range.startContainer;
+        if(start.nodeType == 1 && link){
+            start = start.childNodes[range.startOffset];
+            if(start && start.nodeType == 1 && start.tagName == 'A' && /^(?:https?|ftp|file)\s*:\s*\/\//.test(start[browser.ie?'innerText':'textContent'])){
+                start[browser.ie ? 'innerText' : 'textContent'] =  utils.html(opt.textValue||opt.href);
+
+            }
+        }
+        if( !rngClone.collapsed || link){
+            range.removeInlineStyle( 'a' );
+            rngClone = range.cloneRange();
+        }
+
+        if ( rngClone.collapsed ) {
+            var a = range.document.createElement( 'a'),
+                text = '';
+            if(opt.textValue){
+
+                text =   utils.html(opt.textValue);
+                delete opt.textValue;
+            }else{
+                text =   utils.html(opt.href);
+
+            }
+            domUtils.setAttributes( a, opt );
+            start =  domUtils.findParentByTagName( rngClone.startContainer, 'a', true );
+            if(start && domUtils.isInNodeEndBoundary(rngClone,start)){
+                range.setStartAfter(start).collapse(true);
+
+            }
+            a[browser.ie ? 'innerText' : 'textContent'] = text;
+            range.insertNode(a).selectNode( a );
+        } else {
+            range.applyInlineStyle( 'a', opt );
+
+        }
+    }
+    UE.commands['link'] = {
+        execCommand : function( cmdName, opt ) {
+            var range;
+            opt._href && (opt._href = utils.unhtml(opt._href,/[<">]/g));
+            opt.href && (opt.href = utils.unhtml(opt.href,/[<">]/g));
+            opt.textValue && (opt.textValue = utils.unhtml(opt.textValue,/[<">]/g));
+            doLink(range=this.selection.getRange(),opt,this);
+            //闭合都不加占位符，如果加了会在a后边多个占位符节点，导致a是图片背景组成的列表，出现空白问题
+            range.collapse().select(true);
+
+        },
+        queryCommandValue : function() {
+            var range = this.selection.getRange(),
+                node;
+            if ( range.collapsed ) {
+//                    node = this.selection.getStart();
+                //在ie下getstart()取值偏上了
+                node = range.startContainer;
+                node = node.nodeType == 1 ? node : node.parentNode;
+
+                if ( node && (node = domUtils.findParentByTagName( node, 'a', true )) && ! domUtils.isInNodeEndBoundary(range,node)) {
+
+                    return node;
+                }
+            } else {
+                //trace:1111  如果是<p><a>xx</a></p> startContainer是p就会找不到a
+                range.shrinkBoundary();
+                var start = range.startContainer.nodeType  == 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset],
+                    end =  range.endContainer.nodeType == 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset-1],
+                    common = range.getCommonAncestor();
+                node = domUtils.findParentByTagName( common, 'a', true );
+                if ( !node && common.nodeType == 1){
+
+                    var as = common.getElementsByTagName( 'a' ),
+                        ps,pe;
+
+                    for ( var i = 0,ci; ci = as[i++]; ) {
+                        ps = domUtils.getPosition( ci, start ),pe = domUtils.getPosition( ci,end);
+                        if ( (ps & domUtils.POSITION_FOLLOWING || ps & domUtils.POSITION_CONTAINS)
+                            &&
+                            (pe & domUtils.POSITION_PRECEDING || pe & domUtils.POSITION_CONTAINS)
+                            ) {
+                            node = ci;
+                            break;
+                        }
+                    }
+                }
+                return node;
+            }
+
+        },
+        queryCommandState : function() {
+            //判断如果是视频的话连接不可用
+            //fix 853
+            var img = this.selection.getRange().getClosedNode(),
+                flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video")!=-1);
+            return flag ? -1 : 0;
+        }
+    };
+};

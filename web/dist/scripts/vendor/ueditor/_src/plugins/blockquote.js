@@ -1,1 +1,172 @@
-UE.plugins.blockquote=function(){function e(e){return domUtils.filterNodeList(e.selection.getStartElementPath(),"blockquote")}var t=this;t.commands.blockquote={execCommand:function(t,o){var i=this.selection.getRange(),n=e(this),a=dtd.blockquote,s=i.createBookmark();if(n){var d=i.startContainer,r=domUtils.isBlockElm(d)?d:domUtils.findParent(d,function(e){return domUtils.isBlockElm(e)}),l=i.endContainer,m=domUtils.isBlockElm(l)?l:domUtils.findParent(l,function(e){return domUtils.isBlockElm(e)});r=domUtils.findParentByTagName(r,"li",!0)||r,m=domUtils.findParentByTagName(m,"li",!0)||m,"LI"==r.tagName||"TD"==r.tagName||r===n||domUtils.isBody(r)?domUtils.remove(n,!0):domUtils.breakParent(r,n),r!==m&&(n=domUtils.findParentByTagName(m,"blockquote"),n&&("LI"==m.tagName||"TD"==m.tagName||domUtils.isBody(m)?n.parentNode&&domUtils.remove(n,!0):domUtils.breakParent(m,n)));for(var c,U=domUtils.getElementsByTagName(this.document,"blockquote"),N=0;c=U[N++];)c.childNodes.length?domUtils.getPosition(c,r)&domUtils.POSITION_FOLLOWING&&domUtils.getPosition(c,m)&domUtils.POSITION_PRECEDING&&domUtils.remove(c,!0):domUtils.remove(c)}else{for(var f=i.cloneRange(),u=1==f.startContainer.nodeType?f.startContainer:f.startContainer.parentNode,g=u,k=1;;){if(domUtils.isBody(u)){g!==u?i.collapsed?(f.selectNode(g),k=0):f.setStartBefore(g):f.setStart(u,0);break}if(!a[u.tagName]){i.collapsed?f.selectNode(g):f.setStartBefore(g);break}g=u,u=u.parentNode}if(k)for(g=u=u=1==f.endContainer.nodeType?f.endContainer:f.endContainer.parentNode;;){if(domUtils.isBody(u)){g!==u?f.setEndAfter(g):f.setEnd(u,u.childNodes.length);break}if(!a[u.tagName]){f.setEndAfter(g);break}g=u,u=u.parentNode}u=i.document.createElement("blockquote"),domUtils.setAttributes(u,o),u.appendChild(f.extractContents()),f.insertNode(u);for(var B,b=domUtils.getElementsByTagName(u,"blockquote"),N=0;B=b[N++];)B.parentNode&&domUtils.remove(B,!0)}i.moveToBookmark(s).select()},queryCommandState:function(){return e(this)?1:0}}};
+/**
+ * 添加引用
+ * @file
+ * @since 1.2.6.1
+ */
+
+/**
+ * 添加引用
+ * @command blockquote
+ * @method execCommand
+ * @param { String } cmd 命令字符串
+ * @example
+ * ```javascript
+ * editor.execCommand( 'blockquote' );
+ * ```
+ */
+
+/**
+ * 添加引用
+ * @command blockquote
+ * @method execCommand
+ * @param { String } cmd 命令字符串
+ * @param { Object } attrs 节点属性
+ * @example
+ * ```javascript
+ * editor.execCommand( 'blockquote',{
+ *     style: "color: red;"
+ * } );
+ * ```
+ */
+
+
+UE.plugins['blockquote'] = function(){
+    var me = this;
+    function getObj(editor){
+        return domUtils.filterNodeList(editor.selection.getStartElementPath(),'blockquote');
+    }
+    me.commands['blockquote'] = {
+        execCommand : function( cmdName, attrs ) {
+            var range = this.selection.getRange(),
+                obj = getObj(this),
+                blockquote = dtd.blockquote,
+                bookmark = range.createBookmark();
+
+            if ( obj ) {
+
+                    var start = range.startContainer,
+                        startBlock = domUtils.isBlockElm(start) ? start : domUtils.findParent(start,function(node){return domUtils.isBlockElm(node)}),
+
+                        end = range.endContainer,
+                        endBlock = domUtils.isBlockElm(end) ? end :  domUtils.findParent(end,function(node){return domUtils.isBlockElm(node)});
+
+                    //处理一下li
+                    startBlock = domUtils.findParentByTagName(startBlock,'li',true) || startBlock;
+                    endBlock = domUtils.findParentByTagName(endBlock,'li',true) || endBlock;
+
+
+                    if(startBlock.tagName == 'LI' || startBlock.tagName == 'TD' || startBlock === obj || domUtils.isBody(startBlock)){
+                        domUtils.remove(obj,true);
+                    }else{
+                        domUtils.breakParent(startBlock,obj);
+                    }
+
+                    if(startBlock !== endBlock){
+                        obj = domUtils.findParentByTagName(endBlock,'blockquote');
+                        if(obj){
+                            if(endBlock.tagName == 'LI' || endBlock.tagName == 'TD'|| domUtils.isBody(endBlock)){
+                                obj.parentNode && domUtils.remove(obj,true);
+                            }else{
+                                domUtils.breakParent(endBlock,obj);
+                            }
+
+                        }
+                    }
+
+                    var blockquotes = domUtils.getElementsByTagName(this.document,'blockquote');
+                    for(var i=0,bi;bi=blockquotes[i++];){
+                        if(!bi.childNodes.length){
+                            domUtils.remove(bi);
+                        }else if(domUtils.getPosition(bi,startBlock)&domUtils.POSITION_FOLLOWING && domUtils.getPosition(bi,endBlock)&domUtils.POSITION_PRECEDING){
+                            domUtils.remove(bi,true);
+                        }
+                    }
+
+
+
+
+            } else {
+
+                var tmpRange = range.cloneRange(),
+                    node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode,
+                    preNode = node,
+                    doEnd = 1;
+
+                //调整开始
+                while ( 1 ) {
+                    if ( domUtils.isBody(node) ) {
+                        if ( preNode !== node ) {
+                            if ( range.collapsed ) {
+                                tmpRange.selectNode( preNode );
+                                doEnd = 0;
+                            } else {
+                                tmpRange.setStartBefore( preNode );
+                            }
+                        }else{
+                            tmpRange.setStart(node,0);
+                        }
+
+                        break;
+                    }
+                    if ( !blockquote[node.tagName] ) {
+                        if ( range.collapsed ) {
+                            tmpRange.selectNode( preNode );
+                        } else{
+                            tmpRange.setStartBefore( preNode);
+                        }
+                        break;
+                    }
+
+                    preNode = node;
+                    node = node.parentNode;
+                }
+
+                //调整结束
+                if ( doEnd ) {
+                    preNode = node =  node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
+                    while ( 1 ) {
+
+                        if ( domUtils.isBody( node ) ) {
+                            if ( preNode !== node ) {
+
+                                tmpRange.setEndAfter( preNode );
+
+                            } else {
+                                tmpRange.setEnd( node, node.childNodes.length );
+                            }
+
+                            break;
+                        }
+                        if ( !blockquote[node.tagName] ) {
+                            tmpRange.setEndAfter( preNode );
+                            break;
+                        }
+
+                        preNode = node;
+                        node = node.parentNode;
+                    }
+
+                }
+
+
+                node = range.document.createElement( 'blockquote' );
+                domUtils.setAttributes( node, attrs );
+                node.appendChild( tmpRange.extractContents() );
+                tmpRange.insertNode( node );
+                //去除重复的
+                var childs = domUtils.getElementsByTagName(node,'blockquote');
+                for(var i=0,ci;ci=childs[i++];){
+                    if(ci.parentNode){
+                        domUtils.remove(ci,true);
+                    }
+                }
+
+            }
+            range.moveToBookmark( bookmark ).select();
+        },
+        queryCommandState : function() {
+            return getObj(this) ? 1 : 0;
+        }
+    };
+};
+

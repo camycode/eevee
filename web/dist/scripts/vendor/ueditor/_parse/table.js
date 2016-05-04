@@ -1,1 +1,161 @@
-UE.parse.register("table",function(t){function e(e,r){var n,a=e;for(r=t.isArray(r)?r:[r];a;){for(n=0;n<r.length;n++)if(a.tagName==r[n].toUpperCase())return a;a=a.parentNode}return null}function r(e,r,a){for(var o=e.rows,l=[],i="TH"===o[0].cells[0].tagName,s=0,c=0,d=o.length;d>c;c++)l[c]=o[c];var b={reversecurrent:function(t,e){return 1},orderbyasc:function(t,e){var r=t.innerText||t.textContent,n=e.innerText||e.textContent;return r.localeCompare(n)},reversebyasc:function(t,e){var r=t.innerHTML,n=e.innerHTML;return n.localeCompare(r)},orderbynum:function(e,r){var n=e[t.isIE?"innerText":"textContent"].match(/\d+/),a=r[t.isIE?"innerText":"textContent"].match(/\d+/);return n&&(n=+n[0]),a&&(a=+a[0]),(n||0)-(a||0)},reversebynum:function(e,r){var n=e[t.isIE?"innerText":"textContent"].match(/\d+/),a=r[t.isIE?"innerText":"textContent"].match(/\d+/);return n&&(n=+n[0]),a&&(a=+a[0]),(a||0)-(n||0)}};e.setAttribute("data-sort-type",a&&"string"==typeof a&&b[a]?a:""),i&&l.splice(0,1),l=n(l,function(t,e){var n;return n=a&&"function"==typeof a?a.call(this,t.cells[r],e.cells[r]):a&&"number"==typeof a?1:a&&"string"==typeof a&&b[a]?b[a].call(this,t.cells[r],e.cells[r]):b.orderbyasc.call(this,t.cells[r],e.cells[r])});for(var u=e.ownerDocument.createDocumentFragment(),f=0,d=l.length;d>f;f++)u.appendChild(l[f]);var g=e.getElementsByTagName("tbody")[0];s?g.insertBefore(u,o[s-range.endRowIndex+range.beginRowIndex-1]):g.appendChild(u)}function n(t,e){e=e||function(t,e){return t.localeCompare(e)};for(var r=0,n=t.length;n>r;r++)for(var a=r,o=t.length;o>a;a++)if(e(t[r],t[a])>0){var l=t[r];t[r]=t[a],t[a]=l}return t}function a(e){if(!t.hasClass(e.rows[0],"firstRow")){for(var r=1;r<e.rows.length;r++)t.removeClass(e.rows[r],"firstRow");t.addClass(e.rows[0],"firstRow")}}var o=this,l=this.root,i=l.getElementsByTagName("table");if(i.length){var s=this.selector;t.cssRule("table",s+" table.noBorderTable td,"+s+" table.noBorderTable th,"+s+" table.noBorderTable caption{border:1px dashed #ddd !important}"+s+" table.sortEnabled tr.firstRow th,"+s+" table.sortEnabled tr.firstRow td{padding-right:20px; background-repeat: no-repeat;background-position: center right; background-image:url("+this.rootPath+"themes/default/images/sortable.png);}"+s+" table.sortEnabled tr.firstRow th:hover,"+s+" table.sortEnabled tr.firstRow td:hover{background-color: #EEE;}"+s+" table{margin-bottom:10px;border-collapse:collapse;display:table;}"+s+" td,"+s+" th{ background:white; padding: 5px 10px;border: 1px solid #DDD;}"+s+" caption{border:1px dashed #DDD;border-bottom:0;padding:3px;text-align:center;}"+s+" th{border-top:1px solid #BBB;background:#F7F7F7;}"+s+" table tr.firstRow th{border-top:2px solid #BBB;background:#F7F7F7;}"+s+" tr.ue-table-interlace-color-single td{ background: #fcfcfc; }"+s+" tr.ue-table-interlace-color-double td{ background: #f7faff; }"+s+" td p{margin:0;padding:0;}",document),t.each("td th caption".split(" "),function(e){var r=l.getElementsByTagName(e);r.length&&t.each(r,function(t){t.firstChild||(t.innerHTML="&nbsp;")})});var i=l.getElementsByTagName("table");t.each(i,function(n){/\bsortEnabled\b/.test(n.className)&&t.on(n,"click",function(n){var l=n.target||n.srcElement,i=e(l,["td","th"]),s=e(l,"table"),c=t.indexOf(s.rows[0].cells,i),d=s.getAttribute("data-sort-type");-1!=c&&(r(s,c,o.tableSortCompareFn||d),a(s))})})}});
+UE.parse.register('table', function (utils) {
+    var me = this,
+        root = this.root,
+        tables = root.getElementsByTagName('table');
+    if (tables.length) {
+        var selector = this.selector;
+        //追加默认的表格样式
+        utils.cssRule('table',
+            selector + ' table.noBorderTable td,' +
+                selector + ' table.noBorderTable th,' +
+                selector + ' table.noBorderTable caption{border:1px dashed #ddd !important}' +
+                selector + ' table.sortEnabled tr.firstRow th,' + selector + ' table.sortEnabled tr.firstRow td{padding-right:20px; background-repeat: no-repeat;' +
+                    'background-position: center right; background-image:url(' + this.rootPath + 'themes/default/images/sortable.png);}' +
+                selector + ' table.sortEnabled tr.firstRow th:hover,' + selector + ' table.sortEnabled tr.firstRow td:hover{background-color: #EEE;}' +
+                selector + ' table{margin-bottom:10px;border-collapse:collapse;display:table;}' +
+                selector + ' td,' + selector + ' th{ background:white; padding: 5px 10px;border: 1px solid #DDD;}' +
+                selector + ' caption{border:1px dashed #DDD;border-bottom:0;padding:3px;text-align:center;}' +
+                selector + ' th{border-top:1px solid #BBB;background:#F7F7F7;}' +
+                selector + ' table tr.firstRow th{border-top:2px solid #BBB;background:#F7F7F7;}' +
+                selector + ' tr.ue-table-interlace-color-single td{ background: #fcfcfc; }' +
+                selector + ' tr.ue-table-interlace-color-double td{ background: #f7faff; }' +
+                selector + ' td p{margin:0;padding:0;}',
+            document);
+        //填充空的单元格
+
+        utils.each('td th caption'.split(' '), function (tag) {
+            var cells = root.getElementsByTagName(tag);
+            cells.length && utils.each(cells, function (node) {
+                if (!node.firstChild) {
+                    node.innerHTML = '&nbsp;';
+
+                }
+            })
+        });
+
+        //表格可排序
+        var tables = root.getElementsByTagName('table');
+        utils.each(tables, function (table) {
+            if (/\bsortEnabled\b/.test(table.className)) {
+                utils.on(table, 'click', function(e){
+                    var target = e.target || e.srcElement,
+                        cell = findParentByTagName(target, ['td', 'th']);
+                    var table = findParentByTagName(target, 'table'),
+                        colIndex = utils.indexOf(table.rows[0].cells, cell),
+                        sortType = table.getAttribute('data-sort-type');
+                    if(colIndex != -1) {
+                        sortTable(table, colIndex, me.tableSortCompareFn || sortType);
+                        updateTable(table);
+                    }
+                });
+            }
+        });
+
+        //按照标签名查找父节点
+        function findParentByTagName(target, tagNames) {
+            var i, current = target;
+            tagNames = utils.isArray(tagNames) ? tagNames:[tagNames];
+            while(current){
+                for(i = 0;i < tagNames.length; i++) {
+                    if(current.tagName == tagNames[i].toUpperCase()) return current;
+                }
+                current = current.parentNode;
+            }
+            return null;
+        }
+        //表格排序
+        function sortTable(table, sortByCellIndex, compareFn) {
+            var rows = table.rows,
+                trArray = [],
+                flag = rows[0].cells[0].tagName === "TH",
+                lastRowIndex = 0;
+
+            for (var i = 0,len = rows.length; i < len; i++) {
+                trArray[i] = rows[i];
+            }
+
+            var Fn = {
+                'reversecurrent': function(td1,td2){
+                    return 1;
+                },
+                'orderbyasc': function(td1,td2){
+                    var value1 = td1.innerText||td1.textContent,
+                        value2 = td2.innerText||td2.textContent;
+                    return value1.localeCompare(value2);
+                },
+                'reversebyasc': function(td1,td2){
+                    var value1 = td1.innerHTML,
+                        value2 = td2.innerHTML;
+                    return value2.localeCompare(value1);
+                },
+                'orderbynum': function(td1,td2){
+                    var value1 = td1[utils.isIE ? 'innerText':'textContent'].match(/\d+/),
+                        value2 = td2[utils.isIE ? 'innerText':'textContent'].match(/\d+/);
+                    if(value1) value1 = +value1[0];
+                    if(value2) value2 = +value2[0];
+                    return (value1||0) - (value2||0);
+                },
+                'reversebynum': function(td1,td2){
+                    var value1 = td1[utils.isIE ? 'innerText':'textContent'].match(/\d+/),
+                        value2 = td2[utils.isIE ? 'innerText':'textContent'].match(/\d+/);
+                    if(value1) value1 = +value1[0];
+                    if(value2) value2 = +value2[0];
+                    return (value2||0) - (value1||0);
+                }
+            };
+
+            //对表格设置排序的标记data-sort-type
+            table.setAttribute('data-sort-type', compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn:'');
+
+            //th不参与排序
+            flag && trArray.splice(0, 1);
+            trArray = sort(trArray,function (tr1, tr2) {
+                var result;
+                if (compareFn && typeof compareFn === "function") {
+                    result = compareFn.call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
+                } else if (compareFn && typeof compareFn === "number") {
+                    result = 1;
+                } else if (compareFn && typeof compareFn === "string" && Fn[compareFn]) {
+                    result = Fn[compareFn].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
+                } else {
+                    result = Fn['orderbyasc'].call(this, tr1.cells[sortByCellIndex], tr2.cells[sortByCellIndex]);
+                }
+                return result;
+            });
+            var fragment = table.ownerDocument.createDocumentFragment();
+            for (var j = 0, len = trArray.length; j < len; j++) {
+                fragment.appendChild(trArray[j]);
+            }
+            var tbody = table.getElementsByTagName("tbody")[0];
+            if(!lastRowIndex){
+                tbody.appendChild(fragment);
+            }else{
+                tbody.insertBefore(fragment,rows[lastRowIndex- range.endRowIndex + range.beginRowIndex - 1])
+            }
+        }
+        //冒泡排序
+        function sort(array, compareFn){
+            compareFn = compareFn || function(item1, item2){ return item1.localeCompare(item2);};
+            for(var i= 0,len = array.length; i<len; i++){
+                for(var j = i,length = array.length; j<length; j++){
+                    if(compareFn(array[i], array[j]) > 0){
+                        var t = array[i];
+                        array[i] = array[j];
+                        array[j] = t;
+                    }
+                }
+            }
+            return array;
+        }
+        //更新表格
+        function updateTable(table) {
+            //给第一行设置firstRow的样式名称,在排序图标的样式上使用到
+            if(!utils.hasClass(table.rows[0], "firstRow")) {
+                for(var i = 1; i< table.rows.length; i++) {
+                    utils.removeClass(table.rows[i], "firstRow");
+                }
+                utils.addClass(table.rows[0], "firstRow");
+            }
+        }
+    }
+});

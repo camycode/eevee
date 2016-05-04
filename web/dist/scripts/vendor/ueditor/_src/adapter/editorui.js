@@ -1,1 +1,854 @@
-!function(){var e=baidu.editor.utils,t=baidu.editor.ui,a=t.Dialog;t.buttons={},t.Dialog=function(e){var t=new a(e);return t.addListener("hide",function(){if(t.editor){var e=t.editor;try{if(browser.gecko){var a=e.window.scrollY,n=e.window.scrollX;e.body.focus(),e.window.scrollTo(n,a)}else e.focus()}catch(o){}}}),t};for(var n,o={anchor:"~/dialogs/anchor/anchor.html",insertimage:"~/dialogs/image/image.html",link:"~/dialogs/link/link.html",spechars:"~/dialogs/spechars/spechars.html",searchreplace:"~/dialogs/searchreplace/searchreplace.html",map:"~/dialogs/map/map.html",gmap:"~/dialogs/gmap/gmap.html",insertvideo:"~/dialogs/video/video.html",help:"~/dialogs/help/help.html",preview:"~/dialogs/preview/preview.html",emotion:"~/dialogs/emotion/emotion.html",wordimage:"~/dialogs/wordimage/wordimage.html",attachment:"~/dialogs/attachment/attachment.html",insertframe:"~/dialogs/insertframe/insertframe.html",edittip:"~/dialogs/table/edittip.html",edittable:"~/dialogs/table/edittable.html",edittd:"~/dialogs/table/edittd.html",webapp:"~/dialogs/webapp/webapp.html",snapscreen:"~/dialogs/snapscreen/snapscreen.html",scrawl:"~/dialogs/scrawl/scrawl.html",music:"~/dialogs/music/music.html",template:"~/dialogs/template/template.html",background:"~/dialogs/background/background.html",charts:"~/dialogs/charts/charts.html"},i=["undo","redo","formatmatch","bold","italic","underline","fontborder","touppercase","tolowercase","strikethrough","subscript","superscript","source","indent","outdent","blockquote","pasteplain","pagebreak","selectall","print","horizontal","removeformat","time","date","unlink","insertparagraphbeforetable","insertrow","insertcol","mergeright","mergedown","deleterow","deletecol","splittorows","splittocols","splittocells","mergecells","deletetable","drafts"],l=0;n=i[l++];)n=n.toLowerCase(),t[n]=function(e){return function(a){var n=new t.Button({className:"edui-for-"+e,title:a.options.labelMap[e]||a.getLang("labelMap."+e)||"",onclick:function(){a.execCommand(e)},theme:a.options.theme,showText:!1});return t.buttons[e]=n,a.addListener("selectionchange",function(t,o,i){var l=a.queryCommandState(e);-1==l?(n.setDisabled(!0),n.setChecked(!1)):i||(n.setDisabled(!1),n.setChecked(l))}),n}}(n);t.cleardoc=function(e){var a=new t.Button({className:"edui-for-cleardoc",title:e.options.labelMap.cleardoc||e.getLang("labelMap.cleardoc")||"",theme:e.options.theme,onclick:function(){confirm(e.getLang("confirmClear"))&&e.execCommand("cleardoc")}});return t.buttons.cleardoc=a,e.addListener("selectionchange",function(){a.setDisabled(-1==e.queryCommandState("cleardoc"))}),a};var s={justify:["left","right","center","justify"],imagefloat:["none","left","center","right"],directionality:["ltr","rtl"]};for(var r in s)!function(e,a){for(var n,o=0;n=a[o++];)!function(a){t[e.replace("float","")+a]=function(n){var o=new t.Button({className:"edui-for-"+e.replace("float","")+a,title:n.options.labelMap[e.replace("float","")+a]||n.getLang("labelMap."+e.replace("float","")+a)||"",theme:n.options.theme,onclick:function(){n.execCommand(e,a)}});return t.buttons[e]=o,n.addListener("selectionchange",function(t,i,l){o.setDisabled(-1==n.queryCommandState(e)),o.setChecked(n.queryCommandValue(e)==a&&!l)}),o}}(n)}(r,s[r]);for(var n,l=0;n=["backcolor","forecolor"][l++];)t[n]=function(e){return function(a){var n=new t.ColorButton({className:"edui-for-"+e,color:"default",title:a.options.labelMap[e]||a.getLang("labelMap."+e)||"",editor:a,onpickcolor:function(t,n){a.execCommand(e,n)},onpicknocolor:function(){a.execCommand(e,"default"),this.setColor("transparent"),this.color="default"},onbuttonclick:function(){a.execCommand(e,this.color)}});return t.buttons[e]=n,a.addListener("selectionchange",function(){n.setDisabled(-1==a.queryCommandState(e))}),n}}(n);var c={noOk:["searchreplace","help","spechars","webapp","preview"],ok:["attachment","anchor","link","insertimage","map","gmap","insertframe","wordimage","insertvideo","insertframe","edittip","edittable","edittd","scrawl","template","music","background","charts"]};for(var r in c)!function(a,n){for(var i,l=0;i=n[l++];)browser.opera&&"searchreplace"===i||!function(n){t[n]=function(i,l,s){l=l||(i.options.iframeUrlMap||{})[n]||o[n],s=i.options.labelMap[n]||i.getLang("labelMap."+n)||"";var r;l&&(r=new t.Dialog(e.extend({iframeUrl:i.ui.mapUrl(l),editor:i,className:"edui-for-"+n,title:s,holdScroll:"insertimage"===n,fullscreen:/charts|preview/.test(n),closeDialog:i.getLang("closeDialog")},"ok"==a?{buttons:[{className:"edui-okbutton",label:i.getLang("ok"),editor:i,onclick:function(){r.close(!0)}},{className:"edui-cancelbutton",label:i.getLang("cancel"),editor:i,onclick:function(){r.close(!1)}}]}:{})),i.ui._dialogs[n+"Dialog"]=r);var c=new t.Button({className:"edui-for-"+n,title:s,onclick:function(){if(r)switch(n){case"wordimage":var e=i.execCommand("wordimage");e&&e.length&&(r.render(),r.open());break;case"scrawl":-1!=i.queryCommandState("scrawl")&&(r.render(),r.open());break;default:r.render(),r.open()}},theme:i.options.theme,disabled:"scrawl"==n&&-1==i.queryCommandState("scrawl")||"charts"==n});return t.buttons[n]=c,i.addListener("selectionchange",function(){var e={edittable:1};if(!(n in e)){var t=i.queryCommandState(n);c.getDom()&&(c.setDisabled(-1==t),c.setChecked(t))}}),c}}(i.toLowerCase())}(r,c[r]);t.snapscreen=function(e,a,n){n=e.options.labelMap.snapscreen||e.getLang("labelMap.snapscreen")||"";var i=new t.Button({className:"edui-for-snapscreen",title:n,onclick:function(){e.execCommand("snapscreen")},theme:e.options.theme});if(t.buttons.snapscreen=i,a=a||(e.options.iframeUrlMap||{}).snapscreen||o.snapscreen){var l=new t.Dialog({iframeUrl:e.ui.mapUrl(a),editor:e,className:"edui-for-snapscreen",title:n,buttons:[{className:"edui-okbutton",label:e.getLang("ok"),editor:e,onclick:function(){l.close(!0)}},{className:"edui-cancelbutton",label:e.getLang("cancel"),editor:e,onclick:function(){l.close(!1)}}]});l.render(),e.ui._dialogs.snapscreenDialog=l}return e.addListener("selectionchange",function(){i.setDisabled(-1==e.queryCommandState("snapscreen"))}),i},t.insertcode=function(a,n,o){n=a.options.insertcode||[],o=a.options.labelMap.insertcode||a.getLang("labelMap.insertcode")||"";var i=[];e.each(n,function(e,t){i.push({label:e,value:t,theme:a.options.theme,renderLabelHtml:function(){return'<div class="edui-label %%-label" >'+(this.label||"")+"</div>"}})});var l=new t.Combox({editor:a,items:i,onselect:function(e,t){a.execCommand("insertcode",this.items[t].value)},onbuttonclick:function(){this.showPopup()},title:o,initValue:o,className:"edui-for-insertcode",indexByValue:function(e){if(e)for(var t,a=0;t=this.items[a];a++)if(-1!=t.value.indexOf(e))return a;return-1}});return t.buttons.insertcode=l,a.addListener("selectionchange",function(e,t,n){if(!n){var i=a.queryCommandState("insertcode");if(-1==i)l.setDisabled(!0);else{l.setDisabled(!1);var s=a.queryCommandValue("insertcode");if(!s)return void l.setValue(o);s&&(s=s.replace(/['"]/g,"").split(",")[0]),l.setValue(s)}}}),l},t.fontfamily=function(a,n,o){if(n=a.options.fontfamily||[],o=a.options.labelMap.fontfamily||a.getLang("labelMap.fontfamily")||"",n.length){for(var i,l=0,s=[];i=n[l];l++){var r=a.getLang("fontfamily")[i.name]||"";!function(t,n){s.push({label:t,value:n,theme:a.options.theme,renderLabelHtml:function(){return'<div class="edui-label %%-label" style="font-family:'+e.unhtml(this.value)+'">'+(this.label||"")+"</div>"}})}(i.label||r,i.val)}var c=new t.Combox({editor:a,items:s,onselect:function(e,t){a.execCommand("FontFamily",this.items[t].value)},onbuttonclick:function(){this.showPopup()},title:o,initValue:o,className:"edui-for-fontfamily",indexByValue:function(e){if(e)for(var t,a=0;t=this.items[a];a++)if(-1!=t.value.indexOf(e))return a;return-1}});return t.buttons.fontfamily=c,a.addListener("selectionchange",function(e,t,n){if(!n){var o=a.queryCommandState("FontFamily");if(-1==o)c.setDisabled(!0);else{c.setDisabled(!1);var i=a.queryCommandValue("FontFamily");i&&(i=i.replace(/['"]/g,"").split(",")[0]),c.setValue(i)}}}),c}},t.fontsize=function(e,a,n){if(n=e.options.labelMap.fontsize||e.getLang("labelMap.fontsize")||"",a=a||e.options.fontsize||[],a.length){for(var o=[],i=0;i<a.length;i++){var l=a[i]+"px";o.push({label:l,value:l,theme:e.options.theme,renderLabelHtml:function(){return'<div class="edui-label %%-label" style="line-height:1;font-size:'+this.value+'">'+(this.label||"")+"</div>"}})}var s=new t.Combox({editor:e,items:o,title:n,initValue:n,onselect:function(t,a){e.execCommand("FontSize",this.items[a].value)},onbuttonclick:function(){this.showPopup()},className:"edui-for-fontsize"});return t.buttons.fontsize=s,e.addListener("selectionchange",function(t,a,n){if(!n){var o=e.queryCommandState("FontSize");-1==o?s.setDisabled(!0):(s.setDisabled(!1),s.setValue(e.queryCommandValue("FontSize")))}}),s}},t.paragraph=function(a,n,o){if(o=a.options.labelMap.paragraph||a.getLang("labelMap.paragraph")||"",n=a.options.paragraph||[],!e.isEmptyObject(n)){var i=[];for(var l in n)i.push({value:l,label:n[l]||a.getLang("paragraph")[l],theme:a.options.theme,renderLabelHtml:function(){return'<div class="edui-label %%-label"><span class="edui-for-'+this.value+'">'+(this.label||"")+"</span></div>"}});var s=new t.Combox({editor:a,items:i,title:o,initValue:o,className:"edui-for-paragraph",onselect:function(e,t){a.execCommand("Paragraph",this.items[t].value)},onbuttonclick:function(){this.showPopup()}});return t.buttons.paragraph=s,a.addListener("selectionchange",function(e,t,n){if(!n){var o=a.queryCommandState("Paragraph");if(-1==o)s.setDisabled(!0);else{s.setDisabled(!1);var i=a.queryCommandValue("Paragraph"),l=s.indexByValue(i);-1!=l?s.setValue(i):s.setValue(s.initValue)}}}),s}},t.customstyle=function(e){var a=e.options.customstyle||[],n=e.options.labelMap.customstyle||e.getLang("labelMap.customstyle")||"";if(a.length){for(var o,i=e.getLang("customstyle"),l=0,s=[];o=a[l++];)!function(t){var a={};a.label=t.label?t.label:i[t.name],a.style=t.style,a.className=t.className,a.tag=t.tag,s.push({label:a.label,value:a,theme:e.options.theme,renderLabelHtml:function(){return'<div class="edui-label %%-label"><'+a.tag+" "+(a.className?' class="'+a.className+'"':"")+(a.style?' style="'+a.style+'"':"")+">"+a.label+"</"+a.tag+"></div>"}})}(o);var r=new t.Combox({editor:e,items:s,title:n,initValue:n,className:"edui-for-customstyle",onselect:function(t,a){e.execCommand("customstyle",this.items[a].value)},onbuttonclick:function(){this.showPopup()},indexByValue:function(e){for(var t,a=0;t=this.items[a++];)if(t.label==e)return a-1;return-1}});return t.buttons.customstyle=r,e.addListener("selectionchange",function(t,a,n){if(!n){var o=e.queryCommandState("customstyle");if(-1==o)r.setDisabled(!0);else{r.setDisabled(!1);var i=e.queryCommandValue("customstyle"),l=r.indexByValue(i);-1!=l?r.setValue(i):r.setValue(r.initValue)}}}),r}},t.inserttable=function(e,a,n){n=e.options.labelMap.inserttable||e.getLang("labelMap.inserttable")||"";var o=new t.TableButton({editor:e,title:n,className:"edui-for-inserttable",onpicktable:function(t,a,n){e.execCommand("InsertTable",{numRows:n,numCols:a,border:1})},onbuttonclick:function(){this.showPopup()}});return t.buttons.inserttable=o,e.addListener("selectionchange",function(){o.setDisabled(-1==e.queryCommandState("inserttable"))}),o},t.lineheight=function(e){var a=e.options.lineheight||[];if(a.length){for(var n,o=0,i=[];n=a[o++];)i.push({label:n,value:n,theme:e.options.theme,onclick:function(){e.execCommand("lineheight",this.value)}});var l=new t.MenuButton({editor:e,className:"edui-for-lineheight",title:e.options.labelMap.lineheight||e.getLang("labelMap.lineheight")||"",items:i,onbuttonclick:function(){var t=e.queryCommandValue("LineHeight")||this.value;e.execCommand("LineHeight",t)}});return t.buttons.lineheight=l,e.addListener("selectionchange",function(){var t=e.queryCommandState("LineHeight");if(-1==t)l.setDisabled(!0);else{l.setDisabled(!1);var a=e.queryCommandValue("LineHeight");a&&l.setValue((a+"").replace(/cm/,"")),l.setChecked(t)}}),l}};for(var u,d=["top","bottom"],m=0;u=d[m++];)!function(e){t["rowspacing"+e]=function(a){var n=a.options["rowspacing"+e]||[];if(!n.length)return null;for(var o,i=0,l=[];o=n[i++];)l.push({label:o,value:o,theme:a.options.theme,onclick:function(){a.execCommand("rowspacing",this.value,e)}});var s=new t.MenuButton({editor:a,className:"edui-for-rowspacing"+e,title:a.options.labelMap["rowspacing"+e]||a.getLang("labelMap.rowspacing"+e)||"",items:l,onbuttonclick:function(){var t=a.queryCommandValue("rowspacing",e)||this.value;a.execCommand("rowspacing",t,e)}});return t.buttons[e]=s,a.addListener("selectionchange",function(){var t=a.queryCommandState("rowspacing",e);if(-1==t)s.setDisabled(!0);else{s.setDisabled(!1);var n=a.queryCommandValue("rowspacing",e);n&&s.setValue((n+"").replace(/%/,"")),s.setChecked(t)}}),s}}(u);for(var p,f=["insertorderedlist","insertunorderedlist"],h=0;p=f[h++];)!function(e){t[e]=function(a){var n=a.options[e],o=function(){a.execCommand(e,this.value)},i=[];for(var l in n)i.push({label:n[l]||a.getLang()[e][l]||"",value:l,theme:a.options.theme,onclick:o});var s=new t.MenuButton({editor:a,className:"edui-for-"+e,title:a.getLang("labelMap."+e)||"",items:i,onbuttonclick:function(){var t=a.queryCommandValue(e)||this.value;a.execCommand(e,t)}});return t.buttons[e]=s,a.addListener("selectionchange",function(){var t=a.queryCommandState(e);if(-1==t)s.setDisabled(!0);else{s.setDisabled(!1);var n=a.queryCommandValue(e);s.setValue(n),s.setChecked(t)}}),s}}(p);t.fullscreen=function(e,a){a=e.options.labelMap.fullscreen||e.getLang("labelMap.fullscreen")||"";var n=new t.Button({className:"edui-for-fullscreen",title:a,theme:e.options.theme,onclick:function(){e.ui&&e.ui.setFullScreen(!e.ui.isFullScreen()),this.setChecked(e.ui.isFullScreen())}});return t.buttons.fullscreen=n,e.addListener("selectionchange",function(){var t=e.queryCommandState("fullscreen");n.setDisabled(-1==t),n.setChecked(e.ui.isFullScreen())}),n},t.emotion=function(e,a){var n="emotion",i=new t.MultiMenuPop({title:e.options.labelMap[n]||e.getLang("labelMap."+n)||"",editor:e,className:"edui-for-"+n,iframeUrl:e.ui.mapUrl(a||(e.options.iframeUrlMap||{})[n]||o[n])});return t.buttons[n]=i,e.addListener("selectionchange",function(){i.setDisabled(-1==e.queryCommandState(n))}),i},t.autotypeset=function(e){var a=new t.AutoTypeSetButton({editor:e,title:e.options.labelMap.autotypeset||e.getLang("labelMap.autotypeset")||"",className:"edui-for-autotypeset",onbuttonclick:function(){e.execCommand("autotypeset")}});return t.buttons.autotypeset=a,e.addListener("selectionchange",function(){a.setDisabled(-1==e.queryCommandState("autotypeset"))}),a},t.simpleupload=function(e){var a="simpleupload",n=new t.Button({className:"edui-for-"+a,title:e.options.labelMap[a]||e.getLang("labelMap."+a)||"",onclick:function(){},theme:e.options.theme,showText:!1});return t.buttons[a]=n,e.addListener("ready",function(){var t=n.getDom("body"),a=t.children[0];e.fireEvent("simpleuploadbtnready",a)}),e.addListener("selectionchange",function(t,o,i){var l=e.queryCommandState(a);-1==l?(n.setDisabled(!0),n.setChecked(!1)):i||(n.setDisabled(!1),n.setChecked(l))}),n}}();
+//ui跟编辑器的适配層
+//那个按钮弹出是dialog，是下拉筐等都是在这个js中配置
+//自己写的ui也要在这里配置，放到baidu.editor.ui下边，当编辑器实例化的时候会根据ueditor.config中的toolbars找到相应的进行实例化
+(function () {
+    var utils = baidu.editor.utils;
+    var editorui = baidu.editor.ui;
+    var _Dialog = editorui.Dialog;
+    editorui.buttons = {};
+
+    editorui.Dialog = function (options) {
+        var dialog = new _Dialog(options);
+        dialog.addListener('hide', function () {
+
+            if (dialog.editor) {
+                var editor = dialog.editor;
+                try {
+                    if (browser.gecko) {
+                        var y = editor.window.scrollY,
+                            x = editor.window.scrollX;
+                        editor.body.focus();
+                        editor.window.scrollTo(x, y);
+                    } else {
+                        editor.focus();
+                    }
+
+
+                } catch (ex) {
+                }
+            }
+        });
+        return dialog;
+    };
+
+    var iframeUrlMap = {
+        'anchor':'~/dialogs/anchor/anchor.html',
+        'insertimage':'~/dialogs/image/image.html',
+        'link':'~/dialogs/link/link.html',
+        'spechars':'~/dialogs/spechars/spechars.html',
+        'searchreplace':'~/dialogs/searchreplace/searchreplace.html',
+        'map':'~/dialogs/map/map.html',
+        'gmap':'~/dialogs/gmap/gmap.html',
+        'insertvideo':'~/dialogs/video/video.html',
+        'help':'~/dialogs/help/help.html',
+        'preview':'~/dialogs/preview/preview.html',
+        'emotion':'~/dialogs/emotion/emotion.html',
+        'wordimage':'~/dialogs/wordimage/wordimage.html',
+        'attachment':'~/dialogs/attachment/attachment.html',
+        'insertframe':'~/dialogs/insertframe/insertframe.html',
+        'edittip':'~/dialogs/table/edittip.html',
+        'edittable':'~/dialogs/table/edittable.html',
+        'edittd':'~/dialogs/table/edittd.html',
+        'webapp':'~/dialogs/webapp/webapp.html',
+        'snapscreen':'~/dialogs/snapscreen/snapscreen.html',
+        'scrawl':'~/dialogs/scrawl/scrawl.html',
+        'music':'~/dialogs/music/music.html',
+        'template':'~/dialogs/template/template.html',
+        'background':'~/dialogs/background/background.html',
+        'charts': '~/dialogs/charts/charts.html'
+    };
+    //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
+    var btnCmds = ['undo', 'redo', 'formatmatch',
+        'bold', 'italic', 'underline', 'fontborder', 'touppercase', 'tolowercase',
+        'strikethrough', 'subscript', 'superscript', 'source', 'indent', 'outdent',
+        'blockquote', 'pasteplain', 'pagebreak',
+        'selectall', 'print','horizontal', 'removeformat', 'time', 'date', 'unlink',
+        'insertparagraphbeforetable', 'insertrow', 'insertcol', 'mergeright', 'mergedown', 'deleterow',
+        'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable', 'drafts'];
+
+    for (var i = 0, ci; ci = btnCmds[i++];) {
+        ci = ci.toLowerCase();
+        editorui[ci] = function (cmd) {
+            return function (editor) {
+                var ui = new editorui.Button({
+                    className:'edui-for-' + cmd,
+                    title:editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '',
+                    onclick:function () {
+                        editor.execCommand(cmd);
+                    },
+                    theme:editor.options.theme,
+                    showText:false
+                });
+                editorui.buttons[cmd] = ui;
+                editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+                    var state = editor.queryCommandState(cmd);
+                    if (state == -1) {
+                        ui.setDisabled(true);
+                        ui.setChecked(false);
+                    } else {
+                        if (!uiReady) {
+                            ui.setDisabled(false);
+                            ui.setChecked(state);
+                        }
+                    }
+                });
+                return ui;
+            };
+        }(ci);
+    }
+
+    //清除文档
+    editorui.cleardoc = function (editor) {
+        var ui = new editorui.Button({
+            className:'edui-for-cleardoc',
+            title:editor.options.labelMap.cleardoc || editor.getLang("labelMap.cleardoc") || '',
+            theme:editor.options.theme,
+            onclick:function () {
+                if (confirm(editor.getLang("confirmClear"))) {
+                    editor.execCommand('cleardoc');
+                }
+            }
+        });
+        editorui.buttons["cleardoc"] = ui;
+        editor.addListener('selectionchange', function () {
+            ui.setDisabled(editor.queryCommandState('cleardoc') == -1);
+        });
+        return ui;
+    };
+
+    //排版，图片排版，文字方向
+    var typeset = {
+        'justify':['left', 'right', 'center', 'justify'],
+        'imagefloat':['none', 'left', 'center', 'right'],
+        'directionality':['ltr', 'rtl']
+    };
+
+    for (var p in typeset) {
+
+        (function (cmd, val) {
+            for (var i = 0, ci; ci = val[i++];) {
+                (function (cmd2) {
+                    editorui[cmd.replace('float', '') + cmd2] = function (editor) {
+                        var ui = new editorui.Button({
+                            className:'edui-for-' + cmd.replace('float', '') + cmd2,
+                            title:editor.options.labelMap[cmd.replace('float', '') + cmd2] || editor.getLang("labelMap." + cmd.replace('float', '') + cmd2) || '',
+                            theme:editor.options.theme,
+                            onclick:function () {
+                                editor.execCommand(cmd, cmd2);
+                            }
+                        });
+                        editorui.buttons[cmd] = ui;
+                        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+                            ui.setDisabled(editor.queryCommandState(cmd) == -1);
+                            ui.setChecked(editor.queryCommandValue(cmd) == cmd2 && !uiReady);
+                        });
+                        return ui;
+                    };
+                })(ci)
+            }
+        })(p, typeset[p])
+    }
+
+    //字体颜色和背景颜色
+    for (var i = 0, ci; ci = ['backcolor', 'forecolor'][i++];) {
+        editorui[ci] = function (cmd) {
+            return function (editor) {
+                var ui = new editorui.ColorButton({
+                    className:'edui-for-' + cmd,
+                    color:'default',
+                    title:editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '',
+                    editor:editor,
+                    onpickcolor:function (t, color) {
+                        editor.execCommand(cmd, color);
+                    },
+                    onpicknocolor:function () {
+                        editor.execCommand(cmd, 'default');
+                        this.setColor('transparent');
+                        this.color = 'default';
+                    },
+                    onbuttonclick:function () {
+                        editor.execCommand(cmd, this.color);
+                    }
+                });
+                editorui.buttons[cmd] = ui;
+                editor.addListener('selectionchange', function () {
+                    ui.setDisabled(editor.queryCommandState(cmd) == -1);
+                });
+                return ui;
+            };
+        }(ci);
+    }
+
+
+    var dialogBtns = {
+        noOk:['searchreplace', 'help', 'spechars', 'webapp','preview'],
+        ok:['attachment', 'anchor', 'link', 'insertimage', 'map', 'gmap', 'insertframe', 'wordimage',
+            'insertvideo', 'insertframe', 'edittip', 'edittable', 'edittd', 'scrawl', 'template', 'music', 'background', 'charts']
+    };
+
+    for (var p in dialogBtns) {
+        (function (type, vals) {
+            for (var i = 0, ci; ci = vals[i++];) {
+                //todo opera下存在问题
+                if (browser.opera && ci === "searchreplace") {
+                    continue;
+                }
+                (function (cmd) {
+                    editorui[cmd] = function (editor, iframeUrl, title) {
+                        iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd];
+                        title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '';
+
+                        var dialog;
+                        //没有iframeUrl不创建dialog
+                        if (iframeUrl) {
+                            dialog = new editorui.Dialog(utils.extend({
+                                iframeUrl:editor.ui.mapUrl(iframeUrl),
+                                editor:editor,
+                                className:'edui-for-' + cmd,
+                                title:title,
+                                holdScroll: cmd === 'insertimage',
+                                fullscreen: /charts|preview/.test(cmd),
+                                closeDialog:editor.getLang("closeDialog")
+                            }, type == 'ok' ? {
+                                buttons:[
+                                    {
+                                        className:'edui-okbutton',
+                                        label:editor.getLang("ok"),
+                                        editor:editor,
+                                        onclick:function () {
+                                            dialog.close(true);
+                                        }
+                                    },
+                                    {
+                                        className:'edui-cancelbutton',
+                                        label:editor.getLang("cancel"),
+                                        editor:editor,
+                                        onclick:function () {
+                                            dialog.close(false);
+                                        }
+                                    }
+                                ]
+                            } : {}));
+
+                            editor.ui._dialogs[cmd + "Dialog"] = dialog;
+                        }
+
+                        var ui = new editorui.Button({
+                            className:'edui-for-' + cmd,
+                            title:title,
+                            onclick:function () {
+                                if (dialog) {
+                                    switch (cmd) {
+                                        case "wordimage":
+                                            var images = editor.execCommand("wordimage");
+                                            if (images && images.length) {
+                                                dialog.render();
+                                                dialog.open();
+                                            }
+                                            break;
+                                        case "scrawl":
+                                            if (editor.queryCommandState("scrawl") != -1) {
+                                                dialog.render();
+                                                dialog.open();
+                                            }
+
+                                            break;
+                                        default:
+                                            dialog.render();
+                                            dialog.open();
+                                    }
+                                }
+                            },
+                            theme:editor.options.theme,
+                            disabled:(cmd == 'scrawl' && editor.queryCommandState("scrawl") == -1) || ( cmd == 'charts' )
+                        });
+                        editorui.buttons[cmd] = ui;
+                        editor.addListener('selectionchange', function () {
+                            //只存在于右键菜单而无工具栏按钮的ui不需要检测状态
+                            var unNeedCheckState = {'edittable':1};
+                            if (cmd in unNeedCheckState)return;
+
+                            var state = editor.queryCommandState(cmd);
+                            if (ui.getDom()) {
+                                ui.setDisabled(state == -1);
+                                ui.setChecked(state);
+                            }
+
+                        });
+
+                        return ui;
+                    };
+                })(ci.toLowerCase())
+            }
+        })(p, dialogBtns[p]);
+    }
+
+    editorui.snapscreen = function (editor, iframeUrl, title) {
+        title = editor.options.labelMap['snapscreen'] || editor.getLang("labelMap.snapscreen") || '';
+        var ui = new editorui.Button({
+            className:'edui-for-snapscreen',
+            title:title,
+            onclick:function () {
+                editor.execCommand("snapscreen");
+            },
+            theme:editor.options.theme
+
+        });
+        editorui.buttons['snapscreen'] = ui;
+        iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})["snapscreen"] || iframeUrlMap["snapscreen"];
+        if (iframeUrl) {
+            var dialog = new editorui.Dialog({
+                iframeUrl:editor.ui.mapUrl(iframeUrl),
+                editor:editor,
+                className:'edui-for-snapscreen',
+                title:title,
+                buttons:[
+                    {
+                        className:'edui-okbutton',
+                        label:editor.getLang("ok"),
+                        editor:editor,
+                        onclick:function () {
+                            dialog.close(true);
+                        }
+                    },
+                    {
+                        className:'edui-cancelbutton',
+                        label:editor.getLang("cancel"),
+                        editor:editor,
+                        onclick:function () {
+                            dialog.close(false);
+                        }
+                    }
+                ]
+
+            });
+            dialog.render();
+            editor.ui._dialogs["snapscreenDialog"] = dialog;
+        }
+        editor.addListener('selectionchange', function () {
+            ui.setDisabled(editor.queryCommandState('snapscreen') == -1);
+        });
+        return ui;
+    };
+
+    editorui.insertcode = function (editor, list, title) {
+        list = editor.options['insertcode'] || [];
+        title = editor.options.labelMap['insertcode'] || editor.getLang("labelMap.insertcode") || '';
+       // if (!list.length) return;
+        var items = [];
+        utils.each(list,function(key,val){
+            items.push({
+                label:key,
+                value:val,
+                theme:editor.options.theme,
+                renderLabelHtml:function () {
+                    return '<div class="edui-label %%-label" >' + (this.label || '') + '</div>';
+                }
+            });
+        });
+
+        var ui = new editorui.Combox({
+            editor:editor,
+            items:items,
+            onselect:function (t, index) {
+                editor.execCommand('insertcode', this.items[index].value);
+            },
+            onbuttonclick:function () {
+                this.showPopup();
+            },
+            title:title,
+            initValue:title,
+            className:'edui-for-insertcode',
+            indexByValue:function (value) {
+                if (value) {
+                    for (var i = 0, ci; ci = this.items[i]; i++) {
+                        if (ci.value.indexOf(value) != -1)
+                            return i;
+                    }
+                }
+
+                return -1;
+            }
+        });
+        editorui.buttons['insertcode'] = ui;
+        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+            if (!uiReady) {
+                var state = editor.queryCommandState('insertcode');
+                if (state == -1) {
+                    ui.setDisabled(true);
+                } else {
+                    ui.setDisabled(false);
+                    var value = editor.queryCommandValue('insertcode');
+                    if(!value){
+                        ui.setValue(title);
+                        return;
+                    }
+                    //trace:1871 ie下从源码模式切换回来时，字体会带单引号，而且会有逗号
+                    value && (value = value.replace(/['"]/g, '').split(',')[0]);
+                    ui.setValue(value);
+
+                }
+            }
+
+        });
+        return ui;
+    };
+    editorui.fontfamily = function (editor, list, title) {
+
+        list = editor.options['fontfamily'] || [];
+        title = editor.options.labelMap['fontfamily'] || editor.getLang("labelMap.fontfamily") || '';
+        if (!list.length) return;
+        for (var i = 0, ci, items = []; ci = list[i]; i++) {
+            var langLabel = editor.getLang('fontfamily')[ci.name] || "";
+            (function (key, val) {
+                items.push({
+                    label:key,
+                    value:val,
+                    theme:editor.options.theme,
+                    renderLabelHtml:function () {
+                        return '<div class="edui-label %%-label" style="font-family:' +
+                            utils.unhtml(this.value) + '">' + (this.label || '') + '</div>';
+                    }
+                });
+            })(ci.label || langLabel, ci.val)
+        }
+        var ui = new editorui.Combox({
+            editor:editor,
+            items:items,
+            onselect:function (t, index) {
+                editor.execCommand('FontFamily', this.items[index].value);
+            },
+            onbuttonclick:function () {
+                this.showPopup();
+            },
+            title:title,
+            initValue:title,
+            className:'edui-for-fontfamily',
+            indexByValue:function (value) {
+                if (value) {
+                    for (var i = 0, ci; ci = this.items[i]; i++) {
+                        if (ci.value.indexOf(value) != -1)
+                            return i;
+                    }
+                }
+
+                return -1;
+            }
+        });
+        editorui.buttons['fontfamily'] = ui;
+        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+            if (!uiReady) {
+                var state = editor.queryCommandState('FontFamily');
+                if (state == -1) {
+                    ui.setDisabled(true);
+                } else {
+                    ui.setDisabled(false);
+                    var value = editor.queryCommandValue('FontFamily');
+                    //trace:1871 ie下从源码模式切换回来时，字体会带单引号，而且会有逗号
+                    value && (value = value.replace(/['"]/g, '').split(',')[0]);
+                    ui.setValue(value);
+
+                }
+            }
+
+        });
+        return ui;
+    };
+
+    editorui.fontsize = function (editor, list, title) {
+        title = editor.options.labelMap['fontsize'] || editor.getLang("labelMap.fontsize") || '';
+        list = list || editor.options['fontsize'] || [];
+        if (!list.length) return;
+        var items = [];
+        for (var i = 0; i < list.length; i++) {
+            var size = list[i] + 'px';
+            items.push({
+                label:size,
+                value:size,
+                theme:editor.options.theme,
+                renderLabelHtml:function () {
+                    return '<div class="edui-label %%-label" style="line-height:1;font-size:' +
+                        this.value + '">' + (this.label || '') + '</div>';
+                }
+            });
+        }
+        var ui = new editorui.Combox({
+            editor:editor,
+            items:items,
+            title:title,
+            initValue:title,
+            onselect:function (t, index) {
+                editor.execCommand('FontSize', this.items[index].value);
+            },
+            onbuttonclick:function () {
+                this.showPopup();
+            },
+            className:'edui-for-fontsize'
+        });
+        editorui.buttons['fontsize'] = ui;
+        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+            if (!uiReady) {
+                var state = editor.queryCommandState('FontSize');
+                if (state == -1) {
+                    ui.setDisabled(true);
+                } else {
+                    ui.setDisabled(false);
+                    ui.setValue(editor.queryCommandValue('FontSize'));
+                }
+            }
+
+        });
+        return ui;
+    };
+
+    editorui.paragraph = function (editor, list, title) {
+        title = editor.options.labelMap['paragraph'] || editor.getLang("labelMap.paragraph") || '';
+        list = editor.options['paragraph'] || [];
+        if (utils.isEmptyObject(list)) return;
+        var items = [];
+        for (var i in list) {
+            items.push({
+                value:i,
+                label:list[i] || editor.getLang("paragraph")[i],
+                theme:editor.options.theme,
+                renderLabelHtml:function () {
+                    return '<div class="edui-label %%-label"><span class="edui-for-' + this.value + '">' + (this.label || '') + '</span></div>';
+                }
+            })
+        }
+        var ui = new editorui.Combox({
+            editor:editor,
+            items:items,
+            title:title,
+            initValue:title,
+            className:'edui-for-paragraph',
+            onselect:function (t, index) {
+                editor.execCommand('Paragraph', this.items[index].value);
+            },
+            onbuttonclick:function () {
+                this.showPopup();
+            }
+        });
+        editorui.buttons['paragraph'] = ui;
+        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+            if (!uiReady) {
+                var state = editor.queryCommandState('Paragraph');
+                if (state == -1) {
+                    ui.setDisabled(true);
+                } else {
+                    ui.setDisabled(false);
+                    var value = editor.queryCommandValue('Paragraph');
+                    var index = ui.indexByValue(value);
+                    if (index != -1) {
+                        ui.setValue(value);
+                    } else {
+                        ui.setValue(ui.initValue);
+                    }
+                }
+            }
+
+        });
+        return ui;
+    };
+
+
+    //自定义标题
+    editorui.customstyle = function (editor) {
+        var list = editor.options['customstyle'] || [],
+            title = editor.options.labelMap['customstyle'] || editor.getLang("labelMap.customstyle") || '';
+        if (!list.length)return;
+        var langCs = editor.getLang('customstyle');
+        for (var i = 0, items = [], t; t = list[i++];) {
+            (function (t) {
+                var ck = {};
+                ck.label = t.label ? t.label : langCs[t.name];
+                ck.style = t.style;
+                ck.className = t.className;
+                ck.tag = t.tag;
+                items.push({
+                    label:ck.label,
+                    value:ck,
+                    theme:editor.options.theme,
+                    renderLabelHtml:function () {
+                        return '<div class="edui-label %%-label">' + '<' + ck.tag + ' ' + (ck.className ? ' class="' + ck.className + '"' : "")
+                            + (ck.style ? ' style="' + ck.style + '"' : "") + '>' + ck.label + "<\/" + ck.tag + ">"
+                            + '</div>';
+                    }
+                });
+            })(t);
+        }
+
+        var ui = new editorui.Combox({
+            editor:editor,
+            items:items,
+            title:title,
+            initValue:title,
+            className:'edui-for-customstyle',
+            onselect:function (t, index) {
+                editor.execCommand('customstyle', this.items[index].value);
+            },
+            onbuttonclick:function () {
+                this.showPopup();
+            },
+            indexByValue:function (value) {
+                for (var i = 0, ti; ti = this.items[i++];) {
+                    if (ti.label == value) {
+                        return i - 1
+                    }
+                }
+                return -1;
+            }
+        });
+        editorui.buttons['customstyle'] = ui;
+        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+            if (!uiReady) {
+                var state = editor.queryCommandState('customstyle');
+                if (state == -1) {
+                    ui.setDisabled(true);
+                } else {
+                    ui.setDisabled(false);
+                    var value = editor.queryCommandValue('customstyle');
+                    var index = ui.indexByValue(value);
+                    if (index != -1) {
+                        ui.setValue(value);
+                    } else {
+                        ui.setValue(ui.initValue);
+                    }
+                }
+            }
+
+        });
+        return ui;
+    };
+    editorui.inserttable = function (editor, iframeUrl, title) {
+        title = editor.options.labelMap['inserttable'] || editor.getLang("labelMap.inserttable") || '';
+        var ui = new editorui.TableButton({
+            editor:editor,
+            title:title,
+            className:'edui-for-inserttable',
+            onpicktable:function (t, numCols, numRows) {
+                editor.execCommand('InsertTable', {numRows:numRows, numCols:numCols, border:1});
+            },
+            onbuttonclick:function () {
+                this.showPopup();
+            }
+        });
+        editorui.buttons['inserttable'] = ui;
+        editor.addListener('selectionchange', function () {
+            ui.setDisabled(editor.queryCommandState('inserttable') == -1);
+        });
+        return ui;
+    };
+
+    editorui.lineheight = function (editor) {
+        var val = editor.options.lineheight || [];
+        if (!val.length)return;
+        for (var i = 0, ci, items = []; ci = val[i++];) {
+            items.push({
+                //todo:写死了
+                label:ci,
+                value:ci,
+                theme:editor.options.theme,
+                onclick:function () {
+                    editor.execCommand("lineheight", this.value);
+                }
+            })
+        }
+        var ui = new editorui.MenuButton({
+            editor:editor,
+            className:'edui-for-lineheight',
+            title:editor.options.labelMap['lineheight'] || editor.getLang("labelMap.lineheight") || '',
+            items:items,
+            onbuttonclick:function () {
+                var value = editor.queryCommandValue('LineHeight') || this.value;
+                editor.execCommand("LineHeight", value);
+            }
+        });
+        editorui.buttons['lineheight'] = ui;
+        editor.addListener('selectionchange', function () {
+            var state = editor.queryCommandState('LineHeight');
+            if (state == -1) {
+                ui.setDisabled(true);
+            } else {
+                ui.setDisabled(false);
+                var value = editor.queryCommandValue('LineHeight');
+                value && ui.setValue((value + '').replace(/cm/, ''));
+                ui.setChecked(state)
+            }
+        });
+        return ui;
+    };
+
+    var rowspacings = ['top', 'bottom'];
+    for (var r = 0, ri; ri = rowspacings[r++];) {
+        (function (cmd) {
+            editorui['rowspacing' + cmd] = function (editor) {
+                var val = editor.options['rowspacing' + cmd] || [];
+                if (!val.length) return null;
+                for (var i = 0, ci, items = []; ci = val[i++];) {
+                    items.push({
+                        label:ci,
+                        value:ci,
+                        theme:editor.options.theme,
+                        onclick:function () {
+                            editor.execCommand("rowspacing", this.value, cmd);
+                        }
+                    })
+                }
+                var ui = new editorui.MenuButton({
+                    editor:editor,
+                    className:'edui-for-rowspacing' + cmd,
+                    title:editor.options.labelMap['rowspacing' + cmd] || editor.getLang("labelMap.rowspacing" + cmd) || '',
+                    items:items,
+                    onbuttonclick:function () {
+                        var value = editor.queryCommandValue('rowspacing', cmd) || this.value;
+                        editor.execCommand("rowspacing", value, cmd);
+                    }
+                });
+                editorui.buttons[cmd] = ui;
+                editor.addListener('selectionchange', function () {
+                    var state = editor.queryCommandState('rowspacing', cmd);
+                    if (state == -1) {
+                        ui.setDisabled(true);
+                    } else {
+                        ui.setDisabled(false);
+                        var value = editor.queryCommandValue('rowspacing', cmd);
+                        value && ui.setValue((value + '').replace(/%/, ''));
+                        ui.setChecked(state)
+                    }
+                });
+                return ui;
+            }
+        })(ri)
+    }
+    //有序，无序列表
+    var lists = ['insertorderedlist', 'insertunorderedlist'];
+    for (var l = 0, cl; cl = lists[l++];) {
+        (function (cmd) {
+            editorui[cmd] = function (editor) {
+                var vals = editor.options[cmd],
+                    _onMenuClick = function () {
+                        editor.execCommand(cmd, this.value);
+                    }, items = [];
+                for (var i in vals) {
+                    items.push({
+                        label:vals[i] || editor.getLang()[cmd][i] || "",
+                        value:i,
+                        theme:editor.options.theme,
+                        onclick:_onMenuClick
+                    })
+                }
+                var ui = new editorui.MenuButton({
+                    editor:editor,
+                    className:'edui-for-' + cmd,
+                    title:editor.getLang("labelMap." + cmd) || '',
+                    'items':items,
+                    onbuttonclick:function () {
+                        var value = editor.queryCommandValue(cmd) || this.value;
+                        editor.execCommand(cmd, value);
+                    }
+                });
+                editorui.buttons[cmd] = ui;
+                editor.addListener('selectionchange', function () {
+                    var state = editor.queryCommandState(cmd);
+                    if (state == -1) {
+                        ui.setDisabled(true);
+                    } else {
+                        ui.setDisabled(false);
+                        var value = editor.queryCommandValue(cmd);
+                        ui.setValue(value);
+                        ui.setChecked(state)
+                    }
+                });
+                return ui;
+            };
+        })(cl)
+    }
+
+    editorui.fullscreen = function (editor, title) {
+        title = editor.options.labelMap['fullscreen'] || editor.getLang("labelMap.fullscreen") || '';
+        var ui = new editorui.Button({
+            className:'edui-for-fullscreen',
+            title:title,
+            theme:editor.options.theme,
+            onclick:function () {
+                if (editor.ui) {
+                    editor.ui.setFullScreen(!editor.ui.isFullScreen());
+                }
+                this.setChecked(editor.ui.isFullScreen());
+            }
+        });
+        editorui.buttons['fullscreen'] = ui;
+        editor.addListener('selectionchange', function () {
+            var state = editor.queryCommandState('fullscreen');
+            ui.setDisabled(state == -1);
+            ui.setChecked(editor.ui.isFullScreen());
+        });
+        return ui;
+    };
+
+    // 表情
+    editorui["emotion"] = function (editor, iframeUrl) {
+        var cmd = "emotion";
+        var ui = new editorui.MultiMenuPop({
+            title:editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd + "") || '',
+            editor:editor,
+            className:'edui-for-' + cmd,
+            iframeUrl:editor.ui.mapUrl(iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd])
+        });
+        editorui.buttons[cmd] = ui;
+
+        editor.addListener('selectionchange', function () {
+            ui.setDisabled(editor.queryCommandState(cmd) == -1)
+        });
+        return ui;
+    };
+
+    editorui.autotypeset = function (editor) {
+        var ui = new editorui.AutoTypeSetButton({
+            editor:editor,
+            title:editor.options.labelMap['autotypeset'] || editor.getLang("labelMap.autotypeset") || '',
+            className:'edui-for-autotypeset',
+            onbuttonclick:function () {
+                editor.execCommand('autotypeset')
+            }
+        });
+        editorui.buttons['autotypeset'] = ui;
+        editor.addListener('selectionchange', function () {
+            ui.setDisabled(editor.queryCommandState('autotypeset') == -1);
+        });
+        return ui;
+    };
+
+    /* 简单上传插件 */
+    editorui["simpleupload"] = function (editor) {
+        var name = 'simpleupload',
+            ui = new editorui.Button({
+                className:'edui-for-' + name,
+                title:editor.options.labelMap[name] || editor.getLang("labelMap." + name) || '',
+                onclick:function () {},
+                theme:editor.options.theme,
+                showText:false
+            });
+        editorui.buttons[name] = ui;
+        editor.addListener('ready', function() {
+            var b = ui.getDom('body'),
+                iconSpan = b.children[0];
+            editor.fireEvent('simpleuploadbtnready', iconSpan);
+        });
+        editor.addListener('selectionchange', function (type, causeByUi, uiReady) {
+            var state = editor.queryCommandState(name);
+            if (state == -1) {
+                ui.setDisabled(true);
+                ui.setChecked(false);
+            } else {
+                if (!uiReady) {
+                    ui.setDisabled(false);
+                    ui.setChecked(state);
+                }
+            }
+        });
+        return ui;
+    };
+
+})();

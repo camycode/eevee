@@ -1,1 +1,107 @@
-UE.plugin.register("background",function(){function t(t){var e={},n=t.split(";");return utils.each(n,function(t){var n=t.indexOf(":"),o=utils.trim(t.substr(0,n)).toLowerCase();o&&(e[o]=utils.trim(t.substr(n+1)||""))}),e}function e(t){if(t){var e=[];for(var n in t)t.hasOwnProperty(n)&&e.push(n+":"+t[n]+"; ");utils.cssRule(r,e.length?"body{"+e.join("")+"}":"",o.document)}else utils.cssRule(r,"",o.document)}var n,o=this,r="editor_background",u=new RegExp("body[\\s]*\\{(.+)\\}","i"),i=o.hasContents;return o.hasContents=function(){return o.queryCommandValue("background")?!0:i.apply(o,arguments)},{bindEvents:{getAllHtml:function(t,e){var n=this.body,r=domUtils.getComputedStyle(n,"background-image"),u="";u=r.indexOf(o.options.imagePath)>0?r.substring(r.indexOf(o.options.imagePath),r.length-1).replace(/"|\(|\)/gi,""):"none"!=r?r.replace(/url\("?|"?\)/gi,""):"";var i='<style type="text/css">body{',a={"background-color":domUtils.getComputedStyle(n,"background-color")||"#ffffff","background-image":u?"url("+u+")":"","background-repeat":domUtils.getComputedStyle(n,"background-repeat")||"","background-position":browser.ie?domUtils.getComputedStyle(n,"background-position-x")+" "+domUtils.getComputedStyle(n,"background-position-y"):domUtils.getComputedStyle(n,"background-position"),height:domUtils.getComputedStyle(n,"height")};for(var s in a)a.hasOwnProperty(s)&&(i+=s+":"+a[s]+"; ");i+="}</style> ",e.push(i)},aftersetcontent:function(){0==n&&e()}},inputRule:function(o){n=!1,utils.each(o.getNodesByTagName("p"),function(o){var r=o.getAttr("data-background");r&&(n=!0,e(t(r)),o.parentNode.removeChild(o))})},outputRule:function(t){var e=this,n=(utils.cssRule(r,e.document)||"").replace(/[\n\r]+/g,"").match(u);n&&t.appendChild(UE.uNode.createElement('<p style="display:none;" data-background="'+utils.trim(n[1].replace(/"/g,"").replace(/[\s]+/g," "))+'"><br/></p>'))},commands:{background:{execCommand:function(t,n){e(n)},queryCommandValue:function(){var e=this,n=(utils.cssRule(r,e.document)||"").replace(/[\n\r]+/g,"").match(u);return n?t(n[1]):null},notNeedUndo:!0}}}});
+/**
+ * 背景插件，为UEditor提供设置背景功能
+ * @file
+ * @since 1.2.6.1
+ */
+UE.plugin.register('background', function () {
+    var me = this,
+        cssRuleId = 'editor_background',
+        isSetColored,
+        reg = new RegExp('body[\\s]*\\{(.+)\\}', 'i');
+
+    function stringToObj(str) {
+        var obj = {}, styles = str.split(';');
+        utils.each(styles, function (v) {
+            var index = v.indexOf(':'),
+                key = utils.trim(v.substr(0, index)).toLowerCase();
+            key && (obj[key] = utils.trim(v.substr(index + 1) || ''));
+        });
+        return obj;
+    }
+
+    function setBackground(obj) {
+        if (obj) {
+            var styles = [];
+            for (var name in obj) {
+                if (obj.hasOwnProperty(name)) {
+                    styles.push(name + ":" + obj[name] + '; ');
+                }
+            }
+            utils.cssRule(cssRuleId, styles.length ? ('body{' + styles.join("") + '}') : '', me.document);
+        } else {
+            utils.cssRule(cssRuleId, '', me.document)
+        }
+    }
+    //重写editor.hasContent方法
+
+    var orgFn = me.hasContents;
+    me.hasContents = function(){
+        if(me.queryCommandValue('background')){
+            return true
+        }
+        return orgFn.apply(me,arguments);
+    };
+    return {
+        bindEvents: {
+            'getAllHtml': function (type, headHtml) {
+                var body = this.body,
+                    su = domUtils.getComputedStyle(body, "background-image"),
+                    url = "";
+                if (su.indexOf(me.options.imagePath) > 0) {
+                    url = su.substring(su.indexOf(me.options.imagePath), su.length - 1).replace(/"|\(|\)/ig, "");
+                } else {
+                    url = su != "none" ? su.replace(/url\("?|"?\)/ig, "") : "";
+                }
+                var html = '<style type="text/css">body{';
+                var bgObj = {
+                    "background-color": domUtils.getComputedStyle(body, "background-color") || "#ffffff",
+                    'background-image': url ? 'url(' + url + ')' : '',
+                    'background-repeat': domUtils.getComputedStyle(body, "background-repeat") || "",
+                    'background-position': browser.ie ? (domUtils.getComputedStyle(body, "background-position-x") + " " + domUtils.getComputedStyle(body, "background-position-y")) : domUtils.getComputedStyle(body, "background-position"),
+                    'height': domUtils.getComputedStyle(body, "height")
+                };
+                for (var name in bgObj) {
+                    if (bgObj.hasOwnProperty(name)) {
+                        html += name + ":" + bgObj[name] + "; ";
+                    }
+                }
+                html += '}</style> ';
+                headHtml.push(html);
+            },
+            'aftersetcontent': function () {
+                if(isSetColored == false) setBackground();
+            }
+        },
+        inputRule: function (root) {
+            isSetColored = false;
+            utils.each(root.getNodesByTagName('p'), function (p) {
+                var styles = p.getAttr('data-background');
+                if (styles) {
+                    isSetColored = true;
+                    setBackground(stringToObj(styles));
+                    p.parentNode.removeChild(p);
+                }
+            })
+        },
+        outputRule: function (root) {
+            var me = this,
+                styles = (utils.cssRule(cssRuleId, me.document) || '').replace(/[\n\r]+/g, '').match(reg);
+            if (styles) {
+                root.appendChild(UE.uNode.createElement('<p style="display:none;" data-background="' + utils.trim(styles[1].replace(/"/g, '').replace(/[\s]+/g, ' ')) + '"><br/></p>'));
+            }
+        },
+        commands: {
+            'background': {
+                execCommand: function (cmd, obj) {
+                    setBackground(obj);
+                },
+                queryCommandValue: function () {
+                    var me = this,
+                        styles = (utils.cssRule(cssRuleId, me.document) || '').replace(/[\n\r]+/g, '').match(reg);
+                    return styles ? stringToObj(styles[1]) : null;
+                },
+                notNeedUndo: true
+            }
+        }
+    }
+});

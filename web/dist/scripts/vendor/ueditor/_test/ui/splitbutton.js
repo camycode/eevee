@@ -1,1 +1,68 @@
-module("ui.splitbutton"),test("splitbutton",function(){function e(e,t,o){o&&(e=e.toLowerCase(),t=t.toLowerCase());for(var u=t.substring(0,1),a=t.length,n=0;n<e.length-a+1;n++)if(e.charAt(n)==u&&e.substring(n,n+a)==t)return!0;return!1}var t=new baidu.editor.ui.Editor;t.render("editor"),t.ready(function(){var o=new te.obj[0].SplitButton({popup:new baidu.editor.ui.Popup({content:new te.obj[0].SplitButton({editor:t}),editor:t}),editor:t});te.dom[0].innerHTML=o.renderHtml(),o.postRender(),o.showPopup(),equal(o.popup.getDom("body").lastChild,o.popup.getDom("bordereraser"),"检查：addListener：postrender"),ok(e(o.getStateDom().className,"edui-state-opened"),"_onPopupShow"),o.popup.hide(),equal(o.getStateDom().className,"","_onPopupHide"),o.popup.show(),ok(e(o.getStateDom().className,"edui-state-opened"),"_onPopupShow");var u=0;o.addListener("buttonclick",function(){u=1}),ua.click(document.getElementsByClassName("edui-box edui-button-body")[0]),equal(u,1,"_onButtonClick"),ua.click(document.getElementsByClassName("edui-box edui-arrow")[0]),ok(e(o.getStateDom().className,"edui-state-opened"),"_onArrowClick"),o.popup.hide(),equal(o.getStateDom().className,"","_onArrowClick"),ua.click(document.getElementsByClassName("edui-box edui-arrow")[0]),ok(e(o.getStateDom().className,"edui-state-opened"),"_onArrowClick"),o.popup.hide(),start()}),stop()});
+/**
+ * Created by JetBrains PhpStorm.
+ * User: dongyancen
+ * Date: 12-5-2
+ * Time: 下午2:36
+ * To change this template use File | Settings | File Templates.
+ */
+module( 'ui.splitbutton' );
+test( 'splitbutton', function() {
+    //打开一个对话框
+
+    var editor = new baidu.editor.ui.Editor();
+    editor.render("editor");
+    editor.ready(function(){
+        var splitButton = new te.obj[0].SplitButton({popup:new baidu.editor.ui.Popup({
+                //传入配置参数
+                content: new te.obj[0].SplitButton({editor:editor}),
+                'editor':editor
+        }),   editor:editor});
+        te.dom[0].innerHTML = splitButton.renderHtml();
+        splitButton.postRender();
+        splitButton.showPopup();
+        equal(splitButton.popup.getDom('body').lastChild,splitButton.popup.getDom('bordereraser'),'检查：addListener：postrender');
+        ok(contains(splitButton.getStateDom().className,"edui-state-opened"),'_onPopupShow');
+        splitButton.popup.hide();
+        equal(splitButton.getStateDom().className,"",'_onPopupHide');
+        splitButton.popup.show();
+        ok(contains(splitButton.getStateDom().className,"edui-state-opened"),'_onPopupShow');
+        var flag = 0;
+   //有两个baidu.editor.ui.SplitButton,通过popup操作的是第一个
+        splitButton.addListener('buttonclick', function(){
+            flag = 1;
+        });
+
+        ua.click(document.getElementsByClassName('edui-box edui-button-body')[0]);
+        equal(flag, 1,'_onButtonClick');
+        ua.click(document.getElementsByClassName('edui-box edui-arrow')[0]);
+        ok(contains(splitButton.getStateDom().className,"edui-state-opened"),'_onArrowClick');
+        splitButton.popup.hide();
+        equal(splitButton.getStateDom().className,"",'_onArrowClick');
+        ua.click(document.getElementsByClassName('edui-box edui-arrow')[0]);
+        ok(contains(splitButton.getStateDom().className,"edui-state-opened"),'_onArrowClick');
+        splitButton.popup.hide();
+        start();
+    });
+    stop();
+    function contains(string,substr,isIgnoreCase)
+    {
+        if(isIgnoreCase)
+        {
+            string=string.toLowerCase();
+            substr=substr.toLowerCase();
+        }
+        var startChar=substr.substring(0,1);
+        var strLen=substr.length;
+        for(var j=0;j<string.length-strLen+1;j++)
+        {
+            if(string.charAt(j)==startChar)//如果匹配起始字符,开始查找
+            {
+                if(string.substring(j,j+strLen)==substr)//如果从j开始的字符与str匹配，那ok
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+} );

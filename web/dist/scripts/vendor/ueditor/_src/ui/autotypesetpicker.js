@@ -1,1 +1,66 @@
-!function(){var e=baidu.editor.utils,t=baidu.editor.ui.UIBase,i=baidu.editor.ui.AutoTypeSetPicker=function(e){this.initOptions(e),this.initAutoTypeSetPicker()};i.prototype={initAutoTypeSetPicker:function(){this.initUIBase()},getHtmlTpl:function(){var e=this.editor,t=e.options.autotypeset,i=e.getLang("autoTypeSet"),n="textAlignValue"+e.uid,a="imageBlockLineValue"+e.uid,c="symbolConverValue"+e.uid;return'<div id="##" class="edui-autotypesetpicker %%"><div class="edui-autotypesetpicker-body"><table ><tr><td nowrap><input type="checkbox" name="mergeEmptyline" '+(t.mergeEmptyline?"checked":"")+">"+i.mergeLine+'</td><td colspan="2"><input type="checkbox" name="removeEmptyline" '+(t.removeEmptyline?"checked":"")+">"+i.delLine+'</td></tr><tr><td nowrap><input type="checkbox" name="removeClass" '+(t.removeClass?"checked":"")+">"+i.removeFormat+'</td><td colspan="2"><input type="checkbox" name="indent" '+(t.indent?"checked":"")+">"+i.indent+'</td></tr><tr><td nowrap><input type="checkbox" name="textAlign" '+(t.textAlign?"checked":"")+">"+i.alignment+'</td><td colspan="2" id="'+n+'"><input type="radio" name="'+n+'" value="left" '+(t.textAlign&&"left"==t.textAlign?"checked":"")+">"+e.getLang("justifyleft")+'<input type="radio" name="'+n+'" value="center" '+(t.textAlign&&"center"==t.textAlign?"checked":"")+">"+e.getLang("justifycenter")+'<input type="radio" name="'+n+'" value="right" '+(t.textAlign&&"right"==t.textAlign?"checked":"")+">"+e.getLang("justifyright")+'</td></tr><tr><td nowrap><input type="checkbox" name="imageBlockLine" '+(t.imageBlockLine?"checked":"")+">"+i.imageFloat+'</td><td nowrap id="'+a+'"><input type="radio" name="'+a+'" value="none" '+(t.imageBlockLine&&"none"==t.imageBlockLine?"checked":"")+">"+e.getLang("default")+'<input type="radio" name="'+a+'" value="left" '+(t.imageBlockLine&&"left"==t.imageBlockLine?"checked":"")+">"+e.getLang("justifyleft")+'<input type="radio" name="'+a+'" value="center" '+(t.imageBlockLine&&"center"==t.imageBlockLine?"checked":"")+">"+e.getLang("justifycenter")+'<input type="radio" name="'+a+'" value="right" '+(t.imageBlockLine&&"right"==t.imageBlockLine?"checked":"")+">"+e.getLang("justifyright")+'</td></tr><tr><td nowrap><input type="checkbox" name="clearFontSize" '+(t.clearFontSize?"checked":"")+">"+i.removeFontsize+'</td><td colspan="2"><input type="checkbox" name="clearFontFamily" '+(t.clearFontFamily?"checked":"")+">"+i.removeFontFamily+'</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="removeEmptyNode" '+(t.removeEmptyNode?"checked":"")+">"+i.removeHtml+'</td></tr><tr><td nowrap colspan="3"><input type="checkbox" name="pasteFilter" '+(t.pasteFilter?"checked":"")+">"+i.pasteFilter+'</td></tr><tr><td nowrap><input type="checkbox" name="symbolConver" '+(t.bdc2sb||t.tobdc?"checked":"")+">"+i.symbol+'</td><td id="'+c+'"><input type="radio" name="bdc" value="bdc2sb" '+(t.bdc2sb?"checked":"")+">"+i.bdc2sb+'<input type="radio" name="bdc" value="tobdc" '+(t.tobdc?"checked":"")+">"+i.tobdc+'</td><td nowrap align="right"><button >'+i.run+"</button></td></tr></table></div></div>"},_UIBase_render:t.prototype.render},e.inherits(i,t)}();
+///import core
+///import uicore
+(function () {
+    var utils = baidu.editor.utils,
+        UIBase = baidu.editor.ui.UIBase;
+
+    var AutoTypeSetPicker = baidu.editor.ui.AutoTypeSetPicker = function (options) {
+        this.initOptions(options);
+        this.initAutoTypeSetPicker();
+    };
+    AutoTypeSetPicker.prototype = {
+        initAutoTypeSetPicker:function () {
+            this.initUIBase();
+        },
+        getHtmlTpl:function () {
+            var me = this.editor,
+                opt = me.options.autotypeset,
+                lang = me.getLang("autoTypeSet");
+
+            var textAlignInputName = 'textAlignValue' + me.uid,
+                imageBlockInputName = 'imageBlockLineValue' + me.uid,
+                symbolConverInputName = 'symbolConverValue' + me.uid;
+
+            return '<div id="##" class="edui-autotypesetpicker %%">' +
+                '<div class="edui-autotypesetpicker-body">' +
+                '<table >' +
+                '<tr><td nowrap><input type="checkbox" name="mergeEmptyline" ' + (opt["mergeEmptyline"] ? "checked" : "" ) + '>' + lang.mergeLine + '</td><td colspan="2"><input type="checkbox" name="removeEmptyline" ' + (opt["removeEmptyline"] ? "checked" : "" ) + '>' + lang.delLine + '</td></tr>' +
+                '<tr><td nowrap><input type="checkbox" name="removeClass" ' + (opt["removeClass"] ? "checked" : "" ) + '>' + lang.removeFormat + '</td><td colspan="2"><input type="checkbox" name="indent" ' + (opt["indent"] ? "checked" : "" ) + '>' + lang.indent + '</td></tr>' +
+                '<tr>' +
+                '<td nowrap><input type="checkbox" name="textAlign" ' + (opt["textAlign"] ? "checked" : "" ) + '>' + lang.alignment + '</td>' +
+                '<td colspan="2" id="' + textAlignInputName + '">' +
+                '<input type="radio" name="'+ textAlignInputName +'" value="left" ' + ((opt["textAlign"] && opt["textAlign"] == "left") ? "checked" : "") + '>' + me.getLang("justifyleft") +
+                '<input type="radio" name="'+ textAlignInputName +'" value="center" ' + ((opt["textAlign"] && opt["textAlign"] == "center") ? "checked" : "") + '>' + me.getLang("justifycenter") +
+                '<input type="radio" name="'+ textAlignInputName +'" value="right" ' + ((opt["textAlign"] && opt["textAlign"] == "right") ? "checked" : "") + '>' + me.getLang("justifyright") +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td nowrap><input type="checkbox" name="imageBlockLine" ' + (opt["imageBlockLine"] ? "checked" : "" ) + '>' + lang.imageFloat + '</td>' +
+                '<td nowrap id="'+ imageBlockInputName +'">' +
+                '<input type="radio" name="'+ imageBlockInputName +'" value="none" ' + ((opt["imageBlockLine"] && opt["imageBlockLine"] == "none") ? "checked" : "") + '>' + me.getLang("default") +
+                '<input type="radio" name="'+ imageBlockInputName +'" value="left" ' + ((opt["imageBlockLine"] && opt["imageBlockLine"] == "left") ? "checked" : "") + '>' + me.getLang("justifyleft") +
+                '<input type="radio" name="'+ imageBlockInputName +'" value="center" ' + ((opt["imageBlockLine"] && opt["imageBlockLine"] == "center") ? "checked" : "") + '>' + me.getLang("justifycenter") +
+                '<input type="radio" name="'+ imageBlockInputName +'" value="right" ' + ((opt["imageBlockLine"] && opt["imageBlockLine"] == "right") ? "checked" : "") + '>' + me.getLang("justifyright") +
+                '</td>' +
+                '</tr>' +
+                '<tr><td nowrap><input type="checkbox" name="clearFontSize" ' + (opt["clearFontSize"] ? "checked" : "" ) + '>' + lang.removeFontsize + '</td><td colspan="2"><input type="checkbox" name="clearFontFamily" ' + (opt["clearFontFamily"] ? "checked" : "" ) + '>' + lang.removeFontFamily + '</td></tr>' +
+                '<tr><td nowrap colspan="3"><input type="checkbox" name="removeEmptyNode" ' + (opt["removeEmptyNode"] ? "checked" : "" ) + '>' + lang.removeHtml + '</td></tr>' +
+                '<tr><td nowrap colspan="3"><input type="checkbox" name="pasteFilter" ' + (opt["pasteFilter"] ? "checked" : "" ) + '>' + lang.pasteFilter + '</td></tr>' +
+                '<tr>' +
+                '<td nowrap><input type="checkbox" name="symbolConver" ' + (opt["bdc2sb"] || opt["tobdc"] ? "checked" : "" ) + '>' + lang.symbol + '</td>' +
+                '<td id="' + symbolConverInputName + '">' +
+                '<input type="radio" name="bdc" value="bdc2sb" ' + (opt["bdc2sb"] ? "checked" : "" ) + '>' + lang.bdc2sb +
+                '<input type="radio" name="bdc" value="tobdc" ' + (opt["tobdc"] ? "checked" : "" ) + '>' + lang.tobdc + '' +
+                '</td>' +
+                '<td nowrap align="right"><button >' + lang.run + '</button></td>' +
+                '</tr>' +
+                '</table>' +
+                '</div>' +
+                '</div>';
+
+
+        },
+        _UIBase_render:UIBase.prototype.render
+    };
+    utils.inherits(AutoTypeSetPicker, UIBase);
+})();

@@ -1,1 +1,94 @@
-UE.parse.register("list",function(t){function i(i){var a=this;t.each(i,function(i){if(i.className&&/custom_/i.test(i.className)){var s=i.className.match(/custom_(\w+)/)[1];if("dash"==s||"dot"==s)t.pushItem(e,n+" li.list-"+l[s]+"{background-image:url("+a.liiconpath+l[s]+".gif)}"),t.pushItem(e,n+" ul.custom_"+s+"{list-style:none;} "+n+" ul.custom_"+s+" li{background-position:0 3px;background-repeat:no-repeat}");else{var d=1;t.each(i.childNodes,function(i){"LI"==i.tagName&&(t.pushItem(e,n+" li.list-"+l[s]+d+"{background-image:url("+a.liiconpath+"list-"+l[s]+d+".gif)}"),d++)}),t.pushItem(e,n+" ol.custom_"+s+"{list-style:none;}"+n+" ol.custom_"+s+" li{background-position:0 3px;background-repeat:no-repeat}")}switch(s){case"cn":t.pushItem(e,n+" li.list-"+s+"-paddingleft-1{padding-left:25px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-2{padding-left:40px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-3{padding-left:55px}");break;case"cn1":t.pushItem(e,n+" li.list-"+s+"-paddingleft-1{padding-left:30px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-2{padding-left:40px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-3{padding-left:55px}");break;case"cn2":t.pushItem(e,n+" li.list-"+s+"-paddingleft-1{padding-left:40px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-2{padding-left:55px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-3{padding-left:68px}");break;case"num":case"num1":t.pushItem(e,n+" li.list-"+s+"-paddingleft-1{padding-left:25px}");break;case"num2":t.pushItem(e,n+" li.list-"+s+"-paddingleft-1{padding-left:35px}"),t.pushItem(e,n+" li.list-"+s+"-paddingleft-2{padding-left:40px}");break;case"dash":t.pushItem(e,n+" li.list-"+s+"-paddingleft{padding-left:35px}");break;case"dot":t.pushItem(e,n+" li.list-"+s+"-paddingleft{padding-left:20px}")}}})}var e=[],l={cn:"cn-1-",cn1:"cn-2-",cn2:"cn-3-",num:"num-1-",num1:"num-2-",num2:"num-3-",dash:"dash",dot:"dot"};t.extend(this,{liiconpath:"http://bs.baidu.com/listicon/",listDefaultPaddingLeft:"20"});var a=this.root,s=a.getElementsByTagName("ol"),d=a.getElementsByTagName("ul"),n=this.selector;s.length&&i.call(this,s),d.length&&i.call(this,d),(s.length||d.length)&&(e.push(n+" .list-paddingleft-1{padding-left:0}"),e.push(n+" .list-paddingleft-2{padding-left:"+this.listDefaultPaddingLeft+"px}"),e.push(n+" .list-paddingleft-3{padding-left:"+2*this.listDefaultPaddingLeft+"px}"),t.cssRule("list",n+" ol,"+n+" ul{margin:0;padding:0;}li{clear:both;}"+e.join("\n"),document))});
+UE.parse.register('list',function(utils){
+    var customCss = [],
+        customStyle = {
+            'cn'    :   'cn-1-',
+            'cn1'   :   'cn-2-',
+            'cn2'   :   'cn-3-',
+            'num'   :   'num-1-',
+            'num1'  :   'num-2-',
+            'num2'  :   'num-3-',
+            'dash'  :   'dash',
+            'dot'   :   'dot'
+        };
+
+
+    utils.extend(this,{
+        liiconpath : 'http://bs.baidu.com/listicon/',
+        listDefaultPaddingLeft : '20'
+    });
+
+    var root = this.root,
+        ols = root.getElementsByTagName('ol'),
+        uls = root.getElementsByTagName('ul'),
+        selector = this.selector;
+
+    if(ols.length){
+        applyStyle.call(this,ols);
+    }
+
+    if(uls.length){
+        applyStyle.call(this,uls);
+    }
+
+    if(ols.length || uls.length){
+        customCss.push(selector +' .list-paddingleft-1{padding-left:0}');
+        customCss.push(selector +' .list-paddingleft-2{padding-left:'+ this.listDefaultPaddingLeft+'px}');
+        customCss.push(selector +' .list-paddingleft-3{padding-left:'+ this.listDefaultPaddingLeft*2+'px}');
+
+        utils.cssRule('list', selector +' ol,'+selector +' ul{margin:0;padding:0;}li{clear:both;}'+customCss.join('\n'), document);
+    }
+    function applyStyle(nodes){
+        var T = this;
+        utils.each(nodes,function(list){
+            if(list.className && /custom_/i.test(list.className)){
+                var listStyle = list.className.match(/custom_(\w+)/)[1];
+                if(listStyle == 'dash' || listStyle == 'dot'){
+                    utils.pushItem(customCss,selector +' li.list-' + customStyle[listStyle] + '{background-image:url(' + T.liiconpath +customStyle[listStyle]+'.gif)}');
+                    utils.pushItem(customCss,selector +' ul.custom_'+listStyle+'{list-style:none;} '+ selector +' ul.custom_'+listStyle+' li{background-position:0 3px;background-repeat:no-repeat}');
+
+                }else{
+                    var index = 1;
+                    utils.each(list.childNodes,function(li){
+                        if(li.tagName == 'LI'){
+                            utils.pushItem(customCss,selector + ' li.list-' + customStyle[listStyle] + index + '{background-image:url(' + T.liiconpath  + 'list-'+customStyle[listStyle] +index + '.gif)}');
+                            index++;
+                        }
+                    });
+                    utils.pushItem(customCss,selector + ' ol.custom_'+listStyle+'{list-style:none;}'+selector+' ol.custom_'+listStyle+' li{background-position:0 3px;background-repeat:no-repeat}');
+                }
+                switch(listStyle){
+                    case 'cn':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-1{padding-left:25px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-2{padding-left:40px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-3{padding-left:55px}');
+                        break;
+                    case 'cn1':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-1{padding-left:30px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-2{padding-left:40px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-3{padding-left:55px}');
+                        break;
+                    case 'cn2':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-1{padding-left:40px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-2{padding-left:55px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-3{padding-left:68px}');
+                        break;
+                    case 'num':
+                    case 'num1':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-1{padding-left:25px}');
+                        break;
+                    case 'num2':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-1{padding-left:35px}');
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft-2{padding-left:40px}');
+                        break;
+                    case 'dash':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft{padding-left:35px}');
+                        break;
+                    case 'dot':
+                        utils.pushItem(customCss,selector + ' li.list-'+listStyle+'-paddingleft{padding-left:20px}');
+                }
+            }
+        });
+    }
+
+
+});

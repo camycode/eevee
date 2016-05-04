@@ -9,4 +9,651 @@
  *
  */
 
-!function(e,n,o,r){e.fn.embed=function(o){var t,a=e(this),i=a.selector||"",c=(new Date).getTime(),l=[],d=arguments[0],u="string"==typeof d,s=[].slice.call(arguments,1);return a.each(function(){var m,p=e.isPlainObject(o)?e.extend(!0,{},e.fn.embed.settings,o):e.extend({},e.fn.embed.settings),f=p.selector,h=p.className,b=p.sources,g=p.error,v=p.metadata,y=p.namespace,w=p.templates,C="."+y,P="module-"+y,U=(e(n),e(this)),E=U.find(f.placeholder),S=U.find(f.icon),T=U.find(f.embed),j=this,A=U.data(P);m={initialize:function(){m.debug("Initializing embed"),m.determine.autoplay(),m.create(),m.bind.events(),m.instantiate()},instantiate:function(){m.verbose("Storing instance of module",m),A=m,U.data(P,m)},destroy:function(){m.verbose("Destroying previous instance of embed"),m.reset(),U.removeData(P).off(C)},refresh:function(){m.verbose("Refreshing selector cache"),E=U.find(f.placeholder),S=U.find(f.icon),T=U.find(f.embed)},bind:{events:function(){m.has.placeholder()&&(m.debug("Adding placeholder events"),U.on("click"+C,f.placeholder,m.createAndShow).on("click"+C,f.icon,m.createAndShow))}},create:function(){var e=m.get.placeholder();e?m.createPlaceholder():m.createAndShow()},createPlaceholder:function(e){var n=m.get.icon(),o=m.get.url();m.generate.embed(o);e=e||m.get.placeholder(),U.html(w.placeholder(e,n)),m.debug("Creating placeholder for embed",e,n)},createEmbed:function(n){m.refresh(),n=n||m.get.url(),T=e("<div/>").addClass(h.embed).html(m.generate.embed(n)).appendTo(U),p.onCreate.call(j,n),m.debug("Creating embed object",T)},createAndShow:function(){m.createEmbed(),m.show()},change:function(e,n,o){m.debug("Changing video to ",e,n,o),U.data(v.source,e).data(v.id,n).data(v.url,o),m.create()},reset:function(){m.debug("Clearing embed and showing placeholder"),m.remove.active(),m.remove.embed(),m.showPlaceholder(),p.onReset.call(j)},show:function(){m.debug("Showing embed"),m.set.active(),p.onDisplay.call(j)},hide:function(){m.debug("Hiding embed"),m.showPlaceholder()},showPlaceholder:function(){m.debug("Showing placeholder image"),m.remove.active(),p.onPlaceholderDisplay.call(j)},get:{id:function(){return p.id||U.data(v.id)},placeholder:function(){return p.placeholder||U.data(v.placeholder)},icon:function(){return p.icon?p.icon:U.data(v.icon)!==r?U.data(v.icon):m.determine.icon()},source:function(e){return p.source?p.source:U.data(v.source)!==r?U.data(v.source):m.determine.source()},type:function(){var e=m.get.source();return b[e]!==r?b[e].type:!1},url:function(){return p.url?p.url:U.data(v.url)!==r?U.data(v.url):m.determine.url()}},determine:{autoplay:function(){m.should.autoplay()&&(p.autoplay=!0)},source:function(n){var o=!1;return n=n||m.get.url(),n&&e.each(b,function(e,r){return-1!==n.search(r.domain)?(o=e,!1):void 0}),o},icon:function(){var e=m.get.source();return b[e]!==r?b[e].icon:!1},url:function(){var e,n=p.id||U.data(v.id),o=p.source||U.data(v.source);return e=b[o]!==r?b[o].url.replace("{id}",n):!1,e&&U.data(v.url,e),e}},set:{active:function(){U.addClass(h.active)}},remove:{active:function(){U.removeClass(h.active)},embed:function(){T.empty()}},encode:{parameters:function(e){var n,o=[];for(n in e)o.push(encodeURIComponent(n)+"="+encodeURIComponent(e[n]));return o.join("&amp;")}},generate:{embed:function(e){m.debug("Generating embed html");var n,o,r=m.get.source();return e=m.get.url(e),e?(o=m.generate.parameters(r),n=w.iframe(e,o)):m.error(g.noURL,U),n},parameters:function(n,o){var t=b[n]&&b[n].parameters!==r?b[n].parameters(p):{};return o=o||p.parameters,o&&(t=e.extend({},t,o)),t=p.onEmbed(t),m.encode.parameters(t)}},has:{placeholder:function(){return p.placeholder||U.data(v.placeholder)}},should:{autoplay:function(){return"auto"===p.autoplay?p.placeholder||U.data(v.placeholder)!==r:p.autoplay}},is:{video:function(){return"video"==m.get.type()}},setting:function(n,o){if(m.debug("Changing setting",n,o),e.isPlainObject(n))e.extend(!0,p,n);else{if(o===r)return p[n];p[n]=o}},internal:function(n,o){if(e.isPlainObject(n))e.extend(!0,m,n);else{if(o===r)return m[n];m[n]=o}},debug:function(){p.debug&&(p.performance?m.performance.log(arguments):(m.debug=Function.prototype.bind.call(console.info,console,p.name+":"),m.debug.apply(console,arguments)))},verbose:function(){p.verbose&&p.debug&&(p.performance?m.performance.log(arguments):(m.verbose=Function.prototype.bind.call(console.info,console,p.name+":"),m.verbose.apply(console,arguments)))},error:function(){m.error=Function.prototype.bind.call(console.error,console,p.name+":"),m.error.apply(console,arguments)},performance:{log:function(e){var n,o,r;p.performance&&(n=(new Date).getTime(),r=c||n,o=n-r,c=n,l.push({Name:e[0],Arguments:[].slice.call(e,1)||"",Element:j,"Execution Time":o})),clearTimeout(m.performance.timer),m.performance.timer=setTimeout(m.performance.display,500)},display:function(){var n=p.name+":",o=0;c=!1,clearTimeout(m.performance.timer),e.each(l,function(e,n){o+=n["Execution Time"]}),n+=" "+o+"ms",i&&(n+=" '"+i+"'"),a.length>1&&(n+=" ("+a.length+")"),(console.group!==r||console.table!==r)&&l.length>0&&(console.groupCollapsed(n),console.table?console.table(l):e.each(l,function(e,n){console.log(n.Name+": "+n["Execution Time"]+"ms")}),console.groupEnd()),l=[]}},invoke:function(n,o,a){var i,c,l,d=A;return o=o||s,a=j||a,"string"==typeof n&&d!==r&&(n=n.split(/[\. ]/),i=n.length-1,e.each(n,function(o,t){var a=o!=i?t+n[o+1].charAt(0).toUpperCase()+n[o+1].slice(1):n;if(e.isPlainObject(d[a])&&o!=i)d=d[a];else{if(d[a]!==r)return c=d[a],!1;if(!e.isPlainObject(d[t])||o==i)return d[t]!==r?(c=d[t],!1):(m.error(g.method,n),!1);d=d[t]}})),e.isFunction(c)?l=c.apply(a,o):c!==r&&(l=c),e.isArray(t)?t.push(l):t!==r?t=[t,l]:l!==r&&(t=l),c}},u?(A===r&&m.initialize(),m.invoke(d)):(A!==r&&A.invoke("destroy"),m.initialize())}),t!==r?t:this},e.fn.embed.settings={name:"Embed",namespace:"embed",debug:!1,verbose:!1,performance:!0,icon:!1,source:!1,url:!1,id:!1,autoplay:"auto",color:"#444444",hd:!0,brandedUI:!1,parameters:!1,onDisplay:function(){},onPlaceholderDisplay:function(){},onReset:function(){},onCreate:function(e){},onEmbed:function(e){return e},metadata:{id:"id",icon:"icon",placeholder:"placeholder",source:"source",url:"url"},error:{noURL:"No URL specified",method:"The method you called is not defined"},className:{active:"active",embed:"embed"},selector:{embed:".embed",placeholder:".placeholder",icon:".icon"},sources:{youtube:{name:"youtube",type:"video",icon:"video play",domain:"youtube.com",url:"//www.youtube.com/embed/{id}",parameters:function(e){return{autohide:!e.brandedUI,autoplay:e.autoplay,color:e.colors||r,hq:e.hd,jsapi:e.api,modestbranding:!e.brandedUI}}},vimeo:{name:"vimeo",type:"video",icon:"video play",domain:"vimeo.com",url:"//player.vimeo.com/video/{id}",parameters:function(e){return{api:e.api,autoplay:e.autoplay,byline:e.brandedUI,color:e.colors||r,portrait:e.brandedUI,title:e.brandedUI}}}},templates:{iframe:function(e,n){return'<iframe src="'+e+"?"+n+'" width="100%" height="100%" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'},placeholder:function(e,n){var o="";return n&&(o+='<i class="'+n+' icon"></i>'),e&&(o+='<img class="placeholder" src="'+e+'">'),o}},api:!0,onPause:function(){},onPlay:function(){},onStop:function(){}}}(jQuery,window,document);
+;(function ($, window, document, undefined) {
+
+"use strict";
+
+$.fn.embed = function(parameters) {
+
+  var
+    $allModules     = $(this),
+
+    moduleSelector  = $allModules.selector || '',
+
+    time            = new Date().getTime(),
+    performance     = [],
+
+    query           = arguments[0],
+    methodInvoked   = (typeof query == 'string'),
+    queryArguments  = [].slice.call(arguments, 1),
+
+    returnedValue
+  ;
+
+  $allModules
+    .each(function() {
+      var
+        settings        = ( $.isPlainObject(parameters) )
+          ? $.extend(true, {}, $.fn.embed.settings, parameters)
+          : $.extend({}, $.fn.embed.settings),
+
+        selector        = settings.selector,
+        className       = settings.className,
+        sources         = settings.sources,
+        error           = settings.error,
+        metadata        = settings.metadata,
+        namespace       = settings.namespace,
+        templates       = settings.templates,
+
+        eventNamespace  = '.' + namespace,
+        moduleNamespace = 'module-' + namespace,
+
+        $window         = $(window),
+        $module         = $(this),
+        $placeholder    = $module.find(selector.placeholder),
+        $icon           = $module.find(selector.icon),
+        $embed          = $module.find(selector.embed),
+
+        element         = this,
+        instance        = $module.data(moduleNamespace),
+        module
+      ;
+
+      module = {
+
+        initialize: function() {
+          module.debug('Initializing embed');
+          module.determine.autoplay();
+          module.create();
+          module.bind.events();
+          module.instantiate();
+        },
+
+        instantiate: function() {
+          module.verbose('Storing instance of module', module);
+          instance = module;
+          $module
+            .data(moduleNamespace, module)
+          ;
+        },
+
+        destroy: function() {
+          module.verbose('Destroying previous instance of embed');
+          module.reset();
+          $module
+            .removeData(moduleNamespace)
+            .off(eventNamespace)
+          ;
+        },
+
+        refresh: function() {
+          module.verbose('Refreshing selector cache');
+          $placeholder = $module.find(selector.placeholder);
+          $icon        = $module.find(selector.icon);
+          $embed       = $module.find(selector.embed);
+        },
+
+        bind: {
+          events: function() {
+            if( module.has.placeholder() ) {
+              module.debug('Adding placeholder events');
+              $module
+                .on('click' + eventNamespace, selector.placeholder, module.createAndShow)
+                .on('click' + eventNamespace, selector.icon, module.createAndShow)
+              ;
+            }
+          }
+        },
+
+        create: function() {
+          var
+            placeholder = module.get.placeholder()
+          ;
+          if(placeholder) {
+            module.createPlaceholder();
+          }
+          else {
+            module.createAndShow();
+          }
+        },
+
+        createPlaceholder: function(placeholder) {
+          var
+            icon  = module.get.icon(),
+            url   = module.get.url(),
+            embed = module.generate.embed(url)
+          ;
+          placeholder = placeholder || module.get.placeholder();
+          $module.html( templates.placeholder(placeholder, icon) );
+          module.debug('Creating placeholder for embed', placeholder, icon);
+        },
+
+        createEmbed: function(url) {
+          module.refresh();
+          url = url || module.get.url();
+          $embed = $('<div/>')
+            .addClass(className.embed)
+            .html( module.generate.embed(url) )
+            .appendTo($module)
+          ;
+          settings.onCreate.call(element, url);
+          module.debug('Creating embed object', $embed);
+        },
+
+        createAndShow: function() {
+          module.createEmbed();
+          module.show();
+        },
+
+        // sets new embed
+        change: function(source, id, url) {
+          module.debug('Changing video to ', source, id, url);
+          $module
+            .data(metadata.source, source)
+            .data(metadata.id, id)
+            .data(metadata.url, url)
+          ;
+          module.create();
+        },
+
+        // clears embed
+        reset: function() {
+          module.debug('Clearing embed and showing placeholder');
+          module.remove.active();
+          module.remove.embed();
+          module.showPlaceholder();
+          settings.onReset.call(element);
+        },
+
+        // shows current embed
+        show: function() {
+          module.debug('Showing embed');
+          module.set.active();
+          settings.onDisplay.call(element);
+        },
+
+        hide: function() {
+          module.debug('Hiding embed');
+          module.showPlaceholder();
+        },
+
+        showPlaceholder: function() {
+          module.debug('Showing placeholder image');
+          module.remove.active();
+          settings.onPlaceholderDisplay.call(element);
+        },
+
+        get: {
+          id: function() {
+            return settings.id || $module.data(metadata.id);
+          },
+          placeholder: function() {
+            return settings.placeholder || $module.data(metadata.placeholder);
+          },
+          icon: function() {
+            return (settings.icon)
+              ? settings.icon
+              : ($module.data(metadata.icon) !== undefined)
+                ? $module.data(metadata.icon)
+                : module.determine.icon()
+            ;
+          },
+          source: function(url) {
+            return (settings.source)
+              ? settings.source
+              : ($module.data(metadata.source) !== undefined)
+                ? $module.data(metadata.source)
+                : module.determine.source()
+            ;
+          },
+          type: function() {
+            var source = module.get.source();
+            return (sources[source] !== undefined)
+              ? sources[source].type
+              : false
+            ;
+          },
+          url: function() {
+            return (settings.url)
+              ? settings.url
+              : ($module.data(metadata.url) !== undefined)
+                ? $module.data(metadata.url)
+                : module.determine.url()
+            ;
+          }
+        },
+
+        determine: {
+          autoplay: function() {
+            if(module.should.autoplay()) {
+              settings.autoplay = true;
+            }
+          },
+          source: function(url) {
+            var
+              matchedSource = false
+            ;
+            url = url || module.get.url();
+            if(url) {
+              $.each(sources, function(name, source) {
+                if(url.search(source.domain) !== -1) {
+                  matchedSource = name;
+                  return false;
+                }
+              });
+            }
+            return matchedSource;
+          },
+          icon: function() {
+            var
+              source = module.get.source()
+            ;
+            return (sources[source] !== undefined)
+              ? sources[source].icon
+              : false
+            ;
+          },
+          url: function() {
+            var
+              id     = settings.id     || $module.data(metadata.id),
+              source = settings.source || $module.data(metadata.source),
+              url
+            ;
+            url = (sources[source] !== undefined)
+              ? sources[source].url.replace('{id}', id)
+              : false
+            ;
+            if(url) {
+              $module.data(metadata.url, url);
+            }
+            return url;
+          }
+        },
+
+
+        set: {
+          active: function() {
+            $module.addClass(className.active);
+          }
+        },
+
+        remove: {
+          active: function() {
+            $module.removeClass(className.active);
+          },
+          embed: function() {
+            $embed.empty();
+          }
+        },
+
+        encode: {
+          parameters: function(parameters) {
+            var
+              urlString = [],
+              index
+            ;
+            for (index in parameters) {
+              urlString.push( encodeURIComponent(index) + '=' + encodeURIComponent( parameters[index] ) );
+            }
+            return urlString.join('&amp;');
+          }
+        },
+
+        generate: {
+          embed: function(url) {
+            module.debug('Generating embed html');
+            var
+              source = module.get.source(),
+              html,
+              parameters
+            ;
+            url = module.get.url(url);
+            if(url) {
+              parameters = module.generate.parameters(source);
+              html       = templates.iframe(url, parameters);
+            }
+            else {
+              module.error(error.noURL, $module);
+            }
+            return html;
+          },
+          parameters: function(source, extraParameters) {
+            var
+              parameters = (sources[source] && sources[source].parameters !== undefined)
+                ? sources[source].parameters(settings)
+                : {}
+            ;
+            extraParameters = extraParameters || settings.parameters;
+            if(extraParameters) {
+              parameters = $.extend({}, parameters, extraParameters);
+            }
+            parameters = settings.onEmbed(parameters);
+            return module.encode.parameters(parameters);
+          }
+        },
+
+        has: {
+          placeholder: function() {
+            return settings.placeholder || $module.data(metadata.placeholder);
+          }
+        },
+
+        should: {
+          autoplay: function() {
+            return (settings.autoplay === 'auto')
+              ? (settings.placeholder || $module.data(metadata.placeholder) !== undefined)
+              : settings.autoplay
+            ;
+          }
+        },
+
+        is: {
+          video: function() {
+            return module.get.type() == 'video';
+          }
+        },
+
+        setting: function(name, value) {
+          module.debug('Changing setting', name, value);
+          if( $.isPlainObject(name) ) {
+            $.extend(true, settings, name);
+          }
+          else if(value !== undefined) {
+            settings[name] = value;
+          }
+          else {
+            return settings[name];
+          }
+        },
+        internal: function(name, value) {
+          if( $.isPlainObject(name) ) {
+            $.extend(true, module, name);
+          }
+          else if(value !== undefined) {
+            module[name] = value;
+          }
+          else {
+            return module[name];
+          }
+        },
+        debug: function() {
+          if(settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.debug.apply(console, arguments);
+            }
+          }
+        },
+        verbose: function() {
+          if(settings.verbose && settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.verbose.apply(console, arguments);
+            }
+          }
+        },
+        error: function() {
+          module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+          module.error.apply(console, arguments);
+        },
+        performance: {
+          log: function(message) {
+            var
+              currentTime,
+              executionTime,
+              previousTime
+            ;
+            if(settings.performance) {
+              currentTime   = new Date().getTime();
+              previousTime  = time || currentTime;
+              executionTime = currentTime - previousTime;
+              time          = currentTime;
+              performance.push({
+                'Name'           : message[0],
+                'Arguments'      : [].slice.call(message, 1) || '',
+                'Element'        : element,
+                'Execution Time' : executionTime
+              });
+            }
+            clearTimeout(module.performance.timer);
+            module.performance.timer = setTimeout(module.performance.display, 500);
+          },
+          display: function() {
+            var
+              title = settings.name + ':',
+              totalTime = 0
+            ;
+            time = false;
+            clearTimeout(module.performance.timer);
+            $.each(performance, function(index, data) {
+              totalTime += data['Execution Time'];
+            });
+            title += ' ' + totalTime + 'ms';
+            if(moduleSelector) {
+              title += ' \'' + moduleSelector + '\'';
+            }
+            if($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
+            }
+            if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+              console.groupCollapsed(title);
+              if(console.table) {
+                console.table(performance);
+              }
+              else {
+                $.each(performance, function(index, data) {
+                  console.log(data['Name'] + ': ' + data['Execution Time']+'ms');
+                });
+              }
+              console.groupEnd();
+            }
+            performance = [];
+          }
+        },
+        invoke: function(query, passedArguments, context) {
+          var
+            object = instance,
+            maxDepth,
+            found,
+            response
+          ;
+          passedArguments = passedArguments || queryArguments;
+          context         = element         || context;
+          if(typeof query == 'string' && object !== undefined) {
+            query    = query.split(/[\. ]/);
+            maxDepth = query.length - 1;
+            $.each(query, function(depth, value) {
+              var camelCaseValue = (depth != maxDepth)
+                ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
+                : query
+              ;
+              if( $.isPlainObject( object[camelCaseValue] ) && (depth != maxDepth) ) {
+                object = object[camelCaseValue];
+              }
+              else if( object[camelCaseValue] !== undefined ) {
+                found = object[camelCaseValue];
+                return false;
+              }
+              else if( $.isPlainObject( object[value] ) && (depth != maxDepth) ) {
+                object = object[value];
+              }
+              else if( object[value] !== undefined ) {
+                found = object[value];
+                return false;
+              }
+              else {
+                module.error(error.method, query);
+                return false;
+              }
+            });
+          }
+          if ( $.isFunction( found ) ) {
+            response = found.apply(context, passedArguments);
+          }
+          else if(found !== undefined) {
+            response = found;
+          }
+          if($.isArray(returnedValue)) {
+            returnedValue.push(response);
+          }
+          else if(returnedValue !== undefined) {
+            returnedValue = [returnedValue, response];
+          }
+          else if(response !== undefined) {
+            returnedValue = response;
+          }
+          return found;
+        }
+      };
+
+      if(methodInvoked) {
+        if(instance === undefined) {
+          module.initialize();
+        }
+        module.invoke(query);
+      }
+      else {
+        if(instance !== undefined) {
+          instance.invoke('destroy');
+        }
+        module.initialize();
+      }
+    })
+  ;
+  return (returnedValue !== undefined)
+    ? returnedValue
+    : this
+  ;
+};
+
+$.fn.embed.settings = {
+
+  name        : 'Embed',
+  namespace   : 'embed',
+
+  debug       : false,
+  verbose     : false,
+  performance : true,
+
+  icon     : false,
+  source   : false,
+  url      : false,
+  id       : false,
+
+  // standard video settings
+  autoplay  : 'auto',
+  color     : '#444444',
+  hd        : true,
+  brandedUI : false,
+
+  // additional parameters to include with the embed
+  parameters: false,
+
+  onDisplay            : function() {},
+  onPlaceholderDisplay : function() {},
+  onReset              : function() {},
+  onCreate             : function(url) {},
+  onEmbed              : function(parameters) {
+    return parameters;
+  },
+
+  metadata    : {
+    id          : 'id',
+    icon        : 'icon',
+    placeholder : 'placeholder',
+    source      : 'source',
+    url         : 'url'
+  },
+
+  error : {
+    noURL  : 'No URL specified',
+    method : 'The method you called is not defined'
+  },
+
+  className : {
+    active : 'active',
+    embed  : 'embed'
+  },
+
+  selector : {
+    embed       : '.embed',
+    placeholder : '.placeholder',
+    icon        : '.icon'
+  },
+
+  sources: {
+    youtube: {
+      name   : 'youtube',
+      type   : 'video',
+      icon   : 'video play',
+      domain : 'youtube.com',
+      url    : '//www.youtube.com/embed/{id}',
+      parameters: function(settings) {
+        return {
+          autohide       : !settings.brandedUI,
+          autoplay       : settings.autoplay,
+          color          : settings.colors || undefined,
+          hq             : settings.hd,
+          jsapi          : settings.api,
+          modestbranding : !settings.brandedUI
+        };
+      }
+    },
+    vimeo: {
+      name   : 'vimeo',
+      type   : 'video',
+      icon   : 'video play',
+      domain : 'vimeo.com',
+      url    : '//player.vimeo.com/video/{id}',
+      parameters: function(settings) {
+        return {
+          api      : settings.api,
+          autoplay : settings.autoplay,
+          byline   : settings.brandedUI,
+          color    : settings.colors || undefined,
+          portrait : settings.brandedUI,
+          title    : settings.brandedUI
+        };
+      }
+    }
+  },
+
+  templates: {
+    iframe : function(url, parameters) {
+      return ''
+        + '<iframe src="' + url + '?' + parameters + '"'
+        + ' width="100%" height="100%"'
+        + ' frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
+      ;
+    },
+    placeholder : function(image, icon) {
+      var
+        html = ''
+      ;
+      if(icon) {
+        html += '<i class="' + icon + ' icon"></i>';
+      }
+      if(image) {
+        html += '<img class="placeholder" src="' + image + '">';
+      }
+      return html;
+    }
+  },
+
+  // NOT YET IMPLEMENTED
+  api     : true,
+  onPause : function() {},
+  onPlay  : function() {},
+  onStop  : function() {}
+
+};
+
+
+
+})( jQuery, window, document );

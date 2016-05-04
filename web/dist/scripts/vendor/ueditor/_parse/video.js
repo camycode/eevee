@@ -1,1 +1,34 @@
-UE.parse.register("vedio",function(e){var t=this.root.getElementsByTagName("video"),i=this.root.getElementsByTagName("audio");if(document.createElement("video"),document.createElement("audio"),t.length||i.length){var o=e.removeLastbs(this.rootPath),s=o+"/third-party/video-js/video.js",d=o+"/third-party/video-js/video-js.min.css",a=o+"/third-party/video-js/video-js.swf";window.videojs?videojs.autoSetup():(e.loadFile(document,{id:"video_css",tag:"link",rel:"stylesheet",type:"text/css",href:d}),e.loadFile(document,{id:"video_js",src:s,tag:"script",type:"text/javascript"},function(){videojs.options.flash.swf=a,videojs.autoSetup()}))}});
+UE.parse.register('vedio',function(utils){
+    var video = this.root.getElementsByTagName('video'),
+        audio = this.root.getElementsByTagName('audio');
+
+    document.createElement('video');document.createElement('audio');
+    if(video.length || audio.length){
+        var sourcePath = utils.removeLastbs(this.rootPath),
+            jsurl = sourcePath + '/third-party/video-js/video.js',
+            cssurl = sourcePath + '/third-party/video-js/video-js.min.css',
+            swfUrl = sourcePath + '/third-party/video-js/video-js.swf';
+
+        if(window.videojs) {
+            videojs.autoSetup();
+        } else {
+            utils.loadFile(document,{
+                id : "video_css",
+                tag : "link",
+                rel : "stylesheet",
+                type : "text/css",
+                href : cssurl
+            });
+            utils.loadFile(document,{
+                id : "video_js",
+                src : jsurl,
+                tag : "script",
+                type : "text/javascript"
+            },function(){
+                videojs.options.flash.swf = swfUrl;
+                videojs.autoSetup();
+            });
+        }
+
+    }
+});

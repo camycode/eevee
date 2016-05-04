@@ -1,1 +1,59 @@
-!function(){function t(){for(var t in window.UEDITOR_CONFIG)"string"==typeof window.UEDITOR_CONFIG[t]&&(window.UEDITOR_CONFIG[t]=window.UEDITOR_CONFIG[t].replace("_test/tools/br/",""));var e=document.body.appendChild(document.createElement("div"));$(e).css("width","500px").css("height","500px").css("border","1px solid #ccc");var o=new baidu.editor.Editor({initialContent:"<p>欢迎使用ueditor</p>",autoFloatEnabled:!1,webAppKey:"Qr0M9yTEoLIiUSXXQTtq7yFt"}),n=new UE.ui.Editor({UEDITOR_HOME_URL:"../../../",autoFloatEnabled:!0,webAppKey:"Qr0M9yTEoLIiUSXXQTtq7yFt"});o.render(e),o.ready(function(){var t=new baidu.editor.dom.Range(o.document);te.dom.push(e),te.obj.push(o),te.obj.push(t),te.obj.push(n),QUnit.readyFlag=1}),stop(),QUnit.readyFlag=0,document.getElementsByClassName=function(t){for(var e=[],o=new RegExp("\\b"+t+"\\b"),n=this.getElementsByTagName("*"),i=0;i<n.length;i++){var d=n[i].className;o.test(d)&&e.push(n[i])}return e}}var e=function(){if(te&&te.dom&&te.dom.length)for(var t=0;t<te.dom.length;t++)te.dom[t]&&te.dom[t].parentNode&&te.dom[t].parentNode.removeChild(te.dom[t]);te.dom=[],te.obj=[]},o=QUnit.testStart,n=QUnit.testDone;QUnit.testStart=function(){o.apply(this,arguments),t()},QUnit.testDone=function(){e(),n.apply(this,arguments)}}();
+/**
+
+ */
+(function () {
+    function mySetup() {
+        for (var config in window.UEDITOR_CONFIG) {
+            if (typeof(window.UEDITOR_CONFIG[config]) == 'string')
+                window.UEDITOR_CONFIG[config] = window.UEDITOR_CONFIG[config].replace('_test/tools/br/', '');
+        }
+        var div = document.body.appendChild(document.createElement('div'));
+        $(div).css('width', '500px').css('height', '500px').css('border', '1px solid #ccc');
+        var editor = new baidu.editor.Editor({'initialContent':'<p>欢迎使用ueditor</p>', 'autoFloatEnabled':false,webAppKey:'Qr0M9yTEoLIiUSXXQTtq7yFt'});
+        var ue = new UE.ui.Editor({'UEDITOR_HOME_URL':'../../../', 'autoFloatEnabled':true,webAppKey:'Qr0M9yTEoLIiUSXXQTtq7yFt'});
+        editor.render(div);
+        editor.ready(function () {
+            var range = new baidu.editor.dom.Range(editor.document);
+            te.dom.push(div);
+            te.obj.push(editor);
+            te.obj.push(range);
+            te.obj.push(ue);
+            QUnit.readyFlag =1;
+        });
+        stop();
+        QUnit.readyFlag =0;
+        document.getElementsByClassName = function (eleClassName) {
+            var getEleClass = [];//定义一个数组
+            var myclass = new RegExp("\\b" + eleClassName + "\\b");//创建一个正则表达式对像
+            var elem = this.getElementsByTagName("*");//获取文档里所有的元素
+            for (var h = 0; h < elem.length; h++) {
+                var classes = elem[h].className;//获取class对像
+                if (myclass.test(classes)) getEleClass.push(elem[h]);//正则比较，取到想要的CLASS对像
+            }
+            return getEleClass;//返回数组
+        }
+    }
+
+    var _d = function () {
+        if (te) {
+            if (te.dom && te.dom.length) {
+                for (var i = 0; i < te.dom.length; i++) {
+                    if (te.dom[i] && te.dom[i].parentNode)
+                        te.dom[i].parentNode.removeChild(te.dom[i]);
+                }
+
+            }
+        }
+        te.dom = [];
+        te.obj = [];
+    }
+    var s = QUnit.testStart, d = QUnit.testDone;
+    QUnit.testStart = function () {
+        s.apply(this, arguments);
+        mySetup();
+    };
+    QUnit.testDone = function () {
+        _d();
+        d.apply(this, arguments);
+    }
+})();

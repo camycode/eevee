@@ -1,1 +1,437 @@
-var gulp=require("gulp"),console=require("better-console"),extend=require("extend"),fs=require("fs"),mkdirp=require("mkdirp"),path=require("path"),runSequence=require("run-sequence"),chmod=require("gulp-chmod"),del=require("del"),jsonEditor=require("gulp-json-editor"),plumber=require("gulp-plumber"),prompt=require("gulp-prompt"),rename=require("gulp-rename"),replace=require("gulp-replace"),requireDotFile=require("require-dot-file"),wrench=require("wrench"),install=require("./config/project/install"),config=require("./config/user"),release=require("./config/project/release"),questions=install.questions,files=install.files,folders=install.folders,regExp=install.regExp,settings=install.settings,source=install.source;module.exports=function(e){var o,i=requireDotFile("semantic.json"),s=install.getPackageManager(),n=questions.root,t=!1;if(console.clear(),install.isSubModule())return void console.info("SUI is a sub-module, skipping end-user install");if(i&&"NPM"===s.name){var r=path.join(s.root,i.base),l={config:path.join(s.root,files.config),tasks:path.join(r,folders.tasks),themeImport:path.join(r,folders.themeImport),definition:path.join(i.paths.source.definitions),site:path.join(i.paths.source.site),theme:path.join(i.paths.source.themes),defaultTheme:path.join(i.paths.source.themes,folders.defaultTheme)};if(fs.existsSync(l.definition))return i.version!==release.version?(console.log("Updating Semantic UI from "+i.version+" to "+release.version),console.info("Updating ui definitions..."),wrench.copyDirSyncRecursive(source.definitions,l.definition,settings.wrench.overwrite),console.info("Updating default theme..."),wrench.copyDirSyncRecursive(source.themes,l.theme,settings.wrench.merge),wrench.copyDirSyncRecursive(source.defaultTheme,l.defaultTheme,settings.wrench.overwrite),console.info("Updating tasks..."),wrench.copyDirSyncRecursive(source.tasks,l.tasks,settings.wrench.overwrite),console.info("Updating gulpfile.js"),gulp.src(source.userGulpFile).pipe(plumber()).pipe(gulp.dest(r)),console.info("Updating theme import file"),gulp.src(source.themeImport).pipe(plumber()).pipe(gulp.dest(l.themeImport)),console.info("Adding new site theme files..."),wrench.copyDirSyncRecursive(source.site,l.site,settings.wrench.merge),console.info("Updating version..."),gulp.src(l.config).pipe(plumber()).pipe(rename(settings.rename.json)).pipe(jsonEditor({version:release.version})).pipe(gulp.dest(s.root)),void console.info('Update complete! Run "[92mgulp build[0m" to rebuild dist/ files.')):void console.log("Current version of Semantic UI already installed");console.error("Cannot locate files to update at path: ",l.definition),console.log("Running installer")}"NPM"==s.name&&(n[0].message=n[0].message.replace("{packageMessage}","We detected you are using [92m"+s.name+"[0m. Nice! ").replace("{root}",s.root),n[0]["default"]=s.root,n[1]["default"]=s.root,Array.prototype.splice.apply(questions.setup,[2,0].concat(n)),questions.cleanup=[]),gulp.task("run setup",function(){return gulp.src("gulpfile.js").pipe(prompt.prompt(questions.setup,function(e){o=e}))}),gulp.task("create install files",function(e){if(void 0===o.overwrite||"no"!=o.overwrite){console.clear(),console.log("Installing"),console.log("------------------------------");var i={config:files.config,configFolder:folders.config,site:o.site||folders.site,themeConfig:files.themeConfig,themeConfigFolder:folders.themeConfig};if(o.useRoot||o.customRoot){if(o.customRoot){if(""===o.customRoot)return void console.log("Unable to proceed, invalid project root");s.root=o.customRoot}i=extend(!1,{},i,{definition:folders.definitions,lessImport:folders.lessImport,tasks:folders.tasks,theme:folders.themes,defaultTheme:path.join(folders.themes,folders.defaultTheme),themeImport:folders.themeImport}),t=path.join(s.root,o.semanticRoot);for(var n in i)i.hasOwnProperty(n)&&(i[n]="config"==n||"configFolder"==n?path.normalize(path.join(s.root,i[n])):path.normalize(path.join(t,i[n])));try{mkdirp.sync(t),mkdirp.sync(i.definition),mkdirp.sync(i.theme),mkdirp.sync(i.tasks)}catch(r){console.error('NPM does not have permissions to create folders at your specified path. Adjust your folders permissions and run "npm install" again')}console.log("Installing to [92m"+o.semanticRoot+"[0m"),console.info("Copying UI definitions"),wrench.copyDirSyncRecursive(source.definitions,i.definition,settings.wrench.overwrite),console.info("Copying UI themes"),wrench.copyDirSyncRecursive(source.themes,i.theme,settings.wrench.merge),wrench.copyDirSyncRecursive(source.defaultTheme,i.defaultTheme,settings.wrench.overwrite),console.info("Copying gulp tasks"),wrench.copyDirSyncRecursive(source.tasks,i.tasks,settings.wrench.overwrite),console.info("Adding theme files"),gulp.src(source.themeImport).pipe(plumber()).pipe(gulp.dest(i.themeImport)),gulp.src(source.lessImport).pipe(plumber()).pipe(gulp.dest(i.lessImport)),console.info("Creating gulpfile.js"),gulp.src(source.userGulpFile).pipe(plumber()).pipe(gulp.dest(t))}fs.existsSync(i.site)?console.info("Site folder exists, merging files (no overwrite)",i.site):console.info("Creating site theme folder",i.site),wrench.copyDirSyncRecursive(source.site,i.site,settings.wrench.merge),gulp.task("create theme.config",function(){var e=path.relative(path.resolve(i.themeConfigFolder),path.resolve(i.site)).replace(/\\/g,"/"),o="@siteFolder   : '"+e+"/';";return console.info("Adjusting @siteFolder to: ",e+"/"),fs.existsSync(i.themeConfig)?(console.info("Modifying src/theme.config (LESS config)",i.themeConfig),gulp.src(i.themeConfig).pipe(plumber()).pipe(replace(regExp.siteVariable,o)).pipe(gulp.dest(i.themeConfigFolder))):(console.info("Creating src/theme.config (LESS config)",i.themeConfig),gulp.src(source.themeConfig).pipe(plumber()).pipe(rename({extname:""})).pipe(replace(regExp.siteVariable,o)).pipe(gulp.dest(i.themeConfigFolder)))}),gulp.task("create semantic.json",function(){var e=install.createJSON(o);return fs.existsSync(files.config)?(console.info("Extending config file (semantic.json)",i.config),gulp.src(i.config).pipe(plumber()).pipe(rename(settings.rename.json)).pipe(jsonEditor(e)).pipe(gulp.dest(i.configFolder))):(console.info("Creating config file (semantic.json)",i.config),gulp.src(source.config).pipe(plumber()).pipe(rename({extname:""})).pipe(jsonEditor(e)).pipe(gulp.dest(i.configFolder)))}),runSequence("create theme.config","create semantic.json",e)}}),gulp.task("clean up install",function(){return t?(console.log("\n Setup Complete! \n Installing Peer Dependencies. [0;31mPlease refrain from ctrl + c[0m... \n After completion navigate to [92m"+o.semanticRoot+'[0m and run "[92mgulp build[0m" to build'),process.exit(0)):(console.log(""),console.log("")),gulp.src("gulpfile.js").pipe(prompt.prompt(questions.cleanup,function(e){"yes"==e.cleanup&&del(install.setupFiles),"yes"==e.build&&gulp.start("build")}))}),runSequence("run setup","create install files","clean up install",e)};
+/*******************************
+         Install Task
+*******************************/
+
+/*
+   Install tasks
+
+   For more notes
+
+   * Runs automatically after npm update (hooks)
+   * (NPM) Install - Will ask for where to put semantic (outside pm folder)
+   * (NPM) Upgrade - Will look for semantic install, copy over files and update if new version
+   * Standard installer runs asking for paths to site files etc
+
+*/
+
+var
+  gulp           = require('gulp'),
+
+  // node dependencies
+  console        = require('better-console'),
+  extend         = require('extend'),
+  fs             = require('fs'),
+  mkdirp         = require('mkdirp'),
+  path           = require('path'),
+  runSequence    = require('run-sequence'),
+
+  // gulp dependencies
+  chmod          = require('gulp-chmod'),
+  del            = require('del'),
+  jsonEditor     = require('gulp-json-editor'),
+  plumber        = require('gulp-plumber'),
+  prompt         = require('gulp-prompt'),
+  rename         = require('gulp-rename'),
+  replace        = require('gulp-replace'),
+  requireDotFile = require('require-dot-file'),
+  wrench         = require('wrench'),
+
+  // install config
+  install        = require('./config/project/install'),
+
+  // user config
+  config         = require('./config/user'),
+
+  // release config (name/title/etc)
+  release        = require('./config/project/release'),
+
+  // shorthand
+  questions      = install.questions,
+  files          = install.files,
+  folders        = install.folders,
+  regExp         = install.regExp,
+  settings       = install.settings,
+  source         = install.source
+;
+
+// Export install task
+module.exports = function (callback) {
+
+var
+  currentConfig = requireDotFile('semantic.json'),
+  manager       = install.getPackageManager(),
+  rootQuestions = questions.root,
+  installFolder = false,
+  answers
+;
+
+console.clear();
+
+/* Test NPM install
+manager = {
+  name : 'NPM',
+  root : path.normalize(__dirname + '/../')
+};
+*/
+
+
+/* Don't do end user config if SUI is a sub-module */
+if( install.isSubModule() ) {
+  console.info('SUI is a sub-module, skipping end-user install');
+  return;
+}
+
+/*-----------------
+    Update SUI
+-----------------*/
+
+// run update scripts if semantic.json exists
+if(currentConfig && manager.name === 'NPM') {
+
+  var
+    updateFolder = path.join(manager.root, currentConfig.base),
+    updatePaths  = {
+      config       : path.join(manager.root, files.config),
+      tasks        : path.join(updateFolder, folders.tasks),
+      themeImport  : path.join(updateFolder, folders.themeImport),
+      definition   : path.join(currentConfig.paths.source.definitions),
+      site         : path.join(currentConfig.paths.source.site),
+      theme        : path.join(currentConfig.paths.source.themes),
+      defaultTheme : path.join(currentConfig.paths.source.themes, folders.defaultTheme)
+    }
+  ;
+
+  // duck-type if there is a project installed
+  if( fs.existsSync(updatePaths.definition) ) {
+
+    // perform update if new version
+    if(currentConfig.version !== release.version) {
+      console.log('Updating Semantic UI from ' + currentConfig.version + ' to ' + release.version);
+
+      console.info('Updating ui definitions...');
+      wrench.copyDirSyncRecursive(source.definitions, updatePaths.definition, settings.wrench.overwrite);
+
+      console.info('Updating default theme...');
+      wrench.copyDirSyncRecursive(source.themes, updatePaths.theme, settings.wrench.merge);
+      wrench.copyDirSyncRecursive(source.defaultTheme, updatePaths.defaultTheme, settings.wrench.overwrite);
+
+      console.info('Updating tasks...');
+      wrench.copyDirSyncRecursive(source.tasks, updatePaths.tasks, settings.wrench.overwrite);
+
+      console.info('Updating gulpfile.js');
+      gulp.src(source.userGulpFile)
+        .pipe(plumber())
+        .pipe(gulp.dest(updateFolder))
+      ;
+
+      // copy theme import
+      console.info('Updating theme import file');
+      gulp.src(source.themeImport)
+        .pipe(plumber())
+        .pipe(gulp.dest(updatePaths.themeImport))
+      ;
+
+      console.info('Adding new site theme files...');
+      wrench.copyDirSyncRecursive(source.site, updatePaths.site, settings.wrench.merge);
+
+      console.info('Updating version...');
+
+      // update version number in semantic.json
+      gulp.src(updatePaths.config)
+        .pipe(plumber())
+        .pipe(rename(settings.rename.json)) // preserve file extension
+        .pipe(jsonEditor({
+          version: release.version
+        }))
+        .pipe(gulp.dest(manager.root))
+      ;
+
+      console.info('Update complete! Run "\x1b[92mgulp build\x1b[0m" to rebuild dist/ files.');
+
+      return;
+    }
+    else {
+      console.log('Current version of Semantic UI already installed');
+      return;
+    }
+
+  }
+  else {
+    console.error('Cannot locate files to update at path: ', updatePaths.definition);
+    console.log('Running installer');
+  }
+
+}
+
+/*--------------
+ Determine Root
+---------------*/
+
+// PM that supports Build Tools (NPM Only Now)
+if(manager.name == 'NPM') {
+  rootQuestions[0].message = rootQuestions[0].message
+    .replace('{packageMessage}', 'We detected you are using \x1b[92m' + manager.name + '\x1b[0m. Nice! ')
+    .replace('{root}', manager.root)
+  ;
+  // set default path to detected PM root
+  rootQuestions[0].default = manager.root;
+  rootQuestions[1].default = manager.root;
+
+  // insert PM questions after "Install Type" question
+  Array.prototype.splice.apply(questions.setup, [2, 0].concat(rootQuestions));
+
+  // omit cleanup questions for managed install
+  questions.cleanup = [];
+}
+
+
+/*--------------
+   Create SUI
+---------------*/
+
+gulp.task('run setup', function() {
+
+  return gulp
+    .src('gulpfile.js')
+    .pipe(prompt.prompt(questions.setup, function(setupAnswers) {
+      // hoist
+      answers = setupAnswers;
+    }))
+  ;
+
+});
+
+gulp.task('create install files', function(callback) {
+
+  /*--------------
+   Exit Conditions
+  ---------------*/
+
+  // if config exists and user specifies not to proceed
+  if(answers.overwrite !== undefined && answers.overwrite == 'no') {
+    return;
+  }
+
+  console.clear();
+  console.log('Installing');
+  console.log('------------------------------');
+
+
+  /*--------------
+        Paths
+  ---------------*/
+
+  var
+    installPaths = {
+      config            : files.config,
+      configFolder      : folders.config,
+      site              : answers.site || folders.site,
+      themeConfig       : files.themeConfig,
+      themeConfigFolder : folders.themeConfig
+    }
+  ;
+
+  /*--------------
+    NPM Install
+  ---------------*/
+
+  // Check if PM install
+  if(answers.useRoot || answers.customRoot) {
+
+    // Set root to custom root path if set
+    if(answers.customRoot) {
+      if(answers.customRoot === '') {
+        console.log('Unable to proceed, invalid project root');
+        return;
+      }
+      manager.root = answers.customRoot;
+    }
+
+    // special install paths only for PM install
+    installPaths = extend(false, {}, installPaths, {
+      definition   : folders.definitions,
+      lessImport   : folders.lessImport,
+      tasks        : folders.tasks,
+      theme        : folders.themes,
+      defaultTheme : path.join(folders.themes, folders.defaultTheme),
+      themeImport  : folders.themeImport
+    });
+
+    // add project root to semantic root
+    installFolder = path.join(manager.root, answers.semanticRoot);
+
+    // add install folder to all output paths
+    for(var destination in installPaths) {
+      if( installPaths.hasOwnProperty(destination) ) {
+        // config goes in project root, rest in install folder
+        installPaths[destination] = (destination == 'config' || destination == 'configFolder')
+          ? path.normalize( path.join(manager.root, installPaths[destination]) )
+          : path.normalize( path.join(installFolder, installPaths[destination]) )
+        ;
+      }
+    }
+
+    // create project folders
+    try {
+      mkdirp.sync(installFolder);
+      mkdirp.sync(installPaths.definition);
+      mkdirp.sync(installPaths.theme);
+      mkdirp.sync(installPaths.tasks);
+    }
+    catch(error) {
+      console.error('NPM does not have permissions to create folders at your specified path. Adjust your folders permissions and run "npm install" again');
+    }
+
+    console.log('Installing to \x1b[92m' + answers.semanticRoot + '\x1b[0m');
+
+    console.info('Copying UI definitions');
+    wrench.copyDirSyncRecursive(source.definitions, installPaths.definition, settings.wrench.overwrite);
+
+    console.info('Copying UI themes');
+    wrench.copyDirSyncRecursive(source.themes, installPaths.theme, settings.wrench.merge);
+    wrench.copyDirSyncRecursive(source.defaultTheme, installPaths.defaultTheme, settings.wrench.overwrite);
+
+    console.info('Copying gulp tasks');
+    wrench.copyDirSyncRecursive(source.tasks, installPaths.tasks, settings.wrench.overwrite);
+
+    // copy theme import
+    console.info('Adding theme files');
+    gulp.src(source.themeImport)
+      .pipe(plumber())
+      .pipe(gulp.dest(installPaths.themeImport))
+    ;
+    gulp.src(source.lessImport)
+      .pipe(plumber())
+      .pipe(gulp.dest(installPaths.lessImport))
+    ;
+
+    // create gulp file
+    console.info('Creating gulpfile.js');
+    gulp.src(source.userGulpFile)
+      .pipe(plumber())
+      .pipe(gulp.dest(installFolder))
+    ;
+
+  }
+
+
+  /*--------------
+     Site Theme
+  ---------------*/
+
+  // Copy _site templates folder to destination
+  if( fs.existsSync(installPaths.site) ) {
+    console.info('Site folder exists, merging files (no overwrite)', installPaths.site);
+  }
+  else {
+    console.info('Creating site theme folder', installPaths.site);
+  }
+  wrench.copyDirSyncRecursive(source.site, installPaths.site, settings.wrench.merge);
+
+  /*--------------
+    Theme Config
+  ---------------*/
+
+  gulp.task('create theme.config', function() {
+    var
+      // determine path to site theme folder from theme config
+      // force CSS path variable to use forward slashes for paths
+      pathToSite   = path.relative(path.resolve(installPaths.themeConfigFolder), path.resolve(installPaths.site)).replace(/\\/g,'/'),
+      siteVariable = "@siteFolder   : '" + pathToSite + "/';"
+    ;
+
+    // rewrite site variable in theme.less
+    console.info('Adjusting @siteFolder to: ', pathToSite + '/');
+
+    if(fs.existsSync(installPaths.themeConfig)) {
+      console.info('Modifying src/theme.config (LESS config)', installPaths.themeConfig);
+      return gulp.src(installPaths.themeConfig)
+        .pipe(plumber())
+        .pipe(replace(regExp.siteVariable, siteVariable))
+        .pipe(gulp.dest(installPaths.themeConfigFolder))
+      ;
+    }
+    else {
+      console.info('Creating src/theme.config (LESS config)', installPaths.themeConfig);
+      return gulp.src(source.themeConfig)
+        .pipe(plumber())
+        .pipe(rename({ extname : '' }))
+        .pipe(replace(regExp.siteVariable, siteVariable))
+        .pipe(gulp.dest(installPaths.themeConfigFolder))
+      ;
+    }
+  });
+
+  /*--------------
+    Semantic.json
+  ---------------*/
+
+  gulp.task('create semantic.json', function() {
+
+    var
+      jsonConfig = install.createJSON(answers)
+    ;
+
+    // adjust variables in theme.less
+    if( fs.existsSync(files.config) ) {
+      console.info('Extending config file (semantic.json)', installPaths.config);
+      return gulp.src(installPaths.config)
+        .pipe(plumber())
+        .pipe(rename(settings.rename.json)) // preserve file extension
+        .pipe(jsonEditor(jsonConfig))
+        .pipe(gulp.dest(installPaths.configFolder))
+      ;
+    }
+    else {
+      console.info('Creating config file (semantic.json)', installPaths.config);
+      return gulp.src(source.config)
+        .pipe(plumber())
+        .pipe(rename({ extname : '' })) // remove .template from ext
+        .pipe(jsonEditor(jsonConfig))
+        .pipe(gulp.dest(installPaths.configFolder))
+      ;
+    }
+
+  });
+
+  runSequence(
+    'create theme.config',
+    'create semantic.json',
+    callback
+  );
+
+});
+
+gulp.task('clean up install', function() {
+
+  // Completion Message
+  if(installFolder) {
+    console.log('\n Setup Complete! \n Installing Peer Dependencies. \x1b[0;31mPlease refrain from ctrl + c\x1b[0m... \n After completion navigate to \x1b[92m' + answers.semanticRoot + '\x1b[0m and run "\x1b[92mgulp build\x1b[0m" to build');
+    process.exit(0);
+  }
+  else {
+    console.log('');
+    console.log('');
+  }
+
+  return gulp
+    .src('gulpfile.js')
+    .pipe(prompt.prompt(questions.cleanup, function(answers) {
+      if(answers.cleanup == 'yes') {
+        del(install.setupFiles);
+      }
+      if(answers.build == 'yes') {
+        gulp.start('build');
+      }
+    }))
+  ;
+});
+
+runSequence(
+  'run setup',
+  'create install files',
+  'clean up install',
+  callback
+);
+
+};

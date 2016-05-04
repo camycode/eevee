@@ -1,1 +1,138 @@
-!function(){function e(e){for(var i,n={},o=e.getDom(),a=e.editor.uid,u=null,d=null,l=domUtils.getElementsByTagName(o,"input"),r=l.length-1;i=l[r--];)if(u=i.getAttribute("type"),"checkbox"==u)if(d=i.getAttribute("name"),n[d]&&delete n[d],i.checked){var s=document.getElementById(d+"Value"+a);if(s){if(/input/gi.test(s.tagName))n[d]=s.value;else for(var c,m=s.getElementsByTagName("input"),g=m.length-1;c=m[g--];)if(c.checked){n[d]=c.value;break}}else n[d]=!0}else n[d]=!1;else n[i.getAttribute("value")]=i.checked;for(var h,p=domUtils.getElementsByTagName(o,"select"),r=0;h=p[r++];){var f=h.getAttribute("name");n[f]=n[f]?h.value:""}t.extend(e.editor.options.autotypeset,n),e.editor.setPreferences("autotypeset",n)}var t=baidu.editor.utils,i=baidu.editor.ui.Popup,n=baidu.editor.ui.AutoTypeSetPicker,o=baidu.editor.ui.SplitButton,a=baidu.editor.ui.AutoTypeSetButton=function(e){this.initOptions(e),this.initAutoTypeSetButton()};a.prototype={initAutoTypeSetButton:function(){var t=this;this.popup=new i({content:new n({editor:t.editor}),editor:t.editor,hide:function(){!this._hidden&&this.getDom()&&(e(this),this.getDom().style.display="none",this._hidden=!0,this.fireEvent("hide"))}});var o=0;this.popup.addListener("postRenderAfter",function(){var i=this;if(!o){var n=this.getDom(),a=n.getElementsByTagName("button")[0];a.onclick=function(){e(i),t.editor.execCommand("autotypeset"),i.hide()},domUtils.on(n,"click",function(n){var o=n.target||n.srcElement,a=t.editor.uid;if(o&&"INPUT"==o.tagName){if("imageBlockLine"==o.name||"textAlign"==o.name||"symbolConver"==o.name)for(var u=o.checked,d=document.getElementById(o.name+"Value"+a),l=d.getElementsByTagName("input"),r={imageBlockLine:"none",textAlign:"left",symbolConver:"tobdc"},s=0;s<l.length;s++)u?l[s].value==r[o.name]&&(l[s].checked="checked"):l[s].checked=!1;if(o.name=="imageBlockLineValue"+a||o.name=="textAlignValue"+a||"bdc"==o.name){var c=o.parentNode.previousSibling.getElementsByTagName("input");c&&(c[0].checked=!0)}e(i)}}),o=1}}),this.initSplitButton()}},t.inherits(a,o)}();
+///import core
+///import uicore
+///import ui/popup.js
+///import ui/autotypesetpicker.js
+///import ui/splitbutton.js
+(function (){
+    var utils = baidu.editor.utils,
+        Popup = baidu.editor.ui.Popup,
+        AutoTypeSetPicker = baidu.editor.ui.AutoTypeSetPicker,
+        SplitButton = baidu.editor.ui.SplitButton,
+        AutoTypeSetButton = baidu.editor.ui.AutoTypeSetButton = function (options){
+            this.initOptions(options);
+            this.initAutoTypeSetButton();
+        };
+    function getPara(me){
+
+        var opt = {},
+            cont = me.getDom(),
+            editorId = me.editor.uid,
+            inputType = null,
+            attrName = null,
+            ipts = domUtils.getElementsByTagName(cont,"input");
+        for(var i=ipts.length-1,ipt;ipt=ipts[i--];){
+            inputType = ipt.getAttribute("type");
+            if(inputType=="checkbox"){
+                attrName = ipt.getAttribute("name");
+                opt[attrName] && delete opt[attrName];
+                if(ipt.checked){
+                    var attrValue = document.getElementById( attrName + "Value" + editorId );
+                    if(attrValue){
+                        if(/input/ig.test(attrValue.tagName)){
+                            opt[attrName] = attrValue.value;
+                        } else {
+                            var iptChilds = attrValue.getElementsByTagName("input");
+                            for(var j=iptChilds.length-1,iptchild;iptchild=iptChilds[j--];){
+                                if(iptchild.checked){
+                                    opt[attrName] = iptchild.value;
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        opt[attrName] = true;
+                    }
+                } else {
+                    opt[attrName] = false;
+                }
+            } else {
+                opt[ipt.getAttribute("value")] = ipt.checked;
+            }
+
+        }
+
+        var selects = domUtils.getElementsByTagName(cont,"select");
+        for(var i=0,si;si=selects[i++];){
+            var attr = si.getAttribute('name');
+            opt[attr] = opt[attr] ? si.value : '';
+        }
+
+        utils.extend(me.editor.options.autotypeset,opt);
+
+        me.editor.setPreferences('autotypeset', opt);
+    }
+
+    AutoTypeSetButton.prototype = {
+        initAutoTypeSetButton: function (){
+
+            var me = this;
+            this.popup = new Popup({
+                //传入配置参数
+                content: new AutoTypeSetPicker({editor:me.editor}),
+                'editor':me.editor,
+                hide : function(){
+                    if (!this._hidden && this.getDom()) {
+                        getPara(this);
+                        this.getDom().style.display = 'none';
+                        this._hidden = true;
+                        this.fireEvent('hide');
+                    }
+                }
+            });
+            var flag = 0;
+            this.popup.addListener('postRenderAfter',function(){
+                var popupUI = this;
+                if(flag)return;
+                var cont = this.getDom(),
+                    btn = cont.getElementsByTagName('button')[0];
+
+                btn.onclick = function(){
+                    getPara(popupUI);
+                    me.editor.execCommand('autotypeset');
+                    popupUI.hide()
+                };
+
+                domUtils.on(cont, 'click', function(e) {
+                    var target = e.target || e.srcElement,
+                        editorId = me.editor.uid;
+                    if (target && target.tagName == 'INPUT') {
+
+                        // 点击图片浮动的checkbox,去除对应的radio
+                        if (target.name == 'imageBlockLine' || target.name == 'textAlign' || target.name == 'symbolConver') {
+                            var checked = target.checked,
+                                radioTd = document.getElementById( target.name + 'Value' + editorId),
+                                radios = radioTd.getElementsByTagName('input'),
+                                defalutSelect = {
+                                    'imageBlockLine': 'none',
+                                    'textAlign': 'left',
+                                    'symbolConver': 'tobdc'
+                                };
+
+                            for (var i = 0; i < radios.length; i++) {
+                                if (checked) {
+                                    if (radios[i].value == defalutSelect[target.name]) {
+                                        radios[i].checked = 'checked';
+                                    }
+                                } else {
+                                    radios[i].checked = false;
+                                }
+                            }
+                        }
+                        // 点击radio,选中对应的checkbox
+                        if (target.name == ('imageBlockLineValue' + editorId) || target.name == ('textAlignValue' + editorId) || target.name == 'bdc') {
+                            var checkboxs = target.parentNode.previousSibling.getElementsByTagName('input');
+                            checkboxs && (checkboxs[0].checked = true);
+                        }
+
+                        getPara(popupUI);
+                    }
+                });
+
+                flag = 1;
+            });
+            this.initSplitButton();
+        }
+    };
+    utils.inherits(AutoTypeSetButton, SplitButton);
+
+})();

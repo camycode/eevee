@@ -1,1 +1,17 @@
-module("plugins.music"),test(" trace 3745 3780 音乐",function(){var e=te.obj[0],t=te.obj[1];e.setContent("<p>hello</p>"),t.setStart(e.body.firstChild,0).collapse(!0).select(),e.execCommand("music",{url:"http://box.baidu.com/widget/flash/bdspacesong.swf?from=tiebasongwidget&url=…artist=%E5%BC%A0%E6%B6%A6%E8%B4%9E&extra=Vol.%202&autoPlay=false&loop=true"}),stop(),setTimeout(function(){ua.manualDeleteFillData(e.body),ua.checkSameHtml(e.getContent(),'<p><embed type="application/x-shockwave-flash" class="edui-faked-music" pluginspage="http://www.macromedia.com/go/getflashplayer" src="http://box.baidu.com/widget/flash/bdspacesong.swf?from=tiebasongwidget&url=…artist=%E5%BC%A0%E6%B6%A6%E8%B4%9E&extra=Vol.%202&autoPlay=false&loop=true" width="400" height="95" align="none" wmode="transparent" play="true" loop="false" menu="false" allowscriptaccess="never" allowfullscreen="true"/>hello</p>',""),equal(e.body.firstChild.firstChild.tagName.toLowerCase(),"img"),equal(e.body.firstChild.firstChild.className,"edui-faked-music"),start()},50)});
+module( 'plugins.music' );
+
+test( ' trace 3745 3780 音乐', function () {
+    var editor = te.obj[0];
+    var range = te.obj[1];
+    editor.setContent( '<p>hello</p>' );
+    range.setStart(editor.body.firstChild,0).collapse(true).select();
+    editor.execCommand( 'music',{url:"http://box.baidu.com/widget/flash/bdspacesong.swf?from=tiebasongwidget&url=…artist=%E5%BC%A0%E6%B6%A6%E8%B4%9E&extra=Vol.%202&autoPlay=false&loop=true"});
+    stop();
+    setTimeout(function(){
+        ua.manualDeleteFillData(editor.body);
+        ua.checkSameHtml(editor.getContent(),'<p><embed type=\"application/x-shockwave-flash\" class=\"edui-faked-music\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" src=\"http://box.baidu.com/widget/flash/bdspacesong.swf?from=tiebasongwidget&url=…artist=%E5%BC%A0%E6%B6%A6%E8%B4%9E&extra=Vol.%202&autoPlay=false&loop=true\" width=\"400\" height=\"95\" align=\"none\" wmode=\"transparent\" play=\"true\" loop=\"false\" menu=\"false\" allowscriptaccess=\"never\" allowfullscreen=\"true\"/>hello</p>','');
+        equal(editor.body.firstChild.firstChild.tagName.toLowerCase(),'img');
+        equal(editor.body.firstChild.firstChild.className,'edui-faked-music');
+        start();
+    },50);
+} );

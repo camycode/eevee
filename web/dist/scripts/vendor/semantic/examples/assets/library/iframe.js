@@ -1,1 +1,642 @@
-!function(){"use strict";function e(e,n,t){"addEventListener"in window?e.addEventListener(n,t,!1):"attachEvent"in window&&e.attachEvent("on"+n,t)}function n(){var e,n=["moz","webkit","o","ms"];for(e=0;e<n.length&&!z;e+=1)z=window[n[e]+"RequestAnimationFrame"];z||o(" RequestAnimationFrame not supported")}function t(){var e="Host page";return window.top!==window.self&&(e=window.parentIFrame?window.parentIFrame.getId():"Nested host page"),e}function i(e){return F+"["+t()+"]"+e}function o(e){v&&"object"==typeof window.console&&console.log(i(e))}function r(e){"object"==typeof window.console&&console.warn(i(e))}function a(e){function n(){function e(){d(T),s(),E[j].resizedCallback(T)}a("Height"),a("Width"),u(e,T,"resetPage")}function t(e){var n=e.id;o(" Removing iFrame: "+n),e.parentNode.removeChild(e),E[n].closedCallback(n),delete E[n],o(" --")}function i(){var e=N.substr(I).split(":");return{iframe:document.getElementById(e[0]),id:e[0],height:e[1],width:e[2],type:e[3]}}function a(e){var n=Number(E[j]["max"+e]),t=Number(E[j]["min"+e]),i=e.toLowerCase(),r=Number(T[i]);if(t>n)throw new Error("Value for min"+e+" can not be greater than max"+e);o(" Checking "+i+" is in range "+t+"-"+n),t>r&&(r=t,o(" Set "+i+" to min value")),r>n&&(r=n,o(" Set "+i+" to max value")),T[i]=""+r}function f(){function n(){function e(){o(" Checking connection is from allowed list of origins: "+i);var e;for(e=0;e<i.length;e++)if(i[e]===t)return!0;return!1}function n(){return o(" Checking connection is from: "+r),t==r}return i.constructor===Array?e():n()}var t=e.origin,i=E[j].checkOrigin,r=T.iframe.src.split("/").slice(0,3).join("/");if(i&&""+t!="null"&&!n())throw new Error("Unexpected message received from: "+t+" for "+T.iframe.id+". Message was: "+e.data+". This error can be disabled by setting the checkOrigin: false option or by providing of array of trusted domains.");return!0}function m(){return F===(""+N).substr(0,I)}function g(){var e=T.type in{"true":1,"false":1,undefined:1};return e&&o(" Ignoring init message from meta parent page"),e}function p(e){return N.substr(N.indexOf(":")+x+e)}function w(e){o(" MessageCallback passed: {iframe: "+T.iframe.id+", message: "+e+"}"),E[j].messageCallback({iframe:T.iframe,message:JSON.parse(e)}),o(" --")}function h(){return null===T.iframe?(r(" IFrame ("+T.id+") not found"),!1):!0}function y(e){var n=e.getBoundingClientRect();return c(),{x:parseInt(n.left,10)+parseInt(M.x,10),y:parseInt(n.top,10)+parseInt(M.y,10)}}function k(e){function n(){M=a,z(),o(" --")}function t(){return{x:Number(T.width)+i.x,y:Number(T.height)+i.y}}var i=e?y(T.iframe):{x:0,y:0},a=t();o(" Reposition requested from iFrame (offset x:"+i.x+" y:"+i.y+")"),window.top!==window.self?window.parentIFrame?e?parentIFrame.scrollToOffset(a.x,a.y):parentIFrame.scrollTo(T.width,T.height):r(" Unable to scroll to requested position, window.parentIFrame not found"):n()}function z(){!1!==E[j].scrollCallback(M)&&s()}function C(e){function n(e){var n=y(e);o(" Moving to in page link (#"+t+") at x: "+n.x+" y: "+n.y),M={x:n.x,y:n.y},z(),o(" --")}var t=e.split("#")[1]||"",i=decodeURIComponent(t),r=document.getElementById(i)||document.getElementsByName(i)[0];window.top!==window.self?window.parentIFrame?parentIFrame.moveToAnchor(t):o(" In page link #"+t+" not found and window.parentIFrame not found"):r?n(r):o(" In page link #"+t+" not found")}function O(){switch(T.type){case"close":t(T.iframe);break;case"message":w(p(6));break;case"scrollTo":k(!1);break;case"scrollToOffset":k(!0);break;case"inPageLink":C(p(9));break;case"reset":l(T);break;case"init":n(),E[j].initCallback(T.iframe);break;default:n()}}function R(e){var n=!0;return E[e]||(n=!1,r(T.type+" No settings for "+e+". Message was: "+N)),n}var N=e.data,T={},j=null;m()&&(T=i(),j=T.id,!g()&&R(j)&&(v=E[j].log,o(" Received: "+N),h()&&f()&&(O(),b=!1)))}function c(){null===M&&(M={x:void 0!==window.pageXOffset?window.pageXOffset:document.documentElement.scrollLeft,y:void 0!==window.pageYOffset?window.pageYOffset:document.documentElement.scrollTop},o(" Get page position: "+M.x+","+M.y))}function s(){null!==M&&(window.scrollTo(M.x,M.y),o(" Set page position: "+M.x+","+M.y),M=null)}function l(e){function n(){d(e),f("reset","reset",e.iframe,e.id)}o(" Size reset requested by "+("init"===e.type?"host page":"iFrame")),c(),u(n,e,"init")}function d(e){function n(n){e.iframe.style[n]=e[n]+"px",o(" IFrame ("+t+") "+n+" set to "+e[n]+"px")}var t=e.iframe.id;E[t].sizeHeight&&n("height"),E[t].sizeWidth&&n("width")}function u(e,n,t){t!==n.type&&z?(o(" Requesting animation frame"),z(e)):e()}function f(e,n,t,i){t&&t.contentWindow?(o("["+e+"] Sending msg to iframe ("+n+")"),t.contentWindow.postMessage(F+n,"*")):(r("["+e+"] IFrame not found"),E[i]&&delete E[i])}function m(n){function t(){function e(e){1/0!==E[g][e]&&0!==E[g][e]&&(m.style[e]=E[g][e]+"px",o(" Set "+e+" = "+E[g][e]+"px"))}e("maxHeight"),e("minHeight"),e("maxWidth"),e("minWidth")}function i(e){return""===e&&(m.id=e="iFrameResizer"+y++,v=(n||{}).log,o(" Added missing iframe ID: "+e+" ("+m.src+")")),e}function r(){o(" IFrame scrolling "+(E[g].scrolling?"enabled":"disabled")+" for "+g),m.style.overflow=!1===E[g].scrolling?"hidden":"auto",m.scrolling=!1===E[g].scrolling?"no":"yes"}function a(){("number"==typeof E[g].bodyMargin||"0"===E[g].bodyMargin)&&(E[g].bodyMarginV1=E[g].bodyMargin,E[g].bodyMargin=""+E[g].bodyMargin+"px")}function c(){return g+":"+E[g].bodyMarginV1+":"+E[g].sizeWidth+":"+E[g].log+":"+E[g].interval+":"+E[g].enablePublicMethods+":"+E[g].autoResize+":"+E[g].bodyMargin+":"+E[g].heightCalculationMethod+":"+E[g].bodyBackground+":"+E[g].bodyPadding+":"+E[g].tolerance+":"+E[g].enableInPageLinks+":"+E[g].resizeFrom}function s(n){e(m,"load",function(){var e=b;f("iFrame.onload",n,m),!e&&E[g].heightCalculationMethod in C&&l({iframe:m,height:0,width:0,type:"init"})}),f("init",n,m)}function d(e){if("object"!=typeof e)throw new TypeError("Options is not an object.")}function u(e){e=e||{},E[g]={},d(e);for(var n in R)R.hasOwnProperty(n)&&(E[g][n]=e.hasOwnProperty(n)?e[n]:R[n]);v=E[g].log}var m=this,g=i(m.id);u(n),r(),t(),a(),s(c())}function g(e,n){null===O&&(O=setTimeout(function(){O=null,e()},n))}function p(){g(function(){for(var e in E)"parent"===E[e].resizeFrom&&f("Window resize","resize",document.getElementById(e),e)},66)}function w(){function t(e,n){if(!e.tagName)throw new TypeError("Object is not a valid DOM element");if("IFRAME"!==e.tagName.toUpperCase())throw new TypeError("Expected <IFRAME> tag, found <"+e.tagName+">.");m.call(e,n)}return n(),e(window,"message",a),e(window,"resize",p),function(e,n){switch(typeof n){case"undefined":case"string":Array.prototype.forEach.call(document.querySelectorAll(n||"iframe"),function(n){t(n,e)});break;case"object":t(n,e);break;default:throw new TypeError("Unexpected data type ("+typeof n+").")}}}function h(e){e.fn.iFrameResize=function(e){return this.filter("iframe").each(function(n,t){m.call(t,e)}).end()}}var y=0,b=!0,v=!1,k="message",x=k.length,F="[iFrameSizer]",I=F.length,M=null,z=window.requestAnimationFrame,C={max:1,scroll:1,bodyScroll:1,documentElementScroll:1},E={},O=null,R={autoResize:!0,bodyBackground:null,bodyMargin:null,bodyMarginV1:8,bodyPadding:null,checkOrigin:!0,enableInPageLinks:!1,enablePublicMethods:!1,heightCalculationMethod:"offset",interval:32,log:!1,maxHeight:1/0,maxWidth:1/0,minHeight:0,minWidth:0,resizeFrom:"parent",scrolling:!1,sizeHeight:!0,sizeWidth:!1,tolerance:0,closedCallback:function(){},initCallback:function(){},messageCallback:function(){},resizedCallback:function(){},scrollCallback:function(){return!0}};window.jQuery&&h(jQuery),"function"==typeof define&&define.amd?define([],w):"object"==typeof module&&"object"==typeof module.exports?module.exports=w():window.iFrameResize=window.iFrameResize||w()}();
+/*
+ * File: iframeResizer.js
+ * Desc: Force iframes to size to content.
+ * Requires: iframeResizer.contentWindow.js to be loaded into the target frame.
+ * Author: David J. Bradshaw - dave@bradshaw.net
+ * Contributor: Jure Mav - jure.mav@gmail.com
+ * Contributor: Reed Dadoune - reed@dadoune.com
+ */
+;(function() {
+  'use strict';
+
+  var
+    count                 = 0,
+    firstRun              = true,
+    logEnabled            = false,
+    msgHeader             = 'message',
+    msgHeaderLen          = msgHeader.length,
+    msgId                 = '[iFrameSizer]', //Must match iframe msg ID
+    msgIdLen              = msgId.length,
+    pagePosition          = null,
+    requestAnimationFrame = window.requestAnimationFrame,
+    resetRequiredMethods  = {max:1,scroll:1,bodyScroll:1,documentElementScroll:1},
+    settings              = {},
+    timer                 = null,
+
+    defaults              = {
+      autoResize                : true,
+      bodyBackground            : null,
+      bodyMargin                : null,
+      bodyMarginV1              : 8,
+      bodyPadding               : null,
+      checkOrigin               : true,
+      enableInPageLinks         : false,
+      enablePublicMethods       : false,
+      heightCalculationMethod   : 'offset',
+      interval                  : 32,
+      log                       : false,
+      maxHeight                 : Infinity,
+      maxWidth                  : Infinity,
+      minHeight                 : 0,
+      minWidth                  : 0,
+      resizeFrom                : 'parent',
+      scrolling                 : false,
+      sizeHeight                : true,
+      sizeWidth                 : false,
+      tolerance                 : 0,
+      closedCallback            : function(){},
+      initCallback              : function(){},
+      messageCallback           : function(){},
+      resizedCallback           : function(){},
+      scrollCallback            : function(){return true;}
+    };
+
+  function addEventListener(obj,evt,func){
+    if ('addEventListener' in window){
+      obj.addEventListener(evt,func, false);
+    } else if ('attachEvent' in window){//IE
+      obj.attachEvent('on'+evt,func);
+    }
+  }
+
+  function setupRequestAnimationFrame(){
+    var
+      vendors = ['moz', 'webkit', 'o', 'ms'],
+      x;
+
+    // Remove vendor prefixing if prefixed and break early if not
+    for (x = 0; x < vendors.length && !requestAnimationFrame; x += 1) {
+      requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    }
+
+    if (!(requestAnimationFrame)){
+      log(' RequestAnimationFrame not supported');
+    }
+  }
+
+  function getMyID(){
+    var retStr = 'Host page';
+
+    if (window.top!==window.self){
+      if (window.parentIFrame){
+        retStr = window.parentIFrame.getId();
+      } else {
+        retStr = 'Nested host page';
+      }
+    }
+
+    return retStr;
+  }
+
+  function formatLogMsg(msg){
+    return msgId + '[' + getMyID() + ']' + msg;
+  }
+
+  function log(msg){
+    if (logEnabled && ('object' === typeof window.console)){
+      console.log(formatLogMsg(msg));
+    }
+  }
+
+  function warn(msg){
+    if ('object' === typeof window.console){
+      console.warn(formatLogMsg(msg));
+    }
+  }
+
+  function iFrameListener(event){
+    function resizeIFrame(){
+      function resize(){
+        setSize(messageData);
+        setPagePosition();
+        settings[iframeID].resizedCallback(messageData);
+      }
+
+      ensureInRange('Height');
+      ensureInRange('Width');
+
+      syncResize(resize,messageData,'resetPage');
+    }
+
+    function closeIFrame(iframe){
+      var iframeID = iframe.id;
+
+      log(' Removing iFrame: '+iframeID);
+      iframe.parentNode.removeChild(iframe);
+      settings[iframeID].closedCallback(iframeID);
+      delete settings[iframeID];
+      log(' --');
+    }
+
+    function processMsg(){
+      var data = msg.substr(msgIdLen).split(':');
+
+      return {
+        iframe: document.getElementById(data[0]),
+        id:     data[0],
+        height: data[1],
+        width:  data[2],
+        type:   data[3]
+      };
+    }
+
+    function ensureInRange(Dimension){
+      var
+        max  = Number(settings[iframeID]['max'+Dimension]),
+        min  = Number(settings[iframeID]['min'+Dimension]),
+        dimension = Dimension.toLowerCase(),
+        size = Number(messageData[dimension]);
+
+      if (min>max){
+        throw new Error('Value for min'+Dimension+' can not be greater than max'+Dimension);
+      }
+
+      log(' Checking '+dimension+' is in range '+min+'-'+max);
+
+      if (size<min) {
+        size=min;
+        log(' Set '+dimension+' to min value');
+      }
+
+      if (size>max) {
+        size=max;
+        log(' Set '+dimension+' to max value');
+      }
+
+      messageData[dimension]=''+size;
+    }
+
+
+    function isMessageFromIFrame(){
+      function checkAllowedOrigin(){
+        function checkList(){
+          log(' Checking connection is from allowed list of origins: ' + checkOrigin);
+          var i;
+          for (i = 0; i < checkOrigin.length; i++) {
+            if (checkOrigin[i] === origin) {
+              return true;
+            }
+          }
+          return false;
+        }
+
+        function checkSingle(){
+          log(' Checking connection is from: '+remoteHost);
+          return origin == remoteHost;
+        }
+
+        return checkOrigin.constructor === Array ? checkList() : checkSingle();
+      }
+
+      var
+        origin     = event.origin,
+        checkOrigin = settings[iframeID].checkOrigin,
+        remoteHost = messageData.iframe.src.split('/').slice(0,3).join('/');
+
+      if (checkOrigin) {
+        if ((''+origin !== 'null') && !checkAllowedOrigin()) {
+          throw new Error(
+            'Unexpected message received from: ' + origin +
+            ' for ' + messageData.iframe.id +
+            '. Message was: ' + event.data +
+            '. This error can be disabled by setting the checkOrigin: false option or by providing of array of trusted domains.'
+          );
+        }
+      }
+
+      return true;
+    }
+
+    function isMessageForUs(){
+      return msgId === ('' + msg).substr(0,msgIdLen); //''+Protects against non-string msg
+    }
+
+    function isMessageFromMetaParent(){
+      //test if this message is from a parent above us. This is an ugly test, however, updating
+      //the message format would break backwards compatibity.
+      var retCode = messageData.type in {'true':1,'false':1,'undefined':1};
+
+      if (retCode){
+        log(' Ignoring init message from meta parent page');
+      }
+
+      return retCode;
+    }
+
+    function getMsgBody(offset){
+      return msg.substr(msg.indexOf(':')+msgHeaderLen+offset);
+    }
+
+    function forwardMsgFromIFrame(msgBody){
+      log(' MessageCallback passed: {iframe: '+ messageData.iframe.id + ', message: ' + msgBody + '}');
+      settings[iframeID].messageCallback({
+        iframe: messageData.iframe,
+        message: JSON.parse(msgBody)
+      });
+      log(' --');
+    }
+
+    function checkIFrameExists(){
+      if (null === messageData.iframe) {
+        warn(' IFrame ('+messageData.id+') not found');
+        return false;
+      }
+      return true;
+    }
+
+    function getElementPosition(target){
+      var
+        iFramePosition = target.getBoundingClientRect();
+
+      getPagePosition();
+
+      return {
+        x: parseInt(iFramePosition.left, 10) + parseInt(pagePosition.x, 10),
+        y: parseInt(iFramePosition.top, 10)  + parseInt(pagePosition.y, 10)
+      };
+    }
+
+    function scrollRequestFromChild(addOffset){
+      function reposition(){
+        pagePosition = newPosition;
+
+        scrollTo();
+
+        log(' --');
+      }
+
+      function calcOffset(){
+        return {
+          x: Number(messageData.width) + offset.x,
+          y: Number(messageData.height) + offset.y
+        };
+      }
+
+      var
+        offset = addOffset ? getElementPosition(messageData.iframe) : {x:0,y:0},
+        newPosition = calcOffset();
+
+      log(' Reposition requested from iFrame (offset x:'+offset.x+' y:'+offset.y+')');
+
+      if(window.top!==window.self){
+        if (window.parentIFrame){
+          if (addOffset){
+            parentIFrame.scrollToOffset(newPosition.x,newPosition.y);
+          } else {
+            parentIFrame.scrollTo(messageData.width,messageData.height);
+          }
+        } else {
+          warn(' Unable to scroll to requested position, window.parentIFrame not found');
+        }
+      } else {
+        reposition();
+      }
+
+    }
+
+    function scrollTo(){
+      if (false !== settings[iframeID].scrollCallback(pagePosition)){
+        setPagePosition();
+      }
+    }
+
+    function findTarget(location){
+      var hash = location.split("#")[1] || "";
+      var hashData = decodeURIComponent(hash);
+
+      function jumpToTarget(target){
+        var jumpPosition = getElementPosition(target);
+
+        log(' Moving to in page link (#'+hash+') at x: '+jumpPosition.x+' y: '+jumpPosition.y);
+        pagePosition = {
+          x: jumpPosition.x,
+          y: jumpPosition.y
+        };
+
+        scrollTo();
+        log(' --');
+      }
+
+      var target = document.getElementById(hashData) || document.getElementsByName(hashData)[0];
+
+      if(window.top!==window.self){
+        if (window.parentIFrame){
+          parentIFrame.moveToAnchor(hash);
+        } else {
+          log(' In page link #'+hash+' not found and window.parentIFrame not found');
+        }
+      } else if (target){
+        jumpToTarget(target);
+      } else {
+        log(' In page link #'+hash+' not found');
+      }
+    }
+
+    function actionMsg(){
+      switch(messageData.type){
+        case 'close':
+          closeIFrame(messageData.iframe);
+          break;
+        case 'message':
+          forwardMsgFromIFrame(getMsgBody(6));
+          break;
+        case 'scrollTo':
+          scrollRequestFromChild(false);
+          break;
+        case 'scrollToOffset':
+          scrollRequestFromChild(true);
+          break;
+        case 'inPageLink':
+          findTarget(getMsgBody(9));
+          break;
+        case 'reset':
+          resetIFrame(messageData);
+          break;
+        case 'init':
+          resizeIFrame();
+          settings[iframeID].initCallback(messageData.iframe);
+          break;
+        default:
+          resizeIFrame();
+      }
+    }
+
+    function hasSettings(iframeID){
+      var retBool = true;
+
+      if (!settings[iframeID]){
+        retBool = false;
+        warn(messageData.type + ' No settings for ' + iframeID + '. Message was: ' + msg);
+      }
+
+      return retBool;
+    }
+
+    var
+      msg = event.data,
+      messageData = {},
+      iframeID = null;
+
+    if (isMessageForUs()){
+      messageData = processMsg();
+      iframeID    = messageData.id;
+
+      if (!isMessageFromMetaParent() && hasSettings(iframeID)){
+        logEnabled  = settings[iframeID].log;
+        log(' Received: '+msg);
+
+        if ( checkIFrameExists() && isMessageFromIFrame() ){
+          actionMsg();
+          firstRun = false;
+        }
+      }
+    }
+  }
+
+
+  function getPagePosition (){
+    if(null === pagePosition){
+      pagePosition = {
+        x: (window.pageXOffset !== undefined) ? window.pageXOffset : document.documentElement.scrollLeft,
+        y: (window.pageYOffset !== undefined) ? window.pageYOffset : document.documentElement.scrollTop
+      };
+      log(' Get page position: '+pagePosition.x+','+pagePosition.y);
+    }
+  }
+
+  function setPagePosition(){
+    if(null !== pagePosition){
+      window.scrollTo(pagePosition.x,pagePosition.y);
+      log(' Set page position: '+pagePosition.x+','+pagePosition.y);
+      pagePosition = null;
+    }
+  }
+
+  function resetIFrame(messageData){
+    function reset(){
+      setSize(messageData);
+      trigger('reset','reset',messageData.iframe,messageData.id);
+    }
+
+    log(' Size reset requested by '+('init'===messageData.type?'host page':'iFrame'));
+    getPagePosition();
+    syncResize(reset,messageData,'init');
+  }
+
+  function setSize(messageData){
+    function setDimension(dimension){
+      messageData.iframe.style[dimension] = messageData[dimension] + 'px';
+      log(
+        ' IFrame (' + iframeID +
+        ') ' + dimension +
+        ' set to ' + messageData[dimension] + 'px'
+      );
+    }
+    var iframeID = messageData.iframe.id;
+    if( settings[iframeID].sizeHeight) { setDimension('height'); }
+    if( settings[iframeID].sizeWidth ) { setDimension('width'); }
+  }
+
+  function syncResize(func,messageData,doNotSync){
+    if(doNotSync!==messageData.type && requestAnimationFrame){
+      log(' Requesting animation frame');
+      requestAnimationFrame(func);
+    } else {
+      func();
+    }
+  }
+
+  function trigger(calleeMsg,msg,iframe,id){
+    if(iframe && iframe.contentWindow){
+      log('[' + calleeMsg + '] Sending msg to iframe ('+msg+')');
+      iframe.contentWindow.postMessage( msgId + msg, '*' );
+    } else {
+      warn('[' + calleeMsg + '] IFrame not found');
+      if(settings[id]) delete settings[id];
+    }
+  }
+
+
+  function setupIFrame(options){
+    function setLimits(){
+      function addStyle(style){
+        if ((Infinity !== settings[iframeID][style]) && (0 !== settings[iframeID][style])){
+          iframe.style[style] = settings[iframeID][style] + 'px';
+          log(' Set '+style+' = '+settings[iframeID][style]+'px');
+        }
+      }
+
+      addStyle('maxHeight');
+      addStyle('minHeight');
+      addStyle('maxWidth');
+      addStyle('minWidth');
+    }
+
+    function ensureHasId(iframeID){
+      if (''===iframeID){
+        iframe.id = iframeID = 'iFrameResizer' + count++;
+        logEnabled = (options || {}).log;
+        log(' Added missing iframe ID: '+ iframeID +' (' + iframe.src + ')');
+      }
+
+      return iframeID;
+    }
+
+    function setScrolling(){
+      log(' IFrame scrolling ' + (settings[iframeID].scrolling ? 'enabled' : 'disabled') + ' for ' + iframeID);
+      iframe.style.overflow = false === settings[iframeID].scrolling ? 'hidden' : 'auto';
+      iframe.scrolling      = false === settings[iframeID].scrolling ? 'no' : 'yes';
+    }
+
+    //The V1 iFrame script expects an int, where as in V2 expects a CSS
+    //string value such as '1px 3em', so if we have an int for V2, set V1=V2
+    //and then convert V2 to a string PX value.
+    function setupBodyMarginValues(){
+      if (('number'===typeof(settings[iframeID].bodyMargin)) || ('0'===settings[iframeID].bodyMargin)){
+        settings[iframeID].bodyMarginV1 = settings[iframeID].bodyMargin;
+        settings[iframeID].bodyMargin   = '' + settings[iframeID].bodyMargin + 'px';
+      }
+    }
+
+    function createOutgoingMsg(){
+      return iframeID +
+        ':' + settings[iframeID].bodyMarginV1 +
+        ':' + settings[iframeID].sizeWidth +
+        ':' + settings[iframeID].log +
+        ':' + settings[iframeID].interval +
+        ':' + settings[iframeID].enablePublicMethods +
+        ':' + settings[iframeID].autoResize +
+        ':' + settings[iframeID].bodyMargin +
+        ':' + settings[iframeID].heightCalculationMethod +
+        ':' + settings[iframeID].bodyBackground +
+        ':' + settings[iframeID].bodyPadding +
+        ':' + settings[iframeID].tolerance +
+        ':' + settings[iframeID].enableInPageLinks +
+        ':' + settings[iframeID].resizeFrom;
+    }
+
+    function init(msg){
+      //We have to call trigger twice, as we can not be sure if all
+      //iframes have completed loading when this code runs. The
+      //event listener also catches the page changing in the iFrame.
+      addEventListener(iframe,'load',function(){
+        var fr = firstRun;   // Reduce scope of var to function, because IE8's JS execution
+                                     // context stack is borked and this value gets externally
+                                     // changed midway through running this function.
+        trigger('iFrame.onload',msg,iframe);
+        if (!fr && settings[iframeID].heightCalculationMethod in resetRequiredMethods){
+          resetIFrame({
+            iframe:iframe,
+            height:0,
+            width:0,
+            type:'init'
+          });
+        }
+      });
+      trigger('init',msg,iframe);
+    }
+
+    function checkOptions(options){
+      if ('object' !== typeof options){
+        throw new TypeError('Options is not an object.');
+      }
+    }
+
+    function processOptions(options){
+      options = options || {};
+      settings[iframeID] = {};
+
+      checkOptions(options);
+
+      for (var option in defaults) {
+        if (defaults.hasOwnProperty(option)){
+          settings[iframeID][option] = options.hasOwnProperty(option) ? options[option] : defaults[option];
+        }
+      }
+
+      logEnabled = settings[iframeID].log;
+    }
+
+    var
+      /*jshint validthis:true */
+      iframe   = this,
+      iframeID = ensureHasId(iframe.id);
+
+    processOptions(options);
+    setScrolling();
+    setLimits();
+    setupBodyMarginValues();
+    init(createOutgoingMsg());
+  }
+
+  function throttle(fn,time){
+    if (null === timer){
+      timer = setTimeout(function(){
+        timer = null;
+        fn();
+      }, time);
+    }
+  }
+
+  function winResize(){
+    throttle(function(){
+      for (var iframeId in settings){
+        if('parent' === settings[iframeId].resizeFrom){
+          trigger('Window resize','resize',document.getElementById(iframeId),iframeId);
+        }
+      }
+    },66);
+  }
+
+  function factory(){
+
+    setupRequestAnimationFrame();
+    addEventListener(window,'message',iFrameListener);
+    addEventListener(window,'resize', winResize);
+
+    function init(element, options){
+      if(!element.tagName) {
+        throw new TypeError('Object is not a valid DOM element');
+      } else if ('IFRAME' !== element.tagName.toUpperCase()) {
+        throw new TypeError('Expected <IFRAME> tag, found <'+element.tagName+'>.');
+      } else {
+        setupIFrame.call(element, options);
+      }
+    }
+
+    return function iFrameResizeF(options,target){
+      switch (typeof(target)){
+        case 'undefined':
+        case 'string':
+          Array.prototype.forEach.call( document.querySelectorAll( target || 'iframe' ), function (element) {
+            init(element, options);
+          });
+          break;
+        case 'object':
+          init(target, options);
+          break;
+        default:
+          throw new TypeError('Unexpected data type ('+typeof(target)+').');
+      }
+    };
+  }
+
+  function createJQueryPublicMethod($){
+    $.fn.iFrameResize = function $iFrameResizeF(options) {
+      return this.filter('iframe').each(function (index, element) {
+        setupIFrame.call(element, options);
+      }).end();
+    };
+  }
+
+  if (window.jQuery) { createJQueryPublicMethod(jQuery); }
+
+  if (typeof define === 'function' && define.amd) {
+    define([],factory);
+  } else if (typeof module === 'object' && typeof module.exports === 'object') { //Node for browserfy
+    module.exports = factory();
+  } else {
+    window.iFrameResize = window.iFrameResize || factory();
+  }
+
+})();

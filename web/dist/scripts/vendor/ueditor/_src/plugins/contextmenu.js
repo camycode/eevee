@@ -1,1 +1,496 @@
-UE.plugins.contextmenu=function(){var e=this;if(e.setOpt("enableContextMenu",!0),e.getOpt("enableContextMenu")!==!1){var a,l=e.getLang("contextMenu"),t=e.options.contextMenu||[{label:l.selectall,cmdName:"selectall"},{label:l.cleardoc,cmdName:"cleardoc",exec:function(){confirm(l.confirmclear)&&this.execCommand("cleardoc")}},"-",{label:l.unlink,cmdName:"unlink"},"-",{group:l.paragraph,icon:"justifyjustify",subMenu:[{label:l.justifyleft,cmdName:"justify",value:"left"},{label:l.justifyright,cmdName:"justify",value:"right"},{label:l.justifycenter,cmdName:"justify",value:"center"},{label:l.justifyjustify,cmdName:"justify",value:"justify"}]},"-",{group:l.table,icon:"table",subMenu:[{label:l.inserttable,cmdName:"inserttable"},{label:l.deletetable,cmdName:"deletetable"},"-",{label:l.deleterow,cmdName:"deleterow"},{label:l.deletecol,cmdName:"deletecol"},{label:l.insertcol,cmdName:"insertcol"},{label:l.insertcolnext,cmdName:"insertcolnext"},{label:l.insertrow,cmdName:"insertrow"},{label:l.insertrownext,cmdName:"insertrownext"},"-",{label:l.insertcaption,cmdName:"insertcaption"},{label:l.deletecaption,cmdName:"deletecaption"},{label:l.inserttitle,cmdName:"inserttitle"},{label:l.deletetitle,cmdName:"deletetitle"},{label:l.inserttitlecol,cmdName:"inserttitlecol"},{label:l.deletetitlecol,cmdName:"deletetitlecol"},"-",{label:l.mergecells,cmdName:"mergecells"},{label:l.mergeright,cmdName:"mergeright"},{label:l.mergedown,cmdName:"mergedown"},"-",{label:l.splittorows,cmdName:"splittorows"},{label:l.splittocols,cmdName:"splittocols"},{label:l.splittocells,cmdName:"splittocells"},"-",{label:l.averageDiseRow,cmdName:"averagedistributerow"},{label:l.averageDisCol,cmdName:"averagedistributecol"},"-",{label:l.edittd,cmdName:"edittd",exec:function(){UE.ui.edittd&&new UE.ui.edittd(this),this.getDialog("edittd").open()}},{label:l.edittable,cmdName:"edittable",exec:function(){UE.ui.edittable&&new UE.ui.edittable(this),this.getDialog("edittable").open()}},{label:l.setbordervisible,cmdName:"setbordervisible"}]},{group:l.tablesort,icon:"tablesort",subMenu:[{label:l.enablesort,cmdName:"enablesort"},{label:l.disablesort,cmdName:"disablesort"},"-",{label:l.reversecurrent,cmdName:"sorttable",value:"reversecurrent"},{label:l.orderbyasc,cmdName:"sorttable",value:"orderbyasc"},{label:l.reversebyasc,cmdName:"sorttable",value:"reversebyasc"},{label:l.orderbynum,cmdName:"sorttable",value:"orderbynum"},{label:l.reversebynum,cmdName:"sorttable",value:"reversebynum"}]},{group:l.borderbk,icon:"borderBack",subMenu:[{label:l.setcolor,cmdName:"interlacetable",exec:function(){this.execCommand("interlacetable")}},{label:l.unsetcolor,cmdName:"uninterlacetable",exec:function(){this.execCommand("uninterlacetable")}},{label:l.setbackground,cmdName:"settablebackground",exec:function(){this.execCommand("settablebackground",{repeat:!0,colorList:["#bbb","#ccc"]})}},{label:l.unsetbackground,cmdName:"cleartablebackground",exec:function(){this.execCommand("cleartablebackground")}},{label:l.redandblue,cmdName:"settablebackground",exec:function(){this.execCommand("settablebackground",{repeat:!0,colorList:["red","blue"]})}},{label:l.threecolorgradient,cmdName:"settablebackground",exec:function(){this.execCommand("settablebackground",{repeat:!0,colorList:["#aaa","#bbb","#ccc"]})}}]},{group:l.aligntd,icon:"aligntd",subMenu:[{cmdName:"cellalignment",value:{align:"left",vAlign:"top"}},{cmdName:"cellalignment",value:{align:"center",vAlign:"top"}},{cmdName:"cellalignment",value:{align:"right",vAlign:"top"}},{cmdName:"cellalignment",value:{align:"left",vAlign:"middle"}},{cmdName:"cellalignment",value:{align:"center",vAlign:"middle"}},{cmdName:"cellalignment",value:{align:"right",vAlign:"middle"}},{cmdName:"cellalignment",value:{align:"left",vAlign:"bottom"}},{cmdName:"cellalignment",value:{align:"center",vAlign:"bottom"}},{cmdName:"cellalignment",value:{align:"right",vAlign:"bottom"}}]},{group:l.aligntable,icon:"aligntable",subMenu:[{cmdName:"tablealignment",className:"left",label:l.tableleft,value:"left"},{cmdName:"tablealignment",className:"center",label:l.tablecenter,value:"center"},{cmdName:"tablealignment",className:"right",label:l.tableright,value:"right"}]},"-",{label:l.insertparagraphbefore,cmdName:"insertparagraph",value:!0},{label:l.insertparagraphafter,cmdName:"insertparagraph"},{label:l.copy,cmdName:"copy"},{label:l.paste,cmdName:"paste"}];if(t.length){var n=UE.ui.uiUtils;e.addListener("contextmenu",function(c,m){var r=n.getViewportOffsetByEvent(m);e.fireEvent("beforeselectionchange"),a&&a.destroy();for(var i,o=0,d=[];i=t[o];o++){var s;!function(a){function t(){switch(a.icon){case"table":return e.getLang("contextMenu.table");case"justifyjustify":return e.getLang("contextMenu.paragraph");case"aligntd":return e.getLang("contextMenu.aligntd");case"aligntable":return e.getLang("contextMenu.aligntable");case"tablesort":return l.tablesort;case"borderBack":return l.borderbk;default:return""}}if("-"==a)(s=d[d.length-1])&&"-"!==s&&d.push("-");else if(a.hasOwnProperty("group")){for(var n,c=0,m=[];n=a.subMenu[c];c++)!function(a){"-"==a?(s=m[m.length-1])&&"-"!==s?m.push("-"):m.splice(m.length-1):(e.commands[a.cmdName]||UE.commands[a.cmdName]||a.query)&&(a.query?a.query():e.queryCommandState(a.cmdName))>-1&&m.push({label:a.label||e.getLang("contextMenu."+a.cmdName+(a.value||""))||"",className:"edui-for-"+a.cmdName+(a.className?" edui-for-"+a.cmdName+"-"+a.className:""),onclick:a.exec?function(){a.exec.call(e)}:function(){e.execCommand(a.cmdName,a.value)}})}(n);m.length&&d.push({label:t(),className:"edui-for-"+a.icon,subMenu:{items:m,editor:e}})}else(e.commands[a.cmdName]||UE.commands[a.cmdName]||a.query)&&(a.query?a.query.call(e):e.queryCommandState(a.cmdName))>-1&&d.push({label:a.label||e.getLang("contextMenu."+a.cmdName),className:"edui-for-"+(a.icon?a.icon:a.cmdName+(a.value||"")),onclick:a.exec?function(){a.exec.call(e)}:function(){e.execCommand(a.cmdName,a.value)}})}(i)}if("-"==d[d.length-1]&&d.pop(),a=new UE.ui.Menu({items:d,className:"edui-contextmenu",editor:e}),a.render(),a.showAt(r),e.fireEvent("aftershowcontextmenu",a),domUtils.preventDefault(m),browser.ie){var u;try{u=e.selection.getNative().createRange()}catch(b){return}if(u.item){var g=new dom.Range(e.document);g.selectNode(u.item(0)).select(!0,!0)}}}),e.addListener("aftershowcontextmenu",function(a,l){if(e.zeroclipboard){var t=l.items;for(var n in t)"edui-for-copy"==t[n].className&&e.zeroclipboard.clip(t[n].getDom())}})}}};
+///import core
+///commands 右键菜单
+///commandsName  ContextMenu
+///commandsTitle  右键菜单
+/**
+ * 右键菜单
+ * @function
+ * @name baidu.editor.plugins.contextmenu
+ * @author zhanyi
+ */
+
+UE.plugins['contextmenu'] = function () {
+    var me = this;
+    me.setOpt('enableContextMenu',true);
+    if(me.getOpt('enableContextMenu') === false){
+        return;
+    }
+    var lang = me.getLang( "contextMenu" ),
+            menu,
+            items = me.options.contextMenu || [
+                {label:lang['selectall'], cmdName:'selectall'},
+                {
+                    label:lang.cleardoc,
+                    cmdName:'cleardoc',
+                    exec:function () {
+                        if ( confirm( lang.confirmclear ) ) {
+                            this.execCommand( 'cleardoc' );
+                        }
+                    }
+                },
+                '-',
+                {
+                    label:lang.unlink,
+                    cmdName:'unlink'
+                },
+                '-',
+                {
+                    group:lang.paragraph,
+                    icon:'justifyjustify',
+                    subMenu:[
+                        {
+                            label:lang.justifyleft,
+                            cmdName:'justify',
+                            value:'left'
+                        },
+                        {
+                            label:lang.justifyright,
+                            cmdName:'justify',
+                            value:'right'
+                        },
+                        {
+                            label:lang.justifycenter,
+                            cmdName:'justify',
+                            value:'center'
+                        },
+                        {
+                            label:lang.justifyjustify,
+                            cmdName:'justify',
+                            value:'justify'
+                        }
+                    ]
+                },
+                '-',
+                {
+                    group:lang.table,
+                    icon:'table',
+                    subMenu:[
+                        {
+                            label:lang.inserttable,
+                            cmdName:'inserttable'
+                        },
+                        {
+                            label:lang.deletetable,
+                            cmdName:'deletetable'
+                        },
+                        '-',
+                        {
+                            label:lang.deleterow,
+                            cmdName:'deleterow'
+                        },
+                        {
+                            label:lang.deletecol,
+                            cmdName:'deletecol'
+                        },
+                        {
+                            label:lang.insertcol,
+                            cmdName:'insertcol'
+                        },
+                        {
+                            label:lang.insertcolnext,
+                            cmdName:'insertcolnext'
+                        },
+                        {
+                            label:lang.insertrow,
+                            cmdName:'insertrow'
+                        },
+                        {
+                            label:lang.insertrownext,
+                            cmdName:'insertrownext'
+                        },
+                        '-',
+                        {
+                            label:lang.insertcaption,
+                            cmdName:'insertcaption'
+                        },
+                        {
+                            label:lang.deletecaption,
+                            cmdName:'deletecaption'
+                        },
+                        {
+                            label:lang.inserttitle,
+                            cmdName:'inserttitle'
+                        },
+                        {
+                            label:lang.deletetitle,
+                            cmdName:'deletetitle'
+                        },
+                        {
+                            label:lang.inserttitlecol,
+                            cmdName:'inserttitlecol'
+                        },
+                        {
+                            label:lang.deletetitlecol,
+                            cmdName:'deletetitlecol'
+                        },
+                        '-',
+                        {
+                            label:lang.mergecells,
+                            cmdName:'mergecells'
+                        },
+                        {
+                            label:lang.mergeright,
+                            cmdName:'mergeright'
+                        },
+                        {
+                            label:lang.mergedown,
+                            cmdName:'mergedown'
+                        },
+                        '-',
+                        {
+                            label:lang.splittorows,
+                            cmdName:'splittorows'
+                        },
+                        {
+                            label:lang.splittocols,
+                            cmdName:'splittocols'
+                        },
+                        {
+                            label:lang.splittocells,
+                            cmdName:'splittocells'
+                        },
+                        '-',
+                        {
+                            label:lang.averageDiseRow,
+                            cmdName:'averagedistributerow'
+                        },
+                        {
+                            label:lang.averageDisCol,
+                            cmdName:'averagedistributecol'
+                        },
+                        '-',
+                        {
+                            label:lang.edittd,
+                            cmdName:'edittd',
+                            exec:function () {
+                                if ( UE.ui['edittd'] ) {
+                                    new UE.ui['edittd']( this );
+                                }
+                                this.getDialog('edittd').open();
+                            }
+                        },
+                        {
+                            label:lang.edittable,
+                            cmdName:'edittable',
+                            exec:function () {
+                                if ( UE.ui['edittable'] ) {
+                                    new UE.ui['edittable']( this );
+                                }
+                                this.getDialog('edittable').open();
+                            }
+                        },
+                        {
+                            label:lang.setbordervisible,
+                            cmdName:'setbordervisible'
+                        }
+                    ]
+                },
+                {
+                    group:lang.tablesort,
+                    icon:'tablesort',
+                    subMenu:[
+                        {
+                            label:lang.enablesort,
+                            cmdName:'enablesort'
+                        },
+                        {
+                            label:lang.disablesort,
+                            cmdName:'disablesort'
+                        },
+                        '-',
+                        {
+                            label:lang.reversecurrent,
+                            cmdName:'sorttable',
+                            value:'reversecurrent'
+                        },
+                        {
+                            label:lang.orderbyasc,
+                            cmdName:'sorttable',
+                            value:'orderbyasc'
+                        },
+                        {
+                            label:lang.reversebyasc,
+                            cmdName:'sorttable',
+                            value:'reversebyasc'
+                        },
+                        {
+                            label:lang.orderbynum,
+                            cmdName:'sorttable',
+                            value:'orderbynum'
+                        },
+                        {
+                            label:lang.reversebynum,
+                            cmdName:'sorttable',
+                            value:'reversebynum'
+                        }
+                    ]
+                },
+                {
+                    group:lang.borderbk,
+                    icon:'borderBack',
+                    subMenu:[
+                        {
+                            label:lang.setcolor,
+                            cmdName:"interlacetable",
+                            exec:function(){
+                                this.execCommand("interlacetable");
+                            }
+                        },
+                        {
+                            label:lang.unsetcolor,
+                            cmdName:"uninterlacetable",
+                            exec:function(){
+                                this.execCommand("uninterlacetable");
+                            }
+                        },
+                        {
+                            label:lang.setbackground,
+                            cmdName:"settablebackground",
+                            exec:function(){
+                                this.execCommand("settablebackground",{repeat:true,colorList:["#bbb","#ccc"]});
+                            }
+                        },
+                        {
+                            label:lang.unsetbackground,
+                            cmdName:"cleartablebackground",
+                            exec:function(){
+                                this.execCommand("cleartablebackground");
+                            }
+                        },
+                        {
+                            label:lang.redandblue,
+                            cmdName:"settablebackground",
+                            exec:function(){
+                                this.execCommand("settablebackground",{repeat:true,colorList:["red","blue"]});
+                            }
+                        },
+                        {
+                            label:lang.threecolorgradient,
+                            cmdName:"settablebackground",
+                            exec:function(){
+                                this.execCommand("settablebackground",{repeat:true,colorList:["#aaa","#bbb","#ccc"]});
+                            }
+                        }
+                    ]
+                },
+                {
+                    group:lang.aligntd,
+                    icon:'aligntd',
+                    subMenu:[
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'left',vAlign:'top'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'center',vAlign:'top'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'right',vAlign:'top'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'left',vAlign:'middle'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'center',vAlign:'middle'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'right',vAlign:'middle'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'left',vAlign:'bottom'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'center',vAlign:'bottom'}
+                        },
+                        {
+                            cmdName:'cellalignment',
+                            value:{align:'right',vAlign:'bottom'}
+                        }
+                    ]
+                },
+                {
+                    group:lang.aligntable,
+                    icon:'aligntable',
+                    subMenu:[
+                        {
+                            cmdName:'tablealignment',
+                            className: 'left',
+                            label:lang.tableleft,
+                            value:"left"
+                        },
+                        {
+                            cmdName:'tablealignment',
+                            className: 'center',
+                            label:lang.tablecenter,
+                            value:"center"
+                        },
+                        {
+                            cmdName:'tablealignment',
+                            className: 'right',
+                            label:lang.tableright,
+                            value:"right"
+                        }
+                    ]
+                },
+                '-',
+                {
+                    label:lang.insertparagraphbefore,
+                    cmdName:'insertparagraph',
+                    value:true
+                },
+                {
+                    label:lang.insertparagraphafter,
+                    cmdName:'insertparagraph'
+                },
+                {
+                    label:lang['copy'],
+                    cmdName:'copy'
+                },
+                {
+                    label:lang['paste'],
+                    cmdName:'paste'
+                }
+            ];
+    if ( !items.length ) {
+        return;
+    }
+    var uiUtils = UE.ui.uiUtils;
+
+    me.addListener( 'contextmenu', function ( type, evt ) {
+
+        var offset = uiUtils.getViewportOffsetByEvent( evt );
+        me.fireEvent( 'beforeselectionchange' );
+        if ( menu ) {
+            menu.destroy();
+        }
+        for ( var i = 0, ti, contextItems = []; ti = items[i]; i++ ) {
+            var last;
+            (function ( item ) {
+                if ( item == '-' ) {
+                    if ( (last = contextItems[contextItems.length - 1 ] ) && last !== '-' ) {
+                        contextItems.push( '-' );
+                    }
+                } else if ( item.hasOwnProperty( "group" ) ) {
+                    for ( var j = 0, cj, subMenu = []; cj = item.subMenu[j]; j++ ) {
+                        (function ( subItem ) {
+                            if ( subItem == '-' ) {
+                                if ( (last = subMenu[subMenu.length - 1 ] ) && last !== '-' ) {
+                                    subMenu.push( '-' );
+                                }else{
+                                    subMenu.splice(subMenu.length-1);
+                                }
+                            } else {
+                                if ( (me.commands[subItem.cmdName] || UE.commands[subItem.cmdName] || subItem.query) &&
+                                        (subItem.query ? subItem.query() : me.queryCommandState( subItem.cmdName )) > -1 ) {
+                                    subMenu.push( {
+                                        'label':subItem.label || me.getLang( "contextMenu." + subItem.cmdName + (subItem.value || '') )||"",
+                                        'className':'edui-for-' +subItem.cmdName + ( subItem.className ? ( ' edui-for-' + subItem.cmdName + '-' + subItem.className ) : '' ),
+                                        onclick:subItem.exec ? function () {
+                                                subItem.exec.call( me );
+                                        } : function () {
+                                            me.execCommand( subItem.cmdName, subItem.value );
+                                        }
+                                    } );
+                                }
+                            }
+                        })( cj );
+                    }
+                    if ( subMenu.length ) {
+                        function getLabel(){
+                            switch (item.icon){
+                                case "table":
+                                    return me.getLang( "contextMenu.table" );
+                                case "justifyjustify":
+                                    return me.getLang( "contextMenu.paragraph" );
+                                case "aligntd":
+                                    return me.getLang("contextMenu.aligntd");
+                                case "aligntable":
+                                    return me.getLang("contextMenu.aligntable");
+                                case "tablesort":
+                                    return lang.tablesort;
+                                case "borderBack":
+                                    return lang.borderbk;
+                                default :
+                                    return '';
+                            }
+                        }
+                        contextItems.push( {
+                            //todo 修正成自动获取方式
+                            'label':getLabel(),
+                            className:'edui-for-' + item.icon,
+                            'subMenu':{
+                                items:subMenu,
+                                editor:me
+                            }
+                        } );
+                    }
+
+                } else {
+                    //有可能commmand没有加载右键不能出来，或者没有command也想能展示出来添加query方法
+                    if ( (me.commands[item.cmdName] || UE.commands[item.cmdName] || item.query) &&
+                            (item.query ? item.query.call(me) : me.queryCommandState( item.cmdName )) > -1 ) {
+
+                        contextItems.push( {
+                            'label':item.label || me.getLang( "contextMenu." + item.cmdName ),
+                            className:'edui-for-' + (item.icon ? item.icon : item.cmdName + (item.value || '')),
+                            onclick:item.exec ? function () {
+                                item.exec.call( me );
+                            } : function () {
+                                me.execCommand( item.cmdName, item.value );
+                            }
+                        } );
+                    }
+
+                }
+
+            })( ti );
+        }
+        if ( contextItems[contextItems.length - 1] == '-' ) {
+            contextItems.pop();
+        }
+
+        menu = new UE.ui.Menu( {
+            items:contextItems,
+            className:"edui-contextmenu",
+            editor:me
+        } );
+        menu.render();
+        menu.showAt( offset );
+
+        me.fireEvent("aftershowcontextmenu",menu);
+
+        domUtils.preventDefault( evt );
+        if ( browser.ie ) {
+            var ieRange;
+            try {
+                ieRange = me.selection.getNative().createRange();
+            } catch ( e ) {
+                return;
+            }
+            if ( ieRange.item ) {
+                var range = new dom.Range( me.document );
+                range.selectNode( ieRange.item( 0 ) ).select( true, true );
+            }
+        }
+    });
+
+    // 添加复制的flash按钮
+    me.addListener('aftershowcontextmenu', function(type, menu) {
+        if (me.zeroclipboard) {
+            var items = menu.items;
+            for (var key in items) {
+                if (items[key].className == 'edui-for-copy') {
+                    me.zeroclipboard.clip(items[key].getDom());
+                }
+            }
+        }
+    });
+
+};

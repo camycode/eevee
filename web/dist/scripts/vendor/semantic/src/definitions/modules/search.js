@@ -9,4 +9,1337 @@
  *
  */
 
-!function(e,t,s,n){e.fn.search=function(r){var i,a=e(this),c=a.selector||"",o=(new Date).getTime(),u=[],l=arguments[0],d="string"==typeof l,g=[].slice.call(arguments,1);return e(this).each(function(){var f,p=e.isPlainObject(r)?e.extend(!0,{},e.fn.search.settings,r):e.extend({},e.fn.search.settings),v=p.className,h=p.metadata,m=p.regExp,b=p.fields,y=p.selector,R=p.error,C=p.namespace,w="."+C,x=C+"-module",j=e(this),k=j.find(y.prompt),q=j.find(y.searchButton),E=j.find(y.results),A=(j.find(y.result),j.find(y.category),this),T=j.data(x);f={initialize:function(){f.verbose("Initializing module"),f.determine.searchFields(),f.bind.events(),f.set.type(),f.create.results(),f.instantiate()},instantiate:function(){f.verbose("Storing instance of module",f),T=f,j.data(x,f)},destroy:function(){f.verbose("Destroying instance"),j.off(w).removeData(x)},bind:{events:function(){f.verbose("Binding events to search"),p.automatic&&(j.on(f.get.inputEvent()+w,y.prompt,f.event.input),k.attr("autocomplete","off")),j.on("focus"+w,y.prompt,f.event.focus).on("blur"+w,y.prompt,f.event.blur).on("keydown"+w,y.prompt,f.handleKeyboard).on("click"+w,y.searchButton,f.query).on("mousedown"+w,y.results,f.event.result.mousedown).on("mouseup"+w,y.results,f.event.result.mouseup).on("click"+w,y.result,f.event.result.click)}},determine:{searchFields:function(){r&&r.searchFields!==n&&(p.searchFields=r.searchFields)}},event:{input:function(){clearTimeout(f.timer),f.timer=setTimeout(f.query,p.searchDelay)},focus:function(){f.set.focus(),f.has.minimumCharacters()&&(f.query(),f.can.show()&&f.showResults())},blur:function(e){var t=s.activeElement===this,n=function(){f.cancel.query(),f.remove.focus(),f.timer=setTimeout(f.hideResults,p.hideDelay)};t||(f.resultsClicked?(f.debug("Determining if user action caused search to close"),j.one("click",y.results,function(e){f.is.animating()||f.is.hidden()||n()})):(f.debug("Input blurred without user action, closing results"),n()))},result:{mousedown:function(){f.resultsClicked=!0},mouseup:function(){f.resultsClicked=!1},click:function(s){f.debug("Search result selected");var n=e(this),r=n.find(y.title).eq(0),i=n.find("a[href]").eq(0),a=i.attr("href")||!1,c=i.attr("target")||!1,o=(r.html(),r.length>0?r.text():!1),u=f.get.results(),l=n.data(h.result)||f.get.result(o,u);return e.isFunction(p.onSelect)&&p.onSelect.call(A,l,u)===!1?void f.debug("Custom onSelect callback cancelled default select action"):(f.hideResults(),o&&f.set.value(o),void(a&&(f.verbose("Opening search link found in result",i),"_blank"==c||s.ctrlKey?t.open(a):t.location.href=a)))}}},handleKeyboard:function(e){var t,s=j.find(y.result),n=j.find(y.category),r=s.index(s.filter("."+v.active)),i=s.length,a=e.which,c={backspace:8,enter:13,escape:27,upArrow:38,downArrow:40};if(a==c.escape&&(f.verbose("Escape key pressed, blurring search field"),f.trigger.blur()),f.is.visible())if(a==c.enter){if(f.verbose("Enter key pressed, selecting active result"),s.filter("."+v.active).length>0)return f.event.result.click.call(s.filter("."+v.active),e),e.preventDefault(),!1}else a==c.upArrow?(f.verbose("Up key pressed, changing active result"),t=0>r-1?r:r-1,n.removeClass(v.active),s.removeClass(v.active).eq(t).addClass(v.active).closest(n).addClass(v.active),e.preventDefault()):a==c.downArrow&&(f.verbose("Down key pressed, changing active result"),t=r+1>=i?r:r+1,n.removeClass(v.active),s.removeClass(v.active).eq(t).addClass(v.active).closest(n).addClass(v.active),e.preventDefault());else a==c.enter&&(f.verbose("Enter key pressed, executing query"),f.query(),f.set.buttonPressed(),k.one("keyup",f.remove.buttonFocus))},setup:{api:function(){var e={debug:p.debug,on:!1,cache:"local",action:"search",onError:f.error};f.verbose("First request, initializing API"),j.api(e)}},can:{useAPI:function(){return e.fn.api!==n},show:function(){return f.is.focused()&&!f.is.visible()&&!f.is.empty()},transition:function(){return p.transition&&e.fn.transition!==n&&j.transition("is supported")}},is:{animating:function(){return E.hasClass(v.animating)},hidden:function(){return E.hasClass(v.hidden)},empty:function(){return""===E.html()},visible:function(){return E.filter(":visible").length>0},focused:function(){return k.filter(":focus").length>0}},trigger:{blur:function(){var e=s.createEvent("HTMLEvents"),t=k[0];t&&(f.verbose("Triggering native blur event"),e.initEvent("blur",!1,!1),t.dispatchEvent(e))}},get:{inputEvent:function(){var e=k[0],t=e!==n&&e.oninput!==n?"input":e!==n&&e.onpropertychange!==n?"propertychange":"keyup";return t},value:function(){return k.val()},results:function(){var e=j.data(h.results);return e},result:function(t,s){var r=["title","id"],i=!1;return t=t!==n?t:f.get.value(),s=s!==n?s:f.get.results(),"category"===p.type?(f.debug("Finding result that matches",t),e.each(s,function(s,n){return e.isArray(n.results)&&(i=f.search.object(t,n.results,r)[0])?!1:void 0})):(f.debug("Finding result in results object",t),i=f.search.object(t,s,r)[0]),i||!1}},set:{focus:function(){j.addClass(v.focus)},loading:function(){j.addClass(v.loading)},value:function(e){f.verbose("Setting search input value",e),k.val(e)},type:function(e){e=e||p.type,"category"==p.type&&j.addClass(p.type)},buttonPressed:function(){q.addClass(v.pressed)}},remove:{loading:function(){j.removeClass(v.loading)},focus:function(){j.removeClass(v.focus)},buttonPressed:function(){q.removeClass(v.pressed)}},query:function(){var t=f.get.value(),s=f.read.cache(t);f.has.minimumCharacters()?(s?(f.debug("Reading result from cache",t),f.save.results(s.results),f.addResults(s.html),f.inject.id(s.results)):(f.debug("Querying for",t),e.isPlainObject(p.source)||e.isArray(p.source)?f.search.local(t):f.can.useAPI()?f.search.remote(t):f.error(R.source)),p.onSearchQuery.call(A,t)):f.hideResults()},search:{local:function(e){var t,s=f.search.object(e,p.content);f.set.loading(),f.save.results(s),f.debug("Returned local search results",s),t=f.generateResults({results:s}),f.remove.loading(),f.addResults(t),f.inject.id(s),f.write.cache(e,{html:t,results:s})},remote:function(t){var s={onSuccess:function(e){f.parse.response.call(A,e,t)},onFailure:function(){f.displayMessage(R.serverError)},urlData:{query:t}};j.api("get request")||f.setup.api(),e.extend(!0,s,p.apiSettings),f.debug("Executing search",s),f.cancel.query(),j.api("setting",s).api("query")},object:function(t,s,r){var i=[],a=[],c=t.toString().replace(m.escape,"\\$&"),o=new RegExp(m.beginsWith+c,"i"),u=function(t,s){var n=-1==e.inArray(s,i),r=-1==e.inArray(s,a);n&&r&&t.push(s)};return s=s||p.source,r=r!==n?r:p.searchFields,e.isArray(r)||(r=[r]),s===n||s===!1?(f.error(R.source),[]):(e.each(r,function(n,r){e.each(s,function(e,s){var n="string"==typeof s[r];n&&(-1!==s[r].search(o)?u(i,s):p.searchFullText&&f.fuzzySearch(t,s[r])&&u(a,s))})}),e.merge(i,a))}},fuzzySearch:function(e,t){var s=t.length,n=e.length;if("string"!=typeof e)return!1;if(e=e.toLowerCase(),t=t.toLowerCase(),n>s)return!1;if(n===s)return e===t;e:for(var r=0,i=0;n>r;r++){for(var a=e.charCodeAt(r);s>i;)if(t.charCodeAt(i++)===a)continue e;return!1}return!0},parse:{response:function(e,t){var s=f.generateResults(e);f.verbose("Parsing server response",e),e!==n&&t!==n&&e[b.results]!==n&&(f.addResults(s),f.inject.id(e[b.results]),f.write.cache(t,{html:s,results:e[b.results]}),f.save.results(e[b.results]))}},cancel:{query:function(){f.can.useAPI()&&j.api("abort")}},has:{minimumCharacters:function(){var e=f.get.value(),t=e.length;return t>=p.minCharacters}},clear:{cache:function(e){var t=j.data(h.cache);e?e&&t&&t[e]&&(f.debug("Removing value from cache",e),delete t[e],j.data(h.cache,t)):(f.debug("Clearing cache",e),j.removeData(h.cache))}},read:{cache:function(e){var t=j.data(h.cache);return p.cache?(f.verbose("Checking cache for generated html for query",e),"object"==typeof t&&t[e]!==n?t[e]:!1):!1}},create:{id:function(e,t){var s,r,i=e+1;return t!==n?(s=String.fromCharCode(97+t),r=s+i,f.verbose("Creating category result id",r)):(r=i,f.verbose("Creating result id",r)),r},results:function(){0===E.length&&(E=e("<div />").addClass(v.results).appendTo(j))}},inject:{result:function(e,t,s){f.verbose("Injecting result into results");var r=s!==n?E.children().eq(s).children(y.result).eq(t):E.children(y.result).eq(t);f.verbose("Injecting results metadata",r),r.data(h.result,e)},id:function(t){f.debug("Injecting unique ids into results");var s=0,r=0;return"category"===p.type?e.each(t,function(t,i){r=0,e.each(i.results,function(e,t){var a=i.results[e];a.id===n&&(a.id=f.create.id(r,s)),f.inject.result(a,r,s),r++}),s++}):e.each(t,function(e,s){var i=t[e];i.id===n&&(i.id=f.create.id(r)),f.inject.result(i,r),r++}),t}},save:{results:function(e){f.verbose("Saving current search results to metadata",e),j.data(h.results,e)}},write:{cache:function(e,t){var s=j.data(h.cache)!==n?j.data(h.cache):{};p.cache&&(f.verbose("Writing generated html to cache",e,t),s[e]=t,j.data(h.cache,s))}},addResults:function(t){return e.isFunction(p.onResultsAdd)&&p.onResultsAdd.call(E,t)===!1?(f.debug("onResultsAdd callback cancelled default action"),!1):(E.html(t),void(f.can.show()&&f.showResults()))},showResults:function(){f.is.visible()||(f.can.transition()?(f.debug("Showing results with css animations"),E.transition({animation:p.transition+" in",debug:p.debug,verbose:p.verbose,duration:p.duration,queue:!0})):(f.debug("Showing results with javascript"),E.stop().fadeIn(p.duration,p.easing)),p.onResultsOpen.call(E))},hideResults:function(){f.is.visible()&&(f.can.transition()?(f.debug("Hiding results with css animations"),E.transition({animation:p.transition+" out",debug:p.debug,verbose:p.verbose,duration:p.duration,queue:!0})):(f.debug("Hiding results with javascript"),E.stop().fadeOut(p.duration,p.easing)),p.onResultsClose.call(E))},generateResults:function(t){f.debug("Generating html from response",t);var s=p.templates[p.type],n=e.isPlainObject(t[b.results])&&!e.isEmptyObject(t[b.results]),r=e.isArray(t[b.results])&&t[b.results].length>0,i="";return n||r?(p.maxResults>0&&(n?"standard"==p.type&&f.error(R.maxResults):t[b.results]=t[b.results].slice(0,p.maxResults)),e.isFunction(s)?i=s(t,b):f.error(R.noTemplate,!1)):i=f.displayMessage(R.noResults,"empty"),p.onResults.call(A,t),i},displayMessage:function(e,t){return t=t||"standard",f.debug("Displaying message",e,t),f.addResults(p.templates.message(e,t)),p.templates.message(e,t)},setting:function(t,s){if(e.isPlainObject(t))e.extend(!0,p,t);else{if(s===n)return p[t];p[t]=s}},internal:function(t,s){if(e.isPlainObject(t))e.extend(!0,f,t);else{if(s===n)return f[t];f[t]=s}},debug:function(){p.debug&&(p.performance?f.performance.log(arguments):(f.debug=Function.prototype.bind.call(console.info,console,p.name+":"),f.debug.apply(console,arguments)))},verbose:function(){p.verbose&&p.debug&&(p.performance?f.performance.log(arguments):(f.verbose=Function.prototype.bind.call(console.info,console,p.name+":"),f.verbose.apply(console,arguments)))},error:function(){f.error=Function.prototype.bind.call(console.error,console,p.name+":"),f.error.apply(console,arguments)},performance:{log:function(e){var t,s,n;p.performance&&(t=(new Date).getTime(),n=o||t,s=t-n,o=t,u.push({Name:e[0],Arguments:[].slice.call(e,1)||"",Element:A,"Execution Time":s})),clearTimeout(f.performance.timer),f.performance.timer=setTimeout(f.performance.display,500)},display:function(){var t=p.name+":",s=0;o=!1,clearTimeout(f.performance.timer),e.each(u,function(e,t){s+=t["Execution Time"]}),t+=" "+s+"ms",c&&(t+=" '"+c+"'"),a.length>1&&(t+=" ("+a.length+")"),(console.group!==n||console.table!==n)&&u.length>0&&(console.groupCollapsed(t),console.table?console.table(u):e.each(u,function(e,t){console.log(t.Name+": "+t["Execution Time"]+"ms")}),console.groupEnd()),u=[]}},invoke:function(t,s,r){var a,c,o,u=T;return s=s||g,r=A||r,"string"==typeof t&&u!==n&&(t=t.split(/[\. ]/),a=t.length-1,e.each(t,function(s,r){var i=s!=a?r+t[s+1].charAt(0).toUpperCase()+t[s+1].slice(1):t;if(e.isPlainObject(u[i])&&s!=a)u=u[i];else{if(u[i]!==n)return c=u[i],!1;if(!e.isPlainObject(u[r])||s==a)return u[r]!==n?(c=u[r],!1):!1;u=u[r]}})),e.isFunction(c)?o=c.apply(r,s):c!==n&&(o=c),e.isArray(i)?i.push(o):i!==n?i=[i,o]:o!==n&&(i=o),c}},d?(T===n&&f.initialize(),f.invoke(l)):(T!==n&&T.invoke("destroy"),f.initialize())}),i!==n?i:this},e.fn.search.settings={name:"Search",namespace:"search",debug:!1,verbose:!1,performance:!0,type:"standard",minCharacters:1,apiSettings:!1,source:!1,searchFields:["title","description"],displayField:"",searchFullText:!0,automatic:!0,hideDelay:0,searchDelay:200,maxResults:7,cache:!0,transition:"scale",duration:200,easing:"easeOutExpo",onSelect:!1,onResultsAdd:!1,onSearchQuery:function(e){},onResults:function(e){},onResultsOpen:function(){},onResultsClose:function(){},className:{animating:"animating",active:"active",empty:"empty",focus:"focus",hidden:"hidden",loading:"loading",results:"results",pressed:"down"},error:{source:"Cannot search. No source used, and Semantic API module was not included",noResults:"Your search returned no results",logging:"Error in debug logging, exiting.",noEndpoint:"No search endpoint was specified",noTemplate:"A valid template name was not specified.",serverError:"There was an issue querying the server.",maxResults:"Results must be an array to use maxResults setting",method:"The method you called is not defined."},metadata:{cache:"cache",results:"results",result:"result"},regExp:{escape:/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,beginsWith:"(?:s|^)"},fields:{categories:"results",categoryName:"name",categoryResults:"results",description:"description",image:"image",price:"price",results:"results",title:"title",url:"url",action:"action",actionText:"text",actionURL:"url"},selector:{prompt:".prompt",searchButton:".search.button",results:".results",category:".category",result:".result",title:".title, .name"},templates:{escape:function(e){var t=/[&<>"'`]/g,s=/[&<>"'`]/,n={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","`":"&#x60;"},r=function(e){return n[e]};return s.test(e)?e.replace(t,r):e},message:function(e,t){var s="";return e!==n&&t!==n&&(s+='<div class="message '+t+'">',s+="empty"==t?'<div class="header">No Results</div class="header"><div class="description">'+e+'</div class="description">':' <div class="description">'+e+"</div>",s+="</div>"),s},category:function(t,s){var r="";e.fn.search.settings.templates.escape;return t[s.categoryResults]!==n?(e.each(t[s.categoryResults],function(t,i){i[s.results]!==n&&i.results.length>0&&(r+='<div class="category">',i[s.categoryName]!==n&&(r+='<div class="name">'+i[s.categoryName]+"</div>"),e.each(i.results,function(e,t){r+=t[s.url]?'<a class="result" href="'+t[s.url]+'">':'<a class="result">',t[s.image]!==n&&(r+='<div class="image"> <img src="'+t[s.image]+'"></div>'),r+='<div class="content">',t[s.price]!==n&&(r+='<div class="price">'+t[s.price]+"</div>"),t[s.title]!==n&&(r+='<div class="title">'+t[s.title]+"</div>"),t[s.description]!==n&&(r+='<div class="description">'+t[s.description]+"</div>"),r+="</div>",r+="</a>"}),r+="</div>")}),t[s.action]&&(r+='<a href="'+t[s.action][s.actionURL]+'" class="action">'+t[s.action][s.actionText]+"</a>"),r):!1},standard:function(t,s){var r="";return t[s.results]!==n?(e.each(t[s.results],function(e,t){r+=t[s.url]?'<a class="result" href="'+t[s.url]+'">':'<a class="result">',t[s.image]!==n&&(r+='<div class="image"> <img src="'+t[s.image]+'"></div>'),r+='<div class="content">',t[s.price]!==n&&(r+='<div class="price">'+t[s.price]+"</div>"),t[s.title]!==n&&(r+='<div class="title">'+t[s.title]+"</div>"),t[s.description]!==n&&(r+='<div class="description">'+t[s.description]+"</div>"),r+="</div>",r+="</a>"}),t[s.action]&&(r+='<a href="'+t[s.action][s.actionURL]+'" class="action">'+t[s.action][s.actionText]+"</a>"),r):!1}}}}(jQuery,window,document);
+;(function ($, window, document, undefined) {
+
+"use strict";
+
+$.fn.search = function(parameters) {
+  var
+    $allModules     = $(this),
+    moduleSelector  = $allModules.selector || '',
+
+    time            = new Date().getTime(),
+    performance     = [],
+
+    query           = arguments[0],
+    methodInvoked   = (typeof query == 'string'),
+    queryArguments  = [].slice.call(arguments, 1),
+    returnedValue
+  ;
+  $(this)
+    .each(function() {
+      var
+        settings          = ( $.isPlainObject(parameters) )
+          ? $.extend(true, {}, $.fn.search.settings, parameters)
+          : $.extend({}, $.fn.search.settings),
+
+        className       = settings.className,
+        metadata        = settings.metadata,
+        regExp          = settings.regExp,
+        fields          = settings.fields,
+        selector        = settings.selector,
+        error           = settings.error,
+        namespace       = settings.namespace,
+
+        eventNamespace  = '.' + namespace,
+        moduleNamespace = namespace + '-module',
+
+        $module         = $(this),
+        $prompt         = $module.find(selector.prompt),
+        $searchButton   = $module.find(selector.searchButton),
+        $results        = $module.find(selector.results),
+        $result         = $module.find(selector.result),
+        $category       = $module.find(selector.category),
+
+        element         = this,
+        instance        = $module.data(moduleNamespace),
+
+        module
+      ;
+
+      module = {
+
+        initialize: function() {
+          module.verbose('Initializing module');
+          module.determine.searchFields();
+          module.bind.events();
+          module.set.type();
+          module.create.results();
+          module.instantiate();
+        },
+        instantiate: function() {
+          module.verbose('Storing instance of module', module);
+          instance = module;
+          $module
+            .data(moduleNamespace, module)
+          ;
+        },
+        destroy: function() {
+          module.verbose('Destroying instance');
+          $module
+            .off(eventNamespace)
+            .removeData(moduleNamespace)
+          ;
+        },
+
+        bind: {
+          events: function() {
+            module.verbose('Binding events to search');
+            if(settings.automatic) {
+              $module
+                .on(module.get.inputEvent() + eventNamespace, selector.prompt, module.event.input)
+              ;
+              $prompt
+                .attr('autocomplete', 'off')
+              ;
+            }
+            $module
+              // prompt
+              .on('focus'     + eventNamespace, selector.prompt, module.event.focus)
+              .on('blur'      + eventNamespace, selector.prompt, module.event.blur)
+              .on('keydown'   + eventNamespace, selector.prompt, module.handleKeyboard)
+              // search button
+              .on('click'     + eventNamespace, selector.searchButton, module.query)
+              // results
+              .on('mousedown' + eventNamespace, selector.results, module.event.result.mousedown)
+              .on('mouseup'   + eventNamespace, selector.results, module.event.result.mouseup)
+              .on('click'     + eventNamespace, selector.result,  module.event.result.click)
+            ;
+          }
+        },
+
+        determine: {
+          searchFields: function() {
+            // this makes sure $.extend does not add specified search fields to default fields
+            // this is the only setting which should not extend defaults
+            if(parameters && parameters.searchFields !== undefined) {
+              settings.searchFields = parameters.searchFields;
+            }
+          }
+        },
+
+        event: {
+          input: function() {
+            clearTimeout(module.timer);
+            module.timer = setTimeout(module.query, settings.searchDelay);
+          },
+          focus: function() {
+            module.set.focus();
+            if( module.has.minimumCharacters() ) {
+              module.query();
+              if( module.can.show() ) {
+                module.showResults();
+              }
+            }
+          },
+          blur: function(event) {
+            var
+              pageLostFocus = (document.activeElement === this),
+              callback      = function() {
+                module.cancel.query();
+                module.remove.focus();
+                module.timer = setTimeout(module.hideResults, settings.hideDelay);
+              }
+            ;
+            if(pageLostFocus) {
+              return;
+            }
+            if(module.resultsClicked) {
+              module.debug('Determining if user action caused search to close');
+              $module
+                .one('click', selector.results, function(event) {
+                  if( !module.is.animating() && !module.is.hidden() ) {
+                    callback();
+                  }
+                })
+              ;
+            }
+            else {
+              module.debug('Input blurred without user action, closing results');
+              callback();
+            }
+          },
+          result: {
+            mousedown: function() {
+              module.resultsClicked = true;
+            },
+            mouseup: function() {
+              module.resultsClicked = false;
+            },
+            click: function(event) {
+              module.debug('Search result selected');
+              var
+                $result = $(this),
+                $title  = $result.find(selector.title).eq(0),
+                $link   = $result.find('a[href]').eq(0),
+                href    = $link.attr('href')   || false,
+                target  = $link.attr('target') || false,
+                title   = $title.html(),
+                // title is used for result lookup
+                value   = ($title.length > 0)
+                  ? $title.text()
+                  : false,
+                results = module.get.results(),
+                result  = $result.data(metadata.result) || module.get.result(value, results),
+                returnedValue
+              ;
+              if( $.isFunction(settings.onSelect) ) {
+                if(settings.onSelect.call(element, result, results) === false) {
+                  module.debug('Custom onSelect callback cancelled default select action');
+                  return;
+                }
+              }
+              module.hideResults();
+              if(value) {
+                module.set.value(value);
+              }
+              if(href) {
+                module.verbose('Opening search link found in result', $link);
+                if(target == '_blank' || event.ctrlKey) {
+                  window.open(href);
+                }
+                else {
+                  window.location.href = (href);
+                }
+              }
+            }
+          }
+        },
+        handleKeyboard: function(event) {
+          var
+            // force selector refresh
+            $result      = $module.find(selector.result),
+            $category    = $module.find(selector.category),
+            currentIndex = $result.index( $result.filter('.' + className.active) ),
+            resultSize   = $result.length,
+
+            keyCode      = event.which,
+            keys         = {
+              backspace : 8,
+              enter     : 13,
+              escape    : 27,
+              upArrow   : 38,
+              downArrow : 40
+            },
+            newIndex
+          ;
+          // search shortcuts
+          if(keyCode == keys.escape) {
+            module.verbose('Escape key pressed, blurring search field');
+            module.trigger.blur();
+          }
+          if( module.is.visible() ) {
+            if(keyCode == keys.enter) {
+              module.verbose('Enter key pressed, selecting active result');
+              if( $result.filter('.' + className.active).length > 0 ) {
+                module.event.result.click.call($result.filter('.' + className.active), event);
+                event.preventDefault();
+                return false;
+              }
+            }
+            else if(keyCode == keys.upArrow) {
+              module.verbose('Up key pressed, changing active result');
+              newIndex = (currentIndex - 1 < 0)
+                ? currentIndex
+                : currentIndex - 1
+              ;
+              $category
+                .removeClass(className.active)
+              ;
+              $result
+                .removeClass(className.active)
+                .eq(newIndex)
+                  .addClass(className.active)
+                  .closest($category)
+                    .addClass(className.active)
+              ;
+              event.preventDefault();
+            }
+            else if(keyCode == keys.downArrow) {
+              module.verbose('Down key pressed, changing active result');
+              newIndex = (currentIndex + 1 >= resultSize)
+                ? currentIndex
+                : currentIndex + 1
+              ;
+              $category
+                .removeClass(className.active)
+              ;
+              $result
+                .removeClass(className.active)
+                .eq(newIndex)
+                  .addClass(className.active)
+                  .closest($category)
+                    .addClass(className.active)
+              ;
+              event.preventDefault();
+            }
+          }
+          else {
+            // query shortcuts
+            if(keyCode == keys.enter) {
+              module.verbose('Enter key pressed, executing query');
+              module.query();
+              module.set.buttonPressed();
+              $prompt.one('keyup', module.remove.buttonFocus);
+            }
+          }
+        },
+
+        setup: {
+          api: function() {
+            var
+              apiSettings = {
+                debug     : settings.debug,
+                on        : false,
+                cache     : 'local',
+                action    : 'search',
+                onError   : module.error
+              },
+              searchHTML
+            ;
+            module.verbose('First request, initializing API');
+            $module.api(apiSettings);
+          }
+        },
+
+        can: {
+          useAPI: function() {
+            return $.fn.api !== undefined;
+          },
+          show: function() {
+            return module.is.focused() && !module.is.visible() && !module.is.empty();
+          },
+          transition: function() {
+            return settings.transition && $.fn.transition !== undefined && $module.transition('is supported');
+          }
+        },
+
+        is: {
+          animating: function() {
+            return $results.hasClass(className.animating);
+          },
+          hidden: function() {
+            return $results.hasClass(className.hidden);
+          },
+          empty: function() {
+            return ($results.html() === '');
+          },
+          visible: function() {
+            return ($results.filter(':visible').length > 0);
+          },
+          focused: function() {
+            return ($prompt.filter(':focus').length > 0);
+          }
+        },
+
+        trigger: {
+          blur: function() {
+            var
+              events        = document.createEvent('HTMLEvents'),
+              promptElement = $prompt[0]
+            ;
+            if(promptElement) {
+              module.verbose('Triggering native blur event');
+              events.initEvent('blur', false, false);
+              promptElement.dispatchEvent(events);
+            }
+          }
+        },
+
+        get: {
+          inputEvent: function() {
+            var
+              prompt = $prompt[0],
+              inputEvent   = (prompt !== undefined && prompt.oninput !== undefined)
+                ? 'input'
+                : (prompt !== undefined && prompt.onpropertychange !== undefined)
+                  ? 'propertychange'
+                  : 'keyup'
+            ;
+            return inputEvent;
+          },
+          value: function() {
+            return $prompt.val();
+          },
+          results: function() {
+            var
+              results = $module.data(metadata.results)
+            ;
+            return results;
+          },
+          result: function(value, results) {
+            var
+              lookupFields = ['title', 'id'],
+              result       = false
+            ;
+            value = (value !== undefined)
+              ? value
+              : module.get.value()
+            ;
+            results = (results !== undefined)
+              ? results
+              : module.get.results()
+            ;
+            if(settings.type === 'category') {
+              module.debug('Finding result that matches', value);
+              $.each(results, function(index, category) {
+                if($.isArray(category.results)) {
+                  result = module.search.object(value, category.results, lookupFields)[0];
+                  // don't continue searching if a result is found
+                  if(result) {
+                    return false;
+                  }
+                }
+              });
+            }
+            else {
+              module.debug('Finding result in results object', value);
+              result = module.search.object(value, results, lookupFields)[0];
+            }
+            return result || false;
+          },
+        },
+
+        set: {
+          focus: function() {
+            $module.addClass(className.focus);
+          },
+          loading: function() {
+            $module.addClass(className.loading);
+          },
+          value: function(value) {
+            module.verbose('Setting search input value', value);
+            $prompt
+              .val(value)
+            ;
+          },
+          type: function(type) {
+            type = type || settings.type;
+            if(settings.type == 'category') {
+              $module.addClass(settings.type);
+            }
+          },
+          buttonPressed: function() {
+            $searchButton.addClass(className.pressed);
+          }
+        },
+
+        remove: {
+          loading: function() {
+            $module.removeClass(className.loading);
+          },
+          focus: function() {
+            $module.removeClass(className.focus);
+          },
+          buttonPressed: function() {
+            $searchButton.removeClass(className.pressed);
+          }
+        },
+
+        query: function() {
+          var
+            searchTerm = module.get.value(),
+            cache = module.read.cache(searchTerm)
+          ;
+          if( module.has.minimumCharacters() )  {
+            if(cache) {
+              module.debug('Reading result from cache', searchTerm);
+              module.save.results(cache.results);
+              module.addResults(cache.html);
+              module.inject.id(cache.results);
+            }
+            else {
+              module.debug('Querying for', searchTerm);
+              if($.isPlainObject(settings.source) || $.isArray(settings.source)) {
+                module.search.local(searchTerm);
+              }
+              else if( module.can.useAPI() ) {
+                module.search.remote(searchTerm);
+              }
+              else {
+                module.error(error.source);
+              }
+            }
+            settings.onSearchQuery.call(element, searchTerm);
+          }
+          else {
+            module.hideResults();
+          }
+        },
+
+        search: {
+          local: function(searchTerm) {
+            var
+              results = module.search.object(searchTerm, settings.content),
+              searchHTML
+            ;
+            module.set.loading();
+            module.save.results(results);
+            module.debug('Returned local search results', results);
+
+            searchHTML = module.generateResults({
+              results: results
+            });
+            module.remove.loading();
+            module.addResults(searchHTML);
+            module.inject.id(results);
+            module.write.cache(searchTerm, {
+              html    : searchHTML,
+              results : results
+            });
+          },
+          remote: function(searchTerm) {
+            var
+              apiSettings = {
+                onSuccess : function(response) {
+                  module.parse.response.call(element, response, searchTerm);
+                },
+                onFailure: function() {
+                  module.displayMessage(error.serverError);
+                },
+                urlData: {
+                  query: searchTerm
+                }
+              }
+            ;
+            if( !$module.api('get request') ) {
+              module.setup.api();
+            }
+            $.extend(true, apiSettings, settings.apiSettings);
+            module.debug('Executing search', apiSettings);
+            module.cancel.query();
+            $module
+              .api('setting', apiSettings)
+              .api('query')
+            ;
+          },
+          object: function(searchTerm, source, searchFields) {
+            var
+              results      = [],
+              fuzzyResults = [],
+              searchExp    = searchTerm.toString().replace(regExp.escape, '\\$&'),
+              matchRegExp  = new RegExp(regExp.beginsWith + searchExp, 'i'),
+
+              // avoid duplicates when pushing results
+              addResult = function(array, result) {
+                var
+                  notResult      = ($.inArray(result, results) == -1),
+                  notFuzzyResult = ($.inArray(result, fuzzyResults) == -1)
+                ;
+                if(notResult && notFuzzyResult) {
+                  array.push(result);
+                }
+              }
+            ;
+            source = source || settings.source;
+            searchFields = (searchFields !== undefined)
+              ? searchFields
+              : settings.searchFields
+            ;
+
+            // search fields should be array to loop correctly
+            if(!$.isArray(searchFields)) {
+              searchFields = [searchFields];
+            }
+
+            // exit conditions if no source
+            if(source === undefined || source === false) {
+              module.error(error.source);
+              return [];
+            }
+
+            // iterate through search fields looking for matches
+            $.each(searchFields, function(index, field) {
+              $.each(source, function(label, content) {
+                var
+                  fieldExists = (typeof content[field] == 'string')
+                ;
+                if(fieldExists) {
+                  if( content[field].search(matchRegExp) !== -1) {
+                    // content starts with value (first in results)
+                    addResult(results, content);
+                  }
+                  else if(settings.searchFullText && module.fuzzySearch(searchTerm, content[field]) ) {
+                    // content fuzzy matches (last in results)
+                    addResult(fuzzyResults, content);
+                  }
+                }
+              });
+            });
+            return $.merge(results, fuzzyResults);
+          }
+        },
+
+        fuzzySearch: function(query, term) {
+          var
+            termLength  = term.length,
+            queryLength = query.length
+          ;
+          if(typeof query !== 'string') {
+            return false;
+          }
+          query = query.toLowerCase();
+          term  = term.toLowerCase();
+          if(queryLength > termLength) {
+            return false;
+          }
+          if(queryLength === termLength) {
+            return (query === term);
+          }
+          search: for (var characterIndex = 0, nextCharacterIndex = 0; characterIndex < queryLength; characterIndex++) {
+            var
+              queryCharacter = query.charCodeAt(characterIndex)
+            ;
+            while(nextCharacterIndex < termLength) {
+              if(term.charCodeAt(nextCharacterIndex++) === queryCharacter) {
+                continue search;
+              }
+            }
+            return false;
+          }
+          return true;
+        },
+
+        parse: {
+          response: function(response, searchTerm) {
+            var
+              searchHTML = module.generateResults(response)
+            ;
+            module.verbose('Parsing server response', response);
+            if(response !== undefined) {
+              if(searchTerm !== undefined && response[fields.results] !== undefined) {
+                module.addResults(searchHTML);
+                module.inject.id(response[fields.results]);
+                module.write.cache(searchTerm, {
+                  html    : searchHTML,
+                  results : response[fields.results]
+                });
+                module.save.results(response[fields.results]);
+              }
+            }
+          }
+        },
+
+        cancel: {
+          query: function() {
+            if( module.can.useAPI() ) {
+              $module.api('abort');
+            }
+          }
+        },
+
+        has: {
+          minimumCharacters: function() {
+            var
+              searchTerm    = module.get.value(),
+              numCharacters = searchTerm.length
+            ;
+            return (numCharacters >= settings.minCharacters);
+          }
+        },
+
+        clear: {
+          cache: function(value) {
+            var
+              cache = $module.data(metadata.cache)
+            ;
+            if(!value) {
+              module.debug('Clearing cache', value);
+              $module.removeData(metadata.cache);
+            }
+            else if(value && cache && cache[value]) {
+              module.debug('Removing value from cache', value);
+              delete cache[value];
+              $module.data(metadata.cache, cache);
+            }
+          }
+        },
+
+        read: {
+          cache: function(name) {
+            var
+              cache = $module.data(metadata.cache)
+            ;
+            if(settings.cache) {
+              module.verbose('Checking cache for generated html for query', name);
+              return (typeof cache == 'object') && (cache[name] !== undefined)
+                ? cache[name]
+                : false
+              ;
+            }
+            return false;
+          }
+        },
+
+        create: {
+          id: function(resultIndex, categoryIndex) {
+            var
+              resultID      = (resultIndex + 1), // not zero indexed
+              categoryID    = (categoryIndex + 1),
+              firstCharCode,
+              letterID,
+              id
+            ;
+            if(categoryIndex !== undefined) {
+              // start char code for "A"
+              letterID = String.fromCharCode(97 + categoryIndex);
+              id          = letterID + resultID;
+              module.verbose('Creating category result id', id);
+            }
+            else {
+              id = resultID;
+              module.verbose('Creating result id', id);
+            }
+            return id;
+          },
+          results: function() {
+            if($results.length === 0) {
+              $results = $('<div />')
+                .addClass(className.results)
+                .appendTo($module)
+              ;
+            }
+          }
+        },
+
+        inject: {
+          result: function(result, resultIndex, categoryIndex) {
+            module.verbose('Injecting result into results');
+            var
+              $selectedResult = (categoryIndex !== undefined)
+                ? $results
+                    .children().eq(categoryIndex)
+                      .children(selector.result).eq(resultIndex)
+                : $results
+                    .children(selector.result).eq(resultIndex)
+            ;
+            module.verbose('Injecting results metadata', $selectedResult);
+            $selectedResult
+              .data(metadata.result, result)
+            ;
+          },
+          id: function(results) {
+            module.debug('Injecting unique ids into results');
+            var
+              // since results may be object, we must use counters
+              categoryIndex = 0,
+              resultIndex   = 0
+            ;
+            if(settings.type === 'category') {
+              // iterate through each category result
+              $.each(results, function(index, category) {
+                resultIndex = 0;
+                $.each(category.results, function(index, value) {
+                  var
+                    result = category.results[index]
+                  ;
+                  if(result.id === undefined) {
+                    result.id = module.create.id(resultIndex, categoryIndex);
+                  }
+                  module.inject.result(result, resultIndex, categoryIndex);
+                  resultIndex++;
+                });
+                categoryIndex++;
+              });
+            }
+            else {
+              // top level
+              $.each(results, function(index, value) {
+                var
+                  result = results[index]
+                ;
+                if(result.id === undefined) {
+                  result.id = module.create.id(resultIndex);
+                }
+                module.inject.result(result, resultIndex);
+                resultIndex++;
+              });
+            }
+            return results;
+          }
+        },
+
+        save: {
+          results: function(results) {
+            module.verbose('Saving current search results to metadata', results);
+            $module.data(metadata.results, results);
+          }
+        },
+
+        write: {
+          cache: function(name, value) {
+            var
+              cache = ($module.data(metadata.cache) !== undefined)
+                ? $module.data(metadata.cache)
+                : {}
+            ;
+            if(settings.cache) {
+              module.verbose('Writing generated html to cache', name, value);
+              cache[name] = value;
+              $module
+                .data(metadata.cache, cache)
+              ;
+            }
+          }
+        },
+
+        addResults: function(html) {
+          if( $.isFunction(settings.onResultsAdd) ) {
+            if( settings.onResultsAdd.call($results, html) === false ) {
+              module.debug('onResultsAdd callback cancelled default action');
+              return false;
+            }
+          }
+          $results
+            .html(html)
+          ;
+          if( module.can.show() ) {
+            module.showResults();
+          }
+        },
+
+        showResults: function() {
+          if(!module.is.visible()) {
+            if( module.can.transition() ) {
+              module.debug('Showing results with css animations');
+              $results
+                .transition({
+                  animation  : settings.transition + ' in',
+                  debug      : settings.debug,
+                  verbose    : settings.verbose,
+                  duration   : settings.duration,
+                  queue      : true
+                })
+              ;
+            }
+            else {
+              module.debug('Showing results with javascript');
+              $results
+                .stop()
+                .fadeIn(settings.duration, settings.easing)
+              ;
+            }
+            settings.onResultsOpen.call($results);
+          }
+        },
+        hideResults: function() {
+          if( module.is.visible() ) {
+            if( module.can.transition() ) {
+              module.debug('Hiding results with css animations');
+              $results
+                .transition({
+                  animation  : settings.transition + ' out',
+                  debug      : settings.debug,
+                  verbose    : settings.verbose,
+                  duration   : settings.duration,
+                  queue      : true
+                })
+              ;
+            }
+            else {
+              module.debug('Hiding results with javascript');
+              $results
+                .stop()
+                .fadeOut(settings.duration, settings.easing)
+              ;
+            }
+            settings.onResultsClose.call($results);
+          }
+        },
+
+        generateResults: function(response) {
+          module.debug('Generating html from response', response);
+          var
+            template       = settings.templates[settings.type],
+            isProperObject = ($.isPlainObject(response[fields.results]) && !$.isEmptyObject(response[fields.results])),
+            isProperArray  = ($.isArray(response[fields.results]) && response[fields.results].length > 0),
+            html           = ''
+          ;
+          if(isProperObject || isProperArray ) {
+            if(settings.maxResults > 0) {
+              if(isProperObject) {
+                if(settings.type == 'standard') {
+                  module.error(error.maxResults);
+                }
+              }
+              else {
+                response[fields.results] = response[fields.results].slice(0, settings.maxResults);
+              }
+            }
+            if($.isFunction(template)) {
+              html = template(response, fields);
+            }
+            else {
+              module.error(error.noTemplate, false);
+            }
+          }
+          else {
+            html = module.displayMessage(error.noResults, 'empty');
+          }
+          settings.onResults.call(element, response);
+          return html;
+        },
+
+        displayMessage: function(text, type) {
+          type = type || 'standard';
+          module.debug('Displaying message', text, type);
+          module.addResults( settings.templates.message(text, type) );
+          return settings.templates.message(text, type);
+        },
+
+        setting: function(name, value) {
+          if( $.isPlainObject(name) ) {
+            $.extend(true, settings, name);
+          }
+          else if(value !== undefined) {
+            settings[name] = value;
+          }
+          else {
+            return settings[name];
+          }
+        },
+        internal: function(name, value) {
+          if( $.isPlainObject(name) ) {
+            $.extend(true, module, name);
+          }
+          else if(value !== undefined) {
+            module[name] = value;
+          }
+          else {
+            return module[name];
+          }
+        },
+        debug: function() {
+          if(settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.debug.apply(console, arguments);
+            }
+          }
+        },
+        verbose: function() {
+          if(settings.verbose && settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.verbose.apply(console, arguments);
+            }
+          }
+        },
+        error: function() {
+          module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+          module.error.apply(console, arguments);
+        },
+        performance: {
+          log: function(message) {
+            var
+              currentTime,
+              executionTime,
+              previousTime
+            ;
+            if(settings.performance) {
+              currentTime   = new Date().getTime();
+              previousTime  = time || currentTime;
+              executionTime = currentTime - previousTime;
+              time          = currentTime;
+              performance.push({
+                'Name'           : message[0],
+                'Arguments'      : [].slice.call(message, 1) || '',
+                'Element'        : element,
+                'Execution Time' : executionTime
+              });
+            }
+            clearTimeout(module.performance.timer);
+            module.performance.timer = setTimeout(module.performance.display, 500);
+          },
+          display: function() {
+            var
+              title = settings.name + ':',
+              totalTime = 0
+            ;
+            time = false;
+            clearTimeout(module.performance.timer);
+            $.each(performance, function(index, data) {
+              totalTime += data['Execution Time'];
+            });
+            title += ' ' + totalTime + 'ms';
+            if(moduleSelector) {
+              title += ' \'' + moduleSelector + '\'';
+            }
+            if($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
+            }
+            if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+              console.groupCollapsed(title);
+              if(console.table) {
+                console.table(performance);
+              }
+              else {
+                $.each(performance, function(index, data) {
+                  console.log(data['Name'] + ': ' + data['Execution Time']+'ms');
+                });
+              }
+              console.groupEnd();
+            }
+            performance = [];
+          }
+        },
+        invoke: function(query, passedArguments, context) {
+          var
+            object = instance,
+            maxDepth,
+            found,
+            response
+          ;
+          passedArguments = passedArguments || queryArguments;
+          context         = element         || context;
+          if(typeof query == 'string' && object !== undefined) {
+            query    = query.split(/[\. ]/);
+            maxDepth = query.length - 1;
+            $.each(query, function(depth, value) {
+              var camelCaseValue = (depth != maxDepth)
+                ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
+                : query
+              ;
+              if( $.isPlainObject( object[camelCaseValue] ) && (depth != maxDepth) ) {
+                object = object[camelCaseValue];
+              }
+              else if( object[camelCaseValue] !== undefined ) {
+                found = object[camelCaseValue];
+                return false;
+              }
+              else if( $.isPlainObject( object[value] ) && (depth != maxDepth) ) {
+                object = object[value];
+              }
+              else if( object[value] !== undefined ) {
+                found = object[value];
+                return false;
+              }
+              else {
+                return false;
+              }
+            });
+          }
+          if( $.isFunction( found ) ) {
+            response = found.apply(context, passedArguments);
+          }
+          else if(found !== undefined) {
+            response = found;
+          }
+          if($.isArray(returnedValue)) {
+            returnedValue.push(response);
+          }
+          else if(returnedValue !== undefined) {
+            returnedValue = [returnedValue, response];
+          }
+          else if(response !== undefined) {
+            returnedValue = response;
+          }
+          return found;
+        }
+      };
+      if(methodInvoked) {
+        if(instance === undefined) {
+          module.initialize();
+        }
+        module.invoke(query);
+      }
+      else {
+        if(instance !== undefined) {
+          instance.invoke('destroy');
+        }
+        module.initialize();
+      }
+
+    })
+  ;
+
+  return (returnedValue !== undefined)
+    ? returnedValue
+    : this
+  ;
+};
+
+$.fn.search.settings = {
+
+  name           : 'Search',
+  namespace      : 'search',
+
+  debug          : false,
+  verbose        : false,
+  performance    : true,
+
+  type           : 'standard',
+  // template to use (specified in settings.templates)
+
+  minCharacters  : 1,
+  // minimum characters required to search
+
+  apiSettings    : false,
+  // API config
+
+  source         : false,
+  // object to search
+
+  searchFields   : [
+    'title',
+    'description'
+  ],
+  // fields to search
+
+  displayField   : '',
+  // field to display in standard results template
+
+  searchFullText : true,
+  // whether to include fuzzy results in local search
+
+  automatic      : true,
+  // whether to add events to prompt automatically
+
+  hideDelay      : 0,
+  // delay before hiding menu after blur
+
+  searchDelay    : 200,
+  // delay before searching
+
+  maxResults     : 7,
+  // maximum results returned from local
+
+  cache          : true,
+  // whether to store lookups in local cache
+
+  // transition settings
+  transition     : 'scale',
+  duration       : 200,
+  easing         : 'easeOutExpo',
+
+  // callbacks
+  onSelect       : false,
+  onResultsAdd   : false,
+
+  onSearchQuery  : function(query){},
+  onResults      : function(response){},
+
+  onResultsOpen  : function(){},
+  onResultsClose : function(){},
+
+  className: {
+    animating : 'animating',
+    active    : 'active',
+    empty     : 'empty',
+    focus     : 'focus',
+    hidden    : 'hidden',
+    loading   : 'loading',
+    results   : 'results',
+    pressed   : 'down'
+  },
+
+  error : {
+    source      : 'Cannot search. No source used, and Semantic API module was not included',
+    noResults   : 'Your search returned no results',
+    logging     : 'Error in debug logging, exiting.',
+    noEndpoint  : 'No search endpoint was specified',
+    noTemplate  : 'A valid template name was not specified.',
+    serverError : 'There was an issue querying the server.',
+    maxResults  : 'Results must be an array to use maxResults setting',
+    method      : 'The method you called is not defined.'
+  },
+
+  metadata: {
+    cache   : 'cache',
+    results : 'results',
+    result  : 'result'
+  },
+
+  regExp: {
+    escape     : /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,
+    beginsWith : '(?:\s|^)'
+  },
+
+  // maps api response attributes to internal representation
+  fields: {
+    categories      : 'results',     // array of categories (category view)
+    categoryName    : 'name',        // name of category (category view)
+    categoryResults : 'results',     // array of results (category view)
+    description     : 'description', // result description
+    image           : 'image',       // result image
+    price           : 'price',       // result price
+    results         : 'results',     // array of results (standard)
+    title           : 'title',       // result title
+    url             : 'url',         // result url
+    action          : 'action',      // "view more" object name
+    actionText      : 'text',        // "view more" text
+    actionURL       : 'url'          // "view more" url
+  },
+
+  selector : {
+    prompt       : '.prompt',
+    searchButton : '.search.button',
+    results      : '.results',
+    category     : '.category',
+    result       : '.result',
+    title        : '.title, .name'
+  },
+
+  templates: {
+    escape: function(string) {
+      var
+        badChars     = /[&<>"'`]/g,
+        shouldEscape = /[&<>"'`]/,
+        escape       = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#x27;",
+          "`": "&#x60;"
+        },
+        escapedChar  = function(chr) {
+          return escape[chr];
+        }
+      ;
+      if(shouldEscape.test(string)) {
+        return string.replace(badChars, escapedChar);
+      }
+      return string;
+    },
+    message: function(message, type) {
+      var
+        html = ''
+      ;
+      if(message !== undefined && type !== undefined) {
+        html +=  ''
+          + '<div class="message ' + type + '">'
+        ;
+        // message type
+        if(type == 'empty') {
+          html += ''
+            + '<div class="header">No Results</div class="header">'
+            + '<div class="description">' + message + '</div class="description">'
+          ;
+        }
+        else {
+          html += ' <div class="description">' + message + '</div>';
+        }
+        html += '</div>';
+      }
+      return html;
+    },
+    category: function(response, fields) {
+      var
+        html = '',
+        escape = $.fn.search.settings.templates.escape
+      ;
+      if(response[fields.categoryResults] !== undefined) {
+
+        // each category
+        $.each(response[fields.categoryResults], function(index, category) {
+          if(category[fields.results] !== undefined && category.results.length > 0) {
+
+            html  += '<div class="category">';
+
+            if(category[fields.categoryName] !== undefined) {
+              html += '<div class="name">' + category[fields.categoryName] + '</div>';
+            }
+
+            // each item inside category
+            $.each(category.results, function(index, result) {
+              if(result[fields.url]) {
+                html  += '<a class="result" href="' + result[fields.url] + '">';
+              }
+              else {
+                html  += '<a class="result">';
+              }
+              if(result[fields.image] !== undefined) {
+                html += ''
+                  + '<div class="image">'
+                  + ' <img src="' + result[fields.image] + '">'
+                  + '</div>'
+                ;
+              }
+              html += '<div class="content">';
+              if(result[fields.price] !== undefined) {
+                html += '<div class="price">' + result[fields.price] + '</div>';
+              }
+              if(result[fields.title] !== undefined) {
+                html += '<div class="title">' + result[fields.title] + '</div>';
+              }
+              if(result[fields.description] !== undefined) {
+                html += '<div class="description">' + result[fields.description] + '</div>';
+              }
+              html  += ''
+                + '</div>'
+              ;
+              html += '</a>';
+            });
+            html  += ''
+              + '</div>'
+            ;
+          }
+        });
+        if(response[fields.action]) {
+          html += ''
+          + '<a href="' + response[fields.action][fields.actionURL] + '" class="action">'
+          +   response[fields.action][fields.actionText]
+          + '</a>';
+        }
+        return html;
+      }
+      return false;
+    },
+    standard: function(response, fields) {
+      var
+        html = ''
+      ;
+      if(response[fields.results] !== undefined) {
+
+        // each result
+        $.each(response[fields.results], function(index, result) {
+          if(result[fields.url]) {
+            html  += '<a class="result" href="' + result[fields.url] + '">';
+          }
+          else {
+            html  += '<a class="result">';
+          }
+          if(result[fields.image] !== undefined) {
+            html += ''
+              + '<div class="image">'
+              + ' <img src="' + result[fields.image] + '">'
+              + '</div>'
+            ;
+          }
+          html += '<div class="content">';
+          if(result[fields.price] !== undefined) {
+            html += '<div class="price">' + result[fields.price] + '</div>';
+          }
+          if(result[fields.title] !== undefined) {
+            html += '<div class="title">' + result[fields.title] + '</div>';
+          }
+          if(result[fields.description] !== undefined) {
+            html += '<div class="description">' + result[fields.description] + '</div>';
+          }
+          html  += ''
+            + '</div>'
+          ;
+          html += '</a>';
+        });
+
+        if(response[fields.action]) {
+          html += ''
+          + '<a href="' + response[fields.action][fields.actionURL] + '" class="action">'
+          +   response[fields.action][fields.actionText]
+          + '</a>';
+        }
+        return html;
+      }
+      return false;
+    }
+  }
+};
+
+})( jQuery, window, document );

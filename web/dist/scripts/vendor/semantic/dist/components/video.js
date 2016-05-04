@@ -9,4 +9,524 @@
  *
  */
 
-!function(e,o,t,n){e.fn.video=function(t){var a,i=e(this),r=i.selector||"",l=(new Date).getTime(),c=[],u=arguments[0],s="string"==typeof u,m=[].slice.call(arguments,1);o.requestAnimationFrame||o.mozRequestAnimationFrame||o.webkitRequestAnimationFrame||o.msRequestAnimationFrame||function(e){setTimeout(e,0)};return i.each(function(){var d,p=e.isPlainObject(t)?e.extend(!0,{},e.fn.video.settings,t):e.extend({},e.fn.video.settings),f=p.selector,g=p.className,h=p.error,v=p.metadata,b=p.namespace,y=p.templates,w="."+b,x="module-"+b,F=(e(o),e(this)),C=F.find(f.placeholder),E=F.find(f.playButton),T=F.find(f.embed),A=this,P=F.data(x);d={initialize:function(){d.debug("Initializing video"),d.create(),F.on("click"+w,f.placeholder,d.play).on("click"+w,f.playButton,d.play),d.instantiate()},instantiate:function(){d.verbose("Storing instance of module",d),P=d,F.data(x,d)},create:function(){var e=F.data(v.image),o=y.video(e);F.html(o),d.refresh(),e||d.play(),d.debug("Creating html for video element",o)},destroy:function(){d.verbose("Destroying previous instance of video"),d.reset(),F.removeData(x).off(w)},refresh:function(){d.verbose("Refreshing selector cache"),C=F.find(f.placeholder),E=F.find(f.playButton),T=F.find(f.embed)},change:function(e,o,t){d.debug("Changing video to ",e,o,t),F.data(v.source,e).data(v.id,o).data(v.url,t),p.onChange()},reset:function(){d.debug("Clearing video embed and showing placeholder"),F.removeClass(g.active),T.html(" "),C.show(),p.onReset()},play:function(){d.debug("Playing video");var e=F.data(v.source)||!1,o=F.data(v.url)||!1,t=F.data(v.id)||!1;T.html(d.generate.html(e,t,o)),F.addClass(g.active),p.onPlay()},get:{source:function(e){return"string"!=typeof e?!1:-1!==e.search("youtube.com")?"youtube":-1!==e.search("vimeo.com")?"vimeo":!1},id:function(e){return e.match(p.regExp.youtube)?e.match(p.regExp.youtube)[1]:e.match(p.regExp.vimeo)?e.match(p.regExp.vimeo)[2]:!1}},generate:{html:function(e,o,t){d.debug("Generating embed html");var n;return e=e||p.source,o=o||p.id,e&&o||t?(e&&o||(e=d.get.source(t),o=d.get.id(t)),"vimeo"==e?n='<iframe src="//player.vimeo.com/video/'+o+"?="+d.generate.url(e)+'" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>':"youtube"==e&&(n='<iframe src="//www.youtube.com/embed/'+o+"?="+d.generate.url(e)+'" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>')):d.error(h.noVideo),n},url:function(e){var o=p.api?1:0,t="auto"===p.autoplay?F.data("image")!==n:p.autoplay,a=p.hd?1:0,i=p.showUI?1:0,r=p.showUI?0:1,l="";return"vimeo"==e&&(l="api="+o+"&amp;title="+i+"&amp;byline="+i+"&amp;portrait="+i+"&amp;autoplay="+t,p.color&&(l+="&amp;color="+p.color)),"ustream"==e?(l="autoplay="+t,p.color&&(l+="&amp;color="+p.color)):"youtube"==e&&(l="enablejsapi="+o+"&amp;autoplay="+t+"&amp;autohide="+r+"&amp;hq="+a+"&amp;modestbranding=1",p.color&&(l+="&amp;color="+p.color)),l}},setting:function(o,t){if(d.debug("Changing setting",o,t),e.isPlainObject(o))e.extend(!0,p,o);else{if(t===n)return p[o];p[o]=t}},internal:function(o,t){if(e.isPlainObject(o))e.extend(!0,d,o);else{if(t===n)return d[o];d[o]=t}},debug:function(){p.debug&&(p.performance?d.performance.log(arguments):(d.debug=Function.prototype.bind.call(console.info,console,p.name+":"),d.debug.apply(console,arguments)))},verbose:function(){p.verbose&&p.debug&&(p.performance?d.performance.log(arguments):(d.verbose=Function.prototype.bind.call(console.info,console,p.name+":"),d.verbose.apply(console,arguments)))},error:function(){d.error=Function.prototype.bind.call(console.error,console,p.name+":"),d.error.apply(console,arguments)},performance:{log:function(e){var o,t,n;p.performance&&(o=(new Date).getTime(),n=l||o,t=o-n,l=o,c.push({Name:e[0],Arguments:[].slice.call(e,1)||"",Element:A,"Execution Time":t})),clearTimeout(d.performance.timer),d.performance.timer=setTimeout(d.performance.display,500)},display:function(){var o=p.name+":",t=0;l=!1,clearTimeout(d.performance.timer),e.each(c,function(e,o){t+=o["Execution Time"]}),o+=" "+t+"ms",r&&(o+=" '"+r+"'"),i.length>1&&(o+=" ("+i.length+")"),(console.group!==n||console.table!==n)&&c.length>0&&(console.groupCollapsed(o),console.table?console.table(c):e.each(c,function(e,o){console.log(o.Name+": "+o["Execution Time"]+"ms")}),console.groupEnd()),c=[]}},invoke:function(o,t,i){var r,l,c,u=P;return t=t||m,i=A||i,"string"==typeof o&&u!==n&&(o=o.split(/[\. ]/),r=o.length-1,e.each(o,function(t,a){var i=t!=r?a+o[t+1].charAt(0).toUpperCase()+o[t+1].slice(1):o;if(e.isPlainObject(u[i])&&t!=r)u=u[i];else{if(u[i]!==n)return l=u[i],!1;if(!e.isPlainObject(u[a])||t==r)return u[a]!==n?(l=u[a],!1):(d.error(h.method,o),!1);u=u[a]}})),e.isFunction(l)?c=l.apply(i,t):l!==n&&(c=l),e.isArray(a)?a.push(c):a!==n?a=[a,c]:c!==n&&(a=c),l}},s?(P===n&&d.initialize(),d.invoke(u)):(P!==n&&P.invoke("destroy"),d.initialize())}),a!==n?a:this},e.fn.video.settings={name:"Video",namespace:"video",debug:!1,verbose:!1,performance:!0,metadata:{id:"id",image:"image",source:"source",url:"url"},source:!1,url:!1,id:!1,aspectRatio:16/9,onPlay:function(){},onReset:function(){},onChange:function(){},onPause:function(){},onStop:function(){},width:"auto",height:"auto",autoplay:"auto",color:"#442359",hd:!0,showUI:!1,api:!0,regExp:{youtube:/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/,vimeo:/http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/},error:{noVideo:"No video specified",method:"The method you called is not defined"},className:{active:"active"},selector:{embed:".embed",placeholder:".placeholder",playButton:".play"}},e.fn.video.settings.templates={video:function(e){var o="";return e&&(o+='<i class="video play icon"></i><img class="placeholder" src="'+e+'">'),o+='<div class="embed"></div>'}}}(jQuery,window,document);
+;(function ($, window, document, undefined) {
+
+"use strict";
+
+$.fn.video = function(parameters) {
+
+  var
+    $allModules     = $(this),
+
+    moduleSelector  = $allModules.selector || '',
+
+    time            = new Date().getTime(),
+    performance     = [],
+
+    query           = arguments[0],
+    methodInvoked   = (typeof query == 'string'),
+    queryArguments  = [].slice.call(arguments, 1),
+
+    requestAnimationFrame = window.requestAnimationFrame
+      || window.mozRequestAnimationFrame
+      || window.webkitRequestAnimationFrame
+      || window.msRequestAnimationFrame
+      || function(callback) { setTimeout(callback, 0); },
+
+    returnedValue
+  ;
+
+  $allModules
+    .each(function() {
+      var
+        settings        = ( $.isPlainObject(parameters) )
+          ? $.extend(true, {}, $.fn.video.settings, parameters)
+          : $.extend({}, $.fn.video.settings),
+
+        selector        = settings.selector,
+        className       = settings.className,
+        error           = settings.error,
+        metadata        = settings.metadata,
+        namespace       = settings.namespace,
+        templates       = settings.templates,
+
+        eventNamespace  = '.' + namespace,
+        moduleNamespace = 'module-' + namespace,
+
+        $window         = $(window),
+        $module         = $(this),
+        $placeholder    = $module.find(selector.placeholder),
+        $playButton     = $module.find(selector.playButton),
+        $embed          = $module.find(selector.embed),
+
+        element         = this,
+        instance        = $module.data(moduleNamespace),
+        module
+      ;
+
+      module = {
+
+        initialize: function() {
+          module.debug('Initializing video');
+          module.create();
+          $module
+            .on('click' + eventNamespace, selector.placeholder, module.play)
+            .on('click' + eventNamespace, selector.playButton, module.play)
+          ;
+          module.instantiate();
+        },
+
+        instantiate: function() {
+          module.verbose('Storing instance of module', module);
+          instance = module;
+          $module
+            .data(moduleNamespace, module)
+          ;
+        },
+
+        create: function() {
+          var
+            image = $module.data(metadata.image),
+            html = templates.video(image)
+          ;
+          $module.html(html);
+          module.refresh();
+          if(!image) {
+            module.play();
+          }
+          module.debug('Creating html for video element', html);
+        },
+
+        destroy: function() {
+          module.verbose('Destroying previous instance of video');
+          module.reset();
+          $module
+            .removeData(moduleNamespace)
+            .off(eventNamespace)
+          ;
+        },
+
+        refresh: function() {
+          module.verbose('Refreshing selector cache');
+          $placeholder    = $module.find(selector.placeholder);
+          $playButton     = $module.find(selector.playButton);
+          $embed          = $module.find(selector.embed);
+        },
+
+        // sets new video
+        change: function(source, id, url) {
+          module.debug('Changing video to ', source, id, url);
+          $module
+            .data(metadata.source, source)
+            .data(metadata.id, id)
+            .data(metadata.url, url)
+          ;
+          settings.onChange();
+        },
+
+        // clears video embed
+        reset: function() {
+          module.debug('Clearing video embed and showing placeholder');
+          $module
+            .removeClass(className.active)
+          ;
+          $embed
+            .html(' ')
+          ;
+          $placeholder
+            .show()
+          ;
+          settings.onReset();
+        },
+
+        // plays current video
+        play: function() {
+          module.debug('Playing video');
+          var
+            source = $module.data(metadata.source) || false,
+            url    = $module.data(metadata.url)    || false,
+            id     = $module.data(metadata.id)     || false
+          ;
+          $embed
+            .html( module.generate.html(source, id, url) )
+          ;
+          $module
+            .addClass(className.active)
+          ;
+          settings.onPlay();
+        },
+
+        get: {
+          source: function(url) {
+            if(typeof url !== 'string') {
+              return false;
+            }
+            if(url.search('youtube.com') !== -1) {
+              return 'youtube';
+            }
+            else if(url.search('vimeo.com') !== -1) {
+              return 'vimeo';
+            }
+            return false;
+          },
+          id: function(url) {
+            if(url.match(settings.regExp.youtube)) {
+              return url.match(settings.regExp.youtube)[1];
+            }
+            else if(url.match(settings.regExp.vimeo)) {
+              return url.match(settings.regExp.vimeo)[2];
+            }
+            return false;
+          }
+        },
+
+        generate: {
+          // generates iframe html
+          html: function(source, id, url) {
+            module.debug('Generating embed html');
+            var
+              html
+            ;
+            // allow override of settings
+            source = source || settings.source;
+            id     = id     || settings.id;
+            if((source && id) || url) {
+              if(!source || !id) {
+                source = module.get.source(url);
+                id     = module.get.id(url);
+              }
+              if(source == 'vimeo') {
+                html = ''
+                  + '<iframe src="//player.vimeo.com/video/' + id + '?=' + module.generate.url(source) + '"'
+                  + ' width="100%" height="100%"'
+                  + ' frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
+                ;
+              }
+              else if(source == 'youtube') {
+                html = ''
+                  + '<iframe src="//www.youtube.com/embed/' + id + '?=' + module.generate.url(source) + '"'
+                  + ' width="100%" height="100%"'
+                  + ' frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
+                ;
+              }
+            }
+            else {
+              module.error(error.noVideo);
+            }
+            return html;
+          },
+
+          // generate url parameters
+          url: function(source) {
+            var
+              api      = (settings.api)
+                ? 1
+                : 0,
+              autoplay = (settings.autoplay === 'auto')
+                ? ($module.data('image') !== undefined)
+                : settings.autoplay,
+              hd       = (settings.hd)
+                ? 1
+                : 0,
+              showUI   = (settings.showUI)
+                ? 1
+                : 0,
+              // opposite used for some params
+              hideUI   = !(settings.showUI)
+                ? 1
+                : 0,
+              url = ''
+            ;
+            if(source == 'vimeo') {
+              url = ''
+                +      'api='      + api
+                + '&amp;title='    + showUI
+                + '&amp;byline='   + showUI
+                + '&amp;portrait=' + showUI
+                + '&amp;autoplay=' + autoplay
+              ;
+              if(settings.color) {
+                url += '&amp;color=' + settings.color;
+              }
+            }
+            if(source == 'ustream') {
+              url = ''
+                + 'autoplay=' + autoplay
+              ;
+              if(settings.color) {
+                url += '&amp;color=' + settings.color;
+              }
+            }
+            else if(source == 'youtube') {
+              url = ''
+                + 'enablejsapi='      + api
+                + '&amp;autoplay='    + autoplay
+                + '&amp;autohide='    + hideUI
+                + '&amp;hq='          + hd
+                + '&amp;modestbranding=1'
+              ;
+              if(settings.color) {
+                url += '&amp;color=' + settings.color;
+              }
+            }
+            return url;
+          }
+        },
+
+        setting: function(name, value) {
+          module.debug('Changing setting', name, value);
+          if( $.isPlainObject(name) ) {
+            $.extend(true, settings, name);
+          }
+          else if(value !== undefined) {
+            settings[name] = value;
+          }
+          else {
+            return settings[name];
+          }
+        },
+        internal: function(name, value) {
+          if( $.isPlainObject(name) ) {
+            $.extend(true, module, name);
+          }
+          else if(value !== undefined) {
+            module[name] = value;
+          }
+          else {
+            return module[name];
+          }
+        },
+        debug: function() {
+          if(settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.debug = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.debug.apply(console, arguments);
+            }
+          }
+        },
+        verbose: function() {
+          if(settings.verbose && settings.debug) {
+            if(settings.performance) {
+              module.performance.log(arguments);
+            }
+            else {
+              module.verbose = Function.prototype.bind.call(console.info, console, settings.name + ':');
+              module.verbose.apply(console, arguments);
+            }
+          }
+        },
+        error: function() {
+          module.error = Function.prototype.bind.call(console.error, console, settings.name + ':');
+          module.error.apply(console, arguments);
+        },
+        performance: {
+          log: function(message) {
+            var
+              currentTime,
+              executionTime,
+              previousTime
+            ;
+            if(settings.performance) {
+              currentTime   = new Date().getTime();
+              previousTime  = time || currentTime;
+              executionTime = currentTime - previousTime;
+              time          = currentTime;
+              performance.push({
+                'Name'           : message[0],
+                'Arguments'      : [].slice.call(message, 1) || '',
+                'Element'        : element,
+                'Execution Time' : executionTime
+              });
+            }
+            clearTimeout(module.performance.timer);
+            module.performance.timer = setTimeout(module.performance.display, 500);
+          },
+          display: function() {
+            var
+              title = settings.name + ':',
+              totalTime = 0
+            ;
+            time = false;
+            clearTimeout(module.performance.timer);
+            $.each(performance, function(index, data) {
+              totalTime += data['Execution Time'];
+            });
+            title += ' ' + totalTime + 'ms';
+            if(moduleSelector) {
+              title += ' \'' + moduleSelector + '\'';
+            }
+            if($allModules.length > 1) {
+              title += ' ' + '(' + $allModules.length + ')';
+            }
+            if( (console.group !== undefined || console.table !== undefined) && performance.length > 0) {
+              console.groupCollapsed(title);
+              if(console.table) {
+                console.table(performance);
+              }
+              else {
+                $.each(performance, function(index, data) {
+                  console.log(data['Name'] + ': ' + data['Execution Time']+'ms');
+                });
+              }
+              console.groupEnd();
+            }
+            performance = [];
+          }
+        },
+        invoke: function(query, passedArguments, context) {
+          var
+            object = instance,
+            maxDepth,
+            found,
+            response
+          ;
+          passedArguments = passedArguments || queryArguments;
+          context         = element         || context;
+          if(typeof query == 'string' && object !== undefined) {
+            query    = query.split(/[\. ]/);
+            maxDepth = query.length - 1;
+            $.each(query, function(depth, value) {
+              var camelCaseValue = (depth != maxDepth)
+                ? value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
+                : query
+              ;
+              if( $.isPlainObject( object[camelCaseValue] ) && (depth != maxDepth) ) {
+                object = object[camelCaseValue];
+              }
+              else if( object[camelCaseValue] !== undefined ) {
+                found = object[camelCaseValue];
+                return false;
+              }
+              else if( $.isPlainObject( object[value] ) && (depth != maxDepth) ) {
+                object = object[value];
+              }
+              else if( object[value] !== undefined ) {
+                found = object[value];
+                return false;
+              }
+              else {
+                module.error(error.method, query);
+                return false;
+              }
+            });
+          }
+          if ( $.isFunction( found ) ) {
+            response = found.apply(context, passedArguments);
+          }
+          else if(found !== undefined) {
+            response = found;
+          }
+          if($.isArray(returnedValue)) {
+            returnedValue.push(response);
+          }
+          else if(returnedValue !== undefined) {
+            returnedValue = [returnedValue, response];
+          }
+          else if(response !== undefined) {
+            returnedValue = response;
+          }
+          return found;
+        }
+      };
+
+      if(methodInvoked) {
+        if(instance === undefined) {
+          module.initialize();
+        }
+        module.invoke(query);
+      }
+      else {
+        if(instance !== undefined) {
+          instance.invoke('destroy');
+        }
+        module.initialize();
+      }
+    })
+  ;
+  return (returnedValue !== undefined)
+    ? returnedValue
+    : this
+  ;
+};
+
+$.fn.video.settings = {
+
+  name        : 'Video',
+  namespace   : 'video',
+
+  debug       : false,
+  verbose     : false,
+  performance : true,
+
+  metadata    : {
+    id     : 'id',
+    image  : 'image',
+    source : 'source',
+    url    : 'url'
+  },
+
+  source      : false,
+  url         : false,
+  id          : false,
+
+  aspectRatio : (16/9),
+
+  onPlay   : function(){},
+  onReset  : function(){},
+  onChange : function(){},
+
+  // callbacks not coded yet (needs to use jsapi)
+  onPause  : function() {},
+  onStop   : function() {},
+
+  width    : 'auto',
+  height   : 'auto',
+
+  autoplay : 'auto',
+  color    : '#442359',
+  hd       : true,
+  showUI   : false,
+  api      : true,
+
+  regExp : {
+    youtube : /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/,
+    vimeo   : /http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/
+  },
+
+  error      : {
+    noVideo     : 'No video specified',
+    method      : 'The method you called is not defined'
+  },
+
+  className   : {
+    active      : 'active'
+  },
+
+  selector    : {
+    embed       : '.embed',
+    placeholder : '.placeholder',
+    playButton  : '.play'
+  }
+};
+
+$.fn.video.settings.templates = {
+  video: function(image) {
+    var
+      html = ''
+    ;
+    if(image) {
+      html += ''
+        + '<i class="video play icon"></i>'
+        + '<img class="placeholder" src="' + image + '">'
+      ;
+    }
+    html += '<div class="embed"></div>';
+    return html;
+  }
+};
+
+
+})( jQuery, window , document );

@@ -1,1 +1,1246 @@
-UE.plugins.list=function(){function e(e){var t=[];for(var i in e)t.push(i);return t}function t(e){var t=e.className;return domUtils.hasClass(e,/custom_/)?t.match(/custom_(\w+)/)[1]:domUtils.getStyle(e,"list-style-type")}function i(e,i){utils.each(domUtils.getElementsByTagName(e,"ol ul"),function(n){if(domUtils.inDoc(n,e)){var s=n.parentNode;if(s.tagName==n.tagName){var a=t(n)||("OL"==n.tagName?"decimal":"disc"),d=t(s)||("OL"==s.tagName?"decimal":"disc");if(a==d){var p=utils.indexOf(m[n.tagName],a);p=p+1==m[n.tagName].length?0:p+1,o(n,m[n.tagName][p])}}var c=0,f=2;domUtils.hasClass(n,/custom_/)?/[ou]l/i.test(s.tagName)&&domUtils.hasClass(s,/custom_/)||(f=1):/[ou]l/i.test(s.tagName)&&domUtils.hasClass(s,/custom_/)&&(f=3);var u=domUtils.getStyle(n,"list-style-type");u&&(n.style.cssText="list-style-type:"+u),n.className=utils.trim(n.className.replace(/list-paddingleft-\w+/,""))+" list-paddingleft-"+f,utils.each(domUtils.getElementsByTagName(n,"li"),function(e){if(e.style.cssText&&(e.style.cssText=""),!e.firstChild)return void domUtils.remove(e);if(e.parentNode===n){if(c++,domUtils.hasClass(n,/custom_/)){var i=1,l=t(n);if("OL"==n.tagName){if(l)switch(l){case"cn":case"cn1":case"cn2":c>10&&(c%10==0||c>10&&20>c)?i=2:c>20&&(i=3);break;case"num2":c>9&&(i=2)}e.className="list-"+r[l]+c+" list-"+l+"-paddingleft-"+i}else e.className="list-"+r[l]+" list-"+l+"-paddingleft"}else e.className=e.className.replace(/list-[\w\-]+/gi,"");var o=e.getAttribute("class");null===o||o.replace(/\s/g,"")||domUtils.removeAttributes(e,"class")}}),!i&&l(n,n.tagName.toLowerCase(),t(n)||domUtils.getStyle(n,"list-style-type"),!0)}})}function l(e,l,o,n){var s=e.nextSibling;s&&1==s.nodeType&&s.tagName.toLowerCase()==l&&(t(s)||domUtils.getStyle(s,"list-style-type")||("ol"==l?"decimal":"disc"))==o&&(domUtils.moveChild(s,e),0==s.childNodes.length&&domUtils.remove(s)),s&&domUtils.isFillChar(s)&&domUtils.remove(s);var a=e.previousSibling;a&&1==a.nodeType&&a.tagName.toLowerCase()==l&&(t(a)||domUtils.getStyle(a,"list-style-type")||("ol"==l?"decimal":"disc"))==o&&domUtils.moveChild(e,a),a&&domUtils.isFillChar(a)&&domUtils.remove(a),!n&&domUtils.isEmptyBlock(e)&&domUtils.remove(e),t(e)&&i(e.ownerDocument,!0)}function o(e,t){r[t]&&(e.className="custom_"+t);try{domUtils.setStyle(e,"list-style-type",t)}catch(i){}}function n(e){var t=e.previousSibling;t&&domUtils.isEmptyBlock(t)&&domUtils.remove(t),t=e.nextSibling,t&&domUtils.isEmptyBlock(t)&&domUtils.remove(t)}function s(e){for(;e&&!domUtils.isBody(e);){if("TABLE"==e.nodeName)return null;if("LI"==e.nodeName)return e;e=e.parentNode}}var a=this,d={TD:1,PRE:1,BLOCKQUOTE:1},r={cn:"cn-1-",cn1:"cn-2-",cn2:"cn-3-",num:"num-1-",num1:"num-2-",num2:"num-3-",dash:"dash",dot:"dot"};a.setOpt({autoTransWordToList:!1,insertorderedlist:{num:"",num1:"",num2:"",cn:"",cn1:"",cn2:"",decimal:"","lower-alpha":"","lower-roman":"","upper-alpha":"","upper-roman":""},insertunorderedlist:{circle:"",disc:"",square:"",dash:"",dot:""},listDefaultPaddingLeft:"30",listiconpath:"http://bs.baidu.com/listicon/",maxListLevel:-1,disablePInList:!1});var m={OL:e(a.options.insertorderedlist),UL:e(a.options.insertunorderedlist)},p=a.options.listiconpath;for(var c in r)a.options.insertorderedlist.hasOwnProperty(c)||a.options.insertunorderedlist.hasOwnProperty(c)||delete r[c];a.ready(function(){var e=[];for(var t in r){if("dash"==t||"dot"==t)e.push("li.list-"+r[t]+"{background-image:url("+p+r[t]+".gif)}"),e.push("ul.custom_"+t+"{list-style:none;}ul.custom_"+t+" li{background-position:0 3px;background-repeat:no-repeat}");else{for(var i=0;99>i;i++)e.push("li.list-"+r[t]+i+"{background-image:url("+p+"list-"+r[t]+i+".gif)}");e.push("ol.custom_"+t+"{list-style:none;}ol.custom_"+t+" li{background-position:0 3px;background-repeat:no-repeat}")}switch(t){case"cn":e.push("li.list-"+t+"-paddingleft-1{padding-left:25px}"),e.push("li.list-"+t+"-paddingleft-2{padding-left:40px}"),e.push("li.list-"+t+"-paddingleft-3{padding-left:55px}");break;case"cn1":e.push("li.list-"+t+"-paddingleft-1{padding-left:30px}"),e.push("li.list-"+t+"-paddingleft-2{padding-left:40px}"),e.push("li.list-"+t+"-paddingleft-3{padding-left:55px}");break;case"cn2":e.push("li.list-"+t+"-paddingleft-1{padding-left:40px}"),e.push("li.list-"+t+"-paddingleft-2{padding-left:55px}"),e.push("li.list-"+t+"-paddingleft-3{padding-left:68px}");break;case"num":case"num1":e.push("li.list-"+t+"-paddingleft-1{padding-left:25px}");break;case"num2":e.push("li.list-"+t+"-paddingleft-1{padding-left:35px}"),e.push("li.list-"+t+"-paddingleft-2{padding-left:40px}");break;case"dash":e.push("li.list-"+t+"-paddingleft{padding-left:35px}");break;case"dot":e.push("li.list-"+t+"-paddingleft{padding-left:20px}")}}e.push(".list-paddingleft-1{padding-left:0}"),e.push(".list-paddingleft-2{padding-left:"+a.options.listDefaultPaddingLeft+"px}"),e.push(".list-paddingleft-3{padding-left:"+2*a.options.listDefaultPaddingLeft+"px}"),utils.cssRule("list","ol,ul{margin:0;pading:0;"+(browser.ie?"":"width:95%")+"}li{clear:both;}"+e.join("\n"),a.document)}),a.ready(function(){domUtils.on(a.body,"cut",function(){setTimeout(function(){var e,t=a.selection.getRange();if(!t.collapsed&&(e=domUtils.findParentByTagName(t.startContainer,"li",!0))&&!e.nextSibling&&domUtils.isEmptyBlock(e)){var i,l=e.parentNode;if(i=l.previousSibling)domUtils.remove(l),t.setStartAtLast(i).collapse(!0),t.select(!0);else if(i=l.nextSibling)domUtils.remove(l),t.setStartAtFirst(i).collapse(!0),t.select(!0);else{var o=a.document.createElement("p");domUtils.fillNode(a.document,o),l.parentNode.insertBefore(o,l),domUtils.remove(l),t.setStart(o,0).collapse(!0),t.select(!0)}}})})}),a.addListener("beforepaste",function(e,i){var l,o=this,n=o.selection.getRange(),s=UE.htmlparser(i.html,!0);if(l=domUtils.findParentByTagName(n.startContainer,"li",!0)){var a=l.parentNode,d="OL"==a.tagName?"ul":"ol";utils.each(s.getNodesByTagName(d),function(i){if(i.tagName=a.tagName,i.setAttr(),i.parentNode===s)e=t(a)||("OL"==a.tagName?"decimal":"disc");else{var l=i.parentNode.getAttr("class");e=l&&/custom_/.test(l)?l.match(/custom_(\w+)/)[1]:i.parentNode.getStyle("list-style-type"),e||(e="OL"==a.tagName?"decimal":"disc")}var o=utils.indexOf(m[a.tagName],e);i.parentNode!==s&&(o=o+1==m[a.tagName].length?0:o+1);var n=m[a.tagName][o];r[n]?i.setAttr("class","custom_"+n):i.setStyle("list-style-type",n)})}i.html=s.toHtml()}),a.getOpt("disablePInList")===!0&&a.addOutputRule(function(e){utils.each(e.getNodesByTagName("li"),function(e){var t=[],i=0;utils.each(e.children,function(l){if("p"==l.tagName){for(var o;o=l.children.pop();)t.splice(i,0,o),o.parentNode=e,lastNode=o;if(o=t[t.length-1],!o||"element"!=o.type||"br"!=o.tagName){var n=UE.uNode.createElement("br");n.parentNode=e,t.push(n)}i=t.length}}),t.length&&(e.children=t)})}),a.addInputRule(function(e){function t(e,t){var o=t.firstChild();if(o&&"element"==o.type&&"span"==o.tagName&&/Wingdings|Symbol/.test(o.getStyle("font-family"))){for(var n in l)if(l[n]==o.data)return n;return"disc"}for(var n in i)if(i[n].test(e))return n}if(utils.each(e.getNodesByTagName("li"),function(e){for(var t,i=UE.uNode.createElement("p"),l=0;t=e.children[l];)"text"==t.type||dtd.p[t.tagName]?i.appendChild(t):i.firstChild()?(e.insertBefore(i,t),i=UE.uNode.createElement("p"),l+=2):l++;(i.firstChild()&&!i.parentNode||!e.firstChild())&&e.appendChild(i),i.firstChild()||i.innerHTML(browser.ie?"&nbsp;":"<br/>");var o=e.firstChild(),n=o.lastChild();n&&"text"==n.type&&/^\s*$/.test(n.data)&&o.removeChild(n)}),a.options.autoTransWordToList){var i={num1:/^\d+\)/,decimal:/^\d+\./,"lower-alpha":/^[a-z]+\)/,"upper-alpha":/^[A-Z]+\./,cn:/^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,cn2:/^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/},l={square:"n"};utils.each(e.getNodesByTagName("p"),function(e){function l(e,t,l){if("ol"==e.tagName)if(browser.ie){var o=t.firstChild();"element"==o.type&&"span"==o.tagName&&i[l].test(o.innerText())&&t.removeChild(o)}else t.innerHTML(t.innerHTML().replace(i[l],""));else t.removeChild(t.firstChild());var n=UE.uNode.createElement("li");n.appendChild(t),e.appendChild(n)}if("MsoListParagraph"==e.getAttr("class")){e.setStyle("margin",""),e.setStyle("margin-left",""),e.setAttr("class","");var o,n=e,s=e;if("li"!=e.parentNode.tagName&&(o=t(e.innerText(),e))){var d=UE.uNode.createElement(a.options.insertorderedlist.hasOwnProperty(o)?"ol":"ul");for(r[o]?d.setAttr("class","custom_"+o):d.setStyle("list-style-type",o);e&&"li"!=e.parentNode.tagName&&t(e.innerText(),e);)n=e.nextSibling(),n||e.parentNode.insertBefore(d,e),l(d,e,o),e=n;!d.parentNode&&e&&e.parentNode&&e.parentNode.insertBefore(d,e)}var m=s.firstChild();m&&"element"==m.type&&"span"==m.tagName&&/^\s*(&nbsp;)+\s*$/.test(m.innerText())&&m.parentNode.removeChild(m)}})}}),a.addListener("contentchange",function(){i(a.document)}),a.addListener("keydown",function(e,t){function i(){t.preventDefault?t.preventDefault():t.returnValue=!1,a.fireEvent("contentchange"),a.undoManger&&a.undoManger.save()}function l(e,t){for(;e&&!domUtils.isBody(e);){if(t(e))return null;if(1==e.nodeType&&/[ou]l/i.test(e.tagName))return e;e=e.parentNode}return null}var o=t.keyCode||t.which;if(13==o&&!t.shiftKey){var s=a.selection.getRange(),d=domUtils.findParent(s.startContainer,function(e){return domUtils.isBlockElm(e)},!0),r=domUtils.findParentByTagName(s.startContainer,"li",!0);if(d&&"PRE"!=d.tagName&&!r){var m=d.innerHTML.replace(new RegExp(domUtils.fillChar,"g"),"");/^\s*1\s*\.[^\d]/.test(m)&&(d.innerHTML=m.replace(/^\s*1\s*\./,""),s.setStartAtLast(d).collapse(!0).select(),a.__hasEnterExecCommand=!0,a.execCommand("insertorderedlist"),a.__hasEnterExecCommand=!1)}var p=a.selection.getRange(),c=l(p.startContainer,function(e){return"TABLE"==e.tagName}),f=p.collapsed?c:l(p.endContainer,function(e){return"TABLE"==e.tagName});if(c&&f&&c===f){if(!p.collapsed){if(c=domUtils.findParentByTagName(p.startContainer,"li",!0),f=domUtils.findParentByTagName(p.endContainer,"li",!0),!c||!f||c!==f){var u=p.cloneRange(),g=u.collapse(!1).createBookmark();p.deleteContents(),u.moveToBookmark(g);var r=domUtils.findParentByTagName(u.startContainer,"li",!0);return n(r),u.select(),void i()}if(p.deleteContents(),r=domUtils.findParentByTagName(p.startContainer,"li",!0),r&&domUtils.isEmptyBlock(r))return y=r.previousSibling,next=r.nextSibling,v=a.document.createElement("p"),domUtils.fillNode(a.document,v),h=r.parentNode,y&&next?(p.setStart(next,0).collapse(!0).select(!0),domUtils.remove(r)):((y||next)&&y?r.parentNode.parentNode.insertBefore(v,h.nextSibling):h.parentNode.insertBefore(v,h),domUtils.remove(r),h.firstChild||domUtils.remove(h),p.setStart(v,0).setCursor()),void i()}if(r=domUtils.findParentByTagName(p.startContainer,"li",!0)){if(domUtils.isEmptyBlock(r)){g=p.createBookmark();var h=r.parentNode;if(r!==h.lastChild?(domUtils.breakParent(r,h),n(r)):(h.parentNode.insertBefore(r,h.nextSibling),domUtils.isEmptyNode(h)&&domUtils.remove(h)),!dtd.$list[r.parentNode.tagName])if(domUtils.isBlockElm(r.firstChild))domUtils.remove(r,!0);else{for(v=a.document.createElement("p"),r.parentNode.insertBefore(v,r);r.firstChild;)v.appendChild(r.firstChild);domUtils.remove(r)}p.moveToBookmark(g).select()}else{var N=r.firstChild;if(!N||!domUtils.isBlockElm(N)){var v=a.document.createElement("p");for(!r.firstChild&&domUtils.fillNode(a.document,v);r.firstChild;)v.appendChild(r.firstChild);r.appendChild(v),N=v}var C=a.document.createElement("span");p.insertNode(C),domUtils.breakParent(C,r);var U=C.nextSibling;N=U.firstChild,N||(v=a.document.createElement("p"),domUtils.fillNode(a.document,v),U.appendChild(v),N=v),domUtils.isEmptyNode(N)&&(N.innerHTML="",domUtils.fillNode(a.document,N)),p.setStart(N,0).collapse(!0).shrinkBoundary().select(),domUtils.remove(C);var y=U.previousSibling;y&&domUtils.isEmptyBlock(y)&&(y.innerHTML="<p></p>",domUtils.fillNode(a.document,y.firstChild))}i()}}}if(8==o&&(p=a.selection.getRange(),p.collapsed&&domUtils.isStartInblock(p)&&(u=p.cloneRange().trimBoundary(),r=domUtils.findParentByTagName(p.startContainer,"li",!0),r&&domUtils.isStartInblock(u)))){if(c=domUtils.findParentByTagName(p.startContainer,"p",!0),c&&c!==r.firstChild){var h=domUtils.findParentByTagName(c,["ol","ul"]);return domUtils.breakParent(c,h),n(c),a.fireEvent("contentchange"),p.setStart(c,0).setCursor(!1,!0),a.fireEvent("saveScene"),void domUtils.preventDefault(t)}if(r&&(y=r.previousSibling)){if(46==o&&r.childNodes.length)return;if(dtd.$list[y.tagName]&&(y=y.lastChild),a.undoManger&&a.undoManger.save(),N=r.firstChild,domUtils.isBlockElm(N))if(domUtils.isEmptyNode(N))for(y.appendChild(N),p.setStart(N,0).setCursor(!1,!0);r.firstChild;)y.appendChild(r.firstChild);else C=a.document.createElement("span"),p.insertNode(C),domUtils.isEmptyBlock(y)&&(y.innerHTML=""),domUtils.moveChild(r,y),p.setStartBefore(C).collapse(!0).select(!0),domUtils.remove(C);else if(domUtils.isEmptyNode(r)){var v=a.document.createElement("p");y.appendChild(v),p.setStart(v,0).setCursor()}else for(p.setEnd(y,y.childNodes.length).collapse().select(!0);r.firstChild;)y.appendChild(r.firstChild);return domUtils.remove(r),a.fireEvent("contentchange"),a.fireEvent("saveScene"),void domUtils.preventDefault(t)}if(r&&!r.previousSibling){var h=r.parentNode,g=p.createBookmark();if(domUtils.isTagNode(h.parentNode,"ol ul"))h.parentNode.insertBefore(r,h),domUtils.isEmptyNode(h)&&domUtils.remove(h);else{for(;r.firstChild;)h.parentNode.insertBefore(r.firstChild,h);domUtils.remove(r),domUtils.isEmptyNode(h)&&domUtils.remove(h)}return p.moveToBookmark(g).setCursor(!1,!0),a.fireEvent("contentchange"),a.fireEvent("saveScene"),void domUtils.preventDefault(t)}}}),a.addListener("keyup",function(e,i){var o=i.keyCode||i.which;if(8==o){var n,s=a.selection.getRange();(n=domUtils.findParentByTagName(s.startContainer,["ol","ul"],!0))&&l(n,n.tagName.toLowerCase(),t(n)||domUtils.getComputedStyle(n,"list-style-type"),!0)}}),a.addListener("tabkeydown",function(){function e(e){if(-1!=a.options.maxListLevel){for(var t=e.parentNode,i=0;/[ou]l/i.test(t.tagName);)i++,t=t.parentNode;if(i>=a.options.maxListLevel)return!0}}var i=a.selection.getRange(),n=domUtils.findParentByTagName(i.startContainer,"li",!0);if(n){var s;if(!i.collapsed){a.fireEvent("saveScene"),s=i.createBookmark();for(var d,r,p=0,c=domUtils.findParents(n);r=c[p++];)if(domUtils.isTagNode(r,"ol ul")){d=r;break}var f=n;if(s.end)for(;f&&!(domUtils.getPosition(f,s.end)&domUtils.POSITION_FOLLOWING);)if(e(f))f=domUtils.getNextDomNode(f,!1,null,function(e){return e!==d});else{var u=f.parentNode,g=a.document.createElement(u.tagName),h=utils.indexOf(m[g.tagName],t(u)||domUtils.getComputedStyle(u,"list-style-type")),N=h+1==m[g.tagName].length?0:h+1,v=m[g.tagName][N];for(o(g,v),u.insertBefore(g,f);f&&!(domUtils.getPosition(f,s.end)&domUtils.POSITION_FOLLOWING);){if(n=f.nextSibling,g.appendChild(f),!n||domUtils.isTagNode(n,"ol ul")){if(n)for(;(n=n.firstChild)&&"LI"!=n.tagName;);else n=domUtils.getNextDomNode(f,!1,null,function(e){return e!==d});break}f=n}l(g,g.tagName.toLowerCase(),v),f=n}return a.fireEvent("contentchange"),i.moveToBookmark(s).select(),!0}if(e(n))return!0;var u=n.parentNode,g=a.document.createElement(u.tagName),h=utils.indexOf(m[g.tagName],t(u)||domUtils.getComputedStyle(u,"list-style-type"));h=h+1==m[g.tagName].length?0:h+1;var v=m[g.tagName][h];if(o(g,v),domUtils.isStartInblock(i))return a.fireEvent("saveScene"),s=i.createBookmark(),u.insertBefore(g,n),g.appendChild(n),l(g,g.tagName.toLowerCase(),v),a.fireEvent("contentchange"),i.moveToBookmark(s).select(!0),!0}}),a.commands.insertorderedlist=a.commands.insertunorderedlist={execCommand:function(e,i){i||(i="insertorderedlist"==e.toLowerCase()?"decimal":"disc");var n=this,a=this.selection.getRange(),r=function(e){return 1==e.nodeType?"br"!=e.tagName.toLowerCase():!domUtils.isWhitespace(e)},m="insertorderedlist"==e.toLowerCase()?"ol":"ul",p=n.document.createDocumentFragment();a.adjustmentBoundary().shrinkBoundary();var c,f,u,g,h=a.createBookmark(!0),N=s(n.document.getElementById(h.start)),v=0,C=s(n.document.getElementById(h.end)),U=0;if(N||C){if(N&&(c=N.parentNode),h.end||(C=N),C&&(f=C.parentNode),c===f){for(;N!==C;){if(g=N,N=N.nextSibling,!domUtils.isBlockElm(g.firstChild)){for(var y=n.document.createElement("p");g.firstChild;)y.appendChild(g.firstChild);g.appendChild(y)}p.appendChild(g)}if(g=n.document.createElement("span"),c.insertBefore(g,C),!domUtils.isBlockElm(C.firstChild)){for(y=n.document.createElement("p");C.firstChild;)y.appendChild(C.firstChild);C.appendChild(y)}p.appendChild(C),domUtils.breakParent(g,c),domUtils.isEmptyNode(g.previousSibling)&&domUtils.remove(g.previousSibling),domUtils.isEmptyNode(g.nextSibling)&&domUtils.remove(g.nextSibling);var E=t(c)||domUtils.getComputedStyle(c,"list-style-type")||("insertorderedlist"==e.toLowerCase()?"decimal":"disc");if(c.tagName.toLowerCase()==m&&E==i){for(var B,k=0,b=n.document.createDocumentFragment();B=p.firstChild;)if(domUtils.isTagNode(B,"ol ul"))b.appendChild(B);else for(;B.firstChild;)b.appendChild(B.firstChild),domUtils.remove(B);g.parentNode.insertBefore(b,g)}else u=n.document.createElement(m),o(u,i),u.appendChild(p),g.parentNode.insertBefore(u,g);return domUtils.remove(g),u&&l(u,m,i),void a.moveToBookmark(h).select()}if(N){for(;N;){if(g=N.nextSibling,domUtils.isTagNode(N,"ol ul"))p.appendChild(N);else{for(var S=n.document.createDocumentFragment(),T=0;N.firstChild;)domUtils.isBlockElm(N.firstChild)&&(T=1),S.appendChild(N.firstChild);if(T)p.appendChild(S);else{var x=n.document.createElement("p");x.appendChild(S),p.appendChild(x)}domUtils.remove(N)}N=g}c.parentNode.insertBefore(p,c.nextSibling),domUtils.isEmptyNode(c)?(a.setStartBefore(c),domUtils.remove(c)):a.setStartAfter(c),v=1}if(C&&domUtils.inDoc(f,n.document)){for(N=f.firstChild;N&&N!==C;){if(g=N.nextSibling,domUtils.isTagNode(N,"ol ul"))p.appendChild(N);else{for(S=n.document.createDocumentFragment(),T=0;N.firstChild;)domUtils.isBlockElm(N.firstChild)&&(T=1),S.appendChild(N.firstChild);T?p.appendChild(S):(x=n.document.createElement("p"),x.appendChild(S),p.appendChild(x)),domUtils.remove(N)}N=g}var L=domUtils.createElement(n.document,"div",{tmpDiv:1});domUtils.moveChild(C,L),p.appendChild(L),domUtils.remove(C),f.parentNode.insertBefore(p,f),a.setEndBefore(f),domUtils.isEmptyNode(f)&&domUtils.remove(f),U=1}}v||a.setStartBefore(n.document.getElementById(h.start)),h.end&&!U&&a.setEndAfter(n.document.getElementById(h.end)),a.enlarge(!0,function(e){return d[e.tagName]}),p=n.document.createDocumentFragment();for(var P,w=a.createBookmark(),D=domUtils.getNextDomNode(w.start,!1,r),O=a.cloneRange(),_=domUtils.isBlockElm;D&&D!==w.end&&domUtils.getPosition(D,w.end)&domUtils.POSITION_PRECEDING;)if(3==D.nodeType||dtd.li[D.tagName]){if(1==D.nodeType&&dtd.$list[D.tagName]){for(;D.firstChild;)p.appendChild(D.firstChild);P=domUtils.getNextDomNode(D,!1,r),domUtils.remove(D),D=P;continue}for(P=D,O.setStartBefore(D);D&&D!==w.end&&(!_(D)||domUtils.isBookmarkNode(D));)P=D,D=domUtils.getNextDomNode(D,!1,null,function(e){return!d[e.tagName]});D&&_(D)&&(g=domUtils.getNextDomNode(P,!1,r),g&&domUtils.isBookmarkNode(g)&&(D=domUtils.getNextDomNode(g,!1,r),P=g)),O.setEndAfter(P),D=domUtils.getNextDomNode(P,!1,r);var A=a.document.createElement("li");if(A.appendChild(O.extractContents()),domUtils.isEmptyNode(A)){for(var P=a.document.createElement("p");A.firstChild;)P.appendChild(A.firstChild);A.appendChild(P)}p.appendChild(A)}else D=domUtils.getNextDomNode(D,!0,r);a.moveToBookmark(w).collapse(!0),u=n.document.createElement(m),o(u,i),u.appendChild(p),a.insertNode(u),l(u,m,i);for(var B,k=0,I=domUtils.getElementsByTagName(u,"div");B=I[k++];)B.getAttribute("tmpDiv")&&domUtils.remove(B,!0);a.moveToBookmark(h).select()},queryCommandState:function(e){for(var t,i="insertorderedlist"==e.toLowerCase()?"ol":"ul",l=this.selection.getStartElementPath(),o=0;t=l[o++];){if("TABLE"==t.nodeName)return 0;if(i==t.nodeName.toLowerCase())return 1}return 0},queryCommandValue:function(e){for(var i,l,o="insertorderedlist"==e.toLowerCase()?"ol":"ul",n=this.selection.getStartElementPath(),s=0;l=n[s++];){if("TABLE"==l.nodeName){i=null;break}if(o==l.nodeName.toLowerCase()){i=l;break}}return i?t(i)||domUtils.getComputedStyle(i,"list-style-type"):null}}};
+/**
+ * 有序列表,无序列表插件
+ * @file
+ * @since 1.2.6.1
+ */
+
+UE.plugins['list'] = function () {
+    var me = this,
+        notExchange = {
+            'TD':1,
+            'PRE':1,
+            'BLOCKQUOTE':1
+        };
+    var customStyle = {
+        'cn' : 'cn-1-',
+        'cn1' : 'cn-2-',
+        'cn2' : 'cn-3-',
+        'num':  'num-1-',
+        'num1' : 'num-2-',
+        'num2' : 'num-3-',
+        'dash'  : 'dash',
+        'dot':'dot'
+    };
+
+    me.setOpt( {
+        'autoTransWordToList':false,
+        'insertorderedlist':{
+            'num':'',
+            'num1':'',
+            'num2':'',
+            'cn':'',
+            'cn1':'',
+            'cn2':'',
+            'decimal':'',
+            'lower-alpha':'',
+            'lower-roman':'',
+            'upper-alpha':'',
+            'upper-roman':''
+        },
+        'insertunorderedlist':{
+            'circle':'',
+            'disc':'',
+            'square':'',
+            'dash' : '',
+            'dot':''
+        },
+        listDefaultPaddingLeft : '30',
+        listiconpath : 'http://bs.baidu.com/listicon/',
+        maxListLevel : -1,//-1不限制
+        disablePInList:false
+    } );
+    function listToArray(list){
+        var arr = [];
+        for(var p in list){
+            arr.push(p)
+        }
+        return arr;
+    }
+    var listStyle = {
+        'OL':listToArray(me.options.insertorderedlist),
+        'UL':listToArray(me.options.insertunorderedlist)
+    };
+    var liiconpath = me.options.listiconpath;
+
+    //根据用户配置，调整customStyle
+    for(var s in customStyle){
+        if(!me.options.insertorderedlist.hasOwnProperty(s) && !me.options.insertunorderedlist.hasOwnProperty(s)){
+            delete customStyle[s];
+        }
+    }
+
+    me.ready(function () {
+        var customCss = [];
+        for(var p in customStyle){
+            if(p == 'dash' || p == 'dot'){
+                customCss.push('li.list-' + customStyle[p] + '{background-image:url(' + liiconpath +customStyle[p]+'.gif)}');
+                customCss.push('ul.custom_'+p+'{list-style:none;}ul.custom_'+p+' li{background-position:0 3px;background-repeat:no-repeat}');
+            }else{
+                for(var i= 0;i<99;i++){
+                    customCss.push('li.list-' + customStyle[p] + i + '{background-image:url(' + liiconpath + 'list-'+customStyle[p] + i + '.gif)}')
+                }
+                customCss.push('ol.custom_'+p+'{list-style:none;}ol.custom_'+p+' li{background-position:0 3px;background-repeat:no-repeat}');
+            }
+            switch(p){
+                case 'cn':
+                    customCss.push('li.list-'+p+'-paddingleft-1{padding-left:25px}');
+                    customCss.push('li.list-'+p+'-paddingleft-2{padding-left:40px}');
+                    customCss.push('li.list-'+p+'-paddingleft-3{padding-left:55px}');
+                    break;
+                case 'cn1':
+                    customCss.push('li.list-'+p+'-paddingleft-1{padding-left:30px}');
+                    customCss.push('li.list-'+p+'-paddingleft-2{padding-left:40px}');
+                    customCss.push('li.list-'+p+'-paddingleft-3{padding-left:55px}');
+                    break;
+                case 'cn2':
+                    customCss.push('li.list-'+p+'-paddingleft-1{padding-left:40px}');
+                    customCss.push('li.list-'+p+'-paddingleft-2{padding-left:55px}');
+                    customCss.push('li.list-'+p+'-paddingleft-3{padding-left:68px}');
+                    break;
+                case 'num':
+                case 'num1':
+                    customCss.push('li.list-'+p+'-paddingleft-1{padding-left:25px}');
+                    break;
+                case 'num2':
+                    customCss.push('li.list-'+p+'-paddingleft-1{padding-left:35px}');
+                    customCss.push('li.list-'+p+'-paddingleft-2{padding-left:40px}');
+                    break;
+                case 'dash':
+                    customCss.push('li.list-'+p+'-paddingleft{padding-left:35px}');
+                    break;
+                case 'dot':
+                    customCss.push('li.list-'+p+'-paddingleft{padding-left:20px}');
+            }
+        }
+        customCss.push('.list-paddingleft-1{padding-left:0}');
+        customCss.push('.list-paddingleft-2{padding-left:'+me.options.listDefaultPaddingLeft+'px}');
+        customCss.push('.list-paddingleft-3{padding-left:'+me.options.listDefaultPaddingLeft*2+'px}');
+        //如果不给宽度会在自定应样式里出现滚动条
+        utils.cssRule('list', 'ol,ul{margin:0;pading:0;'+(browser.ie ? '' : 'width:95%')+'}li{clear:both;}'+customCss.join('\n'), me.document);
+    });
+    //单独处理剪切的问题
+    me.ready(function(){
+        domUtils.on(me.body,'cut',function(){
+            setTimeout(function(){
+                var rng = me.selection.getRange(),li;
+                //trace:3416
+                if(!rng.collapsed){
+                    if(li = domUtils.findParentByTagName(rng.startContainer,'li',true)){
+                        if(!li.nextSibling && domUtils.isEmptyBlock(li)){
+                            var pn = li.parentNode,node;
+                            if(node = pn.previousSibling){
+                                domUtils.remove(pn);
+                                rng.setStartAtLast(node).collapse(true);
+                                rng.select(true);
+                            }else if(node = pn.nextSibling){
+                                domUtils.remove(pn);
+                                rng.setStartAtFirst(node).collapse(true);
+                                rng.select(true);
+                            }else{
+                                var tmpNode = me.document.createElement('p');
+                                domUtils.fillNode(me.document,tmpNode);
+                                pn.parentNode.insertBefore(tmpNode,pn);
+                                domUtils.remove(pn);
+                                rng.setStart(tmpNode,0).collapse(true);
+                                rng.select(true);
+                            }
+                        }
+                    }
+                }
+
+            })
+        })
+    });
+
+    function getStyle(node){
+        var cls = node.className;
+        if(domUtils.hasClass(node,/custom_/)){
+            return cls.match(/custom_(\w+)/)[1]
+        }
+        return domUtils.getStyle(node, 'list-style-type')
+
+    }
+
+    me.addListener('beforepaste',function(type,html){
+        var me = this,
+            rng = me.selection.getRange(),li;
+        var root = UE.htmlparser(html.html,true);
+        if(li = domUtils.findParentByTagName(rng.startContainer,'li',true)){
+            var list = li.parentNode,tagName = list.tagName == 'OL' ? 'ul':'ol';
+            utils.each(root.getNodesByTagName(tagName),function(n){
+                n.tagName = list.tagName;
+                n.setAttr();
+                if(n.parentNode === root){
+                    type = getStyle(list) || (list.tagName == 'OL' ? 'decimal' : 'disc')
+                }else{
+                    var className = n.parentNode.getAttr('class');
+                    if(className && /custom_/.test(className)){
+                        type = className.match(/custom_(\w+)/)[1]
+                    }else{
+                        type = n.parentNode.getStyle('list-style-type');
+                    }
+                    if(!type){
+                        type = list.tagName == 'OL' ? 'decimal' : 'disc';
+                    }
+                }
+                var index = utils.indexOf(listStyle[list.tagName], type);
+                if(n.parentNode !== root)
+                    index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
+                var currentStyle = listStyle[list.tagName][index];
+                if(customStyle[currentStyle]){
+                    n.setAttr('class', 'custom_' + currentStyle)
+
+                }else{
+                    n.setStyle('list-style-type',currentStyle)
+                }
+            })
+
+        }
+
+        html.html = root.toHtml();
+    });
+    //导出时，去掉p标签
+    me.getOpt('disablePInList') === true && me.addOutputRule(function(root){
+        utils.each(root.getNodesByTagName('li'),function(li){
+            var newChildrens = [],index=0;
+            utils.each(li.children,function(n){
+                if(n.tagName == 'p'){
+                    var tmpNode;
+                    while(tmpNode = n.children.pop()) {
+                        newChildrens.splice(index,0,tmpNode);
+                        tmpNode.parentNode = li;
+                        lastNode = tmpNode;
+                    }
+                    tmpNode = newChildrens[newChildrens.length-1];
+                    if(!tmpNode || tmpNode.type != 'element' || tmpNode.tagName != 'br'){
+                        var br = UE.uNode.createElement('br');
+                        br.parentNode = li;
+                        newChildrens.push(br);
+                    }
+
+                    index = newChildrens.length;
+                }
+            });
+            if(newChildrens.length){
+                li.children = newChildrens;
+            }
+        });
+    });
+    //进入编辑器的li要套p标签
+    me.addInputRule(function(root){
+        utils.each(root.getNodesByTagName('li'),function(li){
+            var tmpP = UE.uNode.createElement('p');
+            for(var i= 0,ci;ci=li.children[i];){
+                if(ci.type == 'text' || dtd.p[ci.tagName]){
+                    tmpP.appendChild(ci);
+                }else{
+                    if(tmpP.firstChild()){
+                        li.insertBefore(tmpP,ci);
+                        tmpP = UE.uNode.createElement('p');
+                        i = i + 2;
+                    }else{
+                        i++;
+                    }
+
+                }
+            }
+            if(tmpP.firstChild() && !tmpP.parentNode || !li.firstChild()){
+                li.appendChild(tmpP);
+            }
+            //trace:3357
+            //p不能为空
+            if (!tmpP.firstChild()) {
+                tmpP.innerHTML(browser.ie ? '&nbsp;' : '<br/>')
+            }
+            //去掉末尾的空白
+            var p = li.firstChild();
+            var lastChild = p.lastChild();
+            if(lastChild && lastChild.type == 'text' && /^\s*$/.test(lastChild.data)){
+                p.removeChild(lastChild)
+            }
+        });
+        if(me.options.autoTransWordToList){
+            var orderlisttype = {
+                    'num1':/^\d+\)/,
+                    'decimal':/^\d+\./,
+                    'lower-alpha':/^[a-z]+\)/,
+                    'upper-alpha':/^[A-Z]+\./,
+                    'cn':/^[\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+[\u3001]/,
+                    'cn2':/^\([\u4E00\u4E8C\u4E09\u56DB\u516d\u4e94\u4e03\u516b\u4e5d]+\)/
+                },
+                unorderlisttype = {
+                    'square':'n'
+                };
+            function checkListType(content,container){
+                var span = container.firstChild();
+                if(span &&  span.type == 'element' && span.tagName == 'span' && /Wingdings|Symbol/.test(span.getStyle('font-family'))){
+                    for(var p in unorderlisttype){
+                        if(unorderlisttype[p] == span.data){
+                            return p
+                        }
+                    }
+                    return 'disc'
+                }
+                for(var p in orderlisttype){
+                    if(orderlisttype[p].test(content)){
+                        return p;
+                    }
+                }
+
+            }
+            utils.each(root.getNodesByTagName('p'),function(node){
+                if(node.getAttr('class') != 'MsoListParagraph'){
+                    return
+                }
+
+                //word粘贴过来的会带有margin要去掉,但这样也可能会误命中一些央视
+                node.setStyle('margin','');
+                node.setStyle('margin-left','');
+                node.setAttr('class','');
+
+                function appendLi(list,p,type){
+                    if(list.tagName == 'ol'){
+                        if(browser.ie){
+                            var first = p.firstChild();
+                            if(first.type =='element' && first.tagName == 'span' && orderlisttype[type].test(first.innerText())){
+                                p.removeChild(first);
+                            }
+                        }else{
+                            p.innerHTML(p.innerHTML().replace(orderlisttype[type],''));
+                        }
+                    }else{
+                        p.removeChild(p.firstChild())
+                    }
+
+                    var li = UE.uNode.createElement('li');
+                    li.appendChild(p);
+                    list.appendChild(li);
+                }
+                var tmp = node,type,cacheNode = node;
+
+                if(node.parentNode.tagName != 'li' && (type = checkListType(node.innerText(),node))){
+
+                    var list = UE.uNode.createElement(me.options.insertorderedlist.hasOwnProperty(type) ? 'ol' : 'ul');
+                    if(customStyle[type]){
+                        list.setAttr('class','custom_'+type)
+                    }else{
+                        list.setStyle('list-style-type',type)
+                    }
+                    while(node && node.parentNode.tagName != 'li' && checkListType(node.innerText(),node)){
+                        tmp = node.nextSibling();
+                        if(!tmp){
+                            node.parentNode.insertBefore(list,node)
+                        }
+                        appendLi(list,node,type);
+                        node = tmp;
+                    }
+                    if(!list.parentNode && node && node.parentNode){
+                        node.parentNode.insertBefore(list,node)
+                    }
+                }
+                var span = cacheNode.firstChild();
+                if(span && span.type == 'element' && span.tagName == 'span' && /^\s*(&nbsp;)+\s*$/.test(span.innerText())){
+                    span.parentNode.removeChild(span)
+                }
+            })
+        }
+
+    });
+
+    //调整索引标签
+    me.addListener('contentchange',function(){
+        adjustListStyle(me.document)
+    });
+
+    function adjustListStyle(doc,ignore){
+        utils.each(domUtils.getElementsByTagName(doc,'ol ul'),function(node){
+
+            if(!domUtils.inDoc(node,doc))
+                return;
+
+            var parent = node.parentNode;
+            if(parent.tagName == node.tagName){
+                var nodeStyleType = getStyle(node) || (node.tagName == 'OL' ? 'decimal' : 'disc'),
+                    parentStyleType = getStyle(parent) || (parent.tagName == 'OL' ? 'decimal' : 'disc');
+                if(nodeStyleType == parentStyleType){
+                    var styleIndex = utils.indexOf(listStyle[node.tagName], nodeStyleType);
+                    styleIndex = styleIndex + 1 == listStyle[node.tagName].length ? 0 : styleIndex + 1;
+                    setListStyle(node,listStyle[node.tagName][styleIndex])
+                }
+
+            }
+            var index = 0,type = 2;
+            if( domUtils.hasClass(node,/custom_/)){
+                if(!(/[ou]l/i.test(parent.tagName) && domUtils.hasClass(parent,/custom_/))){
+                    type = 1;
+                }
+            }else{
+                if(/[ou]l/i.test(parent.tagName) && domUtils.hasClass(parent,/custom_/)){
+                    type = 3;
+                }
+            }
+
+            var style = domUtils.getStyle(node, 'list-style-type');
+            style && (node.style.cssText = 'list-style-type:' + style);
+            node.className = utils.trim(node.className.replace(/list-paddingleft-\w+/,'')) + ' list-paddingleft-' + type;
+            utils.each(domUtils.getElementsByTagName(node,'li'),function(li){
+                li.style.cssText && (li.style.cssText = '');
+                if(!li.firstChild){
+                    domUtils.remove(li);
+                    return;
+                }
+                if(li.parentNode !== node){
+                    return;
+                }
+                index++;
+                if(domUtils.hasClass(node,/custom_/) ){
+                    var paddingLeft = 1,currentStyle = getStyle(node);
+                    if(node.tagName == 'OL'){
+                        if(currentStyle){
+                            switch(currentStyle){
+                                case 'cn' :
+                                case 'cn1':
+                                case 'cn2':
+                                    if(index > 10 && (index % 10 == 0 || index > 10 && index < 20)){
+                                        paddingLeft = 2
+                                    }else if(index > 20){
+                                        paddingLeft = 3
+                                    }
+                                    break;
+                                case 'num2' :
+                                    if(index > 9){
+                                        paddingLeft = 2
+                                    }
+                            }
+                        }
+                        li.className = 'list-'+customStyle[currentStyle]+ index + ' ' + 'list-'+currentStyle+'-paddingleft-' + paddingLeft;
+                    }else{
+                        li.className = 'list-'+customStyle[currentStyle]  + ' ' + 'list-'+currentStyle+'-paddingleft';
+                    }
+                }else{
+                    li.className = li.className.replace(/list-[\w\-]+/gi,'');
+                }
+                var className = li.getAttribute('class');
+                if(className !== null && !className.replace(/\s/g,'')){
+                    domUtils.removeAttributes(li,'class')
+                }
+            });
+            !ignore && adjustList(node,node.tagName.toLowerCase(),getStyle(node)||domUtils.getStyle(node, 'list-style-type'),true);
+        })
+    }
+    function adjustList(list, tag, style,ignoreEmpty) {
+        var nextList = list.nextSibling;
+        if (nextList && nextList.nodeType == 1 && nextList.tagName.toLowerCase() == tag && (getStyle(nextList) || domUtils.getStyle(nextList, 'list-style-type') || (tag == 'ol' ? 'decimal' : 'disc')) == style) {
+            domUtils.moveChild(nextList, list);
+            if (nextList.childNodes.length == 0) {
+                domUtils.remove(nextList);
+            }
+        }
+        if(nextList && domUtils.isFillChar(nextList)){
+            domUtils.remove(nextList);
+        }
+        var preList = list.previousSibling;
+        if (preList && preList.nodeType == 1 && preList.tagName.toLowerCase() == tag && (getStyle(preList) || domUtils.getStyle(preList, 'list-style-type') || (tag == 'ol' ? 'decimal' : 'disc')) == style) {
+            domUtils.moveChild(list, preList);
+        }
+        if(preList && domUtils.isFillChar(preList)){
+            domUtils.remove(preList);
+        }
+        !ignoreEmpty && domUtils.isEmptyBlock(list) && domUtils.remove(list);
+        if(getStyle(list)){
+            adjustListStyle(list.ownerDocument,true)
+        }
+    }
+
+    function setListStyle(list,style){
+        if(customStyle[style]){
+            list.className = 'custom_' + style;
+        }
+        try{
+            domUtils.setStyle(list, 'list-style-type', style);
+        }catch(e){}
+    }
+    function clearEmptySibling(node) {
+        var tmpNode = node.previousSibling;
+        if (tmpNode && domUtils.isEmptyBlock(tmpNode)) {
+            domUtils.remove(tmpNode);
+        }
+        tmpNode = node.nextSibling;
+        if (tmpNode && domUtils.isEmptyBlock(tmpNode)) {
+            domUtils.remove(tmpNode);
+        }
+    }
+
+    me.addListener('keydown', function (type, evt) {
+        function preventAndSave() {
+            evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+            me.fireEvent('contentchange');
+            me.undoManger && me.undoManger.save();
+        }
+        function findList(node,filterFn){
+            while(node && !domUtils.isBody(node)){
+                if(filterFn(node)){
+                    return null
+                }
+                if(node.nodeType == 1 && /[ou]l/i.test(node.tagName)){
+                    return node;
+                }
+                node = node.parentNode;
+            }
+            return null;
+        }
+        var keyCode = evt.keyCode || evt.which;
+        if (keyCode == 13 && !evt.shiftKey) {//回车
+            var rng = me.selection.getRange(),
+                parent = domUtils.findParent(rng.startContainer,function(node){return domUtils.isBlockElm(node)},true),
+                li = domUtils.findParentByTagName(rng.startContainer,'li',true);
+            if(parent && parent.tagName != 'PRE' && !li){
+                var html = parent.innerHTML.replace(new RegExp(domUtils.fillChar, 'g'),'');
+                if(/^\s*1\s*\.[^\d]/.test(html)){
+                    parent.innerHTML = html.replace(/^\s*1\s*\./,'');
+                    rng.setStartAtLast(parent).collapse(true).select();
+                    me.__hasEnterExecCommand = true;
+                    me.execCommand('insertorderedlist');
+                    me.__hasEnterExecCommand = false;
+                }
+            }
+            var range = me.selection.getRange(),
+                start = findList(range.startContainer,function (node) {
+                    return node.tagName == 'TABLE';
+                }),
+                end = range.collapsed ? start : findList(range.endContainer,function (node) {
+                    return node.tagName == 'TABLE';
+                });
+
+            if (start && end && start === end) {
+
+                if (!range.collapsed) {
+                    start = domUtils.findParentByTagName(range.startContainer, 'li', true);
+                    end = domUtils.findParentByTagName(range.endContainer, 'li', true);
+                    if (start && end && start === end) {
+                        range.deleteContents();
+                        li = domUtils.findParentByTagName(range.startContainer, 'li', true);
+                        if (li && domUtils.isEmptyBlock(li)) {
+
+                            pre = li.previousSibling;
+                            next = li.nextSibling;
+                            p = me.document.createElement('p');
+
+                            domUtils.fillNode(me.document, p);
+                            parentList = li.parentNode;
+                            if (pre && next) {
+                                range.setStart(next, 0).collapse(true).select(true);
+                                domUtils.remove(li);
+
+                            } else {
+                                if (!pre && !next || !pre) {
+
+                                    parentList.parentNode.insertBefore(p, parentList);
+
+
+                                } else {
+                                    li.parentNode.parentNode.insertBefore(p, parentList.nextSibling);
+                                }
+                                domUtils.remove(li);
+                                if (!parentList.firstChild) {
+                                    domUtils.remove(parentList);
+                                }
+                                range.setStart(p, 0).setCursor();
+
+
+                            }
+                            preventAndSave();
+                            return;
+
+                        }
+                    } else {
+                        var tmpRange = range.cloneRange(),
+                            bk = tmpRange.collapse(false).createBookmark();
+
+                        range.deleteContents();
+                        tmpRange.moveToBookmark(bk);
+                        var li = domUtils.findParentByTagName(tmpRange.startContainer, 'li', true);
+
+                        clearEmptySibling(li);
+                        tmpRange.select();
+                        preventAndSave();
+                        return;
+                    }
+                }
+
+
+                li = domUtils.findParentByTagName(range.startContainer, 'li', true);
+
+                if (li) {
+                    if (domUtils.isEmptyBlock(li)) {
+                        bk = range.createBookmark();
+                        var parentList = li.parentNode;
+                        if (li !== parentList.lastChild) {
+                            domUtils.breakParent(li, parentList);
+                            clearEmptySibling(li);
+                        } else {
+
+                            parentList.parentNode.insertBefore(li, parentList.nextSibling);
+                            if (domUtils.isEmptyNode(parentList)) {
+                                domUtils.remove(parentList);
+                            }
+                        }
+                        //嵌套不处理
+                        if (!dtd.$list[li.parentNode.tagName]) {
+
+                            if (!domUtils.isBlockElm(li.firstChild)) {
+                                p = me.document.createElement('p');
+                                li.parentNode.insertBefore(p, li);
+                                while (li.firstChild) {
+                                    p.appendChild(li.firstChild);
+                                }
+                                domUtils.remove(li);
+                            } else {
+                                domUtils.remove(li, true);
+                            }
+                        }
+                        range.moveToBookmark(bk).select();
+
+
+                    } else {
+                        var first = li.firstChild;
+                        if (!first || !domUtils.isBlockElm(first)) {
+                            var p = me.document.createElement('p');
+
+                            !li.firstChild && domUtils.fillNode(me.document, p);
+                            while (li.firstChild) {
+
+                                p.appendChild(li.firstChild);
+                            }
+                            li.appendChild(p);
+                            first = p;
+                        }
+
+                        var span = me.document.createElement('span');
+
+                        range.insertNode(span);
+                        domUtils.breakParent(span, li);
+
+                        var nextLi = span.nextSibling;
+                        first = nextLi.firstChild;
+
+                        if (!first) {
+                            p = me.document.createElement('p');
+
+                            domUtils.fillNode(me.document, p);
+                            nextLi.appendChild(p);
+                            first = p;
+                        }
+                        if (domUtils.isEmptyNode(first)) {
+                            first.innerHTML = '';
+                            domUtils.fillNode(me.document, first);
+                        }
+
+                        range.setStart(first, 0).collapse(true).shrinkBoundary().select();
+                        domUtils.remove(span);
+                        var pre = nextLi.previousSibling;
+                        if (pre && domUtils.isEmptyBlock(pre)) {
+                            pre.innerHTML = '<p></p>';
+                            domUtils.fillNode(me.document, pre.firstChild);
+                        }
+
+                    }
+//                        }
+                    preventAndSave();
+                }
+
+
+            }
+
+
+        }
+        if (keyCode == 8) {
+            //修中ie中li下的问题
+            range = me.selection.getRange();
+            if (range.collapsed && domUtils.isStartInblock(range)) {
+                tmpRange = range.cloneRange().trimBoundary();
+                li = domUtils.findParentByTagName(range.startContainer, 'li', true);
+                //要在li的最左边，才能处理
+                if (li && domUtils.isStartInblock(tmpRange)) {
+                    start = domUtils.findParentByTagName(range.startContainer, 'p', true);
+                    if (start && start !== li.firstChild) {
+                        var parentList = domUtils.findParentByTagName(start,['ol','ul']);
+                        domUtils.breakParent(start,parentList);
+                        clearEmptySibling(start);
+                        me.fireEvent('contentchange');
+                        range.setStart(start,0).setCursor(false,true);
+                        me.fireEvent('saveScene');
+                        domUtils.preventDefault(evt);
+                        return;
+                    }
+
+                    if (li && (pre = li.previousSibling)) {
+                        if (keyCode == 46 && li.childNodes.length) {
+                            return;
+                        }
+                        //有可能上边的兄弟节点是个2级菜单，要追加到2级菜单的最后的li
+                        if (dtd.$list[pre.tagName]) {
+                            pre = pre.lastChild;
+                        }
+                        me.undoManger && me.undoManger.save();
+                        first = li.firstChild;
+                        if (domUtils.isBlockElm(first)) {
+                            if (domUtils.isEmptyNode(first)) {
+//                                    range.setEnd(pre, pre.childNodes.length).shrinkBoundary().collapse().select(true);
+                                pre.appendChild(first);
+                                range.setStart(first, 0).setCursor(false, true);
+                                //first不是唯一的节点
+                                while (li.firstChild) {
+                                    pre.appendChild(li.firstChild);
+                                }
+                            } else {
+
+                                span = me.document.createElement('span');
+                                range.insertNode(span);
+                                //判断pre是否是空的节点,如果是<p><br/></p>类型的空节点，干掉p标签防止它占位
+                                if (domUtils.isEmptyBlock(pre)) {
+                                    pre.innerHTML = '';
+                                }
+                                domUtils.moveChild(li, pre);
+                                range.setStartBefore(span).collapse(true).select(true);
+
+                                domUtils.remove(span);
+
+                            }
+                        } else {
+                            if (domUtils.isEmptyNode(li)) {
+                                var p = me.document.createElement('p');
+                                pre.appendChild(p);
+                                range.setStart(p, 0).setCursor();
+//                                    range.setEnd(pre, pre.childNodes.length).shrinkBoundary().collapse().select(true);
+                            } else {
+                                range.setEnd(pre, pre.childNodes.length).collapse().select(true);
+                                while (li.firstChild) {
+                                    pre.appendChild(li.firstChild);
+                                }
+                            }
+                        }
+                        domUtils.remove(li);
+                        me.fireEvent('contentchange');
+                        me.fireEvent('saveScene');
+                        domUtils.preventDefault(evt);
+                        return;
+
+                    }
+                    //trace:980
+
+                    if (li && !li.previousSibling) {
+                        var parentList = li.parentNode;
+                        var bk = range.createBookmark();
+                        if(domUtils.isTagNode(parentList.parentNode,'ol ul')){
+                            parentList.parentNode.insertBefore(li,parentList);
+                            if(domUtils.isEmptyNode(parentList)){
+                                domUtils.remove(parentList)
+                            }
+                        }else{
+
+                            while(li.firstChild){
+                                parentList.parentNode.insertBefore(li.firstChild,parentList);
+                            }
+
+                            domUtils.remove(li);
+                            if(domUtils.isEmptyNode(parentList)){
+                                domUtils.remove(parentList)
+                            }
+
+                        }
+                        range.moveToBookmark(bk).setCursor(false,true);
+                        me.fireEvent('contentchange');
+                        me.fireEvent('saveScene');
+                        domUtils.preventDefault(evt);
+                        return;
+
+                    }
+
+
+                }
+
+
+            }
+
+        }
+    });
+
+    me.addListener('keyup',function(type, evt){
+        var keyCode = evt.keyCode || evt.which;
+        if (keyCode == 8) {
+            var rng = me.selection.getRange(),list;
+            if(list = domUtils.findParentByTagName(rng.startContainer,['ol', 'ul'],true)){
+                adjustList(list,list.tagName.toLowerCase(),getStyle(list)||domUtils.getComputedStyle(list,'list-style-type'),true)
+            }
+        }
+    });
+    //处理tab键
+    me.addListener('tabkeydown',function(){
+
+        var range = me.selection.getRange();
+
+        //控制级数
+        function checkLevel(li){
+            if(me.options.maxListLevel != -1){
+                var level = li.parentNode,levelNum = 0;
+                while(/[ou]l/i.test(level.tagName)){
+                    levelNum++;
+                    level = level.parentNode;
+                }
+                if(levelNum >= me.options.maxListLevel){
+                    return true;
+                }
+            }
+        }
+        //只以开始为准
+        //todo 后续改进
+        var li = domUtils.findParentByTagName(range.startContainer, 'li', true);
+        if(li){
+
+            var bk;
+            if(range.collapsed){
+                if(checkLevel(li))
+                    return true;
+                var parentLi = li.parentNode,
+                    list = me.document.createElement(parentLi.tagName),
+                    index = utils.indexOf(listStyle[list.tagName], getStyle(parentLi)||domUtils.getComputedStyle(parentLi, 'list-style-type'));
+                index = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
+                var currentStyle = listStyle[list.tagName][index];
+                setListStyle(list,currentStyle);
+                if(domUtils.isStartInblock(range)){
+                    me.fireEvent('saveScene');
+                    bk = range.createBookmark();
+                    parentLi.insertBefore(list, li);
+                    list.appendChild(li);
+                    adjustList(list,list.tagName.toLowerCase(),currentStyle);
+                    me.fireEvent('contentchange');
+                    range.moveToBookmark(bk).select(true);
+                    return true;
+                }
+            }else{
+                me.fireEvent('saveScene');
+                bk = range.createBookmark();
+                for(var i= 0,closeList,parents = domUtils.findParents(li),ci;ci=parents[i++];){
+                    if(domUtils.isTagNode(ci,'ol ul')){
+                        closeList = ci;
+                        break;
+                    }
+                }
+                var current = li;
+                if(bk.end){
+                    while(current && !(domUtils.getPosition(current, bk.end) & domUtils.POSITION_FOLLOWING)){
+                        if(checkLevel(current)){
+                            current = domUtils.getNextDomNode(current,false,null,function(node){return node !== closeList});
+                            continue;
+                        }
+                        var parentLi = current.parentNode,
+                            list = me.document.createElement(parentLi.tagName),
+                            index = utils.indexOf(listStyle[list.tagName], getStyle(parentLi)||domUtils.getComputedStyle(parentLi, 'list-style-type'));
+                        var currentIndex = index + 1 == listStyle[list.tagName].length ? 0 : index + 1;
+                        var currentStyle = listStyle[list.tagName][currentIndex];
+                        setListStyle(list,currentStyle);
+                        parentLi.insertBefore(list, current);
+                        while(current && !(domUtils.getPosition(current, bk.end) & domUtils.POSITION_FOLLOWING)){
+                            li = current.nextSibling;
+                            list.appendChild(current);
+                            if(!li || domUtils.isTagNode(li,'ol ul')){
+                                if(li){
+                                    while(li = li.firstChild){
+                                        if(li.tagName == 'LI'){
+                                            break;
+                                        }
+                                    }
+                                }else{
+                                    li = domUtils.getNextDomNode(current,false,null,function(node){return node !== closeList});
+                                }
+                                break;
+                            }
+                            current = li;
+                        }
+                        adjustList(list,list.tagName.toLowerCase(),currentStyle);
+                        current = li;
+                    }
+                }
+                me.fireEvent('contentchange');
+                range.moveToBookmark(bk).select();
+                return true;
+            }
+        }
+
+    });
+    function getLi(start){
+        while(start && !domUtils.isBody(start)){
+            if(start.nodeName == 'TABLE'){
+                return null;
+            }
+            if(start.nodeName == 'LI'){
+                return start
+            }
+            start = start.parentNode;
+        }
+    }
+
+    /**
+     * 有序列表，与“insertunorderedlist”命令互斥
+     * @command insertorderedlist
+     * @method execCommand
+     * @param { String } command 命令字符串
+     * @param { String } style 插入的有序列表类型，值为：decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
+     * @example
+     * ```javascript
+     * editor.execCommand( 'insertorderedlist','decimal');
+     * ```
+     */
+    /**
+     * 查询当前选区内容是否有序列表
+     * @command insertorderedlist
+     * @method queryCommandState
+     * @param { String } cmd 命令字符串
+     * @return { int } 如果当前选区是有序列表返回1，否则返回0
+     * @example
+     * ```javascript
+     * editor.queryCommandState( 'insertorderedlist' );
+     * ```
+     */
+    /**
+     * 查询当前选区内容是否有序列表
+     * @command insertorderedlist
+     * @method queryCommandValue
+     * @param { String } cmd 命令字符串
+     * @return { String } 返回当前有序列表的类型，值为null或decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
+     * @example
+     * ```javascript
+     * editor.queryCommandValue( 'insertorderedlist' );
+     * ```
+     */
+
+    /**
+     * 无序列表，与“insertorderedlist”命令互斥
+     * @command insertunorderedlist
+     * @method execCommand
+     * @param { String } command 命令字符串
+     * @param { String } style 插入的无序列表类型，值为：circle,disc,square,dash,dot
+     * @example
+     * ```javascript
+     * editor.execCommand( 'insertunorderedlist','circle');
+     * ```
+     */
+    /**
+     * 查询当前是否有word文档粘贴进来的图片
+     * @command insertunorderedlist
+     * @method insertunorderedlist
+     * @param { String } command 命令字符串
+     * @return { int } 如果当前选区是无序列表返回1，否则返回0
+     * @example
+     * ```javascript
+     * editor.queryCommandState( 'insertunorderedlist' );
+     * ```
+     */
+    /**
+     * 查询当前选区内容是否有序列表
+     * @command insertunorderedlist
+     * @method queryCommandValue
+     * @param { String } command 命令字符串
+     * @return { String } 返回当前无序列表的类型，值为null或circle,disc,square,dash,dot
+     * @example
+     * ```javascript
+     * editor.queryCommandValue( 'insertunorderedlist' );
+     * ```
+     */
+
+    me.commands['insertorderedlist'] =
+    me.commands['insertunorderedlist'] = {
+            execCommand:function (command, style) {
+
+                if (!style) {
+                    style = command.toLowerCase() == 'insertorderedlist' ? 'decimal' : 'disc';
+                }
+                var me = this,
+                    range = this.selection.getRange(),
+                    filterFn = function (node) {
+                        return   node.nodeType == 1 ? node.tagName.toLowerCase() != 'br' : !domUtils.isWhitespace(node);
+                    },
+                    tag = command.toLowerCase() == 'insertorderedlist' ? 'ol' : 'ul',
+                    frag = me.document.createDocumentFragment();
+                //去掉是因为会出现选到末尾，导致adjustmentBoundary缩到ol/ul的位置
+                //range.shrinkBoundary();//.adjustmentBoundary();
+                range.adjustmentBoundary().shrinkBoundary();
+                var bko = range.createBookmark(true),
+                    start = getLi(me.document.getElementById(bko.start)),
+                    modifyStart = 0,
+                    end =  getLi(me.document.getElementById(bko.end)),
+                    modifyEnd = 0,
+                    startParent, endParent,
+                    list, tmp;
+
+                if (start || end) {
+                    start && (startParent = start.parentNode);
+                    if (!bko.end) {
+                        end = start;
+                    }
+                    end && (endParent = end.parentNode);
+
+                    if (startParent === endParent) {
+                        while (start !== end) {
+                            tmp = start;
+                            start = start.nextSibling;
+                            if (!domUtils.isBlockElm(tmp.firstChild)) {
+                                var p = me.document.createElement('p');
+                                while (tmp.firstChild) {
+                                    p.appendChild(tmp.firstChild);
+                                }
+                                tmp.appendChild(p);
+                            }
+                            frag.appendChild(tmp);
+                        }
+                        tmp = me.document.createElement('span');
+                        startParent.insertBefore(tmp, end);
+                        if (!domUtils.isBlockElm(end.firstChild)) {
+                            p = me.document.createElement('p');
+                            while (end.firstChild) {
+                                p.appendChild(end.firstChild);
+                            }
+                            end.appendChild(p);
+                        }
+                        frag.appendChild(end);
+                        domUtils.breakParent(tmp, startParent);
+                        if (domUtils.isEmptyNode(tmp.previousSibling)) {
+                            domUtils.remove(tmp.previousSibling);
+                        }
+                        if (domUtils.isEmptyNode(tmp.nextSibling)) {
+                            domUtils.remove(tmp.nextSibling)
+                        }
+                        var nodeStyle = getStyle(startParent) || domUtils.getComputedStyle(startParent, 'list-style-type') || (command.toLowerCase() == 'insertorderedlist' ? 'decimal' : 'disc');
+                        if (startParent.tagName.toLowerCase() == tag && nodeStyle == style) {
+                            for (var i = 0, ci, tmpFrag = me.document.createDocumentFragment(); ci = frag.firstChild;) {
+                                if(domUtils.isTagNode(ci,'ol ul')){
+//                                  删除时，子列表不处理
+//                                  utils.each(domUtils.getElementsByTagName(ci,'li'),function(li){
+//                                        while(li.firstChild){
+//                                            tmpFrag.appendChild(li.firstChild);
+//                                        }
+//
+//                                    });
+                                    tmpFrag.appendChild(ci);
+                                }else{
+                                    while (ci.firstChild) {
+
+                                        tmpFrag.appendChild(ci.firstChild);
+                                        domUtils.remove(ci);
+                                    }
+                                }
+
+                            }
+                            tmp.parentNode.insertBefore(tmpFrag, tmp);
+                        } else {
+                            list = me.document.createElement(tag);
+                            setListStyle(list,style);
+                            list.appendChild(frag);
+                            tmp.parentNode.insertBefore(list, tmp);
+                        }
+
+                        domUtils.remove(tmp);
+                        list && adjustList(list, tag, style);
+                        range.moveToBookmark(bko).select();
+                        return;
+                    }
+                    //开始
+                    if (start) {
+                        while (start) {
+                            tmp = start.nextSibling;
+                            if (domUtils.isTagNode(start, 'ol ul')) {
+                                frag.appendChild(start);
+                            } else {
+                                var tmpfrag = me.document.createDocumentFragment(),
+                                    hasBlock = 0;
+                                while (start.firstChild) {
+                                    if (domUtils.isBlockElm(start.firstChild)) {
+                                        hasBlock = 1;
+                                    }
+                                    tmpfrag.appendChild(start.firstChild);
+                                }
+                                if (!hasBlock) {
+                                    var tmpP = me.document.createElement('p');
+                                    tmpP.appendChild(tmpfrag);
+                                    frag.appendChild(tmpP);
+                                } else {
+                                    frag.appendChild(tmpfrag);
+                                }
+                                domUtils.remove(start);
+                            }
+
+                            start = tmp;
+                        }
+                        startParent.parentNode.insertBefore(frag, startParent.nextSibling);
+                        if (domUtils.isEmptyNode(startParent)) {
+                            range.setStartBefore(startParent);
+                            domUtils.remove(startParent);
+                        } else {
+                            range.setStartAfter(startParent);
+                        }
+                        modifyStart = 1;
+                    }
+
+                    if (end && domUtils.inDoc(endParent, me.document)) {
+                        //结束
+                        start = endParent.firstChild;
+                        while (start && start !== end) {
+                            tmp = start.nextSibling;
+                            if (domUtils.isTagNode(start, 'ol ul')) {
+                                frag.appendChild(start);
+                            } else {
+                                tmpfrag = me.document.createDocumentFragment();
+                                hasBlock = 0;
+                                while (start.firstChild) {
+                                    if (domUtils.isBlockElm(start.firstChild)) {
+                                        hasBlock = 1;
+                                    }
+                                    tmpfrag.appendChild(start.firstChild);
+                                }
+                                if (!hasBlock) {
+                                    tmpP = me.document.createElement('p');
+                                    tmpP.appendChild(tmpfrag);
+                                    frag.appendChild(tmpP);
+                                } else {
+                                    frag.appendChild(tmpfrag);
+                                }
+                                domUtils.remove(start);
+                            }
+                            start = tmp;
+                        }
+                        var tmpDiv = domUtils.createElement(me.document, 'div', {
+                            'tmpDiv':1
+                        });
+                        domUtils.moveChild(end, tmpDiv);
+
+                        frag.appendChild(tmpDiv);
+                        domUtils.remove(end);
+                        endParent.parentNode.insertBefore(frag, endParent);
+                        range.setEndBefore(endParent);
+                        if (domUtils.isEmptyNode(endParent)) {
+                            domUtils.remove(endParent);
+                        }
+
+                        modifyEnd = 1;
+                    }
+
+
+                }
+
+                if (!modifyStart) {
+                    range.setStartBefore(me.document.getElementById(bko.start));
+                }
+                if (bko.end && !modifyEnd) {
+                    range.setEndAfter(me.document.getElementById(bko.end));
+                }
+                range.enlarge(true, function (node) {
+                    return notExchange[node.tagName];
+                });
+
+                frag = me.document.createDocumentFragment();
+
+                var bk = range.createBookmark(),
+                    current = domUtils.getNextDomNode(bk.start, false, filterFn),
+                    tmpRange = range.cloneRange(),
+                    tmpNode,
+                    block = domUtils.isBlockElm;
+
+                while (current && current !== bk.end && (domUtils.getPosition(current, bk.end) & domUtils.POSITION_PRECEDING)) {
+
+                    if (current.nodeType == 3 || dtd.li[current.tagName]) {
+                        if (current.nodeType == 1 && dtd.$list[current.tagName]) {
+                            while (current.firstChild) {
+                                frag.appendChild(current.firstChild);
+                            }
+                            tmpNode = domUtils.getNextDomNode(current, false, filterFn);
+                            domUtils.remove(current);
+                            current = tmpNode;
+                            continue;
+
+                        }
+                        tmpNode = current;
+                        tmpRange.setStartBefore(current);
+
+                        while (current && current !== bk.end && (!block(current) || domUtils.isBookmarkNode(current) )) {
+                            tmpNode = current;
+                            current = domUtils.getNextDomNode(current, false, null, function (node) {
+                                return !notExchange[node.tagName];
+                            });
+                        }
+
+                        if (current && block(current)) {
+                            tmp = domUtils.getNextDomNode(tmpNode, false, filterFn);
+                            if (tmp && domUtils.isBookmarkNode(tmp)) {
+                                current = domUtils.getNextDomNode(tmp, false, filterFn);
+                                tmpNode = tmp;
+                            }
+                        }
+                        tmpRange.setEndAfter(tmpNode);
+
+                        current = domUtils.getNextDomNode(tmpNode, false, filterFn);
+
+                        var li = range.document.createElement('li');
+
+                        li.appendChild(tmpRange.extractContents());
+                        if(domUtils.isEmptyNode(li)){
+                            var tmpNode = range.document.createElement('p');
+                            while(li.firstChild){
+                                tmpNode.appendChild(li.firstChild)
+                            }
+                            li.appendChild(tmpNode);
+                        }
+                        frag.appendChild(li);
+                    } else {
+                        current = domUtils.getNextDomNode(current, true, filterFn);
+                    }
+                }
+                range.moveToBookmark(bk).collapse(true);
+                list = me.document.createElement(tag);
+                setListStyle(list,style);
+                list.appendChild(frag);
+                range.insertNode(list);
+                //当前list上下看能否合并
+                adjustList(list, tag, style);
+                //去掉冗余的tmpDiv
+                for (var i = 0, ci, tmpDivs = domUtils.getElementsByTagName(list, 'div'); ci = tmpDivs[i++];) {
+                    if (ci.getAttribute('tmpDiv')) {
+                        domUtils.remove(ci, true)
+                    }
+                }
+                range.moveToBookmark(bko).select();
+
+            },
+            queryCommandState:function (command) {
+                var tag = command.toLowerCase() == 'insertorderedlist' ? 'ol' : 'ul';
+                var path = this.selection.getStartElementPath();
+                for(var i= 0,ci;ci = path[i++];){
+                    if(ci.nodeName == 'TABLE'){
+                        return 0
+                    }
+                    if(tag == ci.nodeName.toLowerCase()){
+                        return 1
+                    };
+                }
+                return 0;
+
+            },
+            queryCommandValue:function (command) {
+                var tag = command.toLowerCase() == 'insertorderedlist' ? 'ol' : 'ul';
+                var path = this.selection.getStartElementPath(),
+                    node;
+                for(var i= 0,ci;ci = path[i++];){
+                    if(ci.nodeName == 'TABLE'){
+                        node = null;
+                        break;
+                    }
+                    if(tag == ci.nodeName.toLowerCase()){
+                        node = ci;
+                        break;
+                    };
+                }
+                return node ? getStyle(node) || domUtils.getComputedStyle(node, 'list-style-type') : null;
+            }
+        };
+};
+

@@ -1,1 +1,60 @@
-!function(){var o=baidu.editor.utils,t=baidu.editor.ui.uiUtils,i=baidu.editor.ui.ColorPicker,n=baidu.editor.ui.Popup,e=baidu.editor.ui.SplitButton,r=baidu.editor.ui.ColorButton=function(o){this.initOptions(o),this.initColorButton()};r.prototype={initColorButton:function(){var o=this;this.popup=new n({content:new i({noColorText:o.editor.getLang("clearColor"),editor:o.editor,onpickcolor:function(t,i){o._onPickColor(i)},onpicknocolor:function(t,i){o._onPickNoColor(i)}}),editor:o.editor}),this.initSplitButton()},_SplitButton_postRender:e.prototype.postRender,postRender:function(){this._SplitButton_postRender(),this.getDom("button_body").appendChild(t.createElementByHtml('<div id="'+this.id+'_colorlump" class="edui-colorlump"></div>')),this.getDom().className+=" edui-colorbutton"},setColor:function(o){this.getDom("colorlump").style.backgroundColor=o,this.color=o},_onPickColor:function(o){this.fireEvent("pickcolor",o)!==!1&&(this.setColor(o),this.popup.hide())},_onPickNoColor:function(o){this.fireEvent("picknocolor")!==!1&&this.popup.hide()}},o.inherits(r,e)}();
+///import core
+///import uicore
+///import ui/colorpicker.js
+///import ui/popup.js
+///import ui/splitbutton.js
+(function (){
+    var utils = baidu.editor.utils,
+        uiUtils = baidu.editor.ui.uiUtils,
+        ColorPicker = baidu.editor.ui.ColorPicker,
+        Popup = baidu.editor.ui.Popup,
+        SplitButton = baidu.editor.ui.SplitButton,
+        ColorButton = baidu.editor.ui.ColorButton = function (options){
+            this.initOptions(options);
+            this.initColorButton();
+        };
+    ColorButton.prototype = {
+        initColorButton: function (){
+            var me = this;
+            this.popup = new Popup({
+                content: new ColorPicker({
+                    noColorText: me.editor.getLang("clearColor"),
+                    editor:me.editor,
+                    onpickcolor: function (t, color){
+                        me._onPickColor(color);
+                    },
+                    onpicknocolor: function (t, color){
+                        me._onPickNoColor(color);
+                    }
+                }),
+                editor:me.editor
+            });
+            this.initSplitButton();
+        },
+        _SplitButton_postRender: SplitButton.prototype.postRender,
+        postRender: function (){
+            this._SplitButton_postRender();
+            this.getDom('button_body').appendChild(
+                uiUtils.createElementByHtml('<div id="' + this.id + '_colorlump" class="edui-colorlump"></div>')
+            );
+            this.getDom().className += ' edui-colorbutton';
+        },
+        setColor: function (color){
+            this.getDom('colorlump').style.backgroundColor = color;
+            this.color = color;
+        },
+        _onPickColor: function (color){
+            if (this.fireEvent('pickcolor', color) !== false) {
+                this.setColor(color);
+                this.popup.hide();
+            }
+        },
+        _onPickNoColor: function (color){
+            if (this.fireEvent('picknocolor') !== false) {
+                this.popup.hide();
+            }
+        }
+    };
+    utils.inherits(ColorButton, SplitButton);
+
+})();

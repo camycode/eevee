@@ -1,1 +1,129 @@
-UE.plugin.register("autosave",function(){function e(e){var r;if(!(new Date-t<o)){if(!e.hasContents())return void(a&&n.removePreferences(a));t=new Date,e._saveFlag=null,r=n.body.innerHTML,e.fireEvent("beforeautosave",{content:r})!==!1&&(n.setPreferences(a,r),e.fireEvent("afterautosave",{content:r}))}}var n=this,t=new Date,o=20,a=null;return{defaultOptions:{saveInterval:500},bindEvents:{ready:function(){var e="-drafts-data",t=null;t=n.key?n.key+e:(n.container.parentNode.id||"ue-common")+e,a=(location.protocol+location.host+location.pathname).replace(/[.:\/]/g,"_")+t},contentchange:function(){a&&(n._saveFlag&&window.clearTimeout(n._saveFlag),n.options.saveInterval>0?n._saveFlag=window.setTimeout(function(){e(n)},n.options.saveInterval):e(n))}},commands:{clearlocaldata:{execCommand:function(e,t){a&&n.getPreferences(a)&&n.removePreferences(a)},notNeedUndo:!0,ignoreContentChange:!0},getlocaldata:{execCommand:function(e,t){return a?n.getPreferences(a)||"":""},notNeedUndo:!0,ignoreContentChange:!0},drafts:{execCommand:function(e,t){a&&(n.body.innerHTML=n.getPreferences(a)||"<p>"+domUtils.fillHtml+"</p>",n.focus(!0))},queryCommandState:function(){return a?null===n.getPreferences(a)?-1:0:-1},notNeedUndo:!0,ignoreContentChange:!0}}}});
+UE.plugin.register('autosave', function (){
+
+    var me = this,
+        //无限循环保护
+        lastSaveTime = new Date(),
+        //最小保存间隔时间
+        MIN_TIME = 20,
+        //auto save key
+        saveKey = null;
+
+    function save ( editor ) {
+
+        var saveData;
+
+        if ( new Date() - lastSaveTime < MIN_TIME ) {
+            return;
+        }
+
+        if ( !editor.hasContents() ) {
+            //这里不能调用命令来删除， 会造成事件死循环
+            saveKey && me.removePreferences( saveKey );
+            return;
+        }
+
+        lastSaveTime = new Date();
+
+        editor._saveFlag = null;
+
+        saveData = me.body.innerHTML;
+
+        if ( editor.fireEvent( "beforeautosave", {
+            content: saveData
+        } ) === false ) {
+            return;
+        }
+
+        me.setPreferences( saveKey, saveData );
+
+        editor.fireEvent( "afterautosave", {
+            content: saveData
+        } );
+
+    }
+
+    return {
+        defaultOptions: {
+            //默认间隔时间
+            saveInterval: 500
+        },
+        bindEvents:{
+            'ready':function(){
+
+                var _suffix = "-drafts-data",
+                    key = null;
+
+                if ( me.key ) {
+                    key = me.key + _suffix;
+                } else {
+                    key = ( me.container.parentNode.id || 'ue-common' ) + _suffix;
+                }
+
+                //页面地址+编辑器ID 保持唯一
+                saveKey = ( location.protocol + location.host + location.pathname ).replace( /[.:\/]/g, '_' ) + key;
+
+            },
+
+            'contentchange': function () {
+
+                if ( !saveKey ) {
+                    return;
+                }
+
+                if ( me._saveFlag ) {
+                    window.clearTimeout( me._saveFlag );
+                }
+
+                if ( me.options.saveInterval > 0 ) {
+
+                    me._saveFlag = window.setTimeout( function () {
+
+                        save( me );
+
+                    }, me.options.saveInterval );
+
+                } else {
+
+                    save(me);
+
+                }
+
+
+            }
+        },
+        commands:{
+            'clearlocaldata':{
+                execCommand:function (cmd, name) {
+                    if ( saveKey && me.getPreferences( saveKey ) ) {
+                        me.removePreferences( saveKey )
+                    }
+                },
+                notNeedUndo: true,
+                ignoreContentChange:true
+            },
+
+            'getlocaldata':{
+                execCommand:function (cmd, name) {
+                    return saveKey ? me.getPreferences( saveKey ) || '' : '';
+                },
+                notNeedUndo: true,
+                ignoreContentChange:true
+            },
+
+            'drafts':{
+                execCommand:function (cmd, name) {
+                    if ( saveKey ) {
+                        me.body.innerHTML = me.getPreferences( saveKey ) || '<p>'+domUtils.fillHtml+'</p>';
+                        me.focus(true);
+                    }
+                },
+                queryCommandState: function () {
+                    return saveKey ? ( me.getPreferences( saveKey ) === null ? -1 : 0 ) : -1;
+                },
+                notNeedUndo: true,
+                ignoreContentChange:true
+            }
+        }
+    }
+
+});
