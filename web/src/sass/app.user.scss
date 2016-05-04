@@ -7,4 +7,31 @@
     max-width: 25px;
     max-height: 25px;
   }
+  > table {
+      th {
+        padding: 7px 10px;
+      }
+
+    .col-check{
+      width: 20px;
+    }
+    .col-avatar{
+      width: 50px;
+    }
+    .col-username{
+
+    }
+    .col-email{
+
+    }
+    .col-role{
+      width: 10%;
+    }
+    .col-status{
+
+    }
+    .col-date{
+
+    }
+  }
 }

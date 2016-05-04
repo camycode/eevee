@@ -28,25 +28,26 @@
 
         <div class="right">
             <div class="item handle paginations">
-                <span id="">第1-20位用户，共92位</span>
+                <span id="">第{{ offset_start }}-{{ offset_end }}位用户，共{{ user_total }}位</span>
             </div>
             <div class="ui buttons handle paging">
-                <button class="ui button last"><i class="icon chevron left"></i></button>
-                <button class="ui button next"><i class="icon chevron right"></i></button>
+                <button class="ui button last" ng-click="lastPage()"><i class="icon chevron left"></i></button>
+                <button class="ui button next" ng-click="nextPage()"><i class="icon chevron right"></i></button>
             </div>
         </div>
     </div>
     <table class="ui celled striped table layout no-border click" cellspacing="1" cellpadding="0">
         <thead>
         <tr>
-            <th>
+            <th class="col-check">
                 <input type="checkbox" value="">
             </th>
-            <th>头像</th>
-            <th>用户名</th>
-            <th>邮箱</th>
-            <th>状态</th>
-            <th>日期</th>
+            <th class="col-avatar">头像</th>
+            <th class="col-username" ng-click="sortBy('username')">用户名 <i class="icon {{ sort.username || 'sort' }}"></th>
+            <th class="col-email" ng-click="sortBy('email')">邮箱 <i class="icon {{ sort.email || 'sort' }}"></th>
+            <th class="col-role" ng-click="sortBy('role')">角色 <i class="icon {{ sort.role || 'sort' }}"</th>
+            <th class="col-status" ng-click="sortBy('status')">状态 <i class="icon {{ sort.status || 'sort' }}"</th>
+            <th class="col-date" ng-click="sortBy('updated_at')">日期 <i class="icon {{ sort.updated_at || 'sort' }}"</th>
         </tr>
         </thead>
         <tfoot>
@@ -57,40 +58,27 @@
             <th>头像</th>
             <th>用户名</th>
             <th>邮箱</th>
+            <th>角色</th>
             <th>状态</th>
             <th>日期</th>
         </tr>
         </tfoot>
         <tbody>
         <tr ng-repeat="user in users" ng-dblclick="openUserDetailView(user.id)">
-            <td class="">
+            <td class="col-check">
                 <input type="checkbox">
             </td>
-            <td>
+            <td class="col-avatar">
                 <img ng-src="{{ user.avatar }}" class="avatar" alt="">
             </td>
-            <td>
+            <td class="col-username">
                 {{ user.username }}
             </td>
-            <td class="right aligned collapsing">{{ user.email }}</td>
-            <td>{{ user.status }}</td>
-            <td>{{ user.created_at }}</td>
+            <td class="col-email">{{ user.email }}</td>
+            <td class="col-role">{{ user.role }}</td>
+            <td class="col-status">{{ user.status }}</td>
+            <td class="col-date">{{ user.created_at }}</td>
         </tr>
-        <!--<tr class="">-->
-            <!--<td>-->
-                <!--<input type="checkbox">-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<img src="images/photos/jobs.jpeg" class="avatar" alt="">-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--乔布斯-->
-            <!--</td>-->
-            <!--<td class="right aligned">jobs@qq.com</td>-->
-            <!--<td>正常</td>-->
-            <!--<td>2016-01-04 15:26</td>-->
-        <!--</tr>-->
-
         </tbody>
 
     </table>
@@ -106,12 +94,12 @@
         </div>
 
         <div class="right">
-            <div class="paginations">
-                <span>第1-20位用户，共92位</span>
+            <div class="item handle paginations">
+                <span id="">第{{ offset_start }}-{{ offset_end }}位用户，共{{ user_total }}位</span>
             </div>
-            <div class="ui buttons paging">
-                <button class="ui button last"><i class="icon chevron left"></i></button>
-                <button class="ui button next"><i class="icon chevron right"></i></button>
+            <div class="ui buttons handle paging">
+                <button class="ui button last" ng-click="lastPage()"><i class="icon chevron left"></i></button>
+                <button class="ui button next" ng-click="nextPage()"><i class="icon chevron right"></i></button>
             </div>
         </div>
     </div>
