@@ -1,19 +1,17 @@
-#directive-role-editor {
-  width: 50%;
+#app-role .col-name {
+  width: 10%;
 }
-#directive-role-editor .content.block {
-  padding: 20px 40px;
+#app-role .col-permission-amount {
+  text-align: center;
 }
-#directive-role-editor .ms-container {
-  width: 100%;
+#app-role .col-status {
+  text-align: center;
 }
-#directive-role-editor .ms-container .ms-list {
-  min-height: 300px !important;
-  height: auto !important;
+#app-role .col-updated_at {
+  text-align: center;
+  width: 100px;
 }
-#directive-role-editor li.ms-optgroup-label {
-  color: #131313 !important;
-}
-#directive-role-editor li.ms-elem-selectable {
-  color: #9A9A9A !important;
+#app-role .col-description {
+  width: 45%;
+  padding-left: 100px;
 }

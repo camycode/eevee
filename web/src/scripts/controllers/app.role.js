@@ -2,7 +2,8 @@ define([
     'role.editor',
     'role.detail',
     '../models/role',
-    '../services/typing'
+    '../services/typing',
+    'css!../../css/app.role'
 ], function () {
 
     return ['$scope', 'role', 'typing', function ($scope, role, typing) {
@@ -66,7 +67,7 @@ define([
 
 
         $scope.openRoleDetailView = function (role_id) {
-
+            $scope.$emit('app.role.editor.hide');
             $scope.$emit('app.role.detail.show', role_id);
         };
 
@@ -79,6 +80,16 @@ define([
                 });
             } else {
                 $scope.roles.unshift(data);
+            }
+        });
+
+        $scope.$on('app.role.putted', function (e, data) {
+            for (var i in $scope.roles) {
+                if ($scope.roles[i].id == data.id) {
+                    $scope.roles[i] = data;
+                    $scope.$emit('app.role.editor.hide');
+                    break;
+                }
             }
         });
 

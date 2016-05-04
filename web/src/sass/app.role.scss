@@ -2,28 +2,29 @@
 
 @import "globals";
 
-// role 编辑器容器
-#directive-role-editor {
-  width: 50%;
-  .content.block {
-    padding: 20px 40px;
-  }
-
-  .ms-container{
-      width: 100%;
-  }
+#app-role {
 
 
-.ms-container .ms-list {
-    min-height: 300px !important;
-    height: auto !important;
-}
-  // 权限选项组字体
-  li.ms-optgroup-label {
-    color: #131313 !important;
+  .col-name {
+    width: 10%;
   }
-  li.ms-elem-selectable{
-      color: #9A9A9A !important;
+
+  .col-permission-amount {
+    text-align: center;
+  }
+
+  .col-status {
+    text-align: center;
+  }
+
+  .col-updated_at {
+    text-align: center;
+    width: 100px;
+  }
+
+  .col-description {
+    width: 45%;
+    padding-left: 100px;
   }
 
 }

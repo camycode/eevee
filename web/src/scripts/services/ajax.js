@@ -48,6 +48,17 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
 
 
                 return $http(ajax.config);
+            },
+            put: function (url, data) {
+
+                data = data || {};
+
+                ajax.config.method = 'put';
+                ajax.config.url = host + url;
+                ajax.config.data = data;
+                ajax.config.headers['X-User-Token'] = getUserToken();
+                
+                return $http(ajax.config);
             }
         };
 
