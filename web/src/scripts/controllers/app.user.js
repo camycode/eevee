@@ -9,11 +9,13 @@ define([
         return ['$scope', 'typing', 'user', function ($scope, typing, user) {
 
 
-            $scope.users = [];
+            var sortField = 'updated_at';
 
-            user.setUserEditor($scope);
+            var sortRule = 'desc';
 
-            user.setUserDetail($scope);
+            var limit = 10;
+
+            var offset = 0;
 
             var sort = {
                 username: null,
@@ -23,30 +25,14 @@ define([
                 updated_at: null
             };
 
-            var sortField = 'updated_at';
 
-            var sortRule = 'asc';
+            $scope.offsetStart = offset;
 
-            var limit = 5;
+            $scope.offsetEnd = offset + limit;
 
-            var offset = 0;
+            $scope.users = [];
 
-            var paging = 'next';
-
-            $scope.offset_start = offset;
-
-            $scope.offset_end = offset + limit;
-
-
-            user.getUsers({
-                    count: true
-                })
-                .success(function (response) {
-                    $scope.user_total = response.data;
-                })
-                .error(function () {
-
-                });
+            $scope.userTotal = null;
 
 
             var getUsers = function (params) {
@@ -57,26 +43,6 @@ define([
                         if (response.code == 200) {
 
                             $scope.users = response.data;
-
-                            if (paging == 'next') {
-
-                                $scope.offset_start = offset;
-
-                                offset += response.data.length;
-
-                                $scope.offset_end = offset;
-
-                            }else{
-
-                                $scope.offset_end = offset;
-
-                                offset -= response.data.length;
-
-                                $scope.offset_start = offset;
-
-                            }
-
-
 
                         } else {
                             typing.warning(response.message);
@@ -91,12 +57,26 @@ define([
 
             };
 
-            $scope.sort = $.extend({}, sort);
+            user.setUserEditor($scope);
+
+            user.setUserDetail($scope);
+
+            user.getUsers({
+                    count: true
+                })
+                .success(function (response) {
+                    $scope.userTotal = response.data;
+                })
+                .error(function () {
+
+                });
 
             getUsers({
-                order: 'created_at:desc',
+                order: sortField + ':' + sortRule,
                 limit: limit
             });
+
+            $scope.sort = $.extend({}, sort);
 
             $scope.sortBy = function (field) {
 
@@ -118,19 +98,43 @@ define([
             };
 
             $scope.nextPage = function () {
-                getUsers({
-                    order: sortField + ':' + sortRule,
-                    limit: limit,
-                    offset: offset + limit
-                });
+
+                var start = offset + limit;
+
+                if (start < $scope.userTotal) {
+
+                    offset = start;
+
+                    $scope.offsetStart = offset;
+                    $scope.offsetEnd = $scope.offsetStart + limit;
+
+                    getUsers({
+                        order: sortField + ':' + sortRule,
+                        limit: limit,
+                        offset: offset
+                    });
+                }
+
             };
 
             $scope.lastPage = function () {
-                getUsers({
-                    order: sortField + ':' + sortRule,
-                    limit: limit,
-                    offset: offset - limit
-                });
+
+                var start = offset - limit;
+
+                if (start >= 0) {
+
+                    offset = start;
+
+                    $scope.offsetStart = offset;
+                    $scope.offsetEnd = $scope.offsetStart + limit;
+
+                    getUsers({
+                        order: sortField + ':' + sortRule,
+                        limit: limit,
+                        offset: offset
+                    });
+                }
+
             };
 
             $scope.openUserEditor = function () {
