@@ -1,15 +1,1 @@
-module( 'plugins.insertparagraph' );
-
-test( '插入空行', function() {
-    var editor = te.obj[0];
-    var range = te.obj[1];
-    var body = editor.body;
-    editor.setContent( 'hello' );
-    range.setStart( body.firstChild, 0 ).collapse( 1 ).select();
-    editor.execCommand( 'insertparagraph', true );
-    var br = ua.browser.ie?'':'<br>'
-    equal( ua.getChildHTML( body ), '<p>'+br+'</p><p>hello</p>', '插入空行' );
-    range.setStart( body.firstChild.nextSibling, 0 ).collapse( 1 ).select();
-    editor.execCommand( 'insertparagraph', false );
-    equal( ua.getChildHTML( body ), '<p>'+br+'</p><p>hello</p><p>'+br+'</p>', '' );
-} );
+module("plugins.insertparagraph"),test("插入空行",function(){var e=te.obj[0],t=te.obj[1],a=e.body;e.setContent("hello"),t.setStart(a.firstChild,0).collapse(1).select(),e.execCommand("insertparagraph",!0);var l=ua.browser.ie?"":"<br>";equal(ua.getChildHTML(a),"<p>"+l+"</p><p>hello</p>","插入空行"),t.setStart(a.firstChild.nextSibling,0).collapse(1).select(),e.execCommand("insertparagraph",!1),equal(ua.getChildHTML(a),"<p>"+l+"</p><p>hello</p><p>"+l+"</p>","")});

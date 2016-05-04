@@ -63,14 +63,13 @@ require.config({
 
 });
 
-define(['pace'], function (pace) {
+define(['pace','app'], function (pace) {
 
     pace.start({
         restartOnPushState: true,
         restartOnRequestAfter: true
     });
 
-    require(['app']);
 });
 
 
