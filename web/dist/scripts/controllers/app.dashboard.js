@@ -1,0 +1,1 @@
+define(["css!../../css/app.dashboard"],function(){return["$scope","$stateParams",function(s,a){}]});

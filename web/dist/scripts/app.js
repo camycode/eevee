@@ -1,0 +1,1 @@
+define(["angularAMD","json!../config.json","jquery","css!./vendor/semantic/dist/semantic.min","css!./vendor/animate.css/animate.min.css"],function(e,n){var r=angular.module("eevee",["ui.router"]);return r.config(function(r,o,s,a){a.useAnchorScroll(),o.otherwise("/app/dashboard");var t=n.routes||[];for(var i in t)r.state(i,e.route(t[i]))}),e.bootstrap(r)});

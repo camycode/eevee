@@ -1,0 +1,1 @@
+!function(){var t=location.search.match(/[?&]jquery=(.*?)(?=&|$)/);t=t?t[1]:"latest";var c="http://code.jquery.com/jquery-"+t+".min.js";document.write('<script src="'+c+'"></script>')}();

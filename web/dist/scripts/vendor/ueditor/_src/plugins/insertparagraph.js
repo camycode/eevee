@@ -1,0 +1,1 @@
+UE.commands.insertparagraph={execCommand:function(e,t){for(var n,r=this,o=r.selection.getRange(),a=o.startContainer;a&&!domUtils.isBody(a);)n=a,a=a.parentNode;if(n){var i=r.document.createElement("p");t?n.parentNode.insertBefore(i,n):n.parentNode.insertBefore(i,n.nextSibling),domUtils.fillNode(r.document,i),o.setStart(i,0).setCursor(!1,!0)}}};

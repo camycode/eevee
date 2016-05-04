@@ -1,0 +1,1 @@
+var runSequence=require("run-sequence");module.exports=function(e){runSequence("init distributions","create distributions","init components","create components",e)};

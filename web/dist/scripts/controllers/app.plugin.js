@@ -1,0 +1,1 @@
+define(["css!../../css/app.plugin"],function(){return["$scope","$stateParams",function(n,s){}]});
