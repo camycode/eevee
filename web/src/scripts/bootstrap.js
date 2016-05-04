@@ -58,8 +58,8 @@ require.config({
             deps: ['jquery', 'css!./vendor/toastr/toastr.min']
         }
     },
-
-    urlArgs: "bust=" + (new Date()).getTime()
+    // urlArgs: "bust=" + (new Date()).getTime()
+    urlArgs: "version=0.0.1"
 
 });
 
