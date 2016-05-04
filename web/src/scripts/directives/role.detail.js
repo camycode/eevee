@@ -25,7 +25,7 @@ define(
 
                     $scope.hasPermissions = true;
 
-                    var closeUserEditor = function () {
+                    var closeUserDetailView = function () {
                         $('#directive-role-detail').addClass('animated slideOutRight');
                     };
 
@@ -41,7 +41,7 @@ define(
                                 } else {
                                     typing.warning(response.message);
                                 }
-                                
+
                             })
                             .error(function () {
                                 typing.error('网络错误');
@@ -79,11 +79,21 @@ define(
 
                     });
 
-                    $scope.closePostEditor = function () {
+                    $scope.openRoleEditor = function (role_id) {
 
-                        closeUserEditor();
+                        closeUserDetailView();
+                        
+                        $scope.$emit('app.role.editor.show',role_id);
 
                     };
+
+                    $scope.closeUserDetailView = function () {
+
+                        closeUserDetailView();
+
+                    };
+
+
                 }]
             };
         });

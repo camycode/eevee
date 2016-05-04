@@ -20,30 +20,15 @@ define([
 
                     $scope.title = "编辑用户";
 
+                    var action = 'post';
+
                     var init = {
                         name: '',
                         description: '',
                         permissions: []
                     };
 
-
-                    $scope.role = $.extend({}, init);
-
                     $scope.permissions = {};
-
-                    role.getRolePermissions(user.info().role)
-                        .success(function (response) {
-                            if (response.code == 200) {
-                                $scope.permissions = response.data;
-                                $scope.loadPermissionsDone = true;
-                            } else {
-                                typing.warning(response.message);
-                            }
-                        })
-                        .error(function () {
-                            typing.error('网络错误');
-                        });
-
 
                     $scope.submitRole = function () {
 
@@ -115,9 +100,92 @@ define([
                         }
                     };
 
-                    $scope.$on('app.role.editor.show', function (e, data) {
+                    var getEditRolePermissions = function (role_id) {
+
+                        role.getRolePermissions(role_id)
+                            .success(function (response) {
+                                if (response.code == 200) {
+
+                                    for (var ident in response.data) {
+
+                                        for (var i in response.data[ident].permissions) {
+
+                                            for (var j in $scope.permissions[ident].permissions) {
+
+                                                if (response.data[ident].permissions[i].id == $scope.permissions[ident].permissions[j].id) {
+                                                    $scope.permissions[ident].permissions[j].checked = 'primary';
+                                                    $scope.permissions[ident].permissions[j].icon = 'checkmark';
+                                                    break;
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                } else {
+                                    typing.warning(response.message);
+                                }
+                            })
+                            .error(function () {
+                                typing.error('网络错误');
+                            });
+
+                    };
+
+                    $scope.$on('app.role.editor.show', function (e, role_id) {
+
+
                         $("#directive-role-editor").hide().removeClass('animated slideOutRight').addClass('animated slideInRight').show();
+
+                        action = typeof role_id != 'undefiend' ? 'put' : 'post';
+
+                        role.getRolePermissions(user.info().role)
+                            .success(function (response) {
+
+                                if (response.code == 200) {
+
+                                    $scope.permissions = response.data;
+                                    $scope.loadPermissionsDone = true;
+
+                                    if (typeof role_id != 'undefined') {
+                                        getEditRolePermissions(role_id);
+                                    }
+
+                                } else {
+                                    typing.warning(response.message);
+                                }
+
+                            })
+                            .error(function () {
+                                typing.error('网络错误');
+                            });
+
+
+                        if (typeof role_id != 'undefined') {
+
+                            role.getRole(role_id)
+                                .success(function (response) {
+                                    if (response.code == 200) {
+                                        $scope.role = response.data;
+                                    } else {
+                                        typing.warning(response.message);
+                                    }
+                                })
+                                .error(function () {
+                                    typing.error('网络错误');
+                                });
+
+
+                        } else {
+
+                            $scope.role = $.extend({}, init);
+
+                        }
+
                     });
+
 
                     $scope.closeRoleEditor = function () {
 

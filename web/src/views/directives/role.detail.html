@@ -6,9 +6,15 @@
         </div>
 
         <div class="right menu">
+
             <div class="item label">
-                <i class="icon share" ng-click="closePostEditor()"></i>
+                <i class="icon  write" ng-click="openRoleEditor(role.id)"></i>
             </div>
+
+            <div class="item label">
+                <i class="icon share" ng-click="closeUserDetailView()"></i>
+            </div>
+
         </div>
     </div>
 
@@ -47,11 +53,11 @@
                     <td>{{ role.description || '-' }}</td>
                 </tr>
                 <tr>
-                    <td>权限数量</td>
+                    <td>权限数</td>
                     <td>{{ role.permission_amount }}</td>
                 </tr>
                 <tr>
-                    <td>用户数量</td>
+                    <td>用户数</td>
                     <td>{{ role.user_amount }}</td>
                 </tr>
                 <tr>
