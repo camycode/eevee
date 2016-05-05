@@ -18,11 +18,15 @@ class Config extends Model
      */
     public function addConfig($user_id, $config_key, array $config_value)
     {
-        $this->validateConfig($user_id, $config_key);
 
-        $this->resource('CONFIG')->add($this->generateConfig($user_id, $config_key, $config_value));
+        if ($this->getConfig($user_id, $config_key)->code != 200) {
 
-        return status('success');
+            $this->resource('CONFIG')->add($this->generateConfig($user_id, $config_key, $config_value));
+
+            return $this->getConfig($user_id, $config_key);
+        }
+
+        return status('configHasExisted');
     }
 
     /**
@@ -40,11 +44,11 @@ class Config extends Model
 
         $config->config_value = json_decode($config->config_value, true);
 
-        $config->config_value = array_merge($config->config_value, $config_value);
+        $config->config_value = json_encode(array_merge($config->config_value, $config_value));
 
         $this->resource('CONFIG')->where('user_id', $user_id)->where('config_key', $config_key)->update($config);
 
-        return status('success');
+        return $this->getConfig($user_id, $config_key);
     }
 
     /**
@@ -94,16 +98,6 @@ class Config extends Model
         }
     }
 
-    /**
-     * 验证配置
-     *
-     * @param $user_id
-     * @param $config_key
-     */
-    protected function validateConfig($user_id, $config_key)
-    {
-
-    }
 
     /**
      * 生成配置记录
