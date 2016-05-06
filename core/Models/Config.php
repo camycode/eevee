@@ -2,8 +2,6 @@
 
 namespace Core\Models;
 
-use Illuminate\Support\Facades\Validator;
-
 class Config extends Model
 {
 
@@ -16,12 +14,12 @@ class Config extends Model
      *
      * @return mixed
      */
-    public function addConfig($user_id, $config_key, array $config_value)
+    public function addConfig($user_id, $config_key, array $config_value, $source = 'EEVEE')
     {
 
         if ($this->getConfig($user_id, $config_key)->code != 200) {
 
-            $this->resource('CONFIG')->add($this->generateConfig($user_id, $config_key, $config_value));
+            $this->resource('CONFIG')->insert($this->generateConfig($user_id, $config_key, $config_value, $source));
 
             return $this->getConfig($user_id, $config_key);
         }
@@ -40,15 +38,24 @@ class Config extends Model
      */
     public function updateConfig($user_id, $config_key, array $config_value)
     {
-        $config = (array)$this->getConfig($user_id, $config_key)->data;
+        $result = $this->getConfig($user_id, $config_key);
 
-        $config->config_value = json_decode($config->config_value, true);
+        if ($result->code == 200) {
 
-        $config->config_value = json_encode(array_merge($config->config_value, $config_value));
+            $config = (array)$result->data;
 
-        $this->resource('CONFIG')->where('user_id', $user_id)->where('config_key', $config_key)->update($config);
+            $config['config_value'] = json_decode($config['config_value'], true);
 
-        return $this->getConfig($user_id, $config_key);
+            $config['config_value'] = json_encode(array_merge($config['config_value'], $config_value));
+
+            $this->resource('CONFIG')->where('user_id', $user_id)->where('config_key', $config_key)->update($config);
+
+            return $this->getConfig($user_id, $config_key);
+
+        } else {
+
+            return $result;
+        }
     }
 
     /**
@@ -58,7 +65,7 @@ class Config extends Model
      * @param $config_key
      * @param array $config_value
      */
-    public function saveConifg($user_id, $config_key, array $config_value)
+    public function saveConifg($user_id, $config_key, array $config_value, $source = 'EEVEE')
     {
         if ($this->getConfig($user_id, $config_key)->code == 200) {
             $this->updateConfig($user_id, $config_key, $config_value);
@@ -94,7 +101,10 @@ class Config extends Model
     public function deleteConfig($user_id, $config_key)
     {
         if ($this->getConfig($user_id, $config_key)->code == 200) {
+
             $this->resource('CONFIG')->where('user_id', $user_id)->where('config_key', $config_key)->delete();
+
+            return status('success');
         }
     }
 
@@ -108,12 +118,13 @@ class Config extends Model
      *
      * @return array
      */
-    protected function generateConfig($user_id, $config_key, array $config_value)
+    protected function generateConfig($user_id, $config_key, array $config_value, $source)
     {
         return [
             'user_id' => $user_id,
             'config_key' => $config_key,
-            'config_value' => json_encode($config_value)
+            'config_value' => json_encode($config_value),
+            'source' => $source
         ];
     }
 }
