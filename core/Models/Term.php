@@ -9,33 +9,87 @@ class Term extends Model
 
     protected $data = [];
 
-    public function setData($data)
+    /**
+     * 绑定分类操作数据
+     *
+     * @param $data array
+     *
+     * @return $this
+     */
+    public function setData(array $data)
     {
         $this->data = $data;
+
+        return $this;
     }
 
-    public function addTerm($user_id, $key, $value)
+    /**
+     * 添加分类
+     *
+     * @return Status
+     */
+    public function addTerm()
     {
+        $this->validateTerm();
+        $this->filter($this->data, $this->fields('TERM'));
+        $this->resource('TERM')->insert($this->data);
 
+        return $this->getTerm($this->data['id']);
     }
 
-    public function updateTerm($user_id, $key, $value)
+    /**
+     * 更新分类
+     *
+     * @param $term_id
+     *
+     * @return Status
+     */
+    public function updateTerm($term_id)
     {
+        $this->validateTerm();
+        $this->filter($this->data, $this->fields('TERM'));
+        $this->resource('TERM')->where('id', $term_id)->update($this->data);
+
+        return $this->getTerm($term_id);
 
     }
 
-    public function getTerm($user_id, $config_key)
+    /**
+     * 获取分类
+     *
+     * @param $term_id
+     *
+     * @return Status
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    public function getTerm($term_id)
     {
+        if ($term = $this->resource('TERM')->where('id', $term_id)->first()) {
 
+            return status('success', $term);
+        }
+
+        exception('termDoesNotExist');
     }
 
 
-    public function deleteTerm($user_id, $config_key)
+    /**
+     * 删除分类
+     *
+     * @param $term_id
+     *
+     * @return Status
+     */
+    public function deleteTerm($term_id)
     {
+        $this->getTerm($term_id);
+        $this->resource('TERM')->where('id', $term_id)->delete();
 
+        return status('success');
     }
 
-    protected function validatePost()
+    protected function validateTerm()
     {
 
     }
