@@ -1,0 +1,1 @@
+UE.commands.indent={execCommand:function(){var t=this,e=t.queryCommandState("indent")?"0em":t.options.indentValue||"2em";t.execCommand("Paragraph","p",{style:"text-indent:"+e})},queryCommandState:function(){var t=domUtils.filterNodeList(this.selection.getStartElementPath(),"p h1 h2 h3 h4 h5 h6");return t&&t.style.textIndent&&parseInt(t.style.textIndent)?1:0}};

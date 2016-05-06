@@ -6,7 +6,6 @@
  * @author 古月(Gue@lehu.io)
  */
 define([
-        'jquery',
         'navgoco',
         'semantic',
         'slimScroll',
@@ -15,7 +14,7 @@ define([
         '../directives/sidebar',
         'css!../../css/app'
     ],
-    function ($) {
+    function () {
 
         return ['$scope', '$state', 'user', 'url', function ($scope, $state, user, url) {
 

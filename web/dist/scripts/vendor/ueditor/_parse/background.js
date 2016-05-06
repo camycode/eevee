@@ -1,0 +1,1 @@
+UE.parse.register("background",function(e){for(var t,r,o=this,a=o.root,d=a.getElementsByTagName("p"),n=0;r=d[n++];)t=r.getAttribute("data-background"),t&&r.parentNode.removeChild(r);t&&e.cssRule("ueditor_background",o.selector+"{"+t+"}",document)});

@@ -9,7 +9,7 @@ define([
 
         var app = angular.module("eevee", ['ui.router']);
 
-        app.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
+        app.config(['$stateProvider','$urlRouterProvider','$locationProvider','$uiViewScrollProvider',function ($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
 
             $uiViewScrollProvider.useAnchorScroll();
 
@@ -21,7 +21,7 @@ define([
                 $stateProvider.state(i, angularAMD.route(routes[i]));
             }
 
-        });
+        }]);
 
         // app.config(['$httpProvider', function ($httpProvider) {
         //     $httpProvider.interceptors.push(function () {

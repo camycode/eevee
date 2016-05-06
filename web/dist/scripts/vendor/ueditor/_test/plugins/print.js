@@ -1,0 +1,1 @@
+module("plugins.print"),test("print",function(){equal("","")});

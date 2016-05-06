@@ -1,0 +1,1 @@
+UE.plugins.selectall=function(){var e=this;e.commands.selectall={execCommand:function(){var e=this,t=e.body,l=e.selection.getRange();l.selectNodeContents(t),domUtils.isEmptyBlock(t)&&(browser.opera&&t.firstChild&&1==t.firstChild.nodeType&&l.setStartAtFirst(t.firstChild),l.collapse(!0)),l.select(!0)},notNeedUndo:1},e.addshortcutkey({selectAll:"ctrl+65"})};

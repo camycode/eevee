@@ -1,0 +1,1 @@
+module("ui.stateful"),test("",function(){equal("","","")});

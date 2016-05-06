@@ -1,0 +1,1 @@
+module("ui.uibase"),test("",function(){equal("","","")});

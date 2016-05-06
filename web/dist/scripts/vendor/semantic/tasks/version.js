@@ -1,0 +1,1 @@
+var release=require("./config/project/release");module.exports=function(e){console.log(release.title+" "+release.version)};

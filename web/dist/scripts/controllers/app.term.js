@@ -1,0 +1,1 @@
+define(["nestable","css!../../css/app.term"],function(){return["$scope","$state",function(e,t){e.title="分类目录",$("#terms-list").nestable({}),e.editTerm=function(){return!1}}]});

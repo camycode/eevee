@@ -1,0 +1,70 @@
+<div id="eevee-layout" class="page">
+
+    <div id="eevee-header" class="ui menu">
+        <div class="item brand">EEVEE</div>
+        <a class="item"><i class="sidebar icon"></i></a>
+        <div class="right menu">
+            <a class="item"><i class="grid layout icon"></i></a>
+            <a class="item"><i class="mail outline icon"></i></a>
+
+            <div class="ui dropdown item" tabindex="0">
+                <img src="images/photos/bob.jpeg" alt="" class="ui avatar image">
+                <i class="dropdown icon"></i>
+                <div class="user panel menu transition hidden" tabindex="-1">
+                    <div class="item">个人信息</div>
+                    <div class="item">面板</div>
+                    <div class="divider"></div>
+                    <div class="item" ng-click="logout()">退出登录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside id="eevee-sidebar" class="sidebar" sidebar>
+
+        <ul class="ui vertical menu">
+            <li class="item">
+                <a href="#"><i class="dashboard icon"></i>面板</a>
+            </li>
+            <li class="item">
+                <a href="#/app/post"><i class="edit icon"></i></i>文章</a>
+            </li>
+            <li class="item">
+                <a href="#/app/term"><i class="block layout icon"></i>分类</a>
+            </li>
+            <li class="item">
+                <a href="#/app/media"><i class="video play icon"></i>多媒体</a>
+            </li>
+            <li class="item">
+                <a href="#/app/user"><i class="user icon"></i>用户</a>
+            </li>
+            <li class="item">
+                <a href="#/app/role"><i class="spy icon"></i>角色</a>
+            </li>
+            <li class="item">
+                <a href="#/app/theme"><i class="paint brush icon"></i>主题</a>
+            </li>
+            <li class="item">
+                <a href="#/app/plugin"><i class="puzzle icon"></i>插件</a>
+            </li>
+            <li class="item">
+                <a class="" href="#"><i class="setting icon"></i>配置</a>
+                <ul>
+                    <li class="item"><a href="#/app/config/site">网站</a></li>
+                    <li class="item"><a href="#/app/config/email">邮箱</a></li>
+                    <!--<li class="item"><a href="#/app/config/media">多媒体</a></li>-->
+                </ul>
+            </li>
+            <li class="item">
+                <a href="#"><i class="area info icon"></i></i>帮助</a>
+            </li>
+        </ul>
+
+    </aside>
+
+    <section id="eevee-placeholder">
+
+        <div id="eevee-view" ui-view></div>
+    </section>
+
+</div>
