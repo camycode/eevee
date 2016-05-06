@@ -16,7 +16,7 @@ class Post extends Model
 
     public function addPost($user_id, $key, $value)
     {
-
+        
     }
 
     public function updatePost($user_id, $key, $value)
