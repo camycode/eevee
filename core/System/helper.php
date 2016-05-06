@@ -58,7 +58,12 @@ function d($var)
  *
  * @param atring $path
  */
-function asset($path)
+function link($path)
 {
     d(__DIR__);
+}
+
+function auth($permission, $resource, $role_id, $callback)
+{
+    
 }

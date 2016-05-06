@@ -15,7 +15,11 @@ return [
     ],
     'CONFIG' => [
         'table' => 'configs',
-        'fields' => ['config_key', 'config_value', 'source'],
+        'fields' => ['user_id','config_key', 'config_value', 'source','created_at','updated_at'],
+    ],
+    'SYSTEMCONFIG' => [
+        'table' => 'system_configs',
+        'fields' => ['config_key', 'config_value', 'source','created_at','updated_at'],
     ],
     'MESSAGE' => [
         'table' => 'messages',

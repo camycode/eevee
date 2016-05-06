@@ -3,23 +3,22 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConfigsTable extends Migration
+class CreateSystemConfigsTable extends Migration
 {
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
-            $table->string('user_id');
+        Schema::create('system_configs', function (Blueprint $table) {
             $table->string('config_key');
-            $table->longText('config_value');
+            $table->string('config_value');
             $table->string('source');
             $table->timestamps();
-            $table->primary('user_id', 'config_key');
+            $table->primary('config_key');
         });
     }
 
 
     public function down()
     {
-        Schema::drop('configs');
+        Schema::drop('system_configs');
     }
 }

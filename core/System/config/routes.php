@@ -117,4 +117,20 @@ return [
         'action' => 'PluginController@getLocalPlugins',
         'permission' => 'USER_GET',
     ],
+    // 用户设置
+    'post@config' => [
+        'action' => 'ConfigController@postConfig',
+    ],
+    'put@config' => [
+        'action' => 'ConfigController@putConfig',
+    ],
+    'post@config/save' => [
+        'action' => 'ConfigController@saveConfig',
+    ],
+    'get@config' => [
+        'action' => 'ConfigController@getConfig',
+    ],
+    'delete@config' => [
+        'action' => 'ConfigController@deleteConfig',
+    ],
 ];

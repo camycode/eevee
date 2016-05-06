@@ -19,7 +19,7 @@ class System extends Model
      */
     public function addConfig($key, $value, $source)
     {
-        if ($this->resource('CONFIG')->insert(['config_key' => $key, 'config_value' => $value, 'source' => $source])) {
+        if ($this->resource('SYSTEMCONFIG')->insert(['config_key' => $key, 'config_value' => $value, 'source' => $source])) {
 
             return $this->getConfig($key);
         }
@@ -41,7 +41,7 @@ class System extends Model
     {
         $this->getConfig($key);
 
-        if ($this->resource('CONFIG')->where('config_key', $key)->update(['config_value' => $value])) {
+        if ($this->resource('SYSTEMCONFIG')->where('config_key', $key)->update(['config_value' => $value])) {
 
             return $this->getConfig($key);
         }
@@ -60,7 +60,7 @@ class System extends Model
      */
     public function getConfig($key)
     {
-        if ($config = $this->resource('CONFIG')->where('config_key', $key)->first()) {
+        if ($config = $this->resource('SYSTEMCONFIG')->where('config_key', $key)->first()) {
 
             return status('success', $config);
         }
@@ -75,7 +75,7 @@ class System extends Model
 
     public function deleteConfig($key, $source)
     {
-        $resource = $this->resource('CONFIG');
+        $resource = $this->resource('SYSTEMCONFIG');
 
         if ($config = $resource->where('config_key', $key)->first()) {
 

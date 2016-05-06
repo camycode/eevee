@@ -439,5 +439,39 @@ class Role extends Model
 
     }
 
+    /**
+     * 验证用户权限,
+     * 用户资源操作只能在其角色权限范围内执行.
+     *
+     *
+     * @param $permission
+     * @param $role_id
+     * @param array $resource
+     * @param null $callback
+     *
+     * @throws \Core\Exceptions\StatusException
+     *
+     * @example
+     *      $param =[
+     *          'field' => 'user_id',
+     *          'records'=>['','']
+     *      ];
+     */
+    public function auth($permission, $role_id, array $param, $callback = null)
+    {
+        $role = $this->getRole($role_id)->data;
+
+        if (!in_array($permission, $role->permissions)) {
+
+            exception('permissionDenied');
+        }
+
+        foreach ($param['records'] as $record) {
+
+
+        }
+
+    }
+
 
 }
