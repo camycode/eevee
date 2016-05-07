@@ -304,7 +304,7 @@ class User extends Model
         $user = $this->resource('USER')->where($field, $vlaue)->first();
 
         if (!$user) {
-            return status('userDoesNotExist', $user);
+            exception('userDoesNotExist');
         }
 
         if (!$password) unset($user->password);
