@@ -58,7 +58,7 @@ function d($var)
  *
  * @param atring $path
  */
-function link($path)
+function asset($path)
 {
     d(__DIR__);
 }
