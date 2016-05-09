@@ -10,6 +10,14 @@
   > table {
       th {
         padding: 7px 10px;
+        .icon{
+          display: none;
+        }
+        &:hover{
+          .icon{
+            display: inline-block;
+          }
+        }
       }
 
     .col-check{

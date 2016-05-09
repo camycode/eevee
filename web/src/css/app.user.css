@@ -6,6 +6,12 @@
 #app-user > table th {
   padding: 7px 10px;
 }
+#app-user > table th .icon {
+  display: none;
+}
+#app-user > table th:hover .icon {
+  display: inline-block;
+}
 #app-user > table .col-check {
   width: 20px;
 }

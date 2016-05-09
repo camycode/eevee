@@ -3,8 +3,8 @@ define(['app', 'json!../config.json', 'storage'], function (app, config) {
     return app.factory('ajax', ['$http', 'storage', function ($http, storage) {
 
 
-        //var host = 'http://localhost:7800';
-        var host = 'http://dev.eevee.io';
+        var host = 'http://localhost:7800';
+        // var host = 'http://dev.eevee.io';
 
         var app_id = config.app_id;
 

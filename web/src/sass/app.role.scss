@@ -4,7 +4,18 @@
 
 #app-role {
 
+  th {
+    .icon {
+      display: none;
+    }
+    &:hover {
+      .icon {
+        display: inline-block;
+      }
+    }
+  }
 
+  
   .col-name {
     width: 10%;
   }

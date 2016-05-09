@@ -1,3 +1,7 @@
+#app-role th .icon {
+  display: none; }
+#app-role th:hover .icon {
+  display: inline-block; }
 #app-role .col-name {
   width: 10%; }
 #app-role .col-permission-amount {
