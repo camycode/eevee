@@ -133,4 +133,18 @@ return [
     'delete@config' => [
         'action' => 'ConfigController@deleteConfig',
     ],
+
+    // 分类管理
+    'post@term' => [
+        'action' => 'TermController@postTerm',
+    ],
+    'put@term' => [
+        'action' => 'TermController@putTerm',
+    ],
+    'get@term' => [
+        'action' => 'TermController@getTerm',
+    ],
+    'delete@term' => [
+        'action' => 'TermController@deleteTerm',
+    ],
 ];

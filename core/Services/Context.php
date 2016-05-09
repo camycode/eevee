@@ -18,6 +18,8 @@ class Context
     public $request;
 
     public $response;
+
+    public $_params;
     
     public function __construct(Request $request)
     {
@@ -88,6 +90,54 @@ class Context
     public function response($result = '', $statusCode = 200)
     {
         return response(json_encode($result), $statusCode)->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * @Author LuoChao
+     * @FunctionName _getParam
+     * @param $paramName
+     * @param null $default
+     * @return null
+     * @explain 过滤sql
+     */
+    public function _getParam($paramName, $default = null)
+    {
+        $this->getRequest();
+        $value = $this->getParam($paramName);
+        if ((null == $value) && (null !== $default)) {
+            $value = $default;
+        }
+        return $value;
+    }
+
+    /**
+     * @Author LuoChao
+     * @FunctionName getRequest
+     * @return mixed
+     * @explain 获取所有请求数据
+     */
+    public function getRequest()
+    {
+        $this->_params = $_REQUEST;
+        return $this->_params;
+    }
+
+    /**
+     * @Author LuoChao
+     * @FunctionName getParam
+     * @param $key
+     * @param null $default
+     * @return null
+     * @explain 获取指定value
+     */
+    public function getParam($key, $default = null)
+    {
+        $key = (string) $key;
+        if (isset($this->_params[$key])) {
+            return $this->_params[$key];
+        }
+
+        return $default;
     }
 
 }

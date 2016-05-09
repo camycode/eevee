@@ -13,6 +13,10 @@ return [
         'table' => 'roles',
         'fields' => ['id', 'name', 'description', 'parent', 'source', 'status', 'created_at', 'updated_at'],
     ],
+    'TERM' => [
+        'table' => 'term',
+        'fields' => ['id', 'fid', 'name', 'path'],
+    ],
     'CONFIG' => [
         'table' => 'configs',
         'fields' => ['user_id','config_key', 'config_value', 'source','created_at','updated_at'],

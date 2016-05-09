@@ -31,10 +31,13 @@ class Term extends Model
     public function addTerm()
     {
         $this->validateTerm();
-        $this->filter($this->data, $this->fields('TERM'));
-        $this->resource('TERM')->insert($this->data);
-
-        return $this->getTerm($this->data['id']);
+        if($this->filter($this->data, $this->fields('TERM'))){
+            echo "还未开发完成";die;//TODO 开始插入新的分类
+            $this->resource('TERM')->insert($this->data);
+            return $this->getTerm($id);
+        }
+        else{
+        }
     }
 
     /**
