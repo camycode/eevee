@@ -15,7 +15,7 @@ return [
     ],
     'TERM' => [
         'table' => 'term',
-        'fields' => ['id', 'fid', 'name', 'path'],
+        'fields' => ['id', 'fid', 'name', 'path', 'tag', 'keyword', 'describe', 'updatetime', 'createtime', 'unique_tag'],
     ],
     'CONFIG' => [
         'table' => 'configs',
