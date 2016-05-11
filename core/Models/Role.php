@@ -457,7 +457,7 @@ class Role extends Model
      *          'records'=>['','']
      *      ];
      */
-    public function auth($permission, $role_id, array $param, $callback = null)
+    public function guard($permission, $role_id, array $param, $callback = null)
     {
         $role = $this->getRole($role_id)->data;
 
