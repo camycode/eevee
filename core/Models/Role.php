@@ -443,10 +443,8 @@ class Role extends Model
      * 验证用户权限,
      * 用户资源操作只能在其角色权限范围内执行.
      *
-     *
-     * @param $permission
-     * @param $role_id
-     * @param array $resource
+     * @param array $param
+     * @param array $affect
      * @param null $callback
      *
      * @throws \Core\Exceptions\StatusException
@@ -457,19 +455,19 @@ class Role extends Model
      *          'records'=>['','']
      *      ];
      */
-    public function guard($permission, $role_id, array $param, $callback = null)
+    public function guard(array $param, array $affect, $callback = null)
     {
-        $role = $this->getRole($role_id)->data;
-
-        if (!in_array($permission, $role->permissions)) {
-
-            exception('permissionDenied');
-        }
-
-        foreach ($param['records'] as $record) {
-
-
-        }
+//        $role = $this->getRole($role_id)->data;
+//
+//        if (!in_array($permission, $role->permissions)) {
+//
+//            exception('permissionDenied');
+//        }
+//
+//        foreach ($param['records'] as $record) {
+//
+//
+//        }
 
     }
 
