@@ -34,7 +34,7 @@ class Term extends Model
         $this->validateTerm();
         $this->transaction(function(){
             if($this->filter($this->data, $this->fields('TERM'))){
-                $insert_result = $this->resource('TERM')->insert($this->data);
+                $insert_result = $this->resource('TERM')->insert($this->data);//TODO 后期还要加验证，判断分类名是否重复，权限的过滤，否则任何人访问测试连接都可以向库里插入数据
                 if($insert_result){
                     $inserted_data = $this->getTermForUnique($this->data['unique_tag']);
                     if($inserted_data){

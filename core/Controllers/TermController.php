@@ -55,7 +55,64 @@ class TermController extends Controller
      * @FunctionName postTerm
      * @param Context $context
      * @return \Core\Services\Response
-     * @explain
+     * @explain 添加分类
+     *
+     * @api {post} /api/term 添加分类
+     *
+     * @apiPermission TERM.POST
+     *
+     * @apiGroup term
+     *
+     * @apiDescription 添加分类.
+     *
+     * @apiParam {String} name        分类名称
+     * @apiParam {String} fid         父类id
+     * @apiParam {String} path        分类路径
+     * @apiParam {String} tag         标识符
+     * @apiParam {String} keyword     关键字
+     * @apiParam {String} describe    描述
+     *
+     * @apiParamExample POST方式请求
+     * 测试连接：
+     * 1：新增分类为二级分类以及二级分类以下时(fid由选择父类时获取)：
+     * http://dev.eevee.io/api/term?name=社会新闻&tag=新闻&keyword=冷漠,最火&describe=此处省略......&fid=13297
+     * 2：新增分类为一级分类时(不需要传fid)：
+     * http://dev.eevee.io/api/term?name=新闻&tag=最新视频&keyword=视频,最火&describe=此处省略......
+     * @apiSuccessExample {json} 操作成功:
+     * 测试连接1
+     * {
+     *"code": 200,
+     *"message": "操作成功",
+     *"data": {
+     *"id": 13310,
+     *"fid": 13297,
+     *"name": "社会新闻",
+     *"path": "13294,13295,13297,13310",
+     *"tag": "新闻",
+     *"keyword": "冷漠,最火",
+     *"describe": "此处省略......",
+     *"updatetime": "2016-05-12 02:28:48",
+     *"createtime": "2016-05-12 02:28:48",
+     *"unique_tag": "85c5881416515cb2a98e18c515bc925b"
+     *     }
+     *}
+     * 测试连接2
+     * {
+     *"code": 200,
+     *"message": "操作成功",
+     *"data": {
+     *"id": 13311,
+     *"fid": 0,
+     *"name": "新闻",
+     *"path": "13311",
+     *"tag": "最新视频",
+     *"keyword": "视频,最火",
+     *"describe": "此处省略......",
+     *"updatetime": "2016-05-12 02:29:21",
+     *"createtime": "2016-05-12 02:29:21",
+     *"unique_tag": "8ae3bc741e0c1b45ca6fe6e75a8c9402"
+     *     }
+     *}
      */
     public function postTerm(Context $context)
     {
