@@ -11,11 +11,11 @@
       th {
         padding: 7px 10px;
         .icon{
-          display: none;
+          visibility: hidden;
         }
         &:hover{
           .icon{
-            display: inline-block;
+            visibility: visible;
           }
         }
       }

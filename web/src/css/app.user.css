@@ -7,10 +7,10 @@
   padding: 7px 10px;
 }
 #app-user > table th .icon {
-  display: none;
+  visibility: hidden;
 }
 #app-user > table th:hover .icon {
-  display: inline-block;
+  visibility: visible;
 }
 #app-user > table .col-check {
   width: 20px;
