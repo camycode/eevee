@@ -31,9 +31,9 @@ class Authenticate
     {
         $this->request = $request;
 
-        $this->request->visitor = 'root';
+//        $this->request->visitor = 'root';
 
-        //        $this->auth();
+        $this->auth();
 
         return $next($this->request);
 

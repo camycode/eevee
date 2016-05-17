@@ -29,20 +29,21 @@ return [
 
     // 角色模块
     'post@role'             => ['action' => 'RoleController@postRole',          'permission' => 'ROLE_POST'],
-    'get@roles'             => ['action' => 'RoleController@getRoles',          'permission' => 'ROLE_GET'],
-    'get@role'              => ['action' => 'RoleController@getRole',           'permission' => 'ROLE_GET'],
     'put@role'              => ['action' => 'RoleController@putRole',           'permission' => 'ROLE_PUT'],
     'delete@role'           => ['action' => 'RoleController@deleteRole',        'permission' => 'ROLE_DELETE'],
+    'get@roles'             => ['action' => 'RoleController@getRoles',          'permission' => 'ROLE_GET'],
+    'get@role'              => ['action' => 'RoleController@getRole',           'permission' => 'ROLE_GET'],
     'get@role/permissions'  => ['action' => 'RoleController@getPermissions',    'permission' => 'ROLE_GET'],
 
     // 系统模块
     'get@version'           => ['action' => 'SystemController@version'],
     'post@system/install'   => ['action' => 'SystemController@install'],
     'get@asset'             => ['action' => 'SystemController@asset'],
-    'post@system/config'    => ['action' => 'SystemController@postConfig',   'permission' => 'SYSTEM_CONFIG_POST'],
-    'put@system/config'     => ['action' => 'SystemController@putConfig',    'permission' => 'SYSTEM_CONFIG_PUT'],
-    'get@system/config'     => ['action' => 'SystemController@getConfig',    'permission' => 'SYSTEM_CONFIG_GET'],
-    'delete@system/config'  => ['action' => 'SystemController@deleteConfig', 'permission' => 'SYSTEM_CONFIG_DELETE'],
+    'post@system/config'    => ['action' => 'SystemController@postConfig',      'permission' => 'SYSTEM_CONFIG_POST'],
+    'put@system/config'     => ['action' => 'SystemController@putConfig',       'permission' => 'SYSTEM_CONFIG_PUT'],
+    'get@system/config'     => ['action' => 'SystemController@getConfig',       'permission' => 'SYSTEM_CONFIG_GET'],
+    'delete@system/config'  => ['action' => 'SystemController@deleteConfig',    'permission' => 'SYSTEM_CONFIG_DELETE'],
+    'get@system/user/menu'  => ['action' => 'SystemController@getUserMenu'],
 
     // 插件模块
     'get@local/plugins' => ['action' => 'PluginController@getLocalPlugins', 'permission' => 'USER_GET'],

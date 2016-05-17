@@ -3,18 +3,24 @@
  */
 define([
         'media',
+        'post',
         'css!../../css/app.post'
     ],
     function () {
 
-        return ['$scope', 'media', function ($scope, media) {
+        return ['$scope', 'media', 'post', function ($scope, media, post) {
 
-            $scope.title = "文章";
 
-            media.config($scope);
 
-            $scope.openMediaModal = function () {
-                media.open($scope);
+            // media.config($scope);
+            //
+            // $scope.openMediaModal = function () {
+            //     media.open($scope);
+            // };
+            post.setPostEditor($scope);
+
+            $scope.openPostEditor = function () {
+                $scope.$emit('post.editor.show');
             };
 
         }];

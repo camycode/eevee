@@ -4,15 +4,23 @@
 define([
         'user',
         'storage',
+        'url',
         'typing',
         'css!../../css/login'
     ],
     function () {
 
-        return ['$scope', '$state', 'user', 'storage', 'typing', function ($scope, $state, user, storage, typing) {
+        return ['$scope', '$state', 'user', 'storage', 'typing', 'url', function ($scope, $state, user, storage, typing, url) {
 
             $scope.account = null;
             $scope.password = null;
+            $scope.showPage = false;
+
+            if (user.isLogin()) {
+                url.redirect('/app/dashboard');
+            }else{
+                $scope.showPage = true;
+            }
 
 
             $scope.login = function () {
@@ -25,7 +33,7 @@ define([
 
                         if (response.code == 200) {
 
-                            $state.go('app.post');
+                            url.redirect('/app/dashboard');
 
                         } else {
 

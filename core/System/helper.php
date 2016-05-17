@@ -44,6 +44,27 @@ function exception($status, $data = null)
 }
 
 /**
+ *
+ * 获取本地化文件名称属性
+ *
+ * @param $ident
+ *
+ * @return null|string
+ */
+function trans_name($ident)
+{
+    $item = trans($ident);
+
+    if (is_array($item)) {
+
+        return isset($item['name']) ? $item['name'] : null;
+    }
+
+    return $item;
+}
+
+
+/**
  * 调试打印函数
  *
  * @param mixed $var
@@ -52,6 +73,7 @@ function d($var)
 {
     die(json_encode($var));
 }
+
 
 /**
  * 生成插件和主题静态资源链接
@@ -65,5 +87,5 @@ function asset($path)
 
 function auth($permission, $resource, $role_id, $callback)
 {
-    
+
 }

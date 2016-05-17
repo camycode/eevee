@@ -14,21 +14,30 @@ require.config({
         'slimScroll': './vendor/jQuery-slimScroll/jquery.slimscroll.min',
         'navgoco': './vendor/navgoco/src/jquery.navgoco.min',
         'nestable': './vendor/Nestable/jquery.nestable',
+        'UE': './vendor/ueditor-bower/ueditor.all.min',
+        'zeroClipboard': './vendor/ueditor-bower/third-party/zeroclipboard/ZeroClipboard.min',
         'layer': './vendor/layer/src/layer',
         'pace': './vendor/PACE/pace.min',
         'toastr': './vendor/toastr/toastr.min',
         'app': './app',
+
         'user': './models/user',
         'role': './models/role',
         'media': './models/media',
+        'post': './models/post',
+        'system': './models/system',
+
         'url': './services/url',
         'ajax': './services/ajax',
         'typing': './services/typing',
         'storage': './services/storage',
+        'ueditor': './services/ueditor',
+
         'role.editor': './directives/role.editor',
         'role.detail': './directives/role.detail',
         'user.editor': './directives/user.editor',
         'user.detail': './directives/user.detail',
+        'post.edirot': './directives/post.editor'
     },
 
     map: {
@@ -47,12 +56,16 @@ require.config({
         'angularRoute': {
             deps: ['angular']
         },
+        'UE': {
+            exports: 'UE',
+            deps: ['./vendor/ueditor-bower/ueditor.config']
+        },
         'pace': {
             deps: ['css!./vendor/PACE/themes/blue/pace-theme-minimal']
         },
         'layer': {
-            deps: ['css!./vendor/layer/skin/layer'],
-            exports: 'layer'
+            exports: 'layer',
+            deps: ['css!./vendor/layer/skin/layer']
         },
         'toastr': {
             deps: ['jquery', 'css!./vendor/toastr/toastr.min']
@@ -63,7 +76,7 @@ require.config({
 
 });
 
-define(['pace','app'], function (pace) {
+define(['pace', 'app'], function (pace) {
 
     pace.start({
         restartOnPushState: true,
