@@ -30,11 +30,12 @@ gulp.task('browser', function () {
     watch(['./src/config.json','./src/scripts/[^bower]*/**/*.js', './src/scripts/*.js', './src/index.html', './src/views/**/*.html', './src/images/**/*.*'], browserSync.reload);
 
     return browserSync.init({
-        server: {
-            baseDir: "./"
-        },
-        port: 7000,
-        startPath: '/src#login'
+        // server: {
+        //     baseDir: "./"
+        // },
+        // port: 7000,
+        startPath: '/src/index.html#login',
+        proxy : 'http://dev.eevee.io/'
     });
 });
 
