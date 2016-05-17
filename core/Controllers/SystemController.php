@@ -2,6 +2,8 @@
 
 namespace Core\Controllers;
 
+use Core\Models\User;
+use Core\Models\Role;
 use Core\Models\System;
 use Core\Services\Context;
 use Core\Services\Installer;
@@ -159,5 +161,21 @@ class SystemController extends Controller
         return $context->response((new System())->deleteConfig($key, $source));
     }
 
+    /**
+     * @api {get} /api/system/user/menu 获取用户菜单
+     *
+     * @apiGroup USER
+     *
+     */
+    public function getUserMenu(Context $context)
+    {
+
+        $user = (new User())->getUser($context->request->visitor)->data;
+
+        $role = (new Role())->getRolePermissions($user->role, true);
+
+        d($role);
+
+    }
 
 }

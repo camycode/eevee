@@ -283,4 +283,5 @@ class UserController extends Controller
     {
         return $context->response((new User())->deleteUser($context->params('user_id')));
     }
+
 }

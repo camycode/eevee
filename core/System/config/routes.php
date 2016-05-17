@@ -39,10 +39,11 @@ return [
     'get@version'           => ['action' => 'SystemController@version'],
     'post@system/install'   => ['action' => 'SystemController@install'],
     'get@asset'             => ['action' => 'SystemController@asset'],
-    'post@system/config'    => ['action' => 'SystemController@postConfig',   'permission' => 'SYSTEM_CONFIG_POST'],
-    'put@system/config'     => ['action' => 'SystemController@putConfig',    'permission' => 'SYSTEM_CONFIG_PUT'],
-    'get@system/config'     => ['action' => 'SystemController@getConfig',    'permission' => 'SYSTEM_CONFIG_GET'],
-    'delete@system/config'  => ['action' => 'SystemController@deleteConfig', 'permission' => 'SYSTEM_CONFIG_DELETE'],
+    'post@system/config'    => ['action' => 'SystemController@postConfig',      'permission' => 'SYSTEM_CONFIG_POST'],
+    'put@system/config'     => ['action' => 'SystemController@putConfig',       'permission' => 'SYSTEM_CONFIG_PUT'],
+    'get@system/config'     => ['action' => 'SystemController@getConfig',       'permission' => 'SYSTEM_CONFIG_GET'],
+    'delete@system/config'  => ['action' => 'SystemController@deleteConfig',    'permission' => 'SYSTEM_CONFIG_DELETE'],
+    'get@system/user/menu'  => ['action' => 'SystemController@getUserMenu'],
 
     // 插件模块
     'get@local/plugins' => ['action' => 'PluginController@getLocalPlugins', 'permission' => 'USER_GET'],
