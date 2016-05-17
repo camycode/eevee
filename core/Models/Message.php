@@ -12,10 +12,26 @@ class Message extends Model
     public function setData($data)
     {
         $this->data = $data;
+
+        return $this;
     }
 
-    public function addMessage($user_id, $key, $value)
+    /**
+     * 添加用户消息
+     *
+     * @return Status
+     */
+    public function addMessage()
     {
+        $this->validateMessage();
+
+        $this->initMessage();
+
+        $this->filter($this->data, $this->fields('MESSAGE'));
+
+        $this->resource('MESSAGE')->insert($this->data);
+
+        return $this->getMessage($this->data['id']);
 
     }
 
@@ -24,9 +40,23 @@ class Message extends Model
 
     }
 
-    public function getMessage($user_id, $config_key)
+    /**
+     * 获取用户消息
+     *
+     * @param $message_id
+     *
+     * @return mixed
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    public function getMessage($message_id)
     {
+        if ($message = $this->resource('MESSAGE')->where('id', $message_id)->first()) {
 
+            return status('success', $message);
+        }
+
+        exception('MessageDoesNotExist');
     }
 
 
@@ -36,6 +66,11 @@ class Message extends Model
     }
 
     protected function validateMessage()
+    {
+
+    }
+
+    protected function initMessage()
     {
 
     }
