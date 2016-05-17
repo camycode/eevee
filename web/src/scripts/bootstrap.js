@@ -14,8 +14,8 @@ require.config({
         'slimScroll': './vendor/jQuery-slimScroll/jquery.slimscroll.min',
         'navgoco': './vendor/navgoco/src/jquery.navgoco.min',
         'nestable': './vendor/Nestable/jquery.nestable',
-        'ueditor.source': './vendor/ueditor-bower/ueditor.all.min',
-        'ueditor.lang':'./vendor/ueditor-bower/lang/zh-cn/zh-cn',
+        'UE': './vendor/ueditor-bower/ueditor.all.min',
+        'zeroClipboard': './vendor/ueditor-bower/third-party/zeroclipboard/ZeroClipboard.min',
         'layer': './vendor/layer/src/layer',
         'pace': './vendor/PACE/pace.min',
         'toastr': './vendor/toastr/toastr.min',
@@ -30,6 +30,7 @@ require.config({
         'ajax': './services/ajax',
         'typing': './services/typing',
         'storage': './services/storage',
+        'ueditor': './services/ueditor',
 
         'role.editor': './directives/role.editor',
         'role.detail': './directives/role.detail',
@@ -54,9 +55,9 @@ require.config({
         'angularRoute': {
             deps: ['angular']
         },
-        'ueditor.source': {
+        'UE': {
             exports: 'UE',
-            deps: ['./vendor/ueditor-bower/ueditor.config','css!./vendor/ueditor-bower/themes/default/css/ueditor']
+            deps: ['./vendor/ueditor-bower/ueditor.config']
         },
         'pace': {
             deps: ['css!./vendor/PACE/themes/blue/pace-theme-minimal']
