@@ -14,7 +14,8 @@
     "tag": "1.4.3",
     "commit": "9c9c3f3dadedf9537a0e2d1da97b16dbd2bf180c"
   },
-  "_source": "git://github.com/Astray-git/ueditor-bower.git",
-  "_target": "1.4.3",
-  "_originalSource": "ueditor-bower"
+  "_source": "https://github.com/Astray-git/ueditor-bower.git",
+  "_target": "^1.4.3",
+  "_originalSource": "ueditor-bower",
+  "_direct": true
 }

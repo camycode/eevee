@@ -26,7 +26,7 @@ define([
                     return localStorage[key] == 'undefined' ? undefined : localStorage[key];
                 },
                 has: function (key) {
-                    return typeof localStorage[key] != 'undefined' && localStorage[key] != 'null';
+                    return typeof localStorage[key] != 'undefined';
                 },
                 remove: function (key) {
                     localStorage.removeItem(key);

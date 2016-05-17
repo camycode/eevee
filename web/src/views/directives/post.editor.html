@@ -1,6 +1,6 @@
-<div id="directive-post-editor" class="editor slide">
+<div id="directive-post-editor" class="view slide">
 
-  <div class="ui secondary menu">
+  <div class="view title ui secondary menu">
     <div class="item">
       编辑文章
     </div>
@@ -10,13 +10,13 @@
         <i class="icon checkmark"></i>
       </div>
       <div class="item label">
-        <i class="icon share" ng-click="closePostEditor()"></i>
+        <i class="icon share" ng-click="hidePostEditor()"></i>
       </div>
     </div>
   </div>
 
-  <div class="ui card">
-    <div class="content block">
+  <div class="view content">
+    <div class="block">
       <div class="ui form">
         <div class="field">
           <label>标题</label>
@@ -30,7 +30,8 @@
           <label>摘要</label>
           <textarea rows="2" cols="3"></textarea>
         </div>
-        <ueditor config="editorConfig" ng-model="content">
+
+        <ueditor id="container" config="editorConfig" ng-model="content">
           <p>
             <span style="font-size: 36px;">大字</span>
             <span style="color: rgb(255, 0, 0);">颜色</span>

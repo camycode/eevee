@@ -4,8 +4,20 @@
         <div class="item brand">EEVEE</div>
         <a class="item"><i class="sidebar icon"></i></a>
         <div class="right menu">
-            <a class="item"><i class="grid layout icon"></i></a>
-            <a class="item"><i class="mail outline icon"></i></a>
+
+            <div class="ui dropdown item" tabindex="0">
+                <i class="grid layout icon"></i>
+                <div id="shortcuts-wrap"  class="user panel menu transition hidden" tabindex="-1">
+                    <div class="item">一些快捷方式...</div>
+                </div>
+            </div>
+
+            <div class="ui dropdown item" tabindex="0">
+                <i class="mail outline icon"></i>
+                <div id="messages-wrap"  class="user panel menu transition hidden" tabindex="-1">
+                    <div class="item">一些系统消息...</div>
+                </div>
+            </div>
 
             <div class="ui dropdown item" tabindex="0">
                 <img src="images/photos/bob.jpeg" alt="" class="ui avatar image">

@@ -18,6 +18,7 @@ define([
 
         return ['$scope', '$state', 'user', 'url', function ($scope, $state, user, url) {
 
+            // 检查用户是否登录
             if (!user.isLogin()) {
                 url.redirect('/login');
             } else {
@@ -39,15 +40,15 @@ define([
             });
 
 
-
-
             // 配置头部导航菜单
             $('.ui.selection.dropdown').dropdown();
+
             
             $('.ui.menu .ui.dropdown').dropdown({
                 on: 'click'
             });
 
+            // 用户注销
             $scope.logout = function () {
 
                 user.logout(function () {
