@@ -21,17 +21,13 @@ return [
         'table' => 'configs',
         'fields' => ['user_id', 'config_key', 'config_value', 'source', 'created_at', 'updated_at'],
     ],
-    'SYSTEMCONFIG' => [
-        'table' => 'system_configs',
-        'fields' => ['config_key', 'config_value', 'source', 'created_at', 'updated_at'],
-    ],
     'MESSAGE' => [
         'table' => 'messages',
-        'fields' => ['id', 'user_id', 'message', 'sender', 'status', 'source', 'created_at'],
+        'fields' => ['id', 'user_id', 'title', 'content','type', 'sender', 'status', 'source', 'created_at'],
     ],
     'POST' => [
         'table' => 'posts',
-        'fields' => ['id', 'user_id', 'post', 'status', 'source', 'created_at', 'updated_at'],
+        'fields' => ['id', 'user_id', 'title', 'content','type', 'status', 'source', 'created_at', 'updated_at'],
     ],
     'RESOURCE' => [
         'table' => 'resources',
@@ -44,6 +40,10 @@ return [
     'USERTOKEN' => [
         'table' => 'user_tokens',
         'fields' => [],
+    ],
+    'SYSTEMCONFIG' => [
+        'table' => 'system_configs',
+        'fields' => ['config_key', 'config_value', 'source', 'created_at', 'updated_at'],
     ],
     'L:TERMRELATIONSHIP' => [
         'table' => 'terms_relationships',

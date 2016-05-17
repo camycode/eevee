@@ -35,6 +35,7 @@ class Post extends Model
 
             $this->resource('POST')->insert($this->data);
 
+            return $this->getPost($this->data['id']);
         });
     }
 
@@ -76,6 +77,11 @@ class Post extends Model
 
     protected function initPost()
     {
+        $this->data = array_merge([
+            'id' => $this->id(),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ], $this->data);
 
     }
 
