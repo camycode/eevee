@@ -202,6 +202,7 @@ class Installer
     {
         $data = array(
             'id' => 'guest',
+            'parent' => $this->result['register_root_role']->id,
             'name' => message('guest')
         );
 
