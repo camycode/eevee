@@ -3,7 +3,6 @@
 namespace Core\Models;
 
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\Security\Core\User\User;
 
 class Role extends Model
 {
@@ -452,7 +451,8 @@ class Role extends Model
      */
     public function guard($user_id, array $affect, array $param = [], $callback = null)
     {
-          $role = (new User())->getUser($user_id);
+        
+//          $role = (new User())->getUser($user_id);
 //        $role = $this->getRole($role_id)->data;
 //
 //        if (!in_array($permission, $role->permissions)) {

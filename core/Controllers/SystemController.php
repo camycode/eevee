@@ -170,11 +170,34 @@ class SystemController extends Controller
     public function getUserMenu(Context $context)
     {
 
+
         $user = (new User())->getUser($context->request->visitor)->data;
 
-        $role = (new Role())->getRolePermissions($user->role, true);
+        $permissions = (new Role())->getRolePermissions($user->role)->data;
 
-        d($role);
+        $menus = config('menus', []);
+
+        foreach ($menus as $num => $menu) {
+
+            if (isset($menu['permission']) && $menu['permission']) {
+
+                if (is_array($menu['permission'])) {
+
+                    if (array_diff($menu['permission'], $permissions)) {
+                        unset($menus[$num]);
+                    }
+                } else {
+                    
+                    if (!in_array($menu['permission'], $permissions)) {
+                        unset($menus[$num]);
+                    }
+                }
+
+            }
+
+        }
+
+        return $context->response(status('success', $menus));
 
     }
 

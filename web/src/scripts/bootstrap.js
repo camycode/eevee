@@ -25,6 +25,7 @@ require.config({
         'role': './models/role',
         'media': './models/media',
         'post': './models/post',
+        'system': './models/system',
 
         'url': './services/url',
         'ajax': './services/ajax',

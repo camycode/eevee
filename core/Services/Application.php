@@ -12,6 +12,7 @@ class Application extends Lumen
         'queue',
         'view',
         'cache',
+        'menus',
         'routes',
         'system',
         'session',

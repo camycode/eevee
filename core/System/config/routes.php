@@ -29,10 +29,10 @@ return [
 
     // 角色模块
     'post@role'             => ['action' => 'RoleController@postRole',          'permission' => 'ROLE_POST'],
-    'get@roles'             => ['action' => 'RoleController@getRoles',          'permission' => 'ROLE_GET'],
-    'get@role'              => ['action' => 'RoleController@getRole',           'permission' => 'ROLE_GET'],
     'put@role'              => ['action' => 'RoleController@putRole',           'permission' => 'ROLE_PUT'],
     'delete@role'           => ['action' => 'RoleController@deleteRole',        'permission' => 'ROLE_DELETE'],
+    'get@roles'             => ['action' => 'RoleController@getRoles',          'permission' => 'ROLE_GET'],
+    'get@role'              => ['action' => 'RoleController@getRole',           'permission' => 'ROLE_GET'],
     'get@role/permissions'  => ['action' => 'RoleController@getPermissions',    'permission' => 'ROLE_GET'],
 
     // 系统模块

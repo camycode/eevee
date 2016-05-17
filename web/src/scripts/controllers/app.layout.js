@@ -6,17 +6,19 @@
  * @author 古月(Gue@lehu.io)
  */
 define([
+        'url',
+        'user',
+        'typing',
+        'system',
         'navgoco',
         'semantic',
         'slimScroll',
-        'user',
-        'url',
         '../directives/sidebar',
         'css!../../css/app'
     ],
     function () {
 
-        return ['$scope', '$state', 'user', 'url', function ($scope, $state, user, url) {
+        return ['$scope', '$state', 'user', 'url', 'system', 'typing', function ($scope, $state, user, url, system, typing) {
 
             // 检查用户是否登录
             if (!user.isLogin()) {
@@ -24,6 +26,29 @@ define([
             } else {
                 $('#eevee-layout').show();
             }
+
+            // 用户注销
+            $scope.logout = function () {
+
+                user.logout(function () {
+                    url.redirect('/login');
+                });
+
+            };
+
+            system.getUserMenu()
+                .success(function (response) {
+                    if (response.code == 200) {
+
+                        $scope.userMenus = response.data;
+                    } else {
+                        typing.warning(response.message);
+                    }
+                })
+                .error(function () {
+                    typing.error('网络错误');
+                });
+
 
             // 垂直导航栏
             $('#eevee-sidebar .menu').navgoco({
@@ -43,19 +68,10 @@ define([
             // 配置头部导航菜单
             $('.ui.selection.dropdown').dropdown();
 
-            
+
             $('.ui.menu .ui.dropdown').dropdown({
                 on: 'click'
             });
-
-            // 用户注销
-            $scope.logout = function () {
-
-                user.logout(function () {
-                    url.redirect('/login');
-                });
-
-            }
 
 
         }];
