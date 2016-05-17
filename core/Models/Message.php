@@ -12,7 +12,7 @@ class Message extends Model
     public function setData($data)
     {
         $this->data = $data;
-
+        
         return $this;
     }
 
@@ -72,6 +72,10 @@ class Message extends Model
 
     protected function initMessage()
     {
+        $this->data = array_merge([
+            'id' => $this->id(),
+            'created_at' => date('Y-m-d H:i:s'),
+        ], $this->data);
 
     }
 
