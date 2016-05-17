@@ -8,37 +8,37 @@
     max-height: 25px;
   }
   > table {
-      th {
-        padding: 7px 10px;
-        .icon{
-          display: none;
-        }
-        &:hover{
-          .icon{
-            display: inline-block;
-          }
+    th {
+      padding: 7px 10px;
+      .icon {
+        visibility: hidden;
+      }
+      &:hover {
+        .icon {
+          visibility: visible;
         }
       }
+    }
 
-    .col-check{
+    .col-check {
       width: 20px;
     }
-    .col-avatar{
+    .col-avatar {
       width: 50px;
     }
-    .col-username{
+    .col-username {
 
     }
-    .col-email{
+    .col-email {
 
     }
-    .col-role{
+    .col-role {
       width: 10%;
     }
-    .col-status{
+    .col-status {
 
     }
-    .col-date{
+    .col-date {
 
     }
   }

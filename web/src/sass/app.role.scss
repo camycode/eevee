@@ -6,16 +6,15 @@
 
   th {
     .icon {
-      display: none;
+      visibility: hidden;
     }
     &:hover {
       .icon {
-        display: inline-block;
+        visibility: visible;
       }
     }
   }
 
-  
   .col-name {
     width: 10%;
   }

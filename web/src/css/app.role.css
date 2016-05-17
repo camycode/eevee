@@ -1,8 +1,8 @@
 #app-role th .icon {
-  display: none;
+  visibility: hidden;
 }
 #app-role th:hover .icon {
-  display: inline-block;
+  visibility: visible;
 }
 #app-role .col-name {
   width: 10%;
