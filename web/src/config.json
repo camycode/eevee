@@ -64,6 +64,16 @@
       "url": "/theme",
       "templateUrl": "views/app.theme.html",
       "controllerUrl": "controllers/app.theme"
+    },
+    "app.qingjia": {
+      "url": "/qingjia",
+      "templateUrl": "views/app.qingjia.html",
+      "controllerUrl": "controllers/app.qingjia"
+    },
+    "app.qingjia-admin": {
+      "url": "/qingjia-admin",
+      "templateUrl": "views/app.qingjia.admin.html",
+      "controllerUrl": "controllers/app.qingjia.admin"
     }
   }
 }

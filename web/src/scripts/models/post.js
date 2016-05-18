@@ -14,6 +14,12 @@ define([
         return {
             setPostEditor: function ($scope) {
                 $('#eevee-view').append($compile($('<div post.editor></div>'))($scope));
+            },
+            postPost: function (data) {
+                return ajax.post('/api/post', data);
+            },
+            getPosts: function (params) {
+                return ajax.get('/api/posts', params);
             }
 
         };
