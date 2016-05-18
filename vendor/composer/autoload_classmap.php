@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'CreateAppsTable' => $baseDir . '/core/System/database/migrations/2016_03_05_140137_create_apps_table.php',
+    'CreateBooksTable' => $baseDir . '/core/System/database/migrations/2016_05_18_150412_create_books_table.php',
     'CreateConfigsTable' => $baseDir . '/core/System/database/migrations/2016_04_18_141518_create_configs_table.php',
     'CreateMessagesTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020509_create_messages_table.php',
     'CreatePermissionsRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133768_create_permissions_relationships_table.php',

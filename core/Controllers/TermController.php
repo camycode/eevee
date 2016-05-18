@@ -141,7 +141,7 @@ class TermController extends Controller
      * @FunctionName getTerm
      * @param Context $context
      * @return \Core\Services\Response
-     * @explain
+     * @explain 获取分类信息
      */
     public function getTerm(Context $context)
     {
