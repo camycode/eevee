@@ -16,4 +16,10 @@ class PostController extends Controller
     {
         return $context->response((new Post())->getPost($context->params('post_id')));
     }
+
+
+    public function getPosts(Context $context)
+    {
+        return $context->response((new Post())->getPosts($context->params()));
+    }
 }

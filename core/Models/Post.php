@@ -64,9 +64,18 @@ class Post extends Model
 
     }
 
-    public function getPosts($params)
+    /**
+     * 获取 Posts
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
+    public function getPosts(array $params)
     {
+        $roles = $this->selector('POST', $params);
 
+        return status('success', $roles);
     }
 
 

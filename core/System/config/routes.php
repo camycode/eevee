@@ -64,6 +64,7 @@ return [
     // 文章模块
     'post@post' => ['action' => 'PostController@postPost'],
     'get@post'  => ['action' => 'PostController@getPost'],
+    'get@posts' => ['action' => 'PostController@getPosts'],
 
     // 用户消息
     'post@message'  => ['action' => 'MessageController@postMessage'],
