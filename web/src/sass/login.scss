@@ -27,7 +27,7 @@
     z-index: 8;
     background: transparent;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(0, 0, 0, .15)), color-stop(30%, transparent), color-stop(70%, transparent), to(rgba(0, 0, 0, .5)));
-    background: linear-gradient(180deg, rgba(0, 0, 0, .15) 0, transparent 30%, transparent 70%, rgba(0, 0, 0, .5));
+    background: linear-gradient(180deg, rgba(0, 0, 0, .15) 0, transparent 30%, transparent 60%, rgba(0, 0, 0, .4));
   }
 
   #wrapper {
@@ -36,7 +36,7 @@
     z-index: 10;
     margin: auto;
     top: 0;
-    bottom: 200px;
+    bottom: 180px;
     left: 0;
     right: 0;
 
