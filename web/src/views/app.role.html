@@ -28,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="role in roles" role-id="{{ role.id }}" ng-dblclick="openRoleDetailView(role.id )">
+                <tr ng-repeat="role in roles" role-id="{{ role.id }}" ng-click="openRoleDetailView(role.id )">
                     <td class="col-name">{{ role.name }}</td>
                     <td class="col-permission-amount">{{ role.permission_amount }}</td>
                     <td class="col-status">{{ role.status }}</td>
