@@ -3,6 +3,13 @@
 /**
  * 权限验证中间件.
  *
+ * 权限验证以4种接口请求方式(POST,GET,PUT,DELETE)为依托, 在中间件层面按照约定的规对接口的访问加上权限保护.
+ *
+ * 验证流程:
+ *
+ *     1. 获取 "X-App-ID" 请求头, 验证应用ID是否有效.
+ *  
+ *
  * @author 古月(2016/03/11)
  */
 
@@ -15,11 +22,30 @@ use Core\Models\Model;
 class Authenticate
 {
 
-    protected $user_id;
-
-    protected $permissions;
-
+    // 请求对象
     protected $request;
+
+    // 应用ID
+    protected $app_id;
+
+    // 访客的用户ID
+    protected $visitor_id;
+
+    // 记录访客的权限数组
+    protected $visitor_permissions;
+
+    // 访客Token
+    protected $visitor_user_token;
+
+    // 请求API路径
+    protected $request_uri;
+
+    // 请求方法
+    protected $request_method;
+
+    // API 接口要求权限数组
+    protected $request_permissions;
+
 
     /**
      * 权限验证中间件.
@@ -123,7 +149,7 @@ class Authenticate
     protected function authPermissions()
     {
         $permission = $this->getRequestPermission();
-        
+
         if (is_string($permission)) {
 
             if (in_array($permission, $this->permissions)) {
