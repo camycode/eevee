@@ -25,15 +25,15 @@
                             <input type="password" name="password" placeholder="密码" ng-model="password">
                         </div>
                     </div>
-                    <div class="ui fluid large teal submit button" ng-click="login()">登录</div>
+                    <!--<div class="ui fluid large teal submit button" ng-click="login()">登录</div>-->
                 </div>
 
                 <div class="ui error message"></div>
 
             </form>
 
-            <div class="ui message">
-                <a href="#">忘记密码</a>
+            <div class="ui message" ng-click="login()">
+                <a href="#">登录</a>
             </div>
 
         </div>

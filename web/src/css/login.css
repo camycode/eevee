@@ -6,6 +6,14 @@
   width: 100%;
   height: 100%;
   background: #DADADA;
+  background-image: url(../images/login/mountain.jpeg);
+  background-size: cover;
+}
+#page-login .ui.teal.header {
+  color: #616161 !important;
+}
+#page-login .ui.message a {
+  color: #616161;
 }
 #page-login .grid {
   height: 100%;
