@@ -81,6 +81,7 @@ $app->routeMiddleware([
 |
 */
 
+//$app->register(Core\Providers\AppServiceProvider::class);
 $app->register(Core\Providers\EventServiceProvider::class);
 $app->register(Core\Providers\StatusServiceProvider::class);
 $app->register(Core\Providers\ContextServiceProvider::class);

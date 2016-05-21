@@ -3,6 +3,7 @@
 namespace Core\Models;
 
 use Core\Events\UserCreated;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -52,6 +53,8 @@ class User extends Model
             $this->filter($this->data, $this->fields('USER'));
 
             $this->resource('USER')->insert($this->data);
+
+            $this->sendUserRegisterSuccessMail($this->data);
 
             $status = $this->getUser($this->data['id']);
 
@@ -436,5 +439,32 @@ class User extends Model
     protected function encryptPassword($password)
     {
         return md5($password);
+    }
+
+    /**
+     * 发送用户注册成功邮件
+     *
+     * @param array $user
+     */
+    public function sendUserRegisterSuccessMail(array $user)
+    {
+
+        Mail::send('emails.user.new', $user, function ($message) use ($user) {
+
+            $message->from('info@lehu.io', 'EEVEE REGISTER MAIL');
+
+            $message->to($user['email'], $user['username'])->subject('Your Reminder!');
+
+        });
+    }
+
+    /**
+     * 发送用户忘记密码重置密码链接邮件
+     *
+     * @param array $user
+     */
+    public function sendUserForgotPasswordMail(array $user)
+    {
+
     }
 }
