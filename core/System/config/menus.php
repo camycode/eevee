@@ -14,8 +14,8 @@ return [
     ['name' => trans_name('resources.SYSTEM_CONFIG_SITE'),  'icon' => false,                'icon_url' => false, 'link' => '#app/config/site',  'permission' => 'SYSTEM_CONFIG_SITE'],
     ['name' => trans_name('resources.SYSTEM_CONFIG_EMAIL'), 'icon' => false,                'icon_url' => false, 'link' => '#app/config/email', 'permission' => 'SYSTEM_CONFIG_EMAIL'],
     ['name' => trans_name('resources.HELP'),                'icon' => 'area info icon',     'icon_url' => false, 'link' => '#app/help',         'permission' => false],
-    ['name' => '假条',                                       'icon' => 'send icon',     'icon_url' => false, 'link' => '#app/qingjia',                 'permission' => 'QINGJIA'],
-    ['name' => '请假管理',                                    'icon' => 'send icon',     'icon_url' => false, 'link' => '#app/qiangjia-admin',         'permission' => 'QINGJIA_ADMIN'],
+//    ['name' => '假条',                                       'icon' => 'send icon',     'icon_url' => false, 'link' => '#app/qingjia',                 'permission' => 'QINGJIA'],
+//    ['name' => '请假管理',                                    'icon' => 'send icon',     'icon_url' => false, 'link' => '#app/qiangjia-admin',         'permission' => 'QINGJIA_ADMIN'],
 
 ];
 
