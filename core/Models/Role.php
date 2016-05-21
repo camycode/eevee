@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * 角色模型
+ * 
+ * 
+ */
+
 namespace Core\Models;
 
 use Illuminate\Support\Facades\Validator;

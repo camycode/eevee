@@ -23,11 +23,14 @@ return [
     ],
     'MESSAGE' => [
         'table' => 'messages',
-        'fields' => ['id', 'user_id', 'title', 'content','type', 'sender', 'status', 'source', 'created_at'],
+        'fields' => ['id', 'user_id', 'title', 'content', 'type', 'sender', 'status', 'source', 'created_at'],
     ],
     'POST' => [
         'table' => 'posts',
-        'fields' => ['id', 'user_id', 'title', 'content','type', 'status', 'source', 'created_at', 'updated_at'],
+        'fields' => ['id', 'user_id', 'title', 'content', 'type', 'status', 'source', 'created_at', 'updated_at'],
+        'type' => true,
+        'name'=>'',
+        'description'=>''
     ],
     'RESOURCE' => [
         'table' => 'resources',

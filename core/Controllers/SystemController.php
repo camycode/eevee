@@ -162,7 +162,7 @@ class SystemController extends Controller
     }
 
     /**
-     * @api {get} /api/system/user/menu 获取用户菜单
+     * @api {get} /api/system/user/menu 获取用户管理菜单
      *
      * @apiGroup USER
      *
@@ -187,7 +187,7 @@ class SystemController extends Controller
                         unset($menus[$num]);
                     }
                 } else {
-                    
+
                     if (!in_array($menu['permission'], $permissions)) {
                         unset($menus[$num]);
                     }
@@ -198,6 +198,23 @@ class SystemController extends Controller
         }
 
         return $context->response(status('success', $menus));
+
+    }
+
+    /**
+     * 更新系统资源
+     */
+    public function refreshResources(Context $context)
+    {
+
+    }
+
+    /**
+     * 更新系统权限
+     *
+     */
+    public function refreshPermissions(Context $context)
+    {
 
     }
 
