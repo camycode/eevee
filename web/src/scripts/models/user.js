@@ -40,7 +40,7 @@ define([
                  * @param $scope
                  */
                 setUserInformation: function ($scope) {
-                    $('#eevee-view').append($compile($('<div user.information></div>'))($scope));
+                    $('#eevee-layout').append($compile($('<div user.information></div>'))($scope));
                 },
                 /**
                  * 用户登录

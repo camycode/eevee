@@ -30,8 +30,8 @@ define([
             // 检查元素添加个人信息
             var timeout = setInterval(function () {
 
-                if ($('#eevee-view').length > 0) {
-                    
+                if ($('#eevee-layout').length > 0) {
+
                     user.setUserInformation($scope);
                     clearTimeout(timeout);
                 }
