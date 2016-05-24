@@ -11,6 +11,7 @@ define([
         'storage',
         'user.editor',
         'user.detail',
+        'user.information'
     ],
     function (app, $) {
 
@@ -32,6 +33,14 @@ define([
                  */
                 setUserDetail: function ($scope) {
                     $('#eevee-view').append($compile($('<div user.detail></div>'))($scope));
+                },
+                /**
+                 * 配置用户详情弹窗
+                 *
+                 * @param $scope
+                 */
+                setUserInformation: function ($scope) {
+                    $('#eevee-view').append($compile($('<div user.information></div>'))($scope));
                 },
                 /**
                  * 用户登录

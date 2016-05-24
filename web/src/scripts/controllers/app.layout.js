@@ -27,6 +27,22 @@ define([
                 $('#eevee-layout').show();
             }
 
+            // 检查元素添加个人信息
+            var timeout = setInterval(function () {
+
+                if ($('#eevee-view').length > 0) {
+                    
+                    user.setUserInformation($scope);
+                    clearTimeout(timeout);
+                }
+            }, 100);
+
+
+            // 显示用户信息
+            $scope.userInformation = function () {
+                $scope.$emit('user.information.show');
+            };
+
             // 用户注销
             $scope.logout = function () {
 

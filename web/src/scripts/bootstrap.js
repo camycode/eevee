@@ -37,6 +37,7 @@ require.config({
         'role.detail': './directives/role.detail',
         'user.editor': './directives/user.editor',
         'user.detail': './directives/user.detail',
+        'user.information': './directives/user.information',
         'post.edirot': './directives/post.editor'
     },
 
