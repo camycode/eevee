@@ -85,7 +85,15 @@ function asset($path)
     d(__DIR__);
 }
 
-function auth($permission, $resource, $role_id, $callback)
+/**
+ * 接口权限验证函数
+ *
+ * @param $permission
+ * @param $resource
+ * @param $user_id
+ * @param $callback
+ */
+function auth($permission, $resource, $user_id, $callback)
 {
 
 }
