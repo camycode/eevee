@@ -8,13 +8,49 @@
  * @author 古月
  *
  */
+
+use Core\Models\StaticModel as Model;
+
 class Permission
 {
 
-    public static function add(array $data)
+    protected static function validatePermission()
     {
         
     }
+
+    public static function guard()
+    {
+
+    }
+
+    public static function getPermission($permission_id)
+    {
+
+    }
+
+    public static function getPermissions(array $params)
+    {
+
+    }
+
+    public static function addPermission(array $data)
+    {
+        Model::resource('permission')->add($data);
+
+        return status('success');
+    }
+
+    public static function updatePermission(array $data)
+    {
+
+    }
+
+    public static function deletePermission($permission_id)
+    {
+
+    }
+
 
 }
 
