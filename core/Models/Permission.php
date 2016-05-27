@@ -9,7 +9,8 @@
  *
  */
 
-use Core\Models\StaticModel as Model;
+namespace Core\Models;
+
 
 class Permission
 {

@@ -2,6 +2,7 @@
 
 namespace Core\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -13,8 +14,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-      Commands\Permission\Generate::class,
-      Commands\Permission\Checkout::class,
+        Commands\Permission\Generate::class,
+        Commands\Permission\Checkout::class,
+        Commands\Model\Make::class,
     ];
 
     /**
