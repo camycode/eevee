@@ -30,6 +30,8 @@ class Resource
 
     public static function addResource(array $data)
     {
+        Permission::guard();
+
         Model::resource('resource')->add($data);
 
         return status('success');
