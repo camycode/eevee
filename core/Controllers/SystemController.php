@@ -16,6 +16,8 @@ class SystemController extends Controller
      */
     public function version(Context $context)
     {
+        User::setData(['username'=>'Helloshic']);
+        
         return response('EEVEE 1.0.0');
     }
 
