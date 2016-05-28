@@ -6,17 +6,8 @@ use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
-    
-    protected $table = 'apps';
-    
+
     protected $fields = ['app_id','app_name','app_description'];
-    
-    protected $data = [];
-    
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     /**
      * 添加APP
@@ -89,7 +80,8 @@ class App extends Model
      */
     public function getApps(array $params = [])
     {
-        return status('success', $this->selector('APP', $params));
+        d($this->tableName());
+//        return status('success', $this->selector($params));
     }
 
     /**

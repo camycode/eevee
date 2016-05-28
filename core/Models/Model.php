@@ -49,6 +49,7 @@ class Model
         return DB::table($name);
     }
 
+
     /**
      * 获取模型数据库表命, 模型的数据表名称与模型路径保持一致
      *
@@ -59,7 +60,9 @@ class Model
      */
     public function tableName()
     {
-        return strtolower(__CLASS__);
+        $class = explode('\\', get_called_class());
+        
+        return strtolower($class[count($class) - 1]);
     }
 
 
@@ -69,8 +72,8 @@ class Model
      * 支持`order`,`offset`,`limit`,`fields`,`group`,`count`,`first`等条件筛选.
      *
      *
-     * @param array $params     查询参数
-     * @param null  $tableName  数据表名称
+     * @param array $params 查询参数
+     * @param null $tableName 数据表名称
      *
      * @return mixed 数据库查询结果
      *
