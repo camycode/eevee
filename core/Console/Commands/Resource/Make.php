@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Console\Commands\Model;
+namespace Core\Console\Commands\Resource;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\View;
@@ -13,14 +13,14 @@ class Make extends Command
      *
      * @var string
      */
-    protected $signature = 'make:model {model name}';
+    protected $signature = 'make:resource {resource name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create new model with template.';
+    protected $description = 'Create new resource with template.';
 
 
     public function __construct()
@@ -36,7 +36,7 @@ class Make extends Command
      */
     public function handle()
     {
-        $name = $this->argument('model name');
+        $name = $this->argument('resource name');
 
         config(['view.paths' => [__DIR__]]);
 
@@ -55,7 +55,7 @@ class Make extends Command
         } else {
 
             Storage::put(ltrim($modelFileName, base_path()), $code);
-            
+
             $this->info('Create model ' . $modelFileName . ' success.');
         }
 

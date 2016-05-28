@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
         Commands\Permission\Generate::class,
         Commands\Permission\Checkout::class,
         Commands\Model\Make::class,
+        Commands\Controller\Make::class,
+        Commands\Route\Make::class,
     ];
 
     /**

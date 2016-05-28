@@ -1,131 +1,43 @@
+{!! $StartTag !!}
 
-namespace Core\Models\{{  ModelNamespacePath }};
+namespace Core\Controllers{{  $ControllerNamespacePath }};
 
-use Core\Models\Model;
-use Core\Models\Permission;
-use Illuminate\Support\Facades\Validator;
+use Core\Models{{ $ControllerNamespacePath }};
+use Core\Services\Context;
+use Core\Controllers\Controller;
 
-class {{  ModelName }} {
+class {{  $ControllerName }}Controller extends Controller
+{
 
-    // 初始化{{ ModelName }}记录
-    protected static function initialize{{ ModelName }}($data){
-
-        $initialized = [
-            'id' => Model::id(),
-            'type' => '',
-            'status' => '',
-        ];
-
-        Model::timestamps($initialized, true);
-
-        return array_merge($initialized, $data);
+    // 获取{{ $ControllerName  }}
+    public function get{{ $ControllerName  }}(Context $context)
+    {
+        return $context->response((new {{ $ControllerName  }}())->get{{ $ControllerName  }}($context->params('id')));
     }
 
-    // {{ ModelName }}数据校验
-    protected static function validate{{ ModelName }}(array $data, array $ignore = []){
-
-        $table = Model::table('{{ ModelNameToLower }}');
-
-        // 数据验证规则: http://doc.eevee.io/validation.html
-
-        $rule = [
-
-        ];
-
-        Model::ignore($data,$ignore);
-
-        $validator = Validator::make($data, $rule);
-
-        if($validator->fails()) {
-
-            exception('validateFailed', $validator->errors());
-        }
-
+    // 获取{{ $ControllerName  }}组
+    public function get{{ $ControllerName  }}s(Context $context)
+    {
+        return $context->response((new {{ $ControllerName  }}())->get{{ $ControllerName  }}s($context-params()));
     }
 
-    // 获取{{ ModelName }}
-    protected static function get{{ ModelName }}(${{ ModelNameToLower }}_id){
-
-        if($data = Model::resource('{{ ModelNameToLower }}')->where(${{ ModelNameToLower }}_id)->first()){
-
-            Permission::guard((array)$data, true);
-
-            return status('success',$data);
-        }
-
-        exception('{{ ModelNameToLower }}DoesNotExist');
+    // 添加{{ $ControllerName  }}
+    public function post{{ $ControllerName  }}(Context $context)
+    {
+        return $context->response((new {{ $ControllerName  }}($context-data))->add{{ $ControllerName  }}());
     }
 
-    // 获取{{ ModelName }}组
-    protected static function get{{ ModelName }}s(array $params){
-
-        $data = Model::selector('${{ ModelNameToLower }}', $params);
-
-        Permission::guard($data, true);
-
-        return status('success', $data);
+    // 更新{{ $ControllerName  }}
+    public function put{{ $ControllerName  }}(Context $context)
+    {
+        return $context->response((new {{ $ControllerName  }}($context-data))->update{{ $ControllerName  }}($context->params('id')));
     }
 
-    // 添加{{ ModelName }}记录
-    protected static function add{{ ModelName }}(array $data){
-
-        Permission::guard($data);
-
-        self::validate{{ ModelName }}($data);
-
-        $data = self::initialize{{ ModelName }}($data);
-
-        return Model::transaction(function() use($data){
-
-            Model::filter($data, Model::fields('{{ ModelNameToLower }}'));
-
-            Model::resource('{{ ModelNameToLower }}')->insert($data);
-
-            $status = self::get{{ ModelName }}($data['id']);
-
-            return $status;
-
-        });
-
+    // 删除{{ $ControllerName  }}
+    public function delete{{ $ControllerName  }}(Context $context)
+    {
+        return $context->response((new {{ $ControllerName  }}())->delete{{ $ControllerName  }}($context->params('id')));
     }
 
-    // 更新{{ ModelName }}记录
-    protected static function update{{ ModelName }}(${{ ModelNameToLower }}_id, $data){
-
-        Permission::guard($data);
-
-        $origin = self::get{{ ModelName }}(${{ ModelNameToLower }}_id)->data;
-
-        $ignore = [
-
-        ];
-
-        self::validate{{ ModelName }}($data, $ignore);
-
-        return Model::transaction(function() use($data){
-
-            Model::filter($data, Model::fields('{{ ModelNameToLower }}'));
-
-            Model::resource('{{ ModelNameToLower }}')->where('{{ ModelNameToLower }}_id')->update($data);
-
-            $status = self::get{{ ModelName }}($data['id']);
-
-            return $status;
-
-        });
-
-    }
-
-    // 删除{{ ModelName }}记录
-    protected static function delete{{ ModelName }}(${{ ModelNameToLower }}_id){
-
-        $origin = self::get{{ ModelName }}(${{ ModelNameToLower }}_id)->data;
-
-        Permission::guard((array)$origin, true);
-
-        Model::resource('{{ ModelNameToLower }}')->where('{{ ModelNameToLower }}_id')->delete();
-
-        return status('success');
-    }
 }
 
