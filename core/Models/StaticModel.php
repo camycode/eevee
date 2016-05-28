@@ -4,7 +4,7 @@ namespace Core\Models;
 
 use Illuminate\Support\Facades\DB;
 
-class Model
+class StaticModel
 {
     /**
      * 资源数据表.

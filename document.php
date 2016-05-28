@@ -22,8 +22,8 @@ return new Sami($iterator, array(
 //    'theme'                => 'symfony',
 //    'versions'             => $versions,
     'title'                => 'Eeevee References',
-    'build_dir'            => __DIR__.'/docs/web/%version%',
-    'cache_dir'            => __DIR__.'/docs/cache/%version%',
+    'build_dir'            => '../reference.eevee.io/web/%version%',
+    'cache_dir'            => '../reference.eevee.io/cache/%version%',
     'remote_repository'    => new GitHubRemoteRepository('fourever/eevee', dirname($dir)),
     'default_opened_level' => 2,
 ));

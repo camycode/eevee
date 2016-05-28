@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
+    
+    protected $table = 'apps';
+    
+    protected $fields = ['app_id','app_name','app_description'];
+    
     protected $data = [];
-
-    public function setData($data)
+    
+    public function __construct(array $data)
     {
         $this->data = $data;
-
-        return $this;
     }
 
     /**
@@ -36,7 +39,7 @@ class App extends Model
      * 更新APP
      *
      * @param string $app_id
-     * 
+     *
      * @return Status
      */
     public function updateApp($app_id)

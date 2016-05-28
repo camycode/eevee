@@ -6,36 +6,34 @@ use Core\Models\Model;
 use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
-class {{  $ModelName }} {
+class {{  $ModelName }} extends Model {
 
     // 初始化{{ $ModelName }}记录
-    protected static function initialize{{ $ModelName }}(array $data){
+    protected function initialize{{ $ModelName }}(){
 
         $initialized = [
-            'id' => Model::id(),
+            'id' => $this->id(),
             'type' => '',
             'status' => '',
         ];
 
-        Model::timestamps($initialized, true);
+        $this->timestamps($initialized, true);
 
-        return array_merge($initialized, $data);
+        return array_merge($initialized, $this->data);
     }
 
     // {{ $ModelName }}数据校验
-    protected static function validate{{ $ModelName }}(array $data, array $ignore = []){
+    protected function validate{{ $ModelName }}(array $ignore = []){
 
-        $table = Model::table('{{ $ModelNameToLower }}');
-
-        // 数据验证规则: http://doc.eevee.io/validation.html
+        $table = $this->tableName();
 
         $rule = [
 
         ];
 
-        Model::ignore($data,$ignore);
+        $this->ignore($this->data,$ignore);
 
-        $validator = Validator::make($data, $rule);
+        $validator = Validator::make($this->data, $rule);
 
         if($validator->fails()) {
 
@@ -45,9 +43,9 @@ class {{  $ModelName }} {
     }
 
     // 获取{{ $ModelName }}
-    protected static function get{{ $ModelName }}(${{ $ModelNameToLower }}_id){
+    protected function get{{ $ModelName }}(${{ $ModelNameToLower }}_id){
 
-        if($data = Model::resource('{{ $ModelNameToLower }}')->where(${{ $ModelNameToLower }}_id)->first()){
+        if($data = $this->table()->where('{{ $ModelNameToLower }}_id',${{ $ModelNameToLower }}_id)->first()){
 
             Permission::guard((array)$data, true);
 
@@ -58,9 +56,9 @@ class {{  $ModelName }} {
     }
 
     // 获取{{ $ModelName }}组
-    protected static function get{{ $ModelName }}s(array $params){
+    protected function get{{ $ModelName }}s(array $params){
 
-        $data = Model::selector('${{ $ModelNameToLower }}', $params);
+        $data = $this->selector($params);
 
         Permission::guard($data, true);
 
@@ -68,21 +66,21 @@ class {{  $ModelName }} {
     }
 
     // 添加{{ $ModelName }}记录
-    protected static function add{{ $ModelName }}(array $data){
+    protected function add{{ $ModelName }}(){
 
-        Permission::guard($data);
+        Permission::guard($this->data);
 
-        self::validate{{ $ModelName }}($data);
+        $this->validate{{ $ModelName }}($this->data);
 
-        $data = self::initialize{{ $ModelName }}($data);
+        $data = $this->initialize{{ $ModelName }}($this->data);
 
-        return Model::transaction(function() use($data){
+        return $this->transaction(function() use(){
 
-            Model::filter($data, Model::fields('{{ $ModelNameToLower }}'));
+            $this->filter($this->data, $this->fields('{{ $ModelNameToLower }}'));
 
-            Model::resource('{{ $ModelNameToLower }}')->insert($data);
+            $this->table()->insert($this->data);
 
-            $status = self::get{{ $ModelName }}($data['id']);
+            $status = $this->get{{ $ModelName }}($this->data['id']);
 
             return $status;
 
@@ -91,25 +89,25 @@ class {{  $ModelName }} {
     }
 
     // 更新{{ $ModelName }}记录
-    protected static function update{{ $ModelName }}(${{ $ModelNameToLower }}_id, array $data){
+    protected function update{{ $ModelName }}(${{ $ModelNameToLower }}_id){
 
-        Permission::guard($data);
+        Permission::guard($this->data);
 
-        $origin = self::get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
+        $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
         $ignore = [
 
         ];
 
-        self::validate{{ $ModelName }}($data, $ignore);
+        $this->validate{{ $ModelName }}($this->data, $ignore);
 
-        return Model::transaction(function() use($data){
+        return $this->transaction(function() use(){
 
-            Model::filter($data, Model::fields('{{ $ModelNameToLower }}'));
+            $this->filter($this->data, $this->fields('{{ $ModelNameToLower }}'));
 
-            Model::resource('{{ $ModelNameToLower }}')->where('{{ $ModelNameToLower }}_id')->update($data);
+            $this->table()->where('{{ $ModelNameToLower }}_id')->update($this->data);
 
-            $status = self::get{{ $ModelName }}($data['id']);
+            $status = $this->get{{ $ModelName }}($this->data['id']);
 
             return $status;
 
@@ -118,13 +116,13 @@ class {{  $ModelName }} {
     }
 
     // 删除{{ $ModelName }}记录
-    protected static function delete{{ $ModelName }}(${{ $ModelNameToLower }}_id){
+    protected function delete{{ $ModelName }}(${{ $ModelNameToLower }}_id){
 
-        $origin = self::get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
+        $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
         Permission::guard((array)$origin, true);
 
-        Model::resource('{{ $ModelNameToLower }}')->where('{{ $ModelNameToLower }}_id')->delete();
+        $this->table()->where('{{ $ModelNameToLower }}_id')->delete();
 
         return status('success');
     }

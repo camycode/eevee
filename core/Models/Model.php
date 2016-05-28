@@ -6,16 +6,21 @@ use Illuminate\Support\Facades\DB;
 
 class Model
 {
-    /**
-     * 资源数据表.
-     *
-     * @var array core\System\config\resources.php
-     */
-    protected $resources;
 
-    public function __construct()
+
+    /**
+     * @var $data array 模型操作数据
+     */
+    protected $data;
+
+    /**
+     * 构造函数,绑定操作数据
+     *
+     * @param array $data
+     */
+    public function __construct(array $data = [])
     {
-        $this->resources = config('resources');
+        $this->data = $data;
     }
 
     /**
@@ -33,30 +38,30 @@ class Model
     /**
      * 获取资源的数据表名
      *
-     * @param string $resource
+     * @param null $name 指定表明
      *
-     * @return string
-     *
-     * @throws \Exception
+     * @return DB
      */
-    public function table($resource)
+    public function table($name = null)
     {
-        return $this->getResourceInfo($resource, 'table');
+        $name = $name || $this->tableName();
+
+        return DB::table($name);
     }
 
     /**
-     * 获取资源数据表字段
+     * 获取模型数据库表命, 模型的数据表名称与模型路径保持一致
      *
-     * @param $resource
+     * Models/User.php          对应数据表为 user;
+     * Models/User/Config.php   对应数据表为 user_config;
      *
-     * @return array
-     *
-     * @throws \Exception
+     * @return string
      */
-    public function fields($resource)
+    public function tableName()
     {
-        return $this->getResourceInfo($resource, 'fields');
+        return strtolower(__CLASS__);
     }
+
 
     /**
      * 资源查询构造器.
@@ -64,15 +69,17 @@ class Model
      * 支持`order`,`offset`,`limit`,`fields`,`group`,`count`,`first`等条件筛选.
      *
      *
-     * @param string $resource 资源标识符
-     * @param array $params 查询参数
+     * @param array $params     查询参数
+     * @param null  $tableName  数据表名称
      *
      * @return mixed 数据库查询结果
      *
      */
-    public function selector($resource, $params = [])
+    public function selector(array $params = [], $tableName = null)
     {
-        $query = $this->resource($resource);
+        $tableName = $tableName || $this->tableName();
+
+        $query = $this->table($tableName);
 
         foreach ($params as $action => $param) {
 
@@ -104,19 +111,6 @@ class Model
 
         return isset($params['count']) ? $data = $query->count() : $data = $query->get();
     }
-
-    /**
-     * 获取资源数据库操作对象
-     *
-     * @param string $resource
-     *
-     * @return object
-     */
-    public function resource($resource)
-    {
-        return DB::table($this->table($resource));
-    }
-
 
     /**
      * 过滤掉数据的多余字段
@@ -184,6 +178,16 @@ class Model
     }
 
     /**
+     * 获取时间戳
+     *
+     * @return string
+     */
+    public function timestamp()
+    {
+        return date('Y-m-d H:i:s');
+    }
+
+    /**
      * 引用传递数组,生成数据库的时间戳字段.
      *
      * @param array $data 记录数组(引用传递)
@@ -199,32 +203,4 @@ class Model
         $data['updated_at'] = date('Y-m-d H:i:s');
     }
 
-    /**
-     * 获取资源信息
-     *
-     * @param string $resource
-     * @param string $key
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    protected function getResourceInfo($resource, $key)
-    {
-        $resource = strtoupper($resource);
-
-        if (key_exists($resource, $this->resources)) {
-
-            return isset($this->resources[$resource][$key]) ? $this->resources[$resource][$key] : '';
-
-        } elseif (key_exists('L:' . $resource, $this->resources)) {
-
-            return isset($this->resources['L:' . $resource][$key]) ? $this->resources['L:' . $resource][$key] : '';
-
-        } else {
-
-            throw new \Exception("Resource table: $resource does not exist.");
-
-        }
-    }
 }
