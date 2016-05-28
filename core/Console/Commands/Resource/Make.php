@@ -47,9 +47,6 @@ class Make extends Command
             'controller name' => $name,
         ]);
 
-
-
-
     }
 
 }

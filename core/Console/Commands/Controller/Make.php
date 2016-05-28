@@ -41,7 +41,7 @@ class Make extends Command
         config(['view.paths' => []]);
 
         View::addLocation(base_path('core/Console/Commands/Controller'));
-        
+
         $code = View::make('controller', [
             'StartTag' => '<?php ',
             'ControllerNamespacePath' => $this->generateControllerNamespacePath($name),
@@ -59,6 +59,11 @@ class Make extends Command
             Storage::put(ltrim($ControllerFileName, base_path()), $code);
 
             $this->info('Create Controller ' . $ControllerFileName . ' success.');
+
+            $this->call('make:routes', [
+                'controller name' => $name,
+            ]);
+            
         }
 
 

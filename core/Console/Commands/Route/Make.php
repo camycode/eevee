@@ -3,6 +3,7 @@
 namespace Core\Console\Commands\Route;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 
 class Make extends Command
@@ -21,7 +22,6 @@ class Make extends Command
      */
     protected $description = 'Bind routes with target controller.';
 
-
     public function __construct()
     {
         parent::__construct();
@@ -39,34 +39,31 @@ class Make extends Command
 
         $routeConfigFile = base_path('core/System/config/routes.php');
 
-        $routes = require($routeConfigFile);
+        $routesContent = Storage::get(str_replace(base_path(), '', $routeConfigFile));
+
+        $routesContent = str_replace('];', '', $routesContent);
 
         $newRoutes = $this->generateRoutes($name);
 
         foreach ($newRoutes as $newRoute => $value) {
 
-            if (in_array($newRoute, $routes)) {
+            if (preg_match("/'$newRoute'/", $routesContent)) {
+
+                $this->warn('Route ' . $newRoute . ' has existed');
 
                 unset($newRoutes[$newRoute]);
             } else {
-
-                $routes[$newRoute] = $value;
+                $this->info('Bind route ' . $newRoute . ' => ' . $value['action']);
             }
-
         }
 
-        if ($newRoutes) {
+        config(['view.paths' => []]);
 
-            Storage::put(str_replace(base_path(), '', $routeConfigFile), print_r($routes, true));
+        View::addLocation(base_path('core/Console/Commands/Route'));
 
-            $this->info('Bind routes success.');
+        $routesString = View::make('route', ['routes' => $newRoutes]);
 
-            var_dump($newRoutes);
-
-        } else {
-            $this->info('No route bingd.');
-        }
-
+        Storage::put(str_replace(base_path(), '', $routeConfigFile), $routesContent . $routesString);
 
     }
 
@@ -77,7 +74,7 @@ class Make extends Command
 
         $controllerPath = '';
 
-        $paths = explode($name, '/');
+        $paths = explode('/', $name);
 
         foreach ($paths as $path) {
             $controllerPath .= ucfirst($path) . '/';
@@ -86,13 +83,15 @@ class Make extends Command
         $controllerPath = rtrim($controllerPath, '/');
         $controllerName = ucfirst($paths[count($paths) - 1]);
 
-        return [
+        $routes = [
             "get@$name" => ['action' => $controllerPath . '@get' . $controllerName, 'permission' => []],
-            "get@$name" => ['action' => $controllerPath . '@get' . $controllerName . 's', 'permission' => []],
+            "get@$name" . 's' => ['action' => $controllerPath . '@get' . $controllerName . 's', 'permission' => []],
             "post@$name" => ['action' => $controllerPath . '@post' . $controllerName, 'permission' => []],
             "put@$name" => ['action' => $controllerPath . '@put' . $controllerName, 'permission' => []],
             "delete@$name" => ['action' => $controllerPath . '@delete' . $controllerName, 'permission' => []],
         ];
+
+        return $routes;
     }
 
 
