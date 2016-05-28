@@ -227,4 +227,10 @@ class Model
 
         }
     }
+
+    public function __callStatic($name, $arguments)
+    {
+        echo $name;
+        print_r($arguments);
+    }
 }
