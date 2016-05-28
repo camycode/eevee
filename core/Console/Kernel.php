@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Permission\Generate::class,
         Commands\Permission\Checkout::class,
+        Commands\Resource\Make::class,
         Commands\Model\Make::class,
         Commands\Controller\Make::class,
         Commands\Route\Make::class,

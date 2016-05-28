@@ -1,6 +1,6 @@
 {!! $StartTag !!}
 
-namespace Core\Models{{  $ModelNamespacePath }};
+namespace Core\Models{{ $ModelNamespacePath }};
 
 use Core\Models\Model;
 use Core\Models\Permission;

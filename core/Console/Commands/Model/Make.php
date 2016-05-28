@@ -38,19 +38,22 @@ class Make extends Command
     {
         $name = $this->argument('model name');
 
-        config(['view.paths' => [__DIR__]]);
+        config(['view.paths' => []]);
 
-        $code = View::make('template', [
+        View::addLocation(base_path('core/Console/Commands/Model'));
+
+        $code = View::make('model', [
             'StartTag' => '<?php ',
             'ModelNamespacePath' => $this->generateModelNamespacePath($name),
             'ModelName' => $this->generateModelName($name),
             'ModelNameToLower' => $this->generareModelNameToLower($name),
         ]);
-
+        
         $modelFileName = base_path('core/Models' . str_replace('\\', '/', $this->generateModelNamespacePath($name)) . '.php');
 
 
         if (Storage::has(ltrim($modelFileName, base_path()))) {
+
             $this->error('Model ' . $modelFileName . ' has exists');
         } else {
 

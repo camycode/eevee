@@ -3,7 +3,7 @@
 namespace Core\Console\Commands\Resource;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
 class Make extends Command
@@ -20,7 +20,7 @@ class Make extends Command
      *
      * @var string
      */
-    protected $description = 'Create new resource with template.';
+    protected $description = 'Create new resource with controller, model and routes.';
 
 
     public function __construct()
@@ -38,54 +38,18 @@ class Make extends Command
     {
         $name = $this->argument('resource name');
 
-        config(['view.paths' => [__DIR__]]);
 
-        $code = View::make('template', [
-            'StartTag' => '<?php ',
-            'ModelNamespacePath' => $this->generateModelNamespacePath($name),
-            'ModelName' => $this->generateModelName($name),
-            'ModelNameToLower' => $this->generareModelNameToLower($name),
+        $this->call('make:model', [
+            'model name' => $name,
         ]);
 
-        $modelFileName = base_path('core/Models' . str_replace('\\', '/', $this->generateModelNamespacePath($name)) . '.php');
+        $this->call('make:controller', [
+            'controller name' => $name,
+        ]);
 
 
-        if (Storage::has(ltrim($modelFileName, base_path()))) {
-            $this->error('Model ' . $modelFileName . ' has exists');
-        } else {
-
-            Storage::put(ltrim($modelFileName, base_path()), $code);
-
-            $this->info('Create model ' . $modelFileName . ' success.');
-        }
 
 
-    }
-
-
-    protected function generateModelName($name)
-    {
-        $items = explode('/', $name);
-
-        return ucfirst($items[count($items) - 1]);
-    }
-
-    protected function generareModelNameToLower($name)
-    {
-        return strtolower($this->generateModelName($name));
-    }
-
-    protected function generateModelNamespacePath($name)
-    {
-        $path = '\\';
-
-        $items = explode('/', $name);
-
-        foreach ($items as $item) {
-            $path .= ucfirst($item) . '\\';
-        }
-
-        return rtrim($path, '\\');
     }
 
 }

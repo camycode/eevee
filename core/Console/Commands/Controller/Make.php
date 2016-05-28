@@ -38,9 +38,11 @@ class Make extends Command
     {
         $name = $this->argument('controller name');
 
-        config(['view.paths' => [__DIR__]]);
+        config(['view.paths' => []]);
 
-        $code = View::make('template', [
+        View::addLocation(base_path('core/Console/Commands/Controller'));
+        
+        $code = View::make('controller', [
             'StartTag' => '<?php ',
             'ControllerNamespacePath' => $this->generateControllerNamespacePath($name),
             'ControllerName' => $this->generateControllerName($name),
