@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 class User extends Model
 {
 
-    protected $fields;
+    protected $fields = ['id', 'username', 'password', 'created_at', 'updated_at'];
 
     /**
      * 添加用户
@@ -359,7 +359,7 @@ class User extends Model
      */
     protected function validateUser($ignore = [], $password = false)
     {
-        $table = $this->table('USER');
+        $table = $this->tableName();
 
         $rule = [
             'password' => 'required|min:6'
