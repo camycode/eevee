@@ -69,5 +69,11 @@ return [
     // 用户消息
     'post@message' => ['action' => 'MessageController@postMessage'],
     'get@message' => ['action' => 'MessageController@getMessage'],
-    
+
+    'get@file' => ['action' => 'File@getFile', 'permission' => []],
+    'get@files' => ['action' => 'File@getFiles', 'permission' => []],
+    'post@file' => ['action' => 'File@postFile', 'permission' => []],
+    'put@file' => ['action' => 'File@putFile', 'permission' => []],
+    'delete@file' => ['action' => 'File@deleteFile', 'permission' => []],
+
 ];
