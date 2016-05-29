@@ -233,16 +233,18 @@ class Role extends Model
      */
     public function deleteRole($id)
     {
-        $resource = $this->resource('ROLE');
 
-        if (!$resource->where('id', $id)->first()) {
+        if ($role = $this->getRole($id)) {
 
-            return status('roleDoesNotExsit');
+            $this->guard($role, 'delete', GUARD_DELETE);
+
+            $this->table()->where('id', $id)->delete();
+
+            return status('success');
+
         }
 
-        $resource->where('parent', $id)->delete();
-
-        return status('success');
+        return status('roleDoesNotExsit');
 
     }
 
