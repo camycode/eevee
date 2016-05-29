@@ -45,7 +45,7 @@ class {{  $ModelName }} extends Model
     }
 
     // 获取{{ $ModelName }}
-    protected function get{{ $ModelName }}(${{ $ModelNameToLower }}_id)
+    public function get{{ $ModelName }}(${{ $ModelNameToLower }}_id)
     {
 
         if($data = $this->table()->where('{{ $ModelNameToLower }}_id',${{ $ModelNameToLower }}_id)->first()){
@@ -59,7 +59,7 @@ class {{  $ModelName }} extends Model
     }
 
     // 获取{{ $ModelName }}组
-    protected function get{{ $ModelName }}s(array $params)
+    public function get{{ $ModelName }}s(array $params)
     {
 
         $data = $this->selector($params);
@@ -70,7 +70,7 @@ class {{  $ModelName }} extends Model
     }
 
     // 添加{{ $ModelName }}记录
-    protected function add{{ $ModelName }}()
+    public function add{{ $ModelName }}()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
@@ -94,7 +94,7 @@ class {{  $ModelName }} extends Model
     }
 
     // 更新{{ $ModelName }}记录
-    protected function update{{ $ModelName }}(${{ $ModelNameToLower }}_id)
+    public function update{{ $ModelName }}(${{ $ModelNameToLower }}_id)
     {
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
@@ -121,7 +121,7 @@ class {{  $ModelName }} extends Model
     }
 
     // 删除{{ $ModelName }}记录
-    protected function delete{{ $ModelName }}(${{ $ModelNameToLower }}_id)
+    public function delete{{ $ModelName }}(${{ $ModelNameToLower }}_id)
     {
 
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
