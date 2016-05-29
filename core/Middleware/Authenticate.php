@@ -202,6 +202,7 @@ class Authenticate
         define('GUARD_DELETE', 2);
         define('GUARD_GET', 3);
         define('GUARD_UPDATE', 4);
+        define('GUARD_SAVE', 5);
     }
 
     /**

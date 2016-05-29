@@ -2,15 +2,13 @@
 
 namespace Core\Models;
 
-use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
 
     protected $fields = ['id', 'version', 'name', 'description', 'status', 'created_at', 'updated_at'];
-
-
+    
     /**
      * 数据初始化
      *

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSystemConfigsTable extends Migration
+class CreateConfigTable extends Migration
 {
     public function up()
     {

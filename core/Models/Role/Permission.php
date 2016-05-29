@@ -1,136 +1,213 @@
-<?php 
+<?php
 
-namespace Core\Models\Role\Permission;
+namespace Core\Models\Role;
 
 use Core\Models\Model;
-use Illuminate\Support\Facades\Validator;
+use Core\Models\Status;
 
 class Permission extends Model
 {
 
-    protected $fields = ['id','created_at','updated_at'];
+    /**
+     * 定义数据表依赖
+     *
+     * @var array
+     */
+    protected $tables = ['role', 'permission', 'resource'];
 
-    // 初始化Permission记录
-    protected function initializePermission()
+    /**
+     * 定义数据表字段
+     *
+     * @var array
+     */
+    protected $fields = ['role_id', 'permission_id'];
+
+    /**
+     * 获取角色权限资源归档
+     *
+     * @param array $items
+     *
+     * @return Status
+     */
+    protected function getRolePermissionsArchive(array $items)
     {
 
-        $initialized = [
-            'id' => $this->id(),
-        ];
+        $permissions = array();
 
-        $this->timestamps($initialized, true);
+        foreach ($items as $item) {
 
-        $this->data = array_merge($initialized, $this->data);
+            if ($permission = $this->table('permission')->where('id', $item)->first()) {
+
+                array_push($permissions, $permission);
+            }
+        }
+
+        $result = array();
+
+        foreach ($permissions as $item) {
+
+            if ($resource = $this->table('resource')->where('id', $item->resource_id)->first()) {
+
+                $result[$resource->id]['name'] = $resource->name;
+                $result[$resource->id]['parent'] = $resource->parent;
+                $result[$resource->id]['description'] = $resource->description;
+                $result[$resource->id]['source'] = $resource->source;
+                $result[$resource->id]['permissions'] = array();
+            }
+        }
+
+        foreach ($permissions as $permission) {
+            array_push($result[$permission->resource_id]['permissions'], $permission);
+        }
+
+        return status('success', $result);
     }
 
-    // Permission数据校验
-    protected function validatePermission(array $ignore = [])
+    /**
+     * 以角色被删除的权限更新角色的子角色的权限表
+     *
+     * @param $role_id
+     * @param array $permissions
+     */
+    protected function updateRoleChildrenPermissions($role_id, array $permissions)
+    {
+        $children = $this->table('role')->where('id', '<>', $role_id)->where('parent', $role_id)->lists('id');
+
+        $permissions = $this->getDeletedPermissions($role_id, $permissions);
+
+        foreach ($children as $child) {
+
+            foreach ($permissions as $permission) {
+
+                $this->table()->where('role_id', $child)->where('permission_id', $permission)->delete();
+            }
+        }
+    }
+
+    /**
+     * 获取更新用户权限过程中删除的用户权限
+     *
+     * @param $role_id
+     * @param array $permissions
+     *
+     * @return array
+     */
+    protected function getDeletedPermissions($role_id, array $permissions)
+    {
+        return array_diff($this->table()->where('role_id', $role_id)->lists('permission_id'), $permissions);
+    }
+
+    /**
+     * 验证角色的权限是否超出可设定范围
+     *
+     * @param string $parent_id
+     * @param array $permissions
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    protected function validateRolePermissons($parent_id, array $permissions)
     {
 
-        $tableName = $this->tableName();
+        if (array_diff($permissions, $this->table()->where('role_id', $parent_id)->lists('permission_id'))) {
 
-        $rule = [
+            if ($this->table()->first()) {
 
-        ];
-
-        $this->ignore($this->data,$ignore);
-
-        $validator = Validator::make($this->data, $rule);
-
-        if($validator->fails()) {
-
-            exception('validateFailed', $validator->errors());
+                exception('invalidPermissions');
+            }
         }
 
     }
 
-    // 获取Permission
-    protected function getPermission($permission_id)
+    /**
+     * 生成角色权限关系记录
+     *
+     * @param $role_id
+     * @param array $permissions
+     *
+     * @return array|bool
+     */
+    protected function generaRolePermissionRelationships($role_id, array $permissions)
     {
+        $data = [];
 
-        if($data = $this->table()->where('permission_id',$permission_id)->first()){
+        foreach ($permissions as $permission_id) {
 
-            $this->guard($data, 'get', GUARD_GET);
+            $row = [
+                'role_id' => $role_id,
+                'permission_id' => $permission_id,
+            ];
 
-            return status('success',$data);
+            array_push($data, $row);
         }
 
-        exception('permissionDoesNotExist');
+        return $data;
+
     }
 
-    // 获取Permission组
-    protected function getPermissions(array $params)
+    /**
+     * 更新角色权限数
+     *
+     * @param $role_id
+     * @param int $amount
+     */
+    protected function updateRolePermissionAmount($role_id, $amount)
     {
-
-        $data = $this->selector($params);
-
-        $this->guard($data, 'get', GUARD_GET);
-
-        return status('success', $data);
+        $this->table('role')->where('id', $role_id)->update(['permission_amount' => $amount]);
     }
 
-    // 添加Permission记录
-    protected function addPermission()
+
+    /**
+     * 获取角色权限组
+     *
+     * @param $role_id
+     * @param bool $archive
+     *
+     * @return Status
+     */
+    public function getRolePermissions($role_id, $archive = false)
+    {
+        $items = $this->table()->where('role_id', $role_id)->lists('permission_id');
+
+        return $archive ? $this->getRolePermissionsArchive($items) : status('success', $items);
+
+    }
+
+    /**
+     * 保存角色权限
+     *
+     * 保存时会替换角色原有权限.
+     *
+     * @param $role_id
+     * @param $role_parent
+     * @param array $permissions
+     *
+     * @return Status
+     *
+     * @throws \Exception
+     */
+    public function saveRolePermissions($role_id, $role_parent, array $permissions)
     {
 
-        $this->guard($this->data, 'add', GUARD_ADD);
+        $permissions = array_unique($permissions);
 
-        $this->validatePermission();
+        $this->transaction(function () use ($role_id, $role_parent, $permissions) {
 
-        $this->initializePermission();
+            $relationships = $this->generaRolePermissionRelationships($role_id, $permissions);
 
-        return $this->transaction(function(){
+            $this->validateRolePermissons($role_parent, $permissions);
 
-            $this->filter($this->data, $this->fields);
+            $this->updateRoleChildrenPermissions($role_id, $permissions);
 
-            $this->table()->insert($this->data);
+            $this->table()->where('role_id', $role_id)->delete();
 
-            $status = $this->getPermission($this->data['id']);
+            $this->table()->insert($relationships);
 
-            return $status;
+            $this->updateRolePermissionAmount($role_id, count($relationships));
 
         });
 
     }
 
-    // 更新Permission记录
-    protected function updatePermission($permission_id)
-    {
-        $origin = $this->getPermission($permission_id)->data;
 
-        $this->guard($origin, 'update', GUARD_UPDATE);
-
-        $ignore = [
-
-        ];
-
-        $this->validatePermission($ignore);
-
-        return $this->transaction(function() use($permission_id){
-
-            $this->filter($this->data, $this->fields);
-
-            $this->table()->where('permission_id','permission_id')->update($this->data);
-
-            $status = $this->getPermission($this->data['id']);
-
-            return $status;
-
-        });
-
-    }
-
-    // 删除Permission记录
-    protected function deletePermission($permission_id)
-    {
-
-        $origin = $this->getPermission($permission_id)->data;
-
-        $this->guard($origin, 'delete', GUARD_DELETE);
-
-        $this->table()->where('permission_id')->delete();
-
-        return status('success');
-    }
 }
 

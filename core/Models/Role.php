@@ -9,6 +9,7 @@
 namespace Core\Models;
 
 use Illuminate\Support\Facades\Validator;
+use Core\Models\Role\Permission as RolePermission;
 
 class Role extends Model
 {
@@ -25,8 +26,6 @@ class Role extends Model
             'id' => $this->id(),
             'status' => config('site.role.default_status', 0),
             'permissions' => [],
-            'source' => 'EEVEE',
-            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
         $initialized['parent'] = $initialized['id'];
@@ -34,7 +33,6 @@ class Role extends Model
         $this->timestamps($this->data, true);
 
         $this->data = array_merge($initialized, $this->data);
-
 
     }
 
@@ -85,7 +83,7 @@ class Role extends Model
     }
 
     /**
-     * 验证角色父类是否存在
+     * 角色表不为空时, 验证角色父类是否存在.
      *
      * @param string $parent_id
      *
@@ -106,6 +104,46 @@ class Role extends Model
 
 
     /**
+     * 获取角色
+     *
+     * @param string $id
+     *
+     * @return Status
+     */
+    public function getRole($id)
+    {
+
+        if ($role = $this->table()->where('id', $id)->first()) {
+
+            $role->permissions = (new RolePermission())->getRolePermissions($id)->data;
+
+            $this->guard($role, 'get', GUARD_GET);
+
+            return status('success', $role);
+        }
+
+        exception('roleDoesNotExist');
+
+    }
+
+    /**
+     * 获取角色组
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
+    public function getRoles($params)
+    {
+        $roles = $this->selector($params);
+
+        $this->guard($roles, 'get', GUARD_GET);
+
+        return status('success', $roles);
+    }
+
+
+    /**
      * 添加角色
      *
      * 成功返回角色对象,包含角色的权限信息.
@@ -122,13 +160,13 @@ class Role extends Model
 
         return $this->transaction(function () {
 
-//            $permissions = $this->data['permissions'];
+            $permissions = $this->data['permissions'];
 
             $this->filter($this->data, $this->fields);
 
             $this->table()->insert($this->data);
 
-//            $this->updateRolePermisssions($this->data, $permissions);
+            (new RolePermission())->saveRolePermissions($this->data['id'], $this->data['parent'], $permissions);
 
             $role = $this->getRole($this->data['id']);
 
@@ -165,13 +203,13 @@ class Role extends Model
 
         return $this->transaction(function () use ($origin) {
 
-//            if (isset($this->data['permissions'])) {
-//
-//                $origin->parent = $origin->parent == $this->data['parent'] ? $origin->parent : $this->data['parent'];
-//
-//                $this->updateRolePermisssions((array)$origin, (array)$this->data['permissions']);
-//
-//            }
+            if (isset($this->data['permissions'])) {
+
+                $origin->parent = $origin->parent == $this->data['parent'] ? $origin->parent : $this->data['parent'];
+
+                (new RolePermission())->saveRolePermissions($this->data['id'], $this->data['parent'], (array)$this->data['permissions']);
+                
+            }
 
             $this->filter($this->data, $this->fields, ['id']);
 
@@ -182,45 +220,6 @@ class Role extends Model
             return $status;
 
         });
-
-    }
-
-    /**
-     * 获取角色组
-     *
-     * @param array $params
-     *
-     * @return Status
-     */
-    public function getRoles($params)
-    {
-        $roles = $this->selector($params);
-
-        $this->guard($roles, 'get', GUARD_GET);
-
-        return status('success', $roles);
-    }
-
-    /**
-     * 获取角色
-     *
-     * @param string $id
-     *
-     * @return Status
-     */
-    public function getRole($id)
-    {
-
-        if ($role = $this->table()->where('id', $id)->first()) {
-
-            // $role->permissions = $this->getRolePermissions($id)->data;
-
-            $this->guard($role, 'get', GUARD_GET);
-
-            return status('success', $role);
-        }
-
-        exception('roleDoesNotExist');
 
     }
 
