@@ -3,7 +3,6 @@
 namespace Core\Models{{ $ModelNamespacePath }};
 
 use Core\Models\Model;
-use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class {{  $ModelName }} extends Model
@@ -51,7 +50,7 @@ class {{  $ModelName }} extends Model
 
         if($data = $this->table()->where('{{ $ModelNameToLower }}_id',${{ $ModelNameToLower }}_id)->first()){
 
-            Permission::guard((array)$data, GUARD_GET, 'get');
+            $this->guard($data, 'get', GUARD_GET);
 
             return status('success',$data);
         }
@@ -65,7 +64,7 @@ class {{  $ModelName }} extends Model
 
         $data = $this->selector($params);
 
-        Permission::guard($data, GUARD_GET, 'get');
+        $this->guard($data, 'get', GUARD_GET);
 
         return status('success', $data);
     }
@@ -74,7 +73,7 @@ class {{  $ModelName }} extends Model
     protected function add{{ $ModelName }}()
     {
 
-        Permission::guard($this->data, GUARD_ADD , 'add');
+        $this->guard($this->data, 'add', GUARD_ADD);
 
         $this->validate{{ $ModelName }}();
 
@@ -98,7 +97,7 @@ class {{  $ModelName }} extends Model
     protected function update{{ $ModelName }}(${{ $ModelNameToLower }}_id)
     {
 
-        Permission::guard($this->data, GUARD_UPDATE, 'update');
+        $this->guard($this->data, 'update', GUARD_UPDATE);
 
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
@@ -128,7 +127,7 @@ class {{  $ModelName }} extends Model
 
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
-        Permission::guard((array)$origin, GUARD_DELETE, 'delete');
+        $this->guard($origin, 'delete', GUARD_DELETE);
 
         $this->table()->where('{{ $ModelNameToLower }}_id')->delete();
 

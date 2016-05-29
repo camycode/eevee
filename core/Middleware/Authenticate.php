@@ -218,6 +218,8 @@ class Authenticate
 
         $this->request->visitor = 'root';
 
+        $this->setActionConstants();
+
 //        $this->auth();
 
         return $next($this->request);

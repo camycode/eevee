@@ -429,33 +429,4 @@ class Role extends Model
 
     }
     
-    /**
-     * 验证用户权限,
-     * 用户资源操作只能在其角色权限范围内执行.
-     *
-     * @param string $user_id 用户ID
-     * @param array $affect 影响数据
-     * @param array $param 配置参数
-     * @param null $callback 回调函数
-     *
-     */
-    public function guard($user_id, array $affect, array $param = [], $callback = null)
-    {
-        
-//          $role = (new User())->getUser($user_id);
-//        $role = $this->getRole($role_id)->data;
-//
-//        if (!in_array($permission, $role->permissions)) {
-//
-//            exception('permissionDenied');
-//        }
-//
-//        foreach ($param['records'] as $record) {
-//
-//
-//        }
-
-    }
-
-
 }

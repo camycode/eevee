@@ -2,6 +2,7 @@
 
 namespace Core\Models;
 
+use Core\Services\Guard;
 use Illuminate\Support\Facades\DB;
 
 class Model
@@ -34,6 +35,21 @@ class Model
     {
         return md5(sha1(uniqid(mt_rand(1, 1000000))));
     }
+
+    /**
+     * 权限守卫函数
+     *
+     * @param $data
+     * @param $action
+     * @param $action_name
+     * @param string $user_field
+     * @param string $term_field
+     */
+    public function guard($data, $action, $action_name, $user_field = 'user_id', $term_field = 'term_id')
+    {
+        Guard::make($data, $action, $action_name, $user_field, $term_field);
+    }
+
 
     /**
      * 获取资源的数据表名
@@ -182,7 +198,7 @@ class Model
     }
 
     /**
-     * 获取时间戳
+     * 获取日期时间戳
      *
      * @return string
      */

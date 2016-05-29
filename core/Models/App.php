@@ -2,12 +2,13 @@
 
 namespace Core\Models;
 
+use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
 
-    protected $fields = ['id','version','name','description','status','created_at','updated_at'];
+    protected $fields = ['id', 'version', 'name', 'description', 'status', 'created_at', 'updated_at'];
 
     /**
      * 验证数据
@@ -74,6 +75,8 @@ class App extends Model
     public function addApp()
     {
         $this->validateApp();
+
+        $this->guard($this->data, 'add', GUARD_ADD);
 
         $this->filter($this->data, $this->fields);
 
