@@ -10,6 +10,24 @@ class App extends Model
 
     protected $fields = ['id', 'version', 'name', 'description', 'status', 'created_at', 'updated_at'];
 
+
+    /**
+     * 数据初始化
+     *
+     */
+    protected function initializeApp()
+    {
+        $initialized = [
+            'id' => $this->id(),
+            'status' => config('site.app.default_status', 0)
+        ];
+
+        $this->timestamps($this->data, true);
+
+        $this->data = array_merge($initialized, $this->data);
+
+    }
+
     /**
      * 验证数据
      *
@@ -75,6 +93,8 @@ class App extends Model
     public function addApp()
     {
         $this->validateApp();
+
+        $this->initializeApp();
 
         $this->guard($this->data, 'add', GUARD_ADD);
 

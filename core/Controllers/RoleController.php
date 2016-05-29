@@ -60,7 +60,7 @@ class RoleController extends Controller
      */
     public function postRole(Context $context)
     {
-        return $context->response((new Role())->setData($context->data())->addRole());
+        return $context->response((new Role($context->data()))->addRole());
     }
 
     /**
@@ -114,16 +114,16 @@ class RoleController extends Controller
     }
 
     /**
-     * @api {get} /api/role?role_id  获取角色
+     * @api {get} /api/role?id  获取角色
      *
      * @apiGroup Role
      *
      * @apiPermission ROLE.GET
      *
-     * @apiParam {String} role_id  角色ID.
+     * @apiParam {String} id  角色ID.
      *
      * @apiParamExample {json} 示例:
-     * GET /api/role?role_id=bf1f81737cb8dd7ab55bcc6ddba70139
+     * GET /api/role?id=bf1f81737cb8dd7ab55bcc6ddba70139
      *
      * @apiSuccessExample {json} 操作成功:
      * {
@@ -153,11 +153,11 @@ class RoleController extends Controller
      */
     public function getRole(Context $context)
     {
-        return $context->response((new Role())->getRole($context->params('role_id')));
+        return $context->response((new Role())->getRole($context->params('id')));
     }
 
     /**
-     * @api {PUT} /api/role?role_id 更新角色
+     * @api {PUT} /api/role?id 更新角色
      *
      * @apiPermission ROLE.PUT
      *
@@ -173,7 +173,7 @@ class RoleController extends Controller
      * @apiParam {String} [source]      角色来源
      *
      * @apiParamExample {json} 示例:
-     * PUT /api/role?role_id=8dbdfe18863b070af999dd9ad6cb48a6
+     * PUT /api/role?id=8dbdfe18863b070af999dd9ad6cb48a6
      * {
      * "name":"超级会员",
      * "parent":"bf1f81737cb8dd7ab55bcc6ddba70139",
@@ -203,42 +203,42 @@ class RoleController extends Controller
      */
     public function putRole(Context $context)
     {
-        $status = (new Role())->setData($context->data())->updateRole($context->params('role_id'));
+        $status = (new Role($context->data()))->updateRole($context->params('id'));
 
         return $context->response($status);
     }
 
     /**
-     * @api {GET} /api/role/permissions?role_id  获取角色权限组
+     * @api {GET} /api/role/permissions?id  获取角色权限组
      *
      * @apiGroup Role
      *
      * @apiPermission ROLE.GET
      *
-     * @apiParam {String} role_id  角色ID.
+     * @apiParam {String} id  角色ID.
      * @apiParam {Bool} archive    是否归档
      *
      * @apiParamExample {json} 示例:
      *
-     * GET /role/permissions?role_id=bf1f81737cb8dd7ab55bcc6ddba70139&archive=true
+     * GET /role/permissions?id=bf1f81737cb8dd7ab55bcc6ddba70139&archive=true
      *
      */
     public function getPermissions(Context $context)
     {
-        return $context->response((new Role())->getRolePermissions($context->params('role_id'), $context->params('archive')));
+        return $context->response((new Role())->getRolePermissions($context->params('id'), $context->params('archive')));
     }
 
     /**
-     * @api {DELETE} /api/role?role_id  删除角色
+     * @api {DELETE} /api/role?id  删除角色
      *
      * @apiGroup Role
      *
      * @apiPermission ROLE.DELETE
      *
-     * @apiParam {String} role_id  角色ID.
+     * @apiParam {String} id  角色ID.
      *
      * @apiParamExample {json} 示例:
-     * DELETE /api/role?role_id=bf1f81737cb8dd7ab55bcc6ddba70139
+     * DELETE /api/role?id=bf1f81737cb8dd7ab55bcc6ddba70139
      *
      * @apiSuccessExample {json} 操作成功:
      * {
@@ -249,7 +249,7 @@ class RoleController extends Controller
      */
     public function deleteRole(Context $context)
     {
-        return $context->response((new Role())->deleteRole($context->params('role_id')));
+        return $context->response((new Role())->deleteRole($context->params('id')));
     }
 
 
