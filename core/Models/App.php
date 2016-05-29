@@ -7,7 +7,37 @@ use Illuminate\Support\Facades\Validator;
 class App extends Model
 {
 
-    protected $fields = ['app_id','app_name','app_description'];
+    protected $fields = ['id','name','description','status','created_at','updated_at'];
+
+    /**
+     * 获取APP
+     *
+     * @param $app_id
+     *
+     * @return Status
+     */
+    public function getApp($app_id)
+    {
+
+        if ($app = $this->table()->where('id', $app_id)->first()) {
+
+            return status('success', $app);
+        }
+
+        return status('appDoesNotExist');
+    }
+
+    /**
+     * 获取APP组
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
+    public function getApps(array $params = [])
+    {
+        return status('success', $this->selector($params));
+    }
 
     /**
      * 添加APP
@@ -18,9 +48,9 @@ class App extends Model
     {
         $this->validateApp();
 
-        $this->filter($this->data, $this->fields('APP'));
+        $this->filter($this->data, $this->fields);
 
-        $this->resource('APP')->insert($this->data);
+        $this->table()->insert($this->data);
 
         return $this->getApp($this->data['id']);
 
@@ -46,43 +76,13 @@ class App extends Model
 
         $this->validateApp($ignore);
 
-        $this->filter($this->data, $this->fields('APP'));
+        $this->filter($this->data, $this->fields);
 
-        $this->resource('APP')->where('id', $app_id)->update($this->data);
+        $this->table()->where('id', $app_id)->update($this->data);
 
         return $this->getApp($app_id);
     }
 
-    /**
-     * 获取APP
-     *
-     * @param $app_id
-     *
-     * @return Status
-     */
-    public function getApp($app_id)
-    {
-
-        if ($app = $this->resource('APP')->where('id', $app_id)->first()) {
-
-            return status('success', $app);
-        }
-
-        return status('appDoesNotExist');
-    }
-
-    /**
-     * 获取APP组
-     *
-     * @param array $params
-     *
-     * @return Status
-     */
-    public function getApps(array $params = [])
-    {
-        d($this->tableName());
-//        return status('success', $this->selector($params));
-    }
 
     /**
      * 删除APP
@@ -93,7 +93,7 @@ class App extends Model
      */
     public function deleteApp($app_id)
     {
-        if ($this->resource('APP')->where('id', $app_id)->delete()) {
+        if ($this->table()->where('id', $app_id)->delete()) {
 
             return status('success');
         }
@@ -102,7 +102,7 @@ class App extends Model
     }
 
     /**
-     * 验证APP
+     * 验证 APP
      *
      * @param array $ignore
      *
@@ -111,17 +111,14 @@ class App extends Model
     protected function validateApp(array $ignore = [])
     {
 
-        $table = $this->table('APP');
-
+        $table = $this->tableName();
 
         $rule = [
             'id' => "required|unique:$table",
             'name' => "required|unique:$table"
         ];
 
-
         $this->ignore($rule, $ignore);
-
 
         $validator = Validator::make($this->data, $rule);
 
