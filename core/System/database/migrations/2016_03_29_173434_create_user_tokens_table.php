@@ -12,8 +12,8 @@ class CreateUserTokensTable extends Migration
             $table->string('app_id');
             $table->string('user_id');
             $table->string('user_token')->unique();
-            $table->primary(['app_id', 'user_id']);
             $table->timestamps();
+            $table->primary(['app_id', 'user_id']);
             $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
         });
     }

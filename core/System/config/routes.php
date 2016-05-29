@@ -76,4 +76,6 @@ return [
     'put@file' => ['action' => 'File@putFile', 'permission' => []],
     'delete@file' => ['action' => 'File@deleteFile', 'permission' => []],
 
+'get@terms' => ['action' => 'Term@getTerms', 'permission'=>[] ],
+
 ];

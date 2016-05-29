@@ -3,34 +3,37 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateRoleTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-
-
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('role', function (Blueprint $table) {
             $table->string('id');
-            $table->string('username')->unique();
-            $table->string('email', 255)->unique();
-            $table->string('password', 100);
-            $table->string('role');
-            $table->string('avatar');
+            $table->string('name')->unique();
+            $table->mediumText('description');
+            $table->string('parent');
+            $table->integer('user_amount');
+            $table->integer('permission_amount');
             $table->string('source');
             $table->string('status');
             $table->timestamps();
             $table->primary('id');
+
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
-        Schema::drop('user');
+        Schema::drop('role');
     }
 }

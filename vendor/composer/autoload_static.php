@@ -325,17 +325,17 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
-        'CreateAppsTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_05_140137_create_apps_table.php',
+        'CreateAppTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130430_create_app_table.php',
         'CreateConfigsTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_04_18_141518_create_configs_table.php',
         'CreateMessagesTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_17_020509_create_messages_table.php',
         'CreatePermissionsRelationshipsTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_133768_create_permissions_relationships_table.php',
         'CreatePermissionsTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_16_160109_create_permissions_table.php',
         'CreatePostsTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_17_020501_create_posts_table.php',
         'CreateResoucesTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_17_1412079_create_resouces_table.php',
-        'CreateRolesTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130534_create_roles_table.php',
+        'CreateRoleTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130431_create_role_table.php',
         'CreateSystemConfigsTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_06_070603_create_system_configs_table.php',
+        'CreateUserTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130435_create_user_table.php',
         'CreateUserTokensTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_29_173434_create_user_tokens_table.php',
-        'CreateUsersTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130435_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/core/System/database/seeds/DatabaseSeeder.php',
         'ExampleTest' => __DIR__ . '/../..' . '/core/Tests/ExampleTest.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

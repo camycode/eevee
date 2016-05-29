@@ -14,13 +14,9 @@ class Application extends Lumen
         'cache',
         'menus',
         'routes',
-        'system',
         'session',
         'database',
         'statuses',
-        'shortcuts',
-        'resources',
-        'permissions',
         'filesystems',
         'broadcasting',
     ];

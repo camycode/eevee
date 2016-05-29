@@ -7,7 +7,34 @@ use Illuminate\Support\Facades\Validator;
 class App extends Model
 {
 
-    protected $fields = ['id','name','description','status','created_at','updated_at'];
+    protected $fields = ['id','version','name','description','status','created_at','updated_at'];
+
+    /**
+     * 验证数据
+     *
+     * @param array $ignore
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    protected function validateApp(array $ignore = [])
+    {
+
+        $table = $this->tableName();
+
+        $rule = [
+            'name' => "required|unique:$table"
+        ];
+
+        $this->ignore($rule, $ignore);
+
+        $validator = Validator::make($this->data, $rule);
+
+        if ($validator->fails()) {
+
+            exception('validateFailed', $validator->errors());
+        }
+
+    }
 
     /**
      * 获取APP
@@ -99,34 +126,6 @@ class App extends Model
         }
 
         return status('appDoesNotExist');
-    }
-
-    /**
-     * 验证 APP
-     *
-     * @param array $ignore
-     *
-     * @throws \Core\Exceptions\StatusException
-     */
-    protected function validateApp(array $ignore = [])
-    {
-
-        $table = $this->tableName();
-
-        $rule = [
-            'id' => "required|unique:$table",
-            'name' => "required|unique:$table"
-        ];
-
-        $this->ignore($rule, $ignore);
-
-        $validator = Validator::make($this->data, $rule);
-
-        if ($validator->fails()) {
-
-            exception('validateFailed', $validator->errors());
-        }
-
     }
 
 }

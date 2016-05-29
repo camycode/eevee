@@ -44,7 +44,7 @@ class Model
      */
     public function table($name = null)
     {
-        $name = $name || $this->tableName();
+        $name = $name ? $name : $this->tableName();
 
         return DB::table($name);
     }
@@ -81,7 +81,7 @@ class Model
      */
     public function selector(array $params = [], $tableName = null)
     {
-        $tableName = $tableName || $this->tableName();
+        $tableName = $tableName ? $tableName : $this->tableName();
 
         $query = $this->table($tableName);
 

@@ -1,18 +1,18 @@
 <?php 
 
-namespace Core\Models\File;
+namespace Core\Models\User\Email;
 
 use Core\Models\Model;
 use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
-class File extends Model
+class Email extends Model
 {
 
-    protected $fields = [];
+    protected $fields = ['id','created_at','updated_at'];
 
-    // 初始化File记录
-    protected function initializeFile()
+    // 初始化Email记录
+    protected function initializeEmail()
     {
 
         $initialized = [
@@ -21,14 +21,14 @@ class File extends Model
 
         $this->timestamps($initialized, true);
 
-        return array_merge($initialized, $this->data);
+        $this->data = array_merge($initialized, $this->data);
     }
 
-    // File数据校验
-    protected function validateFile(array $ignore = [])
+    // Email数据校验
+    protected function validateEmail(array $ignore = [])
     {
 
-        $table = $this->tableName();
+        $tableName = $this->tableName();
 
         $rule = [
 
@@ -45,22 +45,22 @@ class File extends Model
 
     }
 
-    // 获取File
-    protected function getFile($file_id)
+    // 获取Email
+    protected function getEmail($email_id)
     {
 
-        if($data = $this->table()->where('file_id',$file_id)->first()){
+        if($data = $this->table()->where('email_id',$email_id)->first()){
 
             Permission::guard((array)$data, GUARD_GET, 'get');
 
             return status('success',$data);
         }
 
-        exception('fileDoesNotExist');
+        exception('emailDoesNotExist');
     }
 
-    // 获取File组
-    protected function getFiles(array $params)
+    // 获取Email组
+    protected function getEmails(array $params)
     {
 
         $data = $this->selector($params);
@@ -70,15 +70,15 @@ class File extends Model
         return status('success', $data);
     }
 
-    // 添加File记录
-    protected function addFile()
+    // 添加Email记录
+    protected function addEmail()
     {
 
         Permission::guard($this->data, GUARD_ADD , 'add');
 
-        $this->validateFile();
+        $this->validateEmail();
 
-        $data = $this->initializeFile($this->data);
+        $this->initializeEmail();
 
         return $this->transaction(function(){
 
@@ -86,7 +86,7 @@ class File extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->getFile($this->data['id']);
+            $status = $this->getEmail($this->data['id']);
 
             return $status;
 
@@ -94,27 +94,27 @@ class File extends Model
 
     }
 
-    // 更新File记录
-    protected function updateFile($file_id)
+    // 更新Email记录
+    protected function updateEmail($email_id)
     {
 
         Permission::guard($this->data, GUARD_UPDATE, 'update');
 
-        $origin = $this->getFile($file_id)->data;
+        $origin = $this->getEmail($email_id)->data;
 
         $ignore = [
 
         ];
 
-        $this->validateFile($ignore);
+        $this->validateEmail($ignore);
 
-        return $this->transaction(function() use($file_id){
+        return $this->transaction(function() use($email_id){
 
             $this->filter($this->data, $this->fields);
 
-            $this->table()->where('file_id','file_id')->update($this->data);
+            $this->table()->where('email_id','email_id')->update($this->data);
 
-            $status = $this->getFile($this->data['id']);
+            $status = $this->getEmail($this->data['id']);
 
             return $status;
 
@@ -122,15 +122,15 @@ class File extends Model
 
     }
 
-    // 删除File记录
-    protected function deleteFile($file_id)
+    // 删除Email记录
+    protected function deleteEmail($email_id)
     {
 
-        $origin = $this->getFile($file_id)->data;
+        $origin = $this->getEmail($email_id)->data;
 
         Permission::guard((array)$origin, GUARD_DELETE, 'delete');
 
-        $this->table()->where('file_id')->delete();
+        $this->table()->where('email_id')->delete();
 
         return status('success');
     }

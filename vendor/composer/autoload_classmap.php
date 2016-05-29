@@ -6,17 +6,17 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateAppsTable' => $baseDir . '/core/System/database/migrations/2016_03_05_140137_create_apps_table.php',
+    'CreateAppTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130430_create_app_table.php',
     'CreateConfigsTable' => $baseDir . '/core/System/database/migrations/2016_04_18_141518_create_configs_table.php',
     'CreateMessagesTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020509_create_messages_table.php',
     'CreatePermissionsRelationshipsTable' => $baseDir . '/core/System/database/migrations/2016_03_03_133768_create_permissions_relationships_table.php',
     'CreatePermissionsTable' => $baseDir . '/core/System/database/migrations/2016_03_16_160109_create_permissions_table.php',
     'CreatePostsTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020501_create_posts_table.php',
     'CreateResoucesTable' => $baseDir . '/core/System/database/migrations/2016_03_17_1412079_create_resouces_table.php',
-    'CreateRolesTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130534_create_roles_table.php',
+    'CreateRoleTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130431_create_role_table.php',
     'CreateSystemConfigsTable' => $baseDir . '/core/System/database/migrations/2016_05_06_070603_create_system_configs_table.php',
+    'CreateUserTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130435_create_user_table.php',
     'CreateUserTokensTable' => $baseDir . '/core/System/database/migrations/2016_03_29_173434_create_user_tokens_table.php',
-    'CreateUsersTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130435_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/core/System/database/seeds/DatabaseSeeder.php',
     'ExampleTest' => $baseDir . '/core/Tests/ExampleTest.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',

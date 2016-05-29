@@ -48,13 +48,13 @@ class AppController extends Controller
      */
     public function postApp(Context $context)
     {
-        return $context->response((new App())->setData($context->data())->addApp());
+        return $context->response((new App($context->data()))->addApp());
     }
 
     /**
      * @apiGroup App
      *
-     * @api {put} /api/app?app_id 编辑应用
+     * @api {put} /api/app?id 编辑应用
      *
      *
      * @apiParam {string} name  应用名称
@@ -63,7 +63,7 @@ class AppController extends Controller
      *
      *
      * @apiParamExample {json} 请求示例:
-     * put /api/app?app_id=eevee_admin
+     * put /api/app?id=eevee_admin
      * {
      * "name":"Hello world"
      * }
@@ -85,13 +85,13 @@ class AppController extends Controller
      */
     public function putApp(Context $context)
     {
-        return $context->response((new App())->setData($context->data())->updateApp($context->params('app_id')));
+        return $context->response((new App($context->data()))->updateApp($context->params('id')));
     }
 
     /**
      * @apiGroup App
      *
-     * @api {get} /api/app?app_id 获取应用
+     * @api {get} /api/app?id 获取应用
      *
      * @apiParamExample {json} 请求示例:
      * get /api/app?app_id=eevee_admin
@@ -113,7 +113,7 @@ class AppController extends Controller
      */
     public function getApp(Context $context)
     {
-        return $context->response((new App())->getApp($context->params('app_id')));
+        return $context->response((new App())->getApp($context->params('id')));
     }
 
     /**
@@ -157,7 +157,7 @@ class AppController extends Controller
     /**
      * @apiGroup App
      *
-     * @api {delete} /api/app?app_id 删除应用
+     * @api {delete} /api/app?id 删除应用
      *
      * @apiParamExample {json} 请求示例:
      * delete /api/app?app_id=eevee_admin
@@ -172,6 +172,6 @@ class AppController extends Controller
      */
     public function deleteApp(Context $context)
     {
-        return $context->response((new App())->deleteApp($context->params('app_id')));
+        return $context->response((new App())->deleteApp($context->params('id')));
     }
 }

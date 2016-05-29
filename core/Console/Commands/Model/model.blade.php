@@ -21,7 +21,7 @@ class {{  $ModelName }} extends Model
 
         $this->timestamps($initialized, true);
 
-        return array_merge($initialized, $this->data);
+        $this->data = array_merge($initialized, $this->data);
     }
 
     // {{ $ModelName }}数据校验
@@ -78,7 +78,7 @@ class {{  $ModelName }} extends Model
 
         $this->validate{{ $ModelName }}();
 
-        $data = $this->initialize{{ $ModelName }}($this->data);
+        $this->initialize{{ $ModelName }}();
 
         return $this->transaction(function(){
 
