@@ -40,14 +40,14 @@ class App extends Model
     /**
      * 获取APP
      *
-     * @param $app_id
+     * @param $id
      *
      * @return Status
      */
-    public function getApp($app_id)
+    public function getApp($id)
     {
 
-        if ($app = $this->table()->where('id', $app_id)->first()) {
+        if ($app = $this->table()->where('id', $id)->first()) {
 
             return status('success', $app);
         }
@@ -89,13 +89,15 @@ class App extends Model
     /**
      * 更新APP
      *
-     * @param string $app_id
+     * @param string $id
      *
      * @return Status
      */
-    public function updateApp($app_id)
+    public function updateApp($id)
     {
-        $app = $this->getApp($app_id)->data;
+        $app = $this->getApp($id)->data;
+
+        $this->guard($app, 'update', GUARD_UPDATE);
 
         $ignore = ['id'];
 
@@ -108,22 +110,26 @@ class App extends Model
 
         $this->filter($this->data, $this->fields);
 
-        $this->table()->where('id', $app_id)->update($this->data);
+        $this->table()->where('id', $id)->update($this->data);
 
-        return $this->getApp($app_id);
+        return $this->getApp($id);
     }
 
 
     /**
      * 删除APP
      *
-     * @param string $app_id
+     * @param string $id
      *
      * @return Status
      */
-    public function deleteApp($app_id)
+    public function deleteApp($id)
     {
-        if ($this->table()->where('id', $app_id)->delete()) {
+        if ($app = $this->getApp($id)) {
+
+            $this->guard($app, 'update', GUARD_UPDATE);
+
+            $this->table()->where('id', $id)->delete();
 
             return status('success');
         }

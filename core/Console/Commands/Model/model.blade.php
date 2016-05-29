@@ -96,10 +96,9 @@ class {{  $ModelName }} extends Model
     // 更新{{ $ModelName }}记录
     protected function update{{ $ModelName }}(${{ $ModelNameToLower }}_id)
     {
-
-        $this->guard($this->data, 'update', GUARD_UPDATE);
-
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
+
+        $this->guard($origin, 'update', GUARD_UPDATE);
 
         $ignore = [
 
