@@ -13,22 +13,6 @@ use Illuminate\Support\Facades\Validator;
 class Role extends Model
 {
 
-    protected $data = [];
-
-    /**
-     * 绑定角色数据
-     *
-     * @param array $data
-     *
-     * @return $this
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-
-        return $this;
-    }
-
     /**
      * 添加角色
      *
@@ -307,7 +291,7 @@ class Role extends Model
      */
     protected function validateRole(array $ignore = [])
     {
-        $table = $this->table('ROLE');
+        $table = $this->tableName();
 
         $rule = [
             'name' => "required|unique:$table",
@@ -355,7 +339,7 @@ class Role extends Model
     protected function validateRoleParent($parent_id)
     {
 
-        if (!$this->resource('ROLE')->where('id', $parent_id)->first() && $this->resource('ROLE')->first()) {
+        if (!$this->table()->where('id', $parent_id)->first() && $this->table()->first()) {
 
             exception('validateFailed', [
                 'parent' => message('parentRoleDoesNotExist'),

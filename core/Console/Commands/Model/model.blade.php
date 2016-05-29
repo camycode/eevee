@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class {{  $ModelName }} extends Model
 {
 
-    protected $fields = [];
+    protected $fields = ['id','created_at','updated_at'];
 
     // 初始化{{ $ModelName }}记录
     protected function initialize{{ $ModelName }}()
@@ -28,7 +28,7 @@ class {{  $ModelName }} extends Model
     protected function validate{{ $ModelName }}(array $ignore = [])
     {
 
-        $table = $this->tableName();
+        $tableName = $this->tableName();
 
         $rule = [
 

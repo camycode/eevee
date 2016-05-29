@@ -14,21 +14,8 @@ use Illuminate\Support\Facades\Validator;
  */
 class User extends Model
 {
-    protected $data;
 
-    /**
-     * 绑定用户资源操作数据
-     *
-     * @param $data
-     *
-     * @return $this
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-
-        return $this;
-    }
+    protected $fields;
 
     /**
      * 添加用户
