@@ -3,18 +3,17 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermissionsTable extends Migration
+class CreateResouceTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('permission', function (Blueprint $table) {
+        Schema::create('resource', function (Blueprint $table) {
             $table->string('id');
-            $table->string('resource_id');
             $table->string('name');
-            $table->string('type');
+            $table->string('parent');
             $table->mediumText('description');
             $table->string('source');
             $table->primary('id');
@@ -26,6 +25,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('permission');
+        Schema::drop('resource');
     }
 }
