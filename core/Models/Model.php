@@ -49,7 +49,6 @@ class Model
         return DB::table($name);
     }
 
-
     /**
      * 获取模型数据库表命, 模型的数据表名称与模型路径保持一致
      *
@@ -60,9 +59,11 @@ class Model
      */
     public function tableName()
     {
-        $class = explode('\\', get_called_class());
-        
-        return strtolower($class[count($class) - 1]);
+        $class = str_replace('core\models\\', '', strtolower(get_called_class()));
+
+        $fields = explode('\\', $class);
+
+        return implode('_', $fields);
     }
 
 

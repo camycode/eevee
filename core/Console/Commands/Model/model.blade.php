@@ -53,7 +53,7 @@ class {{  $ModelName }} extends Model
 
         if($data = $this->table()->where('{{ $ModelNameToLower }}_id',${{ $ModelNameToLower }}_id)->first()){
 
-            Permission::guard((array)$data, true);
+            Permission::guard((array)$data, GUARD_GET, 'get');
 
             return status('success',$data);
         }
@@ -67,7 +67,7 @@ class {{  $ModelName }} extends Model
 
         $data = $this->selector($params);
 
-        Permission::guard($data, true);
+        Permission::guard($data, GUARD_GET, 'get');
 
         return status('success', $data);
     }
@@ -76,7 +76,7 @@ class {{  $ModelName }} extends Model
     protected function add{{ $ModelName }}()
     {
 
-        Permission::guard($this->data);
+        Permission::guard($this->data, GUARD_ADD , 'add');
 
         $this->validate{{ $ModelName }}();
 
@@ -100,7 +100,7 @@ class {{  $ModelName }} extends Model
     protected function update{{ $ModelName }}(${{ $ModelNameToLower }}_id)
     {
 
-        Permission::guard($this->data);
+        Permission::guard($this->data, GUARD_UPDATE, 'update');
 
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
@@ -130,7 +130,7 @@ class {{  $ModelName }} extends Model
 
         $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
 
-        Permission::guard((array)$origin, true);
+        Permission::guard((array)$origin, GUARD_DELETE, 'delete');
 
         $this->table()->where('{{ $ModelNameToLower }}_id')->delete();
 

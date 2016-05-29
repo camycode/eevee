@@ -3,12 +3,13 @@
 /**
  * 权限验证中间件.
  *
- * 权限验证以4种接口请求方式(POST,GET,PUT,DELETE)为依托, 在中间件层面按照约定的规对接口的访问加上权限保护.
+ * 系统权限验证由当前中间件配合 Core\Models\Permission::guard() 函数执行.
  *
- * 验证流程:
+ * 当前中间件验证流程:
  *
- *     1. 获取 "X-App-ID" 请求头, 验证应用ID是否有效.
- *  
+ * 1. 获取 "X-App-ID" 请求头, 验证应用ID是否有效.
+ * 2. 获取 "X-User-Token" 请求头, 验证用户秘钥是否有效, 并且获取访客信息, 设置相关常量.
+ * 3. 获取访客的权限, 放入缓存.
  *
  * @author 古月(2016/03/11)
  */
@@ -46,24 +47,6 @@ class Authenticate
     // API 接口要求权限数组
     protected $request_permissions;
 
-
-    /**
-     * 权限验证中间件.
-     *
-     * 如果权限验证成功，则返回接着调用下一中间
-     * 如果失败，则会抛出 403 错误。
-     */
-    public function handle($request, Closure $next)
-    {
-        $this->request = $request;
-
-        $this->request->visitor = 'root';
-
-//        $this->auth();
-
-        return $next($this->request);
-
-    }
 
     /**
      * 用户认证入口,验证请求接口的X-APP-ID.
@@ -176,7 +159,7 @@ class Authenticate
     /**
      * 获取访问接口权限
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Core\Exceptions\StatusException
      */
@@ -194,6 +177,51 @@ class Authenticate
 
             exception('routeDefinedIsInvilad');
         }
+    }
+
+    /**
+     * 设置访客相关常量
+     *
+     * @param string $user_id 用户 ID
+     * @param string $role_id 角色 ID
+     */
+    protected function setVisitorConstants($user_id, $role_id)
+    {
+        define('VISITOR_USER_ID', $user_id);
+        define('VISITOR_ROLE_ID', $role_id);
+    }
+
+    /**
+     * 设置权限验证动作常量
+     *
+     * @return void
+     */
+    protected function setActionConstants()
+    {
+        define('GUARD_ADD', 1);
+        define('GUARD_DELETE', 2);
+        define('GUARD_GET', 3);
+        define('GUARD_UPDATE', 4);
+    }
+
+    /**
+     * 权限验证中间件.
+     *
+     * 如果权限验证成功，则返回接着调用下一中间
+     * 如果失败，则会抛出 403 错误。
+     */
+    public function handle($request, Closure $next)
+    {
+
+
+        $this->request = $request;
+
+        $this->request->visitor = 'root';
+
+//        $this->auth();
+
+        return $next($this->request);
+
     }
 
 

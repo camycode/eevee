@@ -65,17 +65,6 @@ function trans_name($ident)
 
 
 /**
- * 获取调用者函数名
- *
- * @return string
- */
-function get_called_function()
-{
-    return debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3)[2]['function'];
-}
-
-
-/**
  * 调试打印函数
  *
  * @param mixed $var
