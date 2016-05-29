@@ -12,11 +12,11 @@ class CreatePermissionsRelationshipsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions_relationships', function (Blueprint $table) {
+        Schema::create('permission_relationship', function (Blueprint $table) {
             $table->string('role_id');
             $table->string('permission_id');
             $table->primary(['role_id', 'permission_id']);
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('role')->onDelete('cascade');
         });
     }
 
@@ -28,7 +28,7 @@ class CreatePermissionsRelationshipsTable extends Migration
     public function down()
     {
 
-        Schema::drop('permissions_relationships');
+        Schema::drop('permission_relationship');
     }
 
 }

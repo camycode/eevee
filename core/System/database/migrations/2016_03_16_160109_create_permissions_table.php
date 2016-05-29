@@ -10,7 +10,7 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('permission', function (Blueprint $table) {
             $table->string('id');
             $table->string('resource_id');
             $table->string('name');
@@ -26,6 +26,6 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('permissions');
+        Schema::drop('permission');
     }
 }

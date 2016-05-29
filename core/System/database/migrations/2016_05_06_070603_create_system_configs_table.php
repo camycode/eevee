@@ -7,7 +7,7 @@ class CreateSystemConfigsTable extends Migration
 {
     public function up()
     {
-        Schema::create('system_configs', function (Blueprint $table) {
+        Schema::create('system', function (Blueprint $table) {
             $table->string('config_key');
             $table->string('config_value');
             $table->string('source');
@@ -19,6 +19,6 @@ class CreateSystemConfigsTable extends Migration
 
     public function down()
     {
-        Schema::drop('system_configs');
+        Schema::drop('system');
     }
 }

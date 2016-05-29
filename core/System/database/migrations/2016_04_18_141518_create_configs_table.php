@@ -7,7 +7,7 @@ class CreateConfigsTable extends Migration
 {
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
+        Schema::create('config', function (Blueprint $table) {
             $table->string('user_id');
             $table->string('config_key');
             $table->longText('config_value');
@@ -20,6 +20,6 @@ class CreateConfigsTable extends Migration
 
     public function down()
     {
-        Schema::drop('configs');
+        Schema::drop('config');
     }
 }

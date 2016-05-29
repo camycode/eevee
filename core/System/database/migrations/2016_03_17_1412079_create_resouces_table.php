@@ -10,7 +10,7 @@ class CreateResoucesTable extends Migration
      */
     public function up()
     {
-        Schema::create('resources', function (Blueprint $table) {
+        Schema::create('resource', function (Blueprint $table) {
             $table->string('id');
             $table->string('name');
             $table->string('parent');
@@ -25,6 +25,6 @@ class CreateResoucesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('resources');
+        Schema::drop('resource');
     }
 }
