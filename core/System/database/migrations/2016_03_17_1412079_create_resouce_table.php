@@ -14,6 +14,7 @@ class CreateResouceTable extends Migration
             $table->string('id');
             $table->string('name');
             $table->string('parent');
+            $table->string('logo');
             $table->mediumText('description');
             $table->string('source');
             $table->primary('id');

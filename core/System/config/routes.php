@@ -44,6 +44,7 @@ return [
     'get@system/config' => ['action' => 'SystemController@getConfig', 'permission' => 'SYSTEM_CONFIG_GET'],
     'delete@system/config' => ['action' => 'SystemController@deleteConfig', 'permission' => 'SYSTEM_CONFIG_DELETE'],
     'get@system/user/menu' => ['action' => 'SystemController@getUserMenu'],
+    'get@system/refresh' => ['action' => 'SystemController@refresh'],
 
     // 插件模块
     'get@local/plugins' => ['action' => 'PluginController@getLocalPlugins', 'permission' => 'USER_GET'],
@@ -77,5 +78,11 @@ return [
     'delete@file' => ['action' => 'File@deleteFile', 'permission' => []],
 
     'get@terms' => ['action' => 'Term@getTerms', 'permission' => []],
+
+    'get@resource' => ['action' => 'ResourceController@getResource', 'permission' => []],
+    'get@resources' => ['action' => 'ResourceController@getResources', 'permission' => []],
+    'post@resource' => ['action' => 'ResourceController@postResource', 'permission' => []],
+    'put@resource' => ['action' => 'ResourceController@putResource', 'permission' => []],
+    'delete@resource' => ['action' => 'ResourceController@deleteResource', 'permission' => []],
 
 ];

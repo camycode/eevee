@@ -16,8 +16,8 @@ class SystemController extends Controller
      */
     public function version(Context $context)
     {
-        User::setData(['username'=>'Helloshic']);
-        
+        User::setData(['username' => 'Helloshic']);
+
         return response('EEVEE 1.0.0');
     }
 
@@ -28,7 +28,7 @@ class SystemController extends Controller
     {
         return $context->response(status('success', (new Installer($context->data()))->install()));
     }
-    
+
     /**
      * @api {get} /api/system/user/menu 获取用户管理菜单
      *
@@ -70,20 +70,13 @@ class SystemController extends Controller
     }
 
     /**
-     * 更新系统资源
+     * 刷新系统
      */
-    public function refreshResources(Context $context)
+    public function refresh(Context $context)
     {
-
-    }
-
-    /**
-     * 更新系统权限
-     *
-     */
-    public function refreshPermissions(Context $context)
-    {
-
+        (new System())->refreshResourcesAndPermissions();
+        
+        return $context->response(status('success'));
     }
 
 }

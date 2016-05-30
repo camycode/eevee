@@ -1,10 +1,8 @@
 <?php
 /**
- * 默认注册导出资源.
+ * 资源信息.
  *
- * 以此配置后台的管理界面和角色的权限分配列表
- *
- * 可运行 " php artisan parse:permissions " 自动解析源文件绑定资源的权限信息
+ * 以此配置后台的管理界面和角色的权限分配列表.
  *
  * @author 古月
  */
@@ -15,7 +13,20 @@ return [
         'description' => '描述',
         'icon' => '',
         'image' => '',
-        'permissions' => ['USER_ADD', 'USER_UPDATE', 'USER_GET', 'USER_DELETE']
+        'permissions' => [
+            'USER_ADD' => [
+                'name' => '添加用户',
+            ],
+            'USER_UPDATE' => [
+                'name' => '编辑用户',
+            ],
+            'USER_GET' => [
+                'name' => '获取用户',
+            ],
+            'USER_DELETE' => [
+                'name' => '删除用户',
+            ],
+        ],
     ],
     'DASHBOARD' => '面板',
     'ROLE' => '角色',
