@@ -45,10 +45,10 @@ class {{  $ModelName }} extends Model
     }
 
     // 获取{{ $ModelName }}
-    public function get{{ $ModelName }}(${{ $ModelNameToLower }}_id)
+    public function get{{ $ModelName }}($id)
     {
 
-        if($data = $this->table()->where('{{ $ModelNameToLower }}_id',${{ $ModelNameToLower }}_id)->first()){
+        if($data = $this->table()->where('id',$id)->first()){
 
             $this->guard($data, 'get', GUARD_GET);
 
@@ -94,9 +94,9 @@ class {{  $ModelName }} extends Model
     }
 
     // 更新{{ $ModelName }}记录
-    public function update{{ $ModelName }}(${{ $ModelNameToLower }}_id)
+    public function update{{ $ModelName }}($id)
     {
-        $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
+        $origin = $this->get{{ $ModelName }}($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -106,11 +106,11 @@ class {{  $ModelName }} extends Model
 
         $this->validate{{ $ModelName }}($ignore);
 
-        return $this->transaction(function() use(${{ $ModelNameToLower }}_id){
+        return $this->transaction(function() use($id){
 
             $this->filter($this->data, $this->fields);
 
-            $this->table()->where('{{ $ModelNameToLower }}_id','{{ $ModelNameToLower }}_id')->update($this->data);
+            $this->table()->where('id', $id)->update($this->data);
 
             $status = $this->get{{ $ModelName }}($this->data['id']);
 
@@ -121,14 +121,14 @@ class {{  $ModelName }} extends Model
     }
 
     // 删除{{ $ModelName }}记录
-    public function delete{{ $ModelName }}(${{ $ModelNameToLower }}_id)
+    public function delete{{ $ModelName }}($id)
     {
 
-        $origin = $this->get{{ $ModelName }}(${{ $ModelNameToLower }}_id)->data;
+        $origin = $this->get{{ $ModelName }}($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 
-        $this->table()->where('{{ $ModelNameToLower }}_id')->delete();
+        $this->table()->where('id', $id)->delete();
 
         return status('success');
     }

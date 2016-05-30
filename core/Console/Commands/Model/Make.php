@@ -46,7 +46,7 @@ class Make extends Command
             'StartTag' => '<?php ',
             'ModelNamespacePath' => $this->generateModelNamespacePath($name),
             'ModelName' => $this->generateModelName($name),
-            'ModelNameToLower' => $this->generareModelNameToLower($name),
+            'ModelNameToLower' => $this->generateModelNameToLower($name),
         ]);
 
         $modelFileName = base_path('core/Models' . str_replace('\\', '/', $this->generateModelPath($name)) . '.php');
@@ -73,7 +73,7 @@ class Make extends Command
         return ucfirst($items[count($items) - 1]);
     }
 
-    protected function generareModelNameToLower($name)
+    protected function generateModelNameToLower($name)
     {
         return strtolower($this->generateModelName($name));
     }

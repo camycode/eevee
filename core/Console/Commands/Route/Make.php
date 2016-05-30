@@ -80,7 +80,7 @@ class Make extends Command
             $controllerPath .= ucfirst($path) . '/';
         }
 
-        $controllerPath = rtrim($controllerPath, '/');
+        $controllerPath = rtrim($controllerPath, '/') . 'Controller';
         $controllerName = ucfirst($paths[count($paths) - 1]);
 
         $routes = [

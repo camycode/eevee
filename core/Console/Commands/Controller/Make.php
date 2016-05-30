@@ -45,11 +45,12 @@ class Make extends Command
         $code = View::make('controller', [
             'StartTag' => '<?php ',
             'ControllerNamespacePath' => $this->generateControllerNamespacePath($name),
+            'ControllerPath' => $this->generateControllerPath($name),
             'ControllerName' => $this->generateControllerName($name),
-            'ControllerNameToLower' => $this->generareControllerNameToLower($name),
+            'ControllerNameToLower' => $this->generateControllerNameToLower($name),
         ]);
 
-        $ControllerFileName = base_path('core/Controllers' . str_replace('\\', '/', $this->generateControllerNamespacePath($name)) . 'Controller.php');
+        $ControllerFileName = base_path('core/Controllers' . str_replace('\\', '/', $this->generateControllerPath($name)) . 'Controller.php');
 
 
         if (Storage::has(ltrim($ControllerFileName, base_path()))) {
@@ -63,7 +64,7 @@ class Make extends Command
             $this->call('make:routes', [
                 'controller name' => $name,
             ]);
-            
+
         }
 
 
@@ -77,9 +78,22 @@ class Make extends Command
         return ucfirst($items[count($items) - 1]);
     }
 
-    protected function generareControllerNameToLower($name)
+    protected function generateControllerNameToLower($name)
     {
         return strtolower($this->generateControllerName($name));
+    }
+
+    protected function generateControllerPath($name)
+    {
+        $path = '\\';
+
+        $items = explode('/', $name);
+
+        foreach ($items as $item) {
+            $path .= ucfirst($item) . '\\';
+        }
+
+        return rtrim($path, '\\');
     }
 
     protected function generateControllerNamespacePath($name)
@@ -87,6 +101,8 @@ class Make extends Command
         $path = '\\';
 
         $items = explode('/', $name);
+
+        unset($items[count($items) - 1]);
 
         foreach ($items as $item) {
             $path .= ucfirst($item) . '\\';
