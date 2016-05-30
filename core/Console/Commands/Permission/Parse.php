@@ -3,31 +3,30 @@
 namespace Core\Console\Commands\Permission;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
-class Checkout extends Command
+class Parse extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'permission:checkout';
+    protected $signature = 'parse:resources';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'checkout permissions to find invalid permissions.';
+    protected $description = 'Parse system permissions and bind with resources.';
 
-
-    protected $routes;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->routes = config('routes');
     }
 
     /**
@@ -37,6 +36,7 @@ class Checkout extends Command
      */
     public function handle()
     {
-      print_r($this->routes);
+
     }
+
 }

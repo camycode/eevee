@@ -14,12 +14,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\Permission\Generate::class,
-        Commands\Permission\Checkout::class,
         Commands\Resource\Make::class,
         Commands\Model\Make::class,
         Commands\Controller\Make::class,
         Commands\Route\Make::class,
+        Commands\Permission\Parse::class,
     ];
 
     /**

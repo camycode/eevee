@@ -4,7 +4,7 @@
  *
  * 以此配置后台的管理界面和角色的权限分配列表
  *
- * 可运行 " php artisan parse:permissions " 自动生成绑定资源的权限信息
+ * 可运行 " php artisan parse:permissions " 自动解析源文件绑定资源的权限信息
  *
  * @author 古月
  */
