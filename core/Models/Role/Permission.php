@@ -64,9 +64,9 @@ class Permission extends Model
     }
 
     /**
-     * 以角色被删除的权限更新角色的子角色的权限表
+     * 更新角色权限时,以其被删除的权限更新其子角色的权限表.
      *
-     * @param $role_id
+     * @param string $role_id
      * @param array $permissions
      */
     protected function updateRoleChildrenPermissions($role_id, array $permissions)
@@ -85,7 +85,7 @@ class Permission extends Model
     }
 
     /**
-     * 获取更新用户权限过程中删除的用户权限
+     * 获取更新用户权限时被删除的权限记录.
      *
      * @param $role_id
      * @param array $permissions
@@ -98,14 +98,14 @@ class Permission extends Model
     }
 
     /**
-     * 验证角色的权限是否超出可设定范围
+     * 验证角色的权限是否超出父角色权限范围, 如果是第一次添加角色, 则忽略验证.
      *
      * @param string $parent_id
      * @param array $permissions
      *
      * @throws \Core\Exceptions\StatusException
      */
-    protected function validateRolePermissons($parent_id, array $permissions)
+    protected function validateRolePermissions($parent_id, array $permissions)
     {
 
         if (array_diff($permissions, $this->table()->where('role_id', $parent_id)->lists('permission_id'))) {
@@ -194,7 +194,7 @@ class Permission extends Model
 
             $relationships = $this->generaRolePermissionRelationships($role_id, $permissions);
 
-            $this->validateRolePermissons($role_parent, $permissions);
+            $this->validateRolePermissions($role_parent, $permissions);
 
             $this->updateRoleChildrenPermissions($role_id, $permissions);
 

@@ -8,6 +8,7 @@
 
 namespace Core\Models;
 
+use Core\Exceptions\StatusException;
 use Illuminate\Support\Facades\Validator;
 use Core\Models\Role\Permission as RolePermission;
 
@@ -49,7 +50,8 @@ class Role extends Model
 
         $rule = [
             'app_id' => "required",
-            'name' => "required|unique:$table"
+            'name' => "required|unique:$table",
+            "parent" => 'required'
         ];
 
         $this->ignore($rule, $ignore);
@@ -83,7 +85,7 @@ class Role extends Model
     }
 
     /**
-     * 角色表不为空时, 验证角色父类是否存在.
+     * 角色表不为空时, 验证角色父类是否存在, 第一次添加角色时, 忽略验证.
      *
      * @param string $parent_id
      *
@@ -101,7 +103,6 @@ class Role extends Model
         }
 
     }
-
 
     /**
      * 获取角色
@@ -208,7 +209,7 @@ class Role extends Model
                 $origin->parent = $origin->parent == $this->data['parent'] ? $origin->parent : $this->data['parent'];
 
                 (new RolePermission())->saveRolePermissions($this->data['id'], $this->data['parent'], (array)$this->data['permissions']);
-                
+
             }
 
             $this->filter($this->data, $this->fields, ['id']);

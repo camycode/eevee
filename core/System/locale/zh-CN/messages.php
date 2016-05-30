@@ -11,6 +11,10 @@ return [
     'deleteRoleSuccess' => '用户删除成功',
     'roleDoesNotExsit' => '用户不存在',
     'systemHasInstalled' => '系统已安装',
-    'guest' => '访客',
+    'roleParentIsRequired' => '角色父亲不能为空',
+    'parentRoleDoesNotExist' => '父角色不存在',
+    'invalidPermissions' => '权限不合法',
+    'permissionsMustBeArray' => '权限必须是一个数组',
     'root' => '超级管理员',
+    'guest' => '访客',
 ];
