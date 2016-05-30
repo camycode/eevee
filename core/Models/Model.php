@@ -71,15 +71,45 @@ class Model
      * Models/User.php          对应数据表为 user;
      * Models/User/Config.php   对应数据表为 user_config;
      *
+     * @param null $name
+     *
      * @return string
+     *
+     * @throws \Exception
      */
-    public function tableName()
+    public function tableName($name = null)
     {
-        $class = str_replace('core\models\\', '', strtolower(get_called_class()));
 
-        $fields = explode('\\', $class);
+        if ($name) {
 
-        return implode('_', $fields);
+            $class = get_called_class();
+
+            if (isset($this->tables)) {
+
+                if (!is_array($this->tables)) {
+
+                    throw new \Exception('Property tables must be a array in $class.');
+                }
+
+                if (!in_array($name, $this->tables)) {
+
+                    throw new \Exception("The table $name is not defined in tables property in $class.");
+                }
+
+                return $name;
+            }
+
+            throw new \Exception('Property tables is not defined in $class.');
+
+        } else {
+
+            $class = str_replace('core\models\\', '', strtolower(get_called_class()));
+
+            $fields = explode('\\', $class);
+
+            return implode('_', $fields);
+        }
+
     }
 
 
@@ -97,7 +127,7 @@ class Model
      */
     public function selector(array $params = [], $tableName = null)
     {
-        $tableName = $tableName ? $tableName : $this->tableName();
+        $tableName = $tableName ? $tableName : $this->tableName($tableName);
 
         $query = $this->table($tableName);
 
