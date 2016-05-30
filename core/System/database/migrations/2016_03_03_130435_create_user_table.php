@@ -14,16 +14,17 @@ class CreateUserTable extends Migration
 
         Schema::create('user', function (Blueprint $table) {
             $table->string('id');
+            $table->string('app_id');
             $table->string('username')->unique();
             $table->string('email', 255)->unique();
             $table->string('password', 100);
             $table->string('role');
             $table->string('avatar');
-            $table->string('status');
+            $table->integer('status');
             $table->string('source');
             $table->timestamps();
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
+            $table->foreign('app_id')->references('id')->on('app')->onDelete('restrict');
         });
     }
 

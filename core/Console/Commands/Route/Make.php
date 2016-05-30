@@ -46,8 +46,10 @@ class Make extends Command
         $newRoutes = $this->generateRoutes($name);
 
         foreach ($newRoutes as $newRoute => $value) {
+            
+            $newRoute = str_replace('/', '\/', $newRoute);
 
-            if (preg_match("/'$newRoute'/", $routesContent)) {
+            if (preg_match("/$newRoute/i", $routesContent)) {
 
                 $this->warn('Route ' . $newRoute . ' has existed');
 

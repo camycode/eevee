@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 class App extends Model
 {
 
-    protected $fields = ['id', 'name', 'description', 'status', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'role_id', 'name', 'description', 'status', 'created_at', 'updated_at'];
 
     /**
      * 数据初始化

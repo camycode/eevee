@@ -3,6 +3,7 @@
 /**
  * 角色模型
  *
+ * 角色类型分为主要角色,和附加角色. 主要角色能够继承, 而附加角色不能.
  *
  */
 
@@ -14,6 +15,8 @@ use Core\Models\Role\Permission as RolePermission;
 
 class Role extends Model
 {
+
+    protected $type = ['primary', 'addition'];
 
     protected $fields = ['id', 'app_id', 'name', 'description', 'parent', 'user_amount', 'permission_amount', 'status', 'created_at', 'updated_at'];
 

@@ -4,6 +4,16 @@ use Core\Services\Status;
 use Core\Exceptions\StatusException;
 
 /**
+ * 设置系统常量
+ */
+
+define('STATUS_FORBIDDEN', 0);          // 禁用
+define('STATUS_NORMAL', 1);             // 正常
+define('STATUS_VALIDATING', 2);         // 认证中
+define('STATUS_VALIDATED', 3);          // 认证成功
+define('STATUS_VALIDATE_FAILED', 4);    // 认证失败
+
+/**
  * 返回操作结果集,包含状态码,响应消息和响应数据.
  *
  * @param string / int $status

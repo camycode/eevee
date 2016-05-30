@@ -1,17 +1,17 @@
 <?php 
 
-namespace Core\Models;
+namespace Core\Models\App;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
 
-class Organization extends Model
+class Version extends Model
 {
 
     protected $fields = ['id','created_at','updated_at'];
 
-    // 初始化Organization记录
-    protected function initializeOrganization()
+    // 初始化Version记录
+    protected function initializeVersion()
     {
 
         $initialized = [
@@ -23,8 +23,8 @@ class Organization extends Model
         $this->data = array_merge($initialized, $this->data);
     }
 
-    // Organization数据校验
-    protected function validateOrganization(array $ignore = [])
+    // Version数据校验
+    protected function validateVersion(array $ignore = [])
     {
 
         $tableName = $this->tableName();
@@ -44,8 +44,8 @@ class Organization extends Model
 
     }
 
-    // 获取Organization
-    public function getOrganization($id)
+    // 获取Version
+    public function getVersion($id)
     {
 
         if($data = $this->table()->where('id',$id)->first()){
@@ -55,11 +55,11 @@ class Organization extends Model
             return status('success',$data);
         }
 
-        exception('organizationDoesNotExist');
+        exception('versionDoesNotExist');
     }
 
-    // 获取Organization组
-    public function getOrganizations(array $params)
+    // 获取Version组
+    public function getVersions(array $params)
     {
 
         $data = $this->selector($params);
@@ -69,15 +69,15 @@ class Organization extends Model
         return status('success', $data);
     }
 
-    // 添加Organization记录
-    public function addOrganization()
+    // 添加Version记录
+    public function addVersion()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validateOrganization();
+        $this->validateVersion();
 
-        $this->initializeOrganization();
+        $this->initializeVersion();
 
         return $this->transaction(function(){
 
@@ -85,7 +85,7 @@ class Organization extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->getOrganization($this->data['id']);
+            $status = $this->getVersion($this->data['id']);
 
             return $status;
 
@@ -93,10 +93,10 @@ class Organization extends Model
 
     }
 
-    // 更新Organization记录
-    public function updateOrganization($id)
+    // 更新Version记录
+    public function updateVersion($id)
     {
-        $origin = $this->getOrganization($id)->data;
+        $origin = $this->getVersion($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -104,7 +104,7 @@ class Organization extends Model
 
         ];
 
-        $this->validateOrganization($ignore);
+        $this->validateVersion($ignore);
 
         return $this->transaction(function() use($id){
 
@@ -112,7 +112,7 @@ class Organization extends Model
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getOrganization($this->data['id']);
+            $status = $this->getVersion($this->data['id']);
 
             return $status;
 
@@ -120,11 +120,11 @@ class Organization extends Model
 
     }
 
-    // 删除Organization记录
-    public function deleteOrganization($id)
+    // 删除Version记录
+    public function deleteVersion($id)
     {
 
-        $origin = $this->getOrganization($id)->data;
+        $origin = $this->getVersion($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 

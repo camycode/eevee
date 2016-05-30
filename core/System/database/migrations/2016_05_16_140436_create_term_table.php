@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationTable extends Migration
+class CreateTermTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,17 @@ class CreateOrganizationTable extends Migration
      */
     public function up()
     {
-        Schema::create('organization', function (Blueprint $table) {
+        Schema::create('term', function (Blueprint $table) {
             $table->string('id');
-            $table->string('root');
+            $table->string('app_id');
+            $table->string('user_id');
             $table->string('name')->unique();
-            $table->mediumText('description');
             $table->string('parent');
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
             $table->primary('id');
-            $table->foreign('root')->references('id')->on('role')->onDelete('cascade');
+            $table->foreign('app_id')->references('id')->on('app')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 
@@ -32,6 +33,6 @@ class CreateOrganizationTable extends Migration
      */
     public function down()
     {
-        Schema::drop('organization');
+        Schema::drop('term');
     }
 }
