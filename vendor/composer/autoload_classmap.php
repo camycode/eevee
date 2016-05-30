@@ -9,6 +9,7 @@ return array(
     'CreateAppTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130430_create_app_table.php',
     'CreateConfigTable' => $baseDir . '/core/System/database/migrations/2016_05_06_070603_create_config_table.php',
     'CreateMessageTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020509_create_message_table.php',
+    'CreateOrganizationTable' => $baseDir . '/core/System/database/migrations/2016_05_30_090534_create_organization_table.php',
     'CreatePermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_16_160109_create_permission_table.php',
     'CreatePostTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020501_create_post_table.php',
     'CreateResouceTable' => $baseDir . '/core/System/database/migrations/2016_03_17_1412079_create_resouce_table.php',

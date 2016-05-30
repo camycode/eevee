@@ -24,13 +24,13 @@ class {{  $ControllerName }}Controller extends Controller
     // 添加{{ $ControllerName  }}
     public function post{{ $ControllerName  }}(Context $context)
     {
-        return $context->response((new {{ $ControllerName  }}($context->data())->add{{ $ControllerName  }}());
+        return $context->response((new {{ $ControllerName  }}($context->data()))->add{{ $ControllerName  }}());
     }
 
     // 更新{{ $ControllerName  }}
     public function put{{ $ControllerName  }}(Context $context)
     {
-        return $context->response((new {{ $ControllerName  }}($context->data())->update{{ $ControllerName  }}($context->params('id')));
+        return $context->response((new {{ $ControllerName  }}($context->data()))->update{{ $ControllerName  }}($context->params('id')));
     }
 
     // 删除{{ $ControllerName  }}

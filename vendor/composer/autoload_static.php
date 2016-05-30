@@ -328,6 +328,7 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         'CreateAppTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130430_create_app_table.php',
         'CreateConfigTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_06_070603_create_config_table.php',
         'CreateMessageTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_17_020509_create_message_table.php',
+        'CreateOrganizationTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_30_090534_create_organization_table.php',
         'CreatePermissionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_16_160109_create_permission_table.php',
         'CreatePostTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_17_020501_create_post_table.php',
         'CreateResouceTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_17_1412079_create_resouce_table.php',

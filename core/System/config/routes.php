@@ -85,4 +85,10 @@ return [
     'put@resource' => ['action' => 'ResourceController@putResource', 'permission' => []],
     'delete@resource' => ['action' => 'ResourceController@deleteResource', 'permission' => []],
 
+'get@organization' => ['action' => 'OrganizationController@getOrganization', 'permission'=>[] ],
+     'get@organizations' => ['action' => 'OrganizationController@getOrganizations', 'permission'=>[] ],
+     'post@organization' => ['action' => 'OrganizationController@postOrganization', 'permission'=>[] ],
+      'put@organization' => ['action' => 'OrganizationController@putOrganization', 'permission'=>[] ],
+    'delete@organization' => ['action' => 'OrganizationController@deleteOrganization', 'permission'=>[] ],
+
 ];

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoleTable extends Migration
+class CreateOrganizationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,16 @@ class CreateRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('organization', function (Blueprint $table) {
             $table->string('id');
+            $table->string('root');
             $table->string('name')->unique();
             $table->mediumText('description');
             $table->string('parent');
-            $table->integer('user_amount');
-            $table->integer('permission_amount');
             $table->string('status');
             $table->timestamps();
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
+            $table->foreign('root')->references('id')->on('role')->onDelete('cascade');
         });
     }
 
@@ -33,6 +32,6 @@ class CreateRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('role');
+        Schema::drop('organization');
     }
 }
