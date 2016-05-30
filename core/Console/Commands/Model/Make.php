@@ -48,8 +48,8 @@ class Make extends Command
             'ModelName' => $this->generateModelName($name),
             'ModelNameToLower' => $this->generareModelNameToLower($name),
         ]);
-        
-        $modelFileName = base_path('core/Models' . str_replace('\\', '/', $this->generateModelNamespacePath($name)) . '.php');
+
+        $modelFileName = base_path('core/Models' . str_replace('\\', '/', $this->generateModelPath($name)) . '.php');
 
 
         if (Storage::has(ltrim($modelFileName, base_path()))) {
@@ -58,7 +58,7 @@ class Make extends Command
         } else {
 
             Storage::put(ltrim($modelFileName, base_path()), $code);
-            
+
             $this->info('Create model ' . $modelFileName . ' success.');
         }
 
@@ -78,12 +78,27 @@ class Make extends Command
         return strtolower($this->generateModelName($name));
     }
 
+    protected function generateModelPath($name)
+    {
+        $path = '\\';
+
+        $items = explode('/', $name);
+
+        foreach ($items as $item) {
+            $path .= ucfirst($item) . '\\';
+        }
+
+        return rtrim($path, '\\');
+    }
+
     protected function generateModelNamespacePath($name)
     {
         $path = '\\';
 
         $items = explode('/', $name);
 
+        unset($items[count($items) - 1]);
+        
         foreach ($items as $item) {
             $path .= ucfirst($item) . '\\';
         }
