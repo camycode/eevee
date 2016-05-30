@@ -25,7 +25,9 @@ class Permission extends Model
     /**
      * 获取角色权限资源归档
      *
-     * 通过查询资源表(resource)获取权限归档信息
+     * 通过查询资源表(resource)匹配权限, 按资源归档显示权限列表.
+     *
+     * 资源通过 "core/System/local/resources.php" 注册
      *
      * @param array $items
      *
