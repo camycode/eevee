@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * 应用模型
+ *
+ * 应用可以抽象为终端或组织结构, 应用之间存在继承关系.
+ *
+ * @author 古月
+ */
+
 namespace Core\Models;
 
 use Illuminate\Support\Facades\Validator;
@@ -7,8 +15,8 @@ use Illuminate\Support\Facades\Validator;
 class App extends Model
 {
 
-    protected $fields = ['id', 'version', 'name', 'description', 'status', 'created_at', 'updated_at'];
-    
+    protected $fields = ['id', 'name', 'description', 'status', 'created_at', 'updated_at'];
+
     /**
      * 数据初始化
      *
@@ -105,7 +113,9 @@ class App extends Model
     }
 
     /**
-     * 更新APP
+     * 更新 APP
+     *
+     * 更新操作过滤了掉父类信息.
      *
      * @param string $id
      *
@@ -126,7 +136,7 @@ class App extends Model
 
         $this->validateApp($ignore);
 
-        $this->filter($this->data, $this->fields);
+        $this->filter($this->data, $this->fields, ['parent']);
 
         $this->table()->where('id', $id)->update($this->data);
 
