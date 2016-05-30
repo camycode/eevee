@@ -10,7 +10,7 @@ class Guard
      *
      * @return array
      */
-    protected static function get_called_class()
+    protected static function get_called_class_name()
     {
         return explode('\\', str_replace('core\models\\', '', get_called_class()));
     }
@@ -24,7 +24,7 @@ class Guard
      *
      * @param mixed $data 受保护的数据
      * @param string $action_name 操作动作名称
-     * @param int $action_tag 操作动作      GUARD_ADD | GUARD_UPDATE | GUARD_GET | GUARD_DELETE
+     * @param int $action_tag 操作动作      GUARD_ADD | GUARD_UPDATE | GUARD_GET | GUARD_DELETE | GUARD_SAVE
      * @param string $user_field 用户标识字段
      * @param string $term_field 分类标识字段
      */

@@ -25,6 +25,8 @@ class Permission extends Model
     /**
      * 获取角色权限资源归档
      *
+     * 通过查询资源表(resource)获取权限归档信息
+     *
      * @param array $items
      *
      * @return Status

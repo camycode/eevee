@@ -8,6 +8,7 @@ namespace Core\Controllers;
 
 use Core\Models\Role;
 use Core\Services\Context;
+use Core\Models\Role\Permission as RolePermission;
 
 class RoleController extends Controller
 {
@@ -225,7 +226,7 @@ class RoleController extends Controller
      */
     public function getPermissions(Context $context)
     {
-        return $context->response((new Role())->getRolePermissions($context->params('id'), $context->params('archive')));
+        return $context->response((new RolePermission())->getRolePermissions($context->params('id'), $context->params('archive')));
     }
 
     /**
