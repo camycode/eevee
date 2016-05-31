@@ -15,7 +15,7 @@ class CreateRoleTable extends Migration
         Schema::create('role', function (Blueprint $table) {
             $table->string('id');
             $table->string('app_id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->mediumText('description');
             $table->string('parent');
             $table->integer('permission_amount');
@@ -23,6 +23,7 @@ class CreateRoleTable extends Migration
             $table->timestamps();
             $table->primary('id');
             $table->foreign('app_id')->references('id')->on('app')->onDelete('restrict');
+            $table->unique(['app_id', 'name']);
         });
     }
 

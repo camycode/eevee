@@ -11,7 +11,6 @@ class CreateAppConfigTable extends Migration
             $table->string('app_id');
             $table->string('config_key');
             $table->string('config_value');
-            $table->string('source');
             $table->timestamps();
             $table->primary(['app_id', 'config_key']);
         });

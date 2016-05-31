@@ -3,31 +3,28 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppVersionTable extends Migration
+class CreateAppResource extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('app_version', function (Blueprint $table) {
+        Schema::create('app_resource', function (Blueprint $table) {
+            $table->string('id');
             $table->string('app_id');
-            $table->string('version');
-            $table->text('description');
-            $table->primary(['app_id', 'version']);
+            $table->string('name');
+            $table->mediumText('description');
+            $table->primary('id');
             $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
-        Schema::drop('app_version');
+        Schema::drop('app_resource');
     }
 }
