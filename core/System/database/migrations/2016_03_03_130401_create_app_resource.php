@@ -11,12 +11,12 @@ class CreateAppResource extends Migration
     public function up()
     {
         Schema::create('app_resource', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('app_id');
-            $table->string('name');
-            $table->mediumText('description');
-            $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
+            $table->string('app_resource_id');
+            $table->string('app_resource_app_id');
+            $table->string('app_resource_name');
+            $table->mediumText('app_resource_description');
+            $table->primary('app_resource_id');
+            $table->foreign('app_resource_app_id')->references('app_id')->on('app')->onDelete('cascade');
         });
     }
 

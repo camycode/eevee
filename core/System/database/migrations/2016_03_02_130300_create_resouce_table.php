@@ -11,13 +11,13 @@ class CreateResouceTable extends Migration
     public function up()
     {
         Schema::create('resource', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('name');
-            $table->string('parent');
-            $table->string('logo');
-            $table->mediumText('description');
-            $table->string('source');
-            $table->primary('id');
+            $table->string('resource_id');
+            $table->string('resource_name');
+            $table->string('resource_parent');
+            $table->string('resource_logo');
+            $table->mediumText('resource_description');
+            $table->string('resource_source');
+            $table->primary('resource_id');
         });
     }
 

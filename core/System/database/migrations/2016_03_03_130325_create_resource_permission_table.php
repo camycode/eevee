@@ -11,12 +11,12 @@ class CreateResourcePermissionTable extends Migration
     public function up()
     {
         Schema::create('resource_permission', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('resource_id');
-            $table->string('name');
-            $table->mediumText('description');
-            $table->primary('id');
-            $table->foreign('resource_id')->references('id')->on('resource')->onDelete('cascade');
+            $table->string('resource_permission_id');
+            $table->string('resource_permission_resource_id');
+            $table->string('resource_permission_name');
+            $table->mediumText('resource_permission_description');
+            $table->primary('resource_permission_id');
+            $table->foreign('resource_permission_resource_id')->references('resource_id')->on('resource')->onDelete('cascade');
         });
     }
 

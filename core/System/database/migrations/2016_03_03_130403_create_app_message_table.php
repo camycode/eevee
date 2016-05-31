@@ -13,13 +13,14 @@ class CreateAppMessageTable extends Migration
     public function up()
     {
         Schema::create('app_message', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('app_id');
-            $table->string('message');
-            $table->integer('status');
-            $table->timestamps();
-            $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
+            $table->string('app_message_id');
+            $table->string('app_message_app_id');
+            $table->string('app_message_message');
+            $table->integer('app_message_status');
+            $table->timestamp('app_message_created_at');
+            $table->timestamp('app_message__at');
+            $table->primary('app_message_id');
+            $table->foreign('app_message_app_id')->references('app_id')->on('app')->onDelete('cascade');
         });
     }
 

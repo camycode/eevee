@@ -8,11 +8,12 @@ class CreateAppConfigTable extends Migration
     public function up()
     {
         Schema::create('app_config', function (Blueprint $table) {
-            $table->string('app_id');
-            $table->string('config_key');
-            $table->string('config_value');
-            $table->timestamps();
-            $table->primary(['app_id', 'config_key']);
+            $table->string('app_config_app_id');
+            $table->string('app_config_key');
+            $table->string('app_config_value');
+            $table->timestamp('app_config_created_at');
+            $table->timestamp('app_config_updated_at');
+            $table->primary(['app_config_app_id', 'app_config_key']);
         });
     }
 

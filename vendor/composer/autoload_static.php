@@ -325,6 +325,7 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
+        'CreateAppAliasTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_31_100042_create_app_alias_table.php',
         'CreateAppConfigTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130404_create_app_config_table.php',
         'CreateAppMessageTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130403_create_app_message_table.php',
         'CreateAppResource' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130401_create_app_resource.php',

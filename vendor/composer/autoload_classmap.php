@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CreateAppAliasTable' => $baseDir . '/core/System/database/migrations/2016_05_31_100042_create_app_alias_table.php',
     'CreateAppConfigTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130404_create_app_config_table.php',
     'CreateAppMessageTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130403_create_app_message_table.php',
     'CreateAppResource' => $baseDir . '/core/System/database/migrations/2016_03_03_130401_create_app_resource.php',
