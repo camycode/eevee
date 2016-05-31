@@ -9,13 +9,14 @@ class CreateUserTokenTable extends Migration
     public function up()
     {
         Schema::create('user_token', function (Blueprint $table) {
-            $table->string('app_id');
-            $table->string('user_id');
-            $table->string('user_token')->unique();
-            $table->timestamps();
-            $table->primary(['app_id', 'user_id']);
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('restrict');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->string('user_token_app_id');
+            $table->string('user_token_user_id');
+            $table->string('user_token_user_token')->unique();
+            $table->timestamp('user_token_created_at');
+            $table->timestamp('user_token_updated_at');
+            $table->primary(['user_token_app_id', 'user_token_user_id']);
+            $table->foreign('user_token_app_id')->references('app_id')->on('app')->onDelete('restrict');
+            $table->foreign('user_token_user_id')->references('app_id')->on('user')->onDelete('cascade');
         });
     }
 

@@ -8,13 +8,13 @@ class CreateUserConfigTable extends Migration
     public function up()
     {
         Schema::create('user_config', function (Blueprint $table) {
-            $table->string('user_id');
-            $table->string('config_key');
-            $table->longText('config_value');
-            $table->string('source');
-            $table->timestamps();
-            $table->primary('user_id', 'config_key');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->string('user_config_user_id');
+            $table->string('user_config_key');
+            $table->longText('user_config_value');
+            $table->timestamp('user_config_created_at');
+            $table->timestamp('user_config_updated_at');
+            $table->primary('user_config_user_id', 'user_config_key');
+            $table->foreign('user_config_user_id')->references('user_id')->on('user')->onDelete('cascade');
         });
     }
 

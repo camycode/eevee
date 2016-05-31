@@ -11,22 +11,23 @@ class CreateUserTable extends Migration
     public function up()
     {
         Schema::create('user', function (Blueprint $table) {
-            $table->string('id');
-            $table->string('app_id');
-            $table->string('role_id');
-            $table->string('username');
-            $table->string('email', 255);
-            $table->string('password', 100);
-            $table->string('role');
-            $table->string('avatar');
-            $table->string('source');
-            $table->integer('status');
-            $table->timestamps();
-            $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('restrict');
-            $table->foreign('role_id')->references('id')->on('role')->onDelete('restrict');
-            $table->unique(['app_id', 'email']);
-            $table->unique(['app_id', 'username']);
+            $table->string('user_id');
+            $table->string('user_app_id');
+            $table->string('user_role_id');
+            $table->string('user_username');
+            $table->string('user_email', 255);
+            $table->string('user_password', 100);
+            $table->string('user_role');
+            $table->string('user_avatar');
+            $table->string('user_source');
+            $table->integer('user_status');
+            $table->timestamp('user_created_at');
+            $table->timestamp('user_updated_at');
+            $table->primary('user_id');
+            $table->foreign('user_app_id')->references('app_id')->on('app')->onDelete('restrict');
+            $table->foreign('user_role_id')->references('role_id')->on('role')->onDelete('restrict');
+            $table->unique(['user_app_id', 'email']);
+            $table->unique(['user_app_id', 'username']);
         });
     }
 
