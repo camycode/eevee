@@ -55,10 +55,12 @@ class Status
     protected static function getCode($status)
     {
         if (!self::statusExists($status)) {
-            return false;
+
+            return 1000;
         }
 
         if (is_string($status)) {
+            
             return self::$statuses[$status];
         }
 
@@ -99,7 +101,7 @@ class Status
      * 状态消息不存在，返回状态名称.
      *
      * @param $status
-     * 
+     *
      * @return string 状态消息
      *
      */

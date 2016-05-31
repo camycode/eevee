@@ -1,17 +1,17 @@
-<?php
+<?php 
 
-namespace Core\Models;
+namespace Core\Models\App\Resource;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
 
-class Resource extends Model
+class Permission extends Model
 {
 
-    protected $fields = ['id', 'name', 'parent', 'description', 'source'];
+    protected $fields = ['id','created_at','updated_at'];
 
-    // 初始化Resource记录
-    protected function initializeResource()
+    // 初始化Permission记录
+    protected function initializePermission()
     {
 
         $initialized = [
@@ -23,8 +23,8 @@ class Resource extends Model
         $this->data = array_merge($initialized, $this->data);
     }
 
-    // Resource数据校验
-    protected function validateResource(array $ignore = [])
+    // Permission数据校验
+    protected function validatePermission(array $ignore = [])
     {
 
         $tableName = $this->tableName();
@@ -33,33 +33,33 @@ class Resource extends Model
 
         ];
 
-        $this->ignore($this->data, $ignore);
+        $this->ignore($this->data,$ignore);
 
         $validator = Validator::make($this->data, $rule);
 
-        if ($validator->fails()) {
+        if($validator->fails()) {
 
             exception('validateFailed', $validator->errors());
         }
 
     }
 
-    // 获取Resource
-    public function getResource($id)
+    // 获取Permission
+    public function getPermission($id)
     {
 
-        if ($data = $this->table()->where('id', $id)->first()) {
+        if($data = $this->table()->where('id',$id)->first()){
 
             $this->guard($data, 'get', GUARD_GET);
 
-            return status('success', $data);
+            return status('success',$data);
         }
 
-        exception('resourceDoesNotExist');
+        exception('permissionDoesNotExist');
     }
 
-    // 获取Resource组
-    public function getResources(array $params)
+    // 获取Permission组
+    public function getPermissions(array $params)
     {
 
         $data = $this->selector($params);
@@ -69,23 +69,23 @@ class Resource extends Model
         return status('success', $data);
     }
 
-    // 添加Resource记录
-    public function addResource()
+    // 添加Permission记录
+    public function addPermission()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validateResource();
+        $this->validatePermission();
 
-        $this->initializeResource();
+        $this->initializePermission();
 
-        return $this->transaction(function () {
+        return $this->transaction(function(){
 
             $this->filter($this->data, $this->fields);
 
             $this->table()->insert($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getPermission($this->data['id']);
 
             return $status;
 
@@ -93,10 +93,10 @@ class Resource extends Model
 
     }
 
-    // 更新Resource记录
-    public function updateResource($id)
+    // 更新Permission记录
+    public function updatePermission($id)
     {
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getPermission($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -104,15 +104,15 @@ class Resource extends Model
 
         ];
 
-        $this->validateResource($ignore);
+        $this->validatePermission($ignore);
 
-        return $this->transaction(function () use ($id) {
+        return $this->transaction(function() use($id){
 
             $this->filter($this->data, $this->fields);
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getPermission($this->data['id']);
 
             return $status;
 
@@ -120,11 +120,11 @@ class Resource extends Model
 
     }
 
-    // 删除Resource记录
-    public function deleteResource($id)
+    // 删除Permission记录
+    public function deletePermission($id)
     {
 
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getPermission($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 
@@ -132,6 +132,5 @@ class Resource extends Model
 
         return status('success');
     }
-
 }
 

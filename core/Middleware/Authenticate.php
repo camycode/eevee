@@ -49,24 +49,54 @@ class Authenticate
 
 
     /**
+     * 设置应用相关常量
+     */
+    protected function setAppConstants($app_id)
+    {
+        define('APP_ID', $app_id);
+    }
+
+    /**
+     * 设置访客相关常量
+     *
+     * @param string $user_id 用户 ID
+     * @param string $role_id 角色 ID
+     */
+    protected function setVisitorConstants($user_id, $role_id)
+    {
+        define('VISITOR_USER_ID', $user_id);
+        define('VISITOR_ROLE_ID', $role_id);
+    }
+
+    /**
+     * 设置权限验证动作常量
+     *
+     * @return void
+     */
+    protected function setActionConstants()
+    {
+
+        define('GUARD_ADD', 1);
+        define('GUARD_DELETE', 2);
+        define('GUARD_GET', 3);
+        define('GUARD_UPDATE', 4);
+        define('GUARD_SAVE', 5);
+    }
+
+    /**
      * 用户认证入口,验证请求接口的X-APP-ID.
      *
      * @throws \Core\Exceptions\StatusException
      */
-    protected function auth()
+    protected function authAppID()
     {
-        if ($this->request->getPathInfo() == '/api/system/install') {
-            return true;
-        }
+        $this->app_id = $this->request->header('X-App-ID');
 
-        $app_id = $this->request->header('X-App-ID');
-
-        if (!$app_id || !(new Model())->resource('APP')->where('id', $app_id)->first()) {
+        if (!$this->app_id || !(new Model())->table('app')->where('id', $this->app_id)->first()) {
 
             exception('AppIdDoesNotExist');
         }
 
-        $this->authUserToken($app_id);
     }
 
     /**
@@ -79,7 +109,7 @@ class Authenticate
     {
         $user_token = $this->request->header('X-User-Token');
 
-        $record = (new Model())->resource('USERTOKEN')->where('app_id', $app_id)->where('user_token', $user_token)->first();
+        $record = (new Model())->table('user_token')->where('app_id', $app_id)->where('user_token', $user_token)->first();
 
         if ($user_token && $record) {
 
@@ -179,31 +209,6 @@ class Authenticate
         }
     }
 
-    /**
-     * 设置访客相关常量
-     *
-     * @param string $user_id 用户 ID
-     * @param string $role_id 角色 ID
-     */
-    protected function setVisitorConstants($user_id, $role_id)
-    {
-        define('VISITOR_USER_ID', $user_id);
-        define('VISITOR_ROLE_ID', $role_id);
-    }
-
-    /**
-     * 设置权限验证动作常量
-     *
-     * @return void
-     */
-    protected function setActionConstants()
-    {
-        define('GUARD_ADD', 1);
-        define('GUARD_DELETE', 2);
-        define('GUARD_GET', 3);
-        define('GUARD_UPDATE', 4);
-        define('GUARD_SAVE', 5);
-    }
 
     /**
      * 权限验证中间件.
@@ -221,7 +226,9 @@ class Authenticate
 
         $this->setActionConstants();
 
-//        $this->auth();
+        $this->authAppID();
+
+//        $this->authUserToken($this->app_id);
 
         return $next($this->request);
 

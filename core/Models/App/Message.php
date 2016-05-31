@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Core\Models\App;
 
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 class Message extends Model
 {
 
-    protected $fields = ['id','created_at','updated_at'];
+    protected $fields = ['id', 'app_id', 'message', 'status', 'created_at', 'updated_at'];
 
     // 初始化Message记录
     protected function initializeMessage()
@@ -16,6 +16,7 @@ class Message extends Model
 
         $initialized = [
             'id' => $this->id(),
+            'app_id' => APP_ID,
         ];
 
         $this->timestamps($initialized, true);
@@ -33,11 +34,11 @@ class Message extends Model
 
         ];
 
-        $this->ignore($this->data,$ignore);
+        $this->ignore($this->data, $ignore);
 
         $validator = Validator::make($this->data, $rule);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
 
             exception('validateFailed', $validator->errors());
         }
@@ -48,11 +49,11 @@ class Message extends Model
     public function getMessage($id)
     {
 
-        if($data = $this->table()->where('id',$id)->first()){
+        if ($data = $this->table()->where('id', $id)->first()) {
 
             $this->guard($data, 'get', GUARD_GET);
 
-            return status('success',$data);
+            return status('success', $data);
         }
 
         exception('messageDoesNotExist');
@@ -79,7 +80,7 @@ class Message extends Model
 
         $this->initializeMessage();
 
-        return $this->transaction(function(){
+        return $this->transaction(function () {
 
             $this->filter($this->data, $this->fields);
 
@@ -106,7 +107,7 @@ class Message extends Model
 
         $this->validateMessage($ignore);
 
-        return $this->transaction(function() use($id){
+        return $this->transaction(function () use ($id) {
 
             $this->filter($this->data, $this->fields);
 

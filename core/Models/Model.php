@@ -163,10 +163,11 @@ class Model
     }
 
     /**
-     * 过滤掉数据的多余字段
+     * 过滤掉数据的多余字段, 用于数据库操作验证.
      *
-     * @param  array $fields
      * @param  array $data
+     * @param  array $fields
+     * @param  array $ignore
      *
      * @return array
      */
@@ -178,6 +179,10 @@ class Model
             if (!in_array($k, $fields)) {
                 unset($data[$k]);
             }
+        }
+
+        if (!$data) {
+            exception('InvalidData');
         }
 
         return $data;

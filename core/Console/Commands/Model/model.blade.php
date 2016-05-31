@@ -16,6 +16,7 @@ class {{  $ModelName }} extends Model
 
         $initialized = [
             'id' => $this->id(),
+            'app_id' => APP_ID,
         ];
 
         $this->timestamps($initialized, true);

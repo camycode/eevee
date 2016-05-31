@@ -17,6 +17,7 @@ class CreateAppMessageTable extends Migration
             $table->string('app_id');
             $table->string('message');
             $table->integer('status');
+            $table->timestamps();
             $table->primary('id');
             $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
         });

@@ -19,6 +19,7 @@ class CreateUserTable extends Migration
             $table->string('password', 100);
             $table->string('role');
             $table->string('avatar');
+            $table->string('source');
             $table->integer('status');
             $table->timestamps();
             $table->primary('id');

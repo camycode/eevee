@@ -2,6 +2,7 @@
 
 return [
     'success' => 200,
+    'failed' => 1000,
     'invildUserToken' => 1001,
     'permissionsFileMissed' => 1002,
     'databaseOperateError' => 1003,

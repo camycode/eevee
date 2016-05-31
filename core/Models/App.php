@@ -10,12 +10,13 @@
 
 namespace Core\Models;
 
+use Core\Models\App\Message;
 use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
 
-    protected $fields = ['id', 'name', 'description', 'status', 'created_at', 'updated_at'];
+    protected $fields = ['id','name', 'description', 'status', 'created_at', 'updated_at'];
 
     /**
      * 数据初始化
@@ -129,15 +130,15 @@ class App extends Model
 
         $ignore = ['id'];
 
-        if ($app->name == $this->data['name']) {
+        if (!isset($this->data['name']) || $app->name == $this->data['name']) {
 
             array_push($ignore, 'name');
         };
 
         $this->validateApp($ignore);
 
-        $this->filter($this->data, $this->fields, ['parent']);
-
+        $this->filter($this->data, $this->fields, ['id', 'parent']);
+        
         $this->table()->where('id', $id)->update($this->data);
 
         return $this->getApp($id);
