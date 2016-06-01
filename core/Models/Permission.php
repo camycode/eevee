@@ -38,6 +38,7 @@ class Permission extends Model
 
         $rule = [
             'id' => "required|unique:$tableName",
+            'resource_id' => "required",
             'name' => "required|unique:$tableName",
         ];
 
@@ -215,7 +216,7 @@ class Permission extends Model
 
                     continue;
                 }
-                
+
                 $this->initializePermission();
 
                 array_push($result['success'], $this->addPermission());
