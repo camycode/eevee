@@ -15,7 +15,7 @@ class {{  $ModelName }} extends Model
      *
      * @return void
      */
-    protected function initialize{{ $ModelName }}(array &$data)
+    protected function initialize{{ $ModelName }}()
     {
 
         $initialized = [
@@ -25,7 +25,7 @@ class {{  $ModelName }} extends Model
 
         $this->timestamps($initialized, true);
 
-        $data = array_merge($initialized, $data);
+        $this->data = array_merge($initialized, $this->data);
     }
 
     /**
@@ -38,7 +38,7 @@ class {{  $ModelName }} extends Model
      * @throws \Core\Exceptions\StatusException
      *
      */
-    protected function validate{{ $ModelName }}(array $data, array $ignore = [])
+    protected function validate{{ $ModelName }}(array $ignore = [])
     {
 
         $tableName = $this->tableName();
@@ -47,9 +47,9 @@ class {{  $ModelName }} extends Model
 
         ];
 
-        $this->ignore($data,$ignore);
+        $this->ignore($this->data,$ignore);
 
-        $validator = Validator::make($data, $rule);
+        $validator = Validator::make($this->data, $rule);
 
         if($validator->fails()) {
 
@@ -61,7 +61,7 @@ class {{  $ModelName }} extends Model
     /**
      * 获取记录
      *
-     * @param string $id
+     * @param $id
      *
      * @return Status
      *
@@ -108,9 +108,9 @@ class {{  $ModelName }} extends Model
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validate{{ $ModelName }}($this->data);
+        $this->validate{{ $ModelName }}();
 
-        $this->initialize{{ $ModelName }}($this->data);
+        $this->initialize{{ $ModelName }}();
 
         return $this->transaction(function(){
 
@@ -144,7 +144,7 @@ class {{  $ModelName }} extends Model
 
         ];
 
-        $this->validate{{ $ModelName }}($this->data, $ignore);
+        $this->validate{{ $ModelName }}($ignore);
 
         return $this->transaction(function() use($id){
 
@@ -163,7 +163,7 @@ class {{  $ModelName }} extends Model
     /**
      * 删除记录
      *
-     * @param string $id
+     * @param $id
      *
      * @return Status
      */
