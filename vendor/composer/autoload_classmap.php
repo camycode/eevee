@@ -6,12 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateAppConfigTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130404_create_app_config_table.php',
+    'CreateAppClientTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130404_create_app_client_table.php',
+    'CreateAppClientVersionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130405_create_app_client_version_table.php',
+    'CreateAppConfigTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130409_create_app_config_table.php',
     'CreateAppMessageTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130407_create_app_message_table.php',
     'CreateAppPermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130403_create_app_permission_table.php',
     'CreateAppResource' => $baseDir . '/core/System/database/migrations/2016_03_03_130401_create_app_resource.php',
     'CreateAppTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130400_create_app_table.php',
-    'CreateAppVersionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130402_create_app_version_table.php',
     'CreatePermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130325_create_permission_table.php',
     'CreatePostTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020501_create_post_table.php',
     'CreateResouceTable' => $baseDir . '/core/System/database/migrations/2016_03_02_130300_create_resouce_table.php',
