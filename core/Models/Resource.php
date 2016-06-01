@@ -3,14 +3,20 @@
 namespace Core\Models;
 
 use Core\Models\Model;
+use Core\Exceptions\StatusException;
 use Illuminate\Support\Facades\Validator;
 
 class Resource extends Model
 {
 
-    protected $fields = ['id', 'name', 'parent', 'description', 'source'];
+    protected $fields = ['id', 'name', 'parent', 'icon', 'description', 'source', 'created_at'];
 
-    // 初始化Resource记录
+    /**
+     * 资源数据初始化
+     *
+     *
+     * @return void
+     */
     protected function initializeResource()
     {
 
@@ -23,14 +29,22 @@ class Resource extends Model
         $this->data = array_merge($initialized, $this->data);
     }
 
-    // Resource数据校验
+    /**
+     * 资源数据校验
+     *
+     * @param array $ignore
+     *
+     * @throws \Core\Exceptions\StatusException
+     *
+     */
     protected function validateResource(array $ignore = [])
     {
 
         $tableName = $this->tableName();
 
         $rule = [
-
+            'id' => "required|unique:$tableName",
+            'name' => "required|unique:$tableName",
         ];
 
         $this->ignore($this->data, $ignore);
@@ -44,7 +58,15 @@ class Resource extends Model
 
     }
 
-    // 获取Resource
+    /**
+     * 获取资源
+     *
+     * @param $id
+     *
+     * @return Status
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     public function getResource($id)
     {
 
@@ -58,7 +80,13 @@ class Resource extends Model
         exception('resourceDoesNotExist');
     }
 
-    // 获取Resource组
+    /**
+     * 获取资源组
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
     public function getResources(array $params)
     {
 
@@ -69,7 +97,12 @@ class Resource extends Model
         return status('success', $data);
     }
 
-    // 添加Resource记录
+    /**
+     * 添加资源
+     *
+     * @return Status
+     *
+     */
     public function addResource()
     {
 
@@ -93,7 +126,14 @@ class Resource extends Model
 
     }
 
-    // 更新Resource记录
+    /**
+     * 更新资源
+     *
+     * @param $id
+     *
+     * @return Status
+     *
+     */
     public function updateResource($id)
     {
         $origin = $this->getResource($id)->data;
@@ -120,7 +160,13 @@ class Resource extends Model
 
     }
 
-    // 删除Resource记录
+    /**
+     * 删除资源
+     *
+     * @param $id
+     *
+     * @return Status
+     */
     public function deleteResource($id)
     {
 
@@ -132,6 +178,51 @@ class Resource extends Model
 
         return status('success');
     }
+
+    /**
+     * 保存资源组, 此操作会替换已存在的资源记录.
+     *
+     * @return Status
+     */
+    public function saveResources()
+    {
+
+        $data = $this->data;
+
+        $result = [
+            'success' => [],
+            'failed' => [],
+        ];
+
+        foreach ($data as $key => $item) {
+
+            $this->data = $item;
+
+            try {
+
+                $this->validateResource();
+
+            } catch (StatusException $e) {
+
+                $e->status->data = $this->data[$key];
+
+                array_push($result['failed'], $e->status);
+
+                unset($this->data[$key]);
+
+                continue;
+            }
+
+            $this->initializeResource();
+
+            array_push($result['success'], $this->addResource());
+
+        }
+
+        return status('success', $result);
+
+    }
+
 
 }
 
