@@ -207,9 +207,7 @@ class Resource extends Model
                 $e->status->data = $this->data[$key];
 
                 array_push($result['failed'], $e->status);
-
-                unset($this->data[$key]);
-
+                
                 continue;
             }
 
