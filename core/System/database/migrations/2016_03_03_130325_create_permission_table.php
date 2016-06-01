@@ -13,8 +13,9 @@ class CreatePermissionTable extends Migration
         Schema::create('permission', function (Blueprint $table) {
             $table->string('id');
             $table->string('resource_id');
-            $table->string('name');
-            $table->mediumText('description');
+            $table->string('name')->unique();
+            $table->text('description');
+            $table->timestamps();
             $table->primary('id');
             $table->foreign('id')->references('id')->on('resource')->onDelete('cascade');
         });

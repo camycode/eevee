@@ -17,7 +17,7 @@ class CreateResouceTable extends Migration
             $table->string('icon');
             $table->mediumText('description');
             $table->string('source');
-            $table->timestamp('created_at');
+            $table->timestamps();
             $table->primary('id');
         });
     }

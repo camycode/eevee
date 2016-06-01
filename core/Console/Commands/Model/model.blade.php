@@ -148,6 +148,8 @@ class {{  $ModelName }} extends Model
 
         return $this->transaction(function() use($id){
 
+            $this->timestamps($this->data, false);
+
             $this->filter($this->data, $this->fields);
 
             $this->table()->where('id', $id)->update($this->data);

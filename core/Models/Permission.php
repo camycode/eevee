@@ -3,41 +3,34 @@
 namespace Core\Models;
 
 use Core\Models\Model;
-use Core\Exceptions\StatusException;
 use Illuminate\Support\Facades\Validator;
 
-class Resource extends Model
+class Permission extends Model
 {
 
-    protected $fields = ['id', 'name', 'parent', 'icon', 'description', 'source', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'resource_id', 'name', 'description', 'created_at', 'updated_at'];
 
     /**
-     * 资源数据初始化
+     * 数据初始化
      *
-     *
-     * @return void
+     * @return  void
      */
-    protected function initializeResource()
+    protected function initializePermission()
     {
-
-        $initialized = [
-            'source' => 'EEVEE',
-        ];
-
-        $this->timestamps($initialized, true);
-
-        $this->data = array_merge($initialized, $this->data);
+        $this->timestamps($this->data, true);
     }
 
     /**
-     * 资源数据校验
+     * 数据校验
      *
-     * @param array $ignore
+     * @param  array $ignore
      *
-     * @throws \Core\Exceptions\StatusException
+     * @return  void
+     *
+     * @throws  \Core\Exceptions\StatusException
      *
      */
-    protected function validateResource(array $ignore = [])
+    protected function validatePermission(array $ignore = [])
     {
 
         $tableName = $this->tableName();
@@ -59,15 +52,15 @@ class Resource extends Model
     }
 
     /**
-     * 获取资源
+     * 获取记录
      *
-     * @param $id
+     * @param  $id
      *
-     * @return Status
+     * @return  Status
      *
-     * @throws \Core\Exceptions\StatusException
+     * @throws  \Core\Exceptions\StatusException
      */
-    public function getResource($id)
+    public function getPermission($id)
     {
 
         if ($data = $this->table()->where('id', $id)->first()) {
@@ -77,17 +70,17 @@ class Resource extends Model
             return status('success', $data);
         }
 
-        exception('resourceDoesNotExist');
+        exception('permissionDoesNotExist');
     }
 
     /**
-     * 获取资源组
+     * 获取记录组
      *
-     * @param array $params
+     * @param  array $params
      *
-     * @return Status
+     * @return  Status
      */
-    public function getResources(array $params)
+    public function getPermissions(array $params)
     {
 
         $data = $this->selector($params);
@@ -98,19 +91,19 @@ class Resource extends Model
     }
 
     /**
-     * 添加资源
+     * 添加记录
      *
-     * @return Status
+     * @return  Status
      *
      */
-    public function addResource()
+    public function addPermission()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validateResource();
+        $this->validatePermission();
 
-        $this->initializeResource();
+        $this->initializePermission();
 
         return $this->transaction(function () {
 
@@ -118,7 +111,7 @@ class Resource extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getPermission($this->data['id']);
 
             return $status;
 
@@ -127,16 +120,16 @@ class Resource extends Model
     }
 
     /**
-     * 更新资源
+     * 更新记录
      *
-     * @param $id
+     * @param  string $id
      *
-     * @return Status
+     * @return  Status
      *
      */
-    public function updateResource($id)
+    public function updatePermission($id)
     {
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getPermission($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -144,17 +137,15 @@ class Resource extends Model
 
         ];
 
-        $this->validateResource($ignore);
+        $this->validatePermission($ignore);
 
         return $this->transaction(function () use ($id) {
-
-            $this->timestamps($this->data, false);
 
             $this->filter($this->data, $this->fields);
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getPermission($this->data['id']);
 
             return $status;
 
@@ -163,16 +154,16 @@ class Resource extends Model
     }
 
     /**
-     * 删除资源
+     * 删除记录
      *
-     * @param $id
+     * @param  $id
      *
-     * @return Status
+     * @return  Status
      */
-    public function deleteResource($id)
+    public function deletePermission($id)
     {
 
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getPermission($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 
@@ -181,12 +172,13 @@ class Resource extends Model
         return status('success');
     }
 
+
     /**
      * 保存资源组, 此操作会替换已存在的资源记录.
      *
      * @return Status
      */
-    public function saveResources()
+    public function savePermissions()
     {
 
         $data = $this->data;
@@ -202,7 +194,7 @@ class Resource extends Model
 
             try {
 
-                $this->validateResource();
+                $this->validatePermission();
 
             } catch (StatusException $e) {
 
@@ -213,16 +205,14 @@ class Resource extends Model
                 continue;
             }
 
-            $this->initializeResource();
+            $this->initializePermission();
 
-            array_push($result['success'], $this->addResource());
+            array_push($result['success'], $this->addPermission());
 
         }
 
         return status('success', $result);
 
     }
-
-
 }
 
