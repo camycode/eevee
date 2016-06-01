@@ -16,22 +16,37 @@ use Illuminate\Support\Facades\Validator;
 class App extends Model
 {
 
-    protected $fields = ['id','name', 'description', 'status', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'parent', 'name', 'description', 'status', 'created_at', 'updated_at'];
 
     /**
      * 数据初始化
      *
+     * 1. 对于根应用, Parent ID 与 ID 相等.
+     * 2. 在系统已经安装时, 应用 Parent ID 只能等于创建接口调用者的 APP_ID.
+     *
+     * @return void
      */
     protected function initializeApp()
     {
+
         $initialized = [
             'id' => $this->id(),
-            'status' => config('site.app.default_status', 0)
+            'status' => STATUS_NORMAL,
         ];
 
         $this->timestamps($this->data, true);
 
         $this->data = array_merge($initialized, $this->data);
+
+        if (SYSTEM_IS_INSTALLED) {
+
+            $this->data['parent'] = APP_ID;
+
+        } else {
+
+            $this->data['parent'] = $this->data['id'];
+
+        }
 
     }
 
@@ -39,6 +54,8 @@ class App extends Model
      * 验证数据
      *
      * @param array $ignore
+     *
+     * @return void
      *
      * @throws \Core\Exceptions\StatusException
      */
@@ -138,7 +155,7 @@ class App extends Model
         $this->validateApp($ignore);
 
         $this->filter($this->data, $this->fields, ['id', 'parent']);
-        
+
         $this->table()->where('id', $id)->update($this->data);
 
         return $this->getApp($id);

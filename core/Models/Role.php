@@ -97,7 +97,7 @@ class Role extends Model
     protected function validateRoleParent($parent_id)
     {
 
-        if (!$this->table()->where('id', $parent_id)->first() && $this->table()->first()) {
+        if (!$this->table()->where('id', $parent_id)->first() && SYSTEM_IS_INSTALLED) {
 
             exception('validateFailed', [
                 'parent' => message('parentRoleDoesNotExist'),

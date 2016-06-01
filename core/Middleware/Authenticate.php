@@ -82,7 +82,7 @@ class Authenticate
         define('GUARD_UPDATE', 4);
         define('GUARD_SAVE', 5);
     }
-
+    
     /**
      * 用户认证入口,验证请求接口的X-APP-ID.
      *
