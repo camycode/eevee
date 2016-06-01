@@ -14,10 +14,10 @@ class CreateAppVersionTable extends Migration
     {
         Schema::create('app_version', function (Blueprint $table) {
             $table->string('app_id');
-            $table->string('alias');
+            $table->string('device');
             $table->string('version');
             $table->text('description');
-            $table->primary(['app_id', 'alias', 'version']);
+            $table->primary(['app_id', 'device', 'version']);
             $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
         });
     }
