@@ -47,7 +47,7 @@ class Resource extends Model
             'name' => "required|unique:$tableName",
         ];
 
-        $this->ignore($this->data, $ignore);
+        $this->ignore($rule, $ignore);
 
         $validator = Validator::make($this->data, $rule);
 
@@ -140,9 +140,12 @@ class Resource extends Model
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
-        $ignore = [
+        $ignore = ['id'];
 
-        ];
+        if (isset($this->data['name']) && $this->data['name'] == $origin->name) {
+
+            array_push($ignore, 'name');
+        }
 
         $this->validateResource($ignore);
 
@@ -202,9 +205,10 @@ class Resource extends Model
 
             try {
 
-                $this->validateResource(['id', 'name']);
-
-                array_push($result['success'], $this->updateResource($item['id']));
+                if (isset($item['id'])) {
+                    
+                    array_push($result['success'], $this->updateResource($item['id']));
+                }
 
                 continue;
 
@@ -216,13 +220,13 @@ class Resource extends Model
 
                 } catch (StatusException $e) {
 
-                    $e->status->data = $this->data[$key];
+                    $e->status->object = $data[$key];
 
                     array_push($result['failed'], $e->status);
 
                     continue;
                 }
-                
+
                 $this->initializeResource();
 
                 array_push($result['success'], $this->addResource());

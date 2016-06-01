@@ -42,7 +42,7 @@ class Permission extends Model
             'name' => "required|unique:$tableName",
         ];
 
-        $this->ignore($this->data, $ignore);
+        $this->ignore($rule, $ignore);
 
         $validator = Validator::make($this->data, $rule);
 
@@ -135,9 +135,12 @@ class Permission extends Model
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
-        $ignore = [
+        $ignore = ['id'];
 
-        ];
+        if (isset($this->data['name']) && $this->data['name'] == $origin->name) {
+
+            array_push($ignore, 'name');
+        }
 
         $this->validatePermission($ignore);
 
@@ -196,9 +199,10 @@ class Permission extends Model
 
             try {
 
-                $this->validatePermission(['id', 'name']);
-
-                array_push($result['success'], $this->updatePermission($item['id']));
+                if (isset($item['id'])) {
+                    
+                    array_push($result['success'], $this->updatePermission($item['id']));
+                }
 
                 continue;
 
@@ -210,7 +214,7 @@ class Permission extends Model
 
                 } catch (StatusException $e) {
 
-                    $e->status->data = $this->data[$key];
+                    $e->status->object = $data[$key];
 
                     array_push($result['failed'], $e->status);
 

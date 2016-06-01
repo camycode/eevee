@@ -84,10 +84,11 @@ return [
     'post@resource' => ['action' => 'ResourceController@postResource', 'permission' => []],
     'put@resource' => ['action' => 'ResourceController@putResource', 'permission' => []],
     'delete@resource' => ['action' => 'ResourceController@deleteResource', 'permission' => []],
-'get@app/version' => ['action' => 'App/VersionController@getVersion', 'permission'=>[] ],
-      'get@app/versions' => ['action' => 'App/VersionController@getVersions', 'permission'=>[] ],
-      'post@app/version' => ['action' => 'App/VersionController@postVersion', 'permission'=>[] ],
-       'put@app/version' => ['action' => 'App/VersionController@putVersion', 'permission'=>[] ],
-    'delete@app/version' => ['action' => 'App/VersionController@deleteVersion', 'permission'=>[] ],
+
+    'get@app/version' => ['action' => 'App/VersionController@getVersion', 'permission' => []],
+    'get@app/versions' => ['action' => 'App/VersionController@getVersions', 'permission' => []],
+    'post@app/version' => ['action' => 'App/VersionController@postVersion', 'permission' => []],
+    'put@app/version' => ['action' => 'App/VersionController@putVersion', 'permission' => []],
+    'delete@app/version' => ['action' => 'App/VersionController@deleteVersion', 'permission' => []],
 
 ];

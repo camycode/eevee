@@ -11,6 +11,8 @@
 namespace Core\Models;
 
 use Core\Models\Model;
+use Core\Models\Resource;
+use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class System extends Model
@@ -35,14 +37,14 @@ class System extends Model
      * @var array
      */
     protected $permissions = [];
-    
+
 
     /**
      * 刷新系统资源表和系统权限表
      *
      * 资源注册文件: core/System/local/resources.php
      *
-     * @return void
+     * @return Status
      *
      */
     public function refreshResourcesAndPermissions()
@@ -59,19 +61,19 @@ class System extends Model
 
             if (is_array($options)) {
 
-                $resource = ['id' => $ident, 'name' => '', 'parent' => '', 'description' => '', 'source' => 'EEVEE'];
+                $resource = ['id' => $ident, 'name' => '', 'parent' => '', 'description' => ''];
 
-                array_merge($resource, $options);
+                $resource = array_merge($resource, $options);
 
-                array_push($this->resources, ['id' => $resource['id'], 'name' => $resource['name'], 'parent' => $resource['parent'], 'description' => $resource['description'], 'source' => $resource['source']]);
+                array_push($this->resources, ['id' => $resource['id'], 'name' => $resource['name'], 'parent' => $resource['parent'], 'description' => $resource['description']]);
 
-                if (isset($options['permissions']) && is_array($options['permissions'])) {
+                if (isset($options['actions']) && is_array($options['actions'])) {
 
-                    foreach ($options['permissions'] as $permissionIdent => $permissionOptions) {
+                    foreach ($options['actions'] as $permissionIdent => $permissionOptions) {
 
-                        $permission = ['id' => $permissionIdent, 'resource_id' => $ident, 'name' => '', 'description' => '', 'source' => 'EEVEE'];
+                        $permission = ['id' => strtoupper($ident . '_' . $permissionIdent), 'resource_id' => $ident, 'name' => '', 'description' => ''];
 
-                        array_push($this->permissions, array_merge($permission, $options));
+                        array_push($this->permissions, array_merge($permission, $permissionOptions));
 
                     }
 
@@ -79,8 +81,14 @@ class System extends Model
 
             }
         }
+        
+        $result = array();
 
+        $result['refresh_resources'] = (new Resource($this->resources))->saveResources();
 
+        $result['refresh_permissions'] = (new Permission($this->permissions))->savePermissions();
+
+        return status('success', $result);
     }
 
 }

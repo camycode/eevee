@@ -47,7 +47,7 @@ class {{  $ModelName }} extends Model
 
         ];
 
-        $this->ignore($this->data,$ignore);
+        $this->ignore($rule,$ignore);
 
         $validator = Validator::make($this->data, $rule);
 

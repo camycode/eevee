@@ -74,9 +74,7 @@ class SystemController extends Controller
      */
     public function refresh(Context $context)
     {
-        (new System())->refreshResourcesAndPermissions();
-        
-        return $context->response(status('success'));
+        return $context->response((new System())->refreshResourcesAndPermissions());
     }
 
 }

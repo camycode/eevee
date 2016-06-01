@@ -17,7 +17,7 @@ class CreatePermissionTable extends Migration
             $table->text('description');
             $table->timestamps();
             $table->primary('id');
-            $table->foreign('id')->references('id')->on('resource')->onDelete('cascade');
+            $table->foreign('resource_id')->references('id')->on('resource')->onDelete('cascade');
         });
     }
 

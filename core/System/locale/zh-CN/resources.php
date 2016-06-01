@@ -12,33 +12,32 @@ return [
         'name' => '用户',
         'description' => '描述',
         'icon' => '',
-        'image' => '',
-        'permissions' => [
-            'USER_ADD' => [
+        'actions' => [
+            'add' => [
                 'name' => '添加用户',
             ],
-            'USER_UPDATE' => [
+            'update' => [
                 'name' => '编辑用户',
             ],
-            'USER_GET' => [
+            'get' => [
                 'name' => '获取用户',
             ],
-            'USER_DELETE' => [
+            'delete' => [
                 'name' => '删除用户',
             ],
         ],
     ],
-    'DASHBOARD' => '面板',
-    'ROLE' => '角色',
-    'PERMISSION' => '权限',
-    'TERM' => '分类',
-    'POST' => '内容',
-    'FILE' => '文件',
-    'FOLDER' => '文件夹',
-    'MESSAGE' => '沟通',
-    'SYSTEM' => '系统',
-    'MEDIA' => '多媒体',
-    'THEME' => '主题',
-    'PLUGIN' => '插件',
-    'HELP' => '帮助',
+//    'DASHBOARD' => '面板',
+//    'ROLE' => '角色',
+//    'PERMISSION' => '权限',
+//    'TERM' => '分类',
+//    'POST' => '内容',
+//    'FILE' => '文件',
+//    'FOLDER' => '文件夹',
+//    'MESSAGE' => '沟通',
+//    'SYSTEM' => '系统',
+//    'MEDIA' => '多媒体',
+//    'THEME' => '主题',
+//    'PLUGIN' => '插件',
+//    'HELP' => '帮助',
 ];

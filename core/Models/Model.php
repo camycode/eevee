@@ -198,7 +198,7 @@ class Model
      * @param array &$rule
      * @param array $fields
      */
-    public function ignore(&$rule, $fields)
+    public function ignore(&$rule, array $fields)
     {
         foreach ($fields as $field) {
 
@@ -259,7 +259,7 @@ class Model
         if ($post) {
             $data['created_at'] = date('Y-m-d H:i:s');
         }
-        
+
         $data['updated_at'] = date('Y-m-d H:i:s');
     }
 
