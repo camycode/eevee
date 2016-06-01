@@ -10,7 +10,11 @@ class {{  $ModelName }} extends Model
 
     protected $fields = ['id','created_at','updated_at'];
 
-    // 初始化{{ $ModelName }}记录
+    /**
+     * 数据初始化
+     *
+     * @return void
+     */
     protected function initialize{{ $ModelName }}()
     {
 
@@ -24,7 +28,16 @@ class {{  $ModelName }} extends Model
         $this->data = array_merge($initialized, $this->data);
     }
 
-    // {{ $ModelName }}数据校验
+    /**
+     * 数据校验
+     *
+     * @param array $ignore
+     *
+     * @return void
+     *
+     * @throws \Core\Exceptions\StatusException
+     *
+     */
     protected function validate{{ $ModelName }}(array $ignore = [])
     {
 
@@ -45,7 +58,15 @@ class {{  $ModelName }} extends Model
 
     }
 
-    // 获取{{ $ModelName }}
+    /**
+     * 获取记录
+     *
+     * @param string $id
+     *
+     * @return Status
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     public function get{{ $ModelName }}($id)
     {
 
@@ -59,7 +80,13 @@ class {{  $ModelName }} extends Model
         exception('{{ $ModelNameToLower }}DoesNotExist');
     }
 
-    // 获取{{ $ModelName }}组
+    /**
+     * 获取记录组
+     *
+     * @param array $params
+     *
+     * @return Status
+     */
     public function get{{ $ModelName }}s(array $params)
     {
 
@@ -70,7 +97,12 @@ class {{  $ModelName }} extends Model
         return status('success', $data);
     }
 
-    // 添加{{ $ModelName }}记录
+    /**
+     * 添加记录
+     *
+     * @return Status
+     *
+     */
     public function add{{ $ModelName }}()
     {
 
@@ -94,7 +126,14 @@ class {{  $ModelName }} extends Model
 
     }
 
-    // 更新{{ $ModelName }}记录
+    /**
+     * 更新记录
+     *
+     * @param string $id
+     *
+     * @return Status
+     *
+     */
     public function update{{ $ModelName }}($id)
     {
         $origin = $this->get{{ $ModelName }}($id)->data;
@@ -121,7 +160,13 @@ class {{  $ModelName }} extends Model
 
     }
 
-    // 删除{{ $ModelName }}记录
+    /**
+     * 删除记录
+     *
+     * @param string $id
+     *
+     * @return Status
+     */
     public function delete{{ $ModelName }}($id)
     {
 
