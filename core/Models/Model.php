@@ -163,47 +163,25 @@ class Model
     }
 
     /**
-     * 加上数据表前缀
-     *
-     * @param  string $field
-     * @param string $target
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    protected function prefix($field, $target = '')
-    {
-        return implode('_', [$this->tableName($target), $field]);
-    }
-
-    /**
-     * 过滤掉数据的多余字段, 同时为每一个数组字段加上数据表前缀.
+     * 过滤掉数据的多余字段.
      *
      * @param  array $data
      * @param  array $fields
      * @param  array $ignore
-     * @param string $target
      *
      * @throws \Core\Exceptions\StatusException
      */
-    public function filter(array &$data, array $fields, array $ignore = [], $target = '')
+    public function filter(array &$data, array $fields, array $ignore = [])
     {
         $fields = array_diff($fields, $ignore);
-
-        $record = [];
 
         foreach ($data as $k => $v) {
 
             if (!in_array($k, $fields)) {
 
                 unset($data[$k]);
-
-            } else {
-
-                $record[$this->prefix($k, $target)] = $v;
-
             }
+
         }
 
         if (!$data) {
@@ -212,7 +190,6 @@ class Model
 
         }
 
-        $data = $record;
     }
 
     /**
