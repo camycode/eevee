@@ -15,7 +15,7 @@ class {{  $ModelName }} extends Model
      *
      * @return void
      */
-    protected function initialize{{ $ModelName }}()
+    protected function initialize{{ $ModelName }}(array &$data)
     {
 
         $initialized = [
@@ -25,7 +25,7 @@ class {{  $ModelName }} extends Model
 
         $this->timestamps($initialized, true);
 
-        $this->data = array_merge($initialized, $this->data);
+        $data = array_merge($initialized, $data);
     }
 
     /**
@@ -38,7 +38,7 @@ class {{  $ModelName }} extends Model
      * @throws \Core\Exceptions\StatusException
      *
      */
-    protected function validate{{ $ModelName }}(array $ignore = [])
+    protected function validate{{ $ModelName }}(array $data, array $ignore = [])
     {
 
         $tableName = $this->tableName();
@@ -47,9 +47,9 @@ class {{  $ModelName }} extends Model
 
         ];
 
-        $this->ignore($this->data,$ignore);
+        $this->ignore($data,$ignore);
 
-        $validator = Validator::make($this->data, $rule);
+        $validator = Validator::make($data, $rule);
 
         if($validator->fails()) {
 
@@ -108,9 +108,9 @@ class {{  $ModelName }} extends Model
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validate{{ $ModelName }}();
+        $this->validate{{ $ModelName }}($this->data);
 
-        $this->initialize{{ $ModelName }}();
+        $this->initialize{{ $ModelName }}($this->data);
 
         return $this->transaction(function(){
 
@@ -144,7 +144,7 @@ class {{  $ModelName }} extends Model
 
         ];
 
-        $this->validate{{ $ModelName }}($ignore);
+        $this->validate{{ $ModelName }}($this->data, $ignore);
 
         return $this->transaction(function() use($id){
 
