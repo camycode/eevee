@@ -3,20 +3,20 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppResource extends Migration
+class CreatePermissionTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('app_resource', function (Blueprint $table) {
+        Schema::create('permission', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_id');
+            $table->string('resource_id');
             $table->string('name');
             $table->mediumText('description');
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
+            $table->foreign('id')->references('id')->on('resource')->onDelete('cascade');
         });
     }
 
@@ -25,6 +25,6 @@ class CreateAppResource extends Migration
      */
     public function down()
     {
-        Schema::drop('app_resource');
+        Schema::drop('permission');
     }
 }

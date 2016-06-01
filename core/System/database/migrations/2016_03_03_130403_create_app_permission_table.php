@@ -3,32 +3,27 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppVersionTable extends Migration
+class CreateAppPermissionTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('app_version', function (Blueprint $table) {
+        Schema::create('app_permission', function (Blueprint $table) {
             $table->string('app_id');
-            $table->string('alias');
-            $table->string('version');
-            $table->text('description');
-            $table->primary(['app_id', 'alias', 'version']);
+            $table->string('permission_id');
+            $table->primary(['app_id','permission_id']);
             $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
+            $table->foreign('permission_id')->references('id')->on('permission')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
-        Schema::drop('app_version');
+        Schema::drop('app_permission');
     }
 }

@@ -6,16 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateAppAliasTable' => $baseDir . '/core/System/database/migrations/2016_05_31_100042_create_app_alias_table.php',
     'CreateAppConfigTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130404_create_app_config_table.php',
-    'CreateAppMessageTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130403_create_app_message_table.php',
+    'CreateAppMessageTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130407_create_app_message_table.php',
+    'CreateAppPermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130403_create_app_permission_table.php',
     'CreateAppResource' => $baseDir . '/core/System/database/migrations/2016_03_03_130401_create_app_resource.php',
-    'CreateAppResourcePermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130405_create_app_resource_permission_table.php',
     'CreateAppTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130400_create_app_table.php',
     'CreateAppVersionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130402_create_app_version_table.php',
+    'CreatePermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130325_create_permission_table.php',
     'CreatePostTable' => $baseDir . '/core/System/database/migrations/2016_05_17_020501_create_post_table.php',
     'CreateResouceTable' => $baseDir . '/core/System/database/migrations/2016_03_02_130300_create_resouce_table.php',
-    'CreateResourcePermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130325_create_resource_permission_table.php',
     'CreateRolePermissionTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130420_create_role_permission_table.php',
     'CreateRoleTable' => $baseDir . '/core/System/database/migrations/2016_03_03_130410_create_role_table.php',
     'CreateTermTable' => $baseDir . '/core/System/database/migrations/2016_05_16_140436_create_term_table.php',

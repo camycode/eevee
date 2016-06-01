@@ -8,14 +8,14 @@ class CreateAppTable extends Migration
     public function up()
     {
         Schema::create('app', function (Blueprint $table) {
-            $table->string('app_id');
-            $table->string('app_name')->unique();
-            $table->string('app_parent');
-            $table->text('app_description');
-            $table->integer('app_status');
-            $table->timestamp('app_created_at');
-            $table->timestamp('app_updated_at');
-            $table->primary('app_id');
+            $table->string('id');
+            $table->string('name')->unique();
+            $table->string('parent');
+            $table->text('description');
+            $table->integer('status');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
+            $table->primary('id');
         });
     }
 

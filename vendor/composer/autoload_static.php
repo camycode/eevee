@@ -325,16 +325,15 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
-        'CreateAppAliasTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_31_100042_create_app_alias_table.php',
         'CreateAppConfigTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130404_create_app_config_table.php',
-        'CreateAppMessageTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130403_create_app_message_table.php',
+        'CreateAppMessageTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130407_create_app_message_table.php',
+        'CreateAppPermissionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130403_create_app_permission_table.php',
         'CreateAppResource' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130401_create_app_resource.php',
-        'CreateAppResourcePermissionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130405_create_app_resource_permission_table.php',
         'CreateAppTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130400_create_app_table.php',
         'CreateAppVersionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130402_create_app_version_table.php',
+        'CreatePermissionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130325_create_permission_table.php',
         'CreatePostTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_17_020501_create_post_table.php',
         'CreateResouceTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_02_130300_create_resouce_table.php',
-        'CreateResourcePermissionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130325_create_resource_permission_table.php',
         'CreateRolePermissionTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130420_create_role_permission_table.php',
         'CreateRoleTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_03_03_130410_create_role_table.php',
         'CreateTermTable' => __DIR__ . '/../..' . '/core/System/database/migrations/2016_05_16_140436_create_term_table.php',
