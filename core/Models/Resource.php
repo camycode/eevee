@@ -202,20 +202,31 @@ class Resource extends Model
 
             try {
 
-                $this->validateResource();
+                $this->validateResource(['id', 'name']);
+
+                array_push($result['success'], $this->updateResource($item['id']));
+
+                continue;
 
             } catch (StatusException $e) {
 
-                $e->status->data = $this->data[$key];
+                try {
 
-                array_push($result['failed'], $e->status);
+                    $this->validateResource();
 
-                continue;
+                } catch (StatusException $e) {
+
+                    $e->status->data = $this->data[$key];
+
+                    array_push($result['failed'], $e->status);
+
+                    continue;
+                }
+                
+                $this->initializeResource();
+
+                array_push($result['success'], $this->addResource());
             }
-
-            $this->initializeResource();
-
-            array_push($result['success'], $this->addResource());
 
         }
 

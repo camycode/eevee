@@ -4,6 +4,7 @@ namespace Core\Models;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
+use Core\Exceptions\StatusException;
 
 class Permission extends Model
 {
@@ -194,20 +195,31 @@ class Permission extends Model
 
             try {
 
-                $this->validatePermission();
+                $this->validatePermission(['id', 'name']);
+
+                array_push($result['success'], $this->updatePermission($item['id']));
+
+                continue;
 
             } catch (StatusException $e) {
 
-                $e->status->data = $this->data[$key];
+                try {
 
-                array_push($result['failed'], $e->status);
+                    $this->validatePermission();
 
-                continue;
+                } catch (StatusException $e) {
+
+                    $e->status->data = $this->data[$key];
+
+                    array_push($result['failed'], $e->status);
+
+                    continue;
+                }
+                
+                $this->initializePermission();
+
+                array_push($result['success'], $this->addPermission());
             }
-
-            $this->initializePermission();
-
-            array_push($result['success'], $this->addPermission());
 
         }
 
