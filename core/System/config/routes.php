@@ -91,4 +91,10 @@ return [
     'put@app/version' => ['action' => 'App/VersionController@putVersion', 'permission' => []],
     'delete@app/version' => ['action' => 'App/VersionController@deleteVersion', 'permission' => []],
 
+'get@installer' => ['action' => 'InstallerController@getInstaller', 'permission'=>[] ],
+        'get@installers' => ['action' => 'InstallerController@getInstallers', 'permission'=>[] ],
+        'post@installer' => ['action' => 'InstallerController@postInstaller', 'permission'=>[] ],
+         'put@installer' => ['action' => 'InstallerController@putInstaller', 'permission'=>[] ],
+      'delete@installer' => ['action' => 'InstallerController@deleteInstaller', 'permission'=>[] ],
+
 ];

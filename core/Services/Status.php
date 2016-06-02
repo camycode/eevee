@@ -27,19 +27,19 @@ class Status
      * 识别状态码，返回状态信息.
      * 响应状态时，根据状态名称，从本地化文件中读取状态消息。
      *
-     * @param int /string     $status 状态编码或别名
-     * @param [array/string] $data   返回的数据
-     *
-     * @return \Core\Models\Status 返回结果对象
+     * @param int / string $status 状态编码或别名
+     * @param null $data 返回的数据
+     * @param null $message
+     * @return StatusModel 返回结果对象
      */
-    public static function make($status, $data = null)
+    public static function make($status, $data = null, $message = null)
     {
 
         self::$statuses = config('statuses');
 
         $result = new StatusModel();
         $result->code = self::getCode($status);
-        $result->message = self::getMessage($status);
+        $result->message = $message ? $message : self::getMessage($status);
         $result->data = $data;
 
         return $result;
@@ -60,7 +60,7 @@ class Status
         }
 
         if (is_string($status)) {
-            
+
             return self::$statuses[$status];
         }
 

@@ -12,20 +12,20 @@ define('STATUS_NORMAL', 1);             // 正常
 define('STATUS_VALIDATING', 2);         // 认证中
 define('STATUS_VALIDATED', 3);          // 认证成功
 define('STATUS_VALIDATE_FAILED', 4);    // 认证失败
-
 /**
  * 返回操作结果集,包含状态码,响应消息和响应数据.
  *
  * @param string / int $status
  * @param null $data
+ * @param null $message
  *
  * @return \Core\Models\Status
- *
  */
-function status($status, $data = null)
+function status($status, $data = null, $message = null)
 {
-    return Status::make($status, $data);
+    return Status::make($status, $data, $message);
 }
+
 
 /**
  * 获取响应消息
@@ -45,12 +45,13 @@ function message($message)
  *
  * @param array $status
  * @param mixed $data
+ * @param string $message
  *
  * @throws StatusException
  */
-function exception($status, $data = null)
+function exception($status, $data = null, $message = null)
 {
-    throw new StatusException(status($status, $data));
+    throw new StatusException(status($status, $data, $message));
 }
 
 /**

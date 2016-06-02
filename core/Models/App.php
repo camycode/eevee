@@ -125,8 +125,8 @@ class App extends Model
 
         $this->initializeApp();
 
-        $this->guard($this->data, ['add' => '*', 'app.parent.transfer' => ['parent' => APP_ID]], GUARD_ADD, function ($arguments) {
-            
+        $this->guard($this->data, ['add' => '*', 'app.parent.transfer' => ['parent' => APP_ID]], GUARD_ADD, function () {
+
             $this->validateAppParent();
         });
 

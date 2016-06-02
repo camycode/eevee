@@ -29,24 +29,11 @@ class Authenticate
     // 应用ID
     protected $app_id;
 
-    // 访客的用户ID
+    // 访客用户ID
     protected $visitor_id;
 
-    // 记录访客的权限数组
-    protected $visitor_permissions;
-
-    // 访客Token
-    protected $visitor_user_token;
-
-    // 请求API路径
-    protected $request_uri;
-
-    // 请求方法
-    protected $request_method;
-
-    // API 接口要求权限数组
-    protected $request_permissions;
-
+    // 访客角色ID
+    protected $visitor_role_id;
 
     /**
      * 设置应用相关常量
@@ -96,7 +83,7 @@ class Authenticate
 
         if (!$this->app_id || !(new Model())->table('app')->where('id', $this->app_id)->first()) {
 
-            exception('AppIdDoesNotExist');
+            exception('appIdDoesNotExist');
         }
 
     }
@@ -113,104 +100,29 @@ class Authenticate
 
         $user_token = $this->request->header('X-User-Token');
 
-        $record = (new Model())->table('user_token')->where('app_id', $app_id)->where('user_token', $user_token)->first();
+        $model = new Model();
 
-        if ($user_token && $record) {
+        $record = $model->table('user_token')->where('app_id', $app_id)->where('user_token', $user_token)->first();
 
-            $this->user_id = $record->user_id;
+        if (!$user_token || !$record) {
 
-        } else {
-            $this->user_id = null;
-        }
+            $this->visitor_id = null;
 
-        $this->request->visitor = $this->user_id;
-
-        $this->permissions = $this->getUserPermissions($this->user_id);
-
-        $this->authPermissions();
-    }
-
-    /**
-     * 获取用户的权限组
-     */
-    protected function getUserPermissions($user_id)
-    {
-
-        if ($user_id) {
-
-            $role_id = (new Model())->resource('USER')->where('id', $user_id)->value('role');
-
-            $permissions = (new Model())->resource('L:PERMISSIONRELATIONSHIP')->where('role_id', $role_id)->lists('permission_id');
-
-        } else {
-
-            $permissions = $this->getGuestPermissions();
+            $this->visitor_role_id = 'guest';
 
         }
 
-        return $permissions;
-    }
+        $visitor = $model->table('user')->where('id', $record->user_id);
 
-    /**
-     * 获取宾客的权限
-     */
-    protected function getGuestPermissions()
-    {
-        return (new Model())->resource('PERMISSIONRELATIONSHIP')->where('role_id', 'guest')->lists('permission_id');
-    }
+        if (!$visitor) {
 
-
-    /**
-     * 验证接口访问权限组
-     */
-    protected function authPermissions()
-    {
-        $permission = $this->getRequestPermission();
-
-        if (is_string($permission)) {
-
-            if (in_array($permission, $this->permissions)) {
-
-                return true;
-            }
-
-        } else if (is_array($permission)) {
-
-            if (!array_diff($permission, $this->permissions)) {
-
-                return true;
-            }
-
-        } else {
-
-            return true;
+            exception('visitorNotExist');
         }
 
-        exception('permissionDenied');
+        $this->request->visitor_id = $this->visitor_id;
 
-    }
+        $this->request->visitor_role_id = $this->visitor_role_id;
 
-    /**
-     * 获取访问接口权限
-     *
-     * @return array
-     *
-     * @throws \Core\Exceptions\StatusException
-     */
-    protected function getRequestPermission()
-    {
-
-        $route = strtolower($this->request->method()) . '@' . str_replace('/api/', '', $this->request->getPathInfo());
-
-        $routes = config('routes');
-
-        if (isset($routes[$route])) {
-
-            return isset($routes[$route]['permission']) ? $routes[$route]['permission'] : false;
-        } else {
-
-            exception('routeDefinedIsInvilad');
-        }
     }
 
 

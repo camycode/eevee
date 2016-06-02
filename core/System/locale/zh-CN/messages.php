@@ -2,12 +2,11 @@
 
 return [
     'success' => '操作成功',
-    'AppIdDoesNotExist' => '应用不存在',
     'InvalidData' => '数据不合法',
     'databaseException' => '数据库操作异常',
     'validateFailed' => '数据校验错误',
     'userDoesNotExist' => '该用户不存在',
-    'invialidAccountOrUsername' => '账户或密码不正确',
+    'invalidAccountOrUsername' => '账户或密码不正确',
     'roleHasExist' => '该角色已存在',
     'databaseOperateError' => '事务异常',
     'updateRolePermissionsError' => '编辑角色权限错误.',
@@ -18,6 +17,8 @@ return [
     'parentRoleDoesNotExist' => '父角色不存在',
     'invalidPermissions' => '权限不合法',
     'permissionsMustBeArray' => '权限必须是一个数组',
+    'appIdDoesNotExist' => '应用不存在',
+    'visitorNotExist' => '访客不存在',
     'root' => '超级管理员',
     'guest' => '访客',
 ];

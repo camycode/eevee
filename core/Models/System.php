@@ -82,13 +82,10 @@ class System extends Model
             }
         }
 
-        $result = array();
-
-        $result['refresh_resources'] = (new Resource($this->resources))->saveResources();
-
-        $result['refresh_permissions'] = (new Permission($this->permissions))->savePermissions();
-
-        return status('success', $result);
+        return status('success', [
+            'refresh_resources' => (new Resource($this->resources))->saveResources(),
+            'refresh_permissions' => (new Permission($this->permissions))->savePermissions(),
+        ]);
     }
 
 }

@@ -5,8 +5,8 @@ namespace Core\Controllers;
 use Core\Models\User;
 use Core\Models\Role;
 use Core\Models\System;
+use Core\Models\Installer;
 use Core\Services\Context;
-use Core\Services\Installer;
 
 
 class SystemController extends Controller
