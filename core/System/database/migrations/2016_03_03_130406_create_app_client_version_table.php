@@ -17,7 +17,6 @@ class CreateAppClientVersionTable extends Migration
             $table->string('version');
             $table->text('description');
             $table->primary(['app_client_id', 'version']);
-            $table->foreign('app_client_id')->references('id')->on('app_client')->onDelete('cascade');
         });
     }
 

@@ -24,8 +24,6 @@ class CreateUserTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('restrict');
-            $table->foreign('role_id')->references('id')->on('role')->onDelete('restrict');
             $table->unique(['app_id', 'email']);
             $table->unique(['app_id', 'username']);
         });

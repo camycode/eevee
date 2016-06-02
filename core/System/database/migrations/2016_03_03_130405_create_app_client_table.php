@@ -14,7 +14,6 @@ class CreateAppClientTable extends Migration
             $table->string('id');
             $table->string('app_id');
             $table->primary(['id','app_id']);
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
         });
     }
 

@@ -12,7 +12,7 @@ namespace Core\Models;
 
 use Core\Models\Model;
 use Core\Models\Resource;
-use Core\Models\Permission;
+use Core\Models\Resource\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class System extends Model
@@ -71,7 +71,7 @@ class System extends Model
 
                     foreach ($options['actions'] as $permissionIdent => $permissionOptions) {
 
-                        $permission = ['id' => strtoupper($ident . '_' . $permissionIdent), 'resource_id' => $ident, 'name' => '', 'description' => ''];
+                        $permission = ['id' => strtoupper($permissionIdent), 'resource_id' => $ident, 'name' => '', 'description' => ''];
 
                         array_push($this->permissions, array_merge($permission, $permissionOptions));
 
@@ -81,7 +81,7 @@ class System extends Model
 
             }
         }
-        
+
         $result = array();
 
         $result['refresh_resources'] = (new Resource($this->resources))->saveResources();

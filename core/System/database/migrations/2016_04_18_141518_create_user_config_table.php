@@ -14,7 +14,6 @@ class CreateUserConfigTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('user_id', 'key');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 

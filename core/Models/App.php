@@ -38,16 +38,6 @@ class App extends Model
 
         $this->data = array_merge($initialized, $this->data);
 
-        if (SYSTEM_IS_INSTALLED) {
-
-            $this->data['parent'] = APP_ID;
-
-        } else {
-
-            $this->data['parent'] = $this->data['id'];
-
-        }
-
     }
 
     /**

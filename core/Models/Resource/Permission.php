@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Models;
+namespace Core\Models\Resource;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
@@ -200,7 +200,7 @@ class Permission extends Model
             try {
 
                 if (isset($item['id'])) {
-                    
+
                     array_push($result['success'], $this->updatePermission($item['id']));
                 }
 

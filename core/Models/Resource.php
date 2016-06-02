@@ -206,7 +206,7 @@ class Resource extends Model
             try {
 
                 if (isset($item['id'])) {
-                    
+
                     array_push($result['success'], $this->updateResource($item['id']));
                 }
 

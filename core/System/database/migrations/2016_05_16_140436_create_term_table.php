@@ -17,13 +17,12 @@ class CreateTermTable extends Migration
             $table->string('app_id');
             $table->string('user_id');
             $table->string('name');
+            $table->mediumText('description');
             $table->string('parent');
             $table->integer('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->unique(['app_id', 'name']);
 
         });
