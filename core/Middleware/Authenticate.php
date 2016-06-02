@@ -75,14 +75,13 @@ class Authenticate
      */
     protected function setActionConstants()
     {
-
         define('GUARD_ADD', 1);
         define('GUARD_DELETE', 2);
         define('GUARD_GET', 3);
         define('GUARD_UPDATE', 4);
         define('GUARD_SAVE', 5);
     }
-    
+
     /**
      * 用户认证入口,验证请求接口的X-APP-ID.
      *
@@ -90,6 +89,9 @@ class Authenticate
      */
     protected function authAppID()
     {
+
+        if (!SYSTEM_IS_INSTALLED) return;
+
         $this->app_id = $this->request->header('X-App-ID');
 
         if (!$this->app_id || !(new Model())->table('app')->where('id', $this->app_id)->first()) {
@@ -107,6 +109,8 @@ class Authenticate
      */
     protected function authUserToken($app_id)
     {
+        if (!SYSTEM_IS_INSTALLED) return;
+
         $user_token = $this->request->header('X-User-Token');
 
         $record = (new Model())->table('user_token')->where('app_id', $app_id)->where('user_token', $user_token)->first();
@@ -227,6 +231,8 @@ class Authenticate
         $this->setActionConstants();
 
         $this->authAppID();
+
+        $this->setAppConstants($this->app_id);
 
 //        $this->authUserToken($this->app_id);
 

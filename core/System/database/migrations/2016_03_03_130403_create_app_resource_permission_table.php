@@ -16,7 +16,6 @@ class CreateAppResourcePermissionTable extends Migration
             $table->string('permission_id');
             $table->string('app_resource_type');
             $table->primary('id');
-            $table->unique(['app_resource_id', 'permission_id', 'app_resource_type']);
         });
     }
 

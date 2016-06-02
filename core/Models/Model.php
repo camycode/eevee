@@ -40,14 +40,16 @@ class Model
      * 权限守卫函数
      *
      * @param $data
-     * @param $action
      * @param $action_name
+     * @param $action_tag
+     * @param null $callback
      * @param string $user_field
-     * @param string $term_field
+     * @param string $type_field
+     * @internal param $action
      */
-    public function guard($data, $action, $action_name, $user_field = 'user_id', $term_field = 'term_id')
+    public function guard($data, $action_name, $action_tag, $callback = null, $user_field = 'user_id', $type_field = 'type')
     {
-        Guard::make($data, $action, $action_name, $user_field, $term_field);
+        Guard::make($data, $action_name, $action_tag, $callback, $user_field, $type_field);
     }
 
 
