@@ -40,12 +40,12 @@ class Model
      * 权限守卫函数
      *
      * @param $data
-     * @param $action_name
+     * @param mixed $action_name
      * @param $action_tag
      * @param null $callback
      * @param string $user_field
      * @param string $type_field
-     * @internal param $action
+     *
      */
     public function guard($data, $action_name, $action_tag, $callback = null, $user_field = 'user_id', $type_field = 'type')
     {

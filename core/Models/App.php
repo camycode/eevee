@@ -71,6 +71,18 @@ class App extends Model
     }
 
     /**
+     * 验证父应用ID
+     *
+     * @return void
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    protected function validateAppParent()
+    {
+
+    }
+
+    /**
      * 获取APP
      *
      * @param $id
@@ -103,6 +115,8 @@ class App extends Model
     /**
      * 添加APP
      *
+     * 如果访问者拥有应用父ID转移(app.parent.transfer)权限, 则可以指定不超出其子类范围的应用父ID.
+     *
      * @return Status
      */
     public function addApp()
@@ -111,7 +125,10 @@ class App extends Model
 
         $this->initializeApp();
 
-        $this->guard($this->data, 'add', GUARD_ADD);
+        $this->guard($this->data, ['add' => '*', 'app.parent.transfer' => ['parent' => APP_ID]], GUARD_ADD, function ($arguments) {
+            
+            $this->validateAppParent();
+        });
 
         $this->filter($this->data, $this->fields);
 
@@ -134,7 +151,7 @@ class App extends Model
     {
         $app = $this->getApp($id)->data;
 
-        $this->guard($app, 'update', GUARD_UPDATE);
+        $this->guard($app, ['update' => '*', 'app.parent.transfer' => ['parent' => APP_ID]], GUARD_UPDATE);
 
         $ignore = ['id'];
 
