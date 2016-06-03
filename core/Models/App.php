@@ -133,7 +133,7 @@ class App extends Model
         if ($app = $this->table()->where('id', $id)->first()) {
 
             if($detail){
-                $app->resources
+                
             }
 
             return status('success', $app);
