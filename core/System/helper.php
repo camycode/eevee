@@ -6,6 +6,11 @@ use Core\Exceptions\StatusException;
 /**
  * 设置系统常量
  */
+define('GUARD_ADD', 1);
+define('GUARD_DELETE', 2);
+define('GUARD_GET', 3);
+define('GUARD_UPDATE', 4);
+define('GUARD_SAVE', 5);
 
 define('STATUS_FORBIDDEN', 0);          // 禁用
 define('STATUS_NORMAL', 1);             // 正常

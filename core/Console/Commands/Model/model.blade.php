@@ -87,7 +87,7 @@ class {{  $ModelName }} extends Model
      *
      * @return Status
      */
-    public function get{{ $ModelName }}s(array $params)
+    public function get{{ $ModelName }}s(array $params = [])
     {
 
         $data = $this->selector($params);

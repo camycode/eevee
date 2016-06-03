@@ -3,11 +3,15 @@
 namespace Core\Models;
 
 use Core\Models\App;
+use Core\Models\App\Resource as AppResource;
+use Core\Models\App\Resource\Permission as AppResourcePermission;
 use Core\Models\User;
 use Core\Models\Role;
+use Core\Models\Role\Permission as RolePermission;
 use Core\Models\Model;
 use Core\Models\System;
 use Core\Models\Resource;
+use Core\Models\Resource\Permission as ResourcePermission;
 use Core\Services\Status;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
@@ -99,7 +103,12 @@ class Installer extends Model
      */
     protected function registerInitialApp(array $data)
     {
-        return (new App($data))->addApp();
+        $app = (new App($data))->addApp()->data;
+
+        $resources = (new Resource())->getResources()->data;
+        $resourcePermissions = (new ResourcePermission())->data;
+
+        return;
     }
 
 
@@ -112,7 +121,27 @@ class Installer extends Model
      */
     protected function registerInitialRole(array $data)
     {
-        return (new Role($data))->addRole();
+
+        $app = (new App())->getApps()->data[0];
+
+        $data['app_id'] = $app->id;
+
+        $role = (new Role($data))->addRole()->data;
+
+        $rolePermission = new RolePermission();
+
+        $appResourcePermissions = (new AppResourcePermission())->getPermissions()->data;
+
+        $rolePermissions = [];
+
+        foreach ($appResourcePermissions as $permission) {
+
+            array_push($rolePermissions, $permission->id);
+        }
+
+        $rolePermission->savePermissions($role->id, $role->parent, $rolePermissions);
+
+        return (new Role())->getRole($role->id);
     }
 
     /**
@@ -124,26 +153,58 @@ class Installer extends Model
      */
     protected function registerInitialUser(array $data)
     {
+        $role = (new Role())->getRoles()->data[0];
+
+        $data['role_id'] = $role->id;
+
+        $data['app_id'] = $role->app_id;
+
         return (new User($data))->addUser();
     }
 
 
     public function install()
     {
+
         $this->getSystemInformation();
 
-        $this->checkDirsPermission();
+        //  $this->checkDirsPermission();
 
-        $this->createDatabase($this->data['db_host'], $this->data['db_username'], $this->data['db_password'], $this->data['db_database']);
+        //  $this->createDatabase($this->data['db_host'], $this->data['db_username'], $this->data['db_password'], $this->data['db_database']);
 
-        $this->migrateDatabase();
+        // $this->migrateDatabase();
 
-        return status('success', [
-            'registerResources' => $this->registerResources(),
-            'registerInitialApp' => $this->registerInitialApp($this->data['app']),
-            'registerInitialRole' => $this->registerInitialRole($this->data['role']),
-            'registerInitialUser' => $this->registerInitialUser($this->data['user']),
-        ]);
+        $this->data['app'] = [
+            'id' => 'eevee',
+            'name' => '后台管理'
+        ];
+
+        $this->data['role'] = [
+            'id' => 'root',
+            'name' => '超级管理员',
+            'parent' => 'root',
+        ];
+
+        $this->data['user'] = [
+            'username' => 'admin',
+            'password' => 'admin123',
+            'email' => 'admin@eevee.io',
+        ];
+
+        $this->registerResources();
+
+        return $this->transaction(function () {
+
+            return status('success', [
+                'registerResources' => $this->registerResources(),
+                'registerInitialApp' => $this->registerInitialApp($this->data['app']),
+                'registerInitialRole' => $this->registerInitialRole($this->data['role']),
+                'registerInitialUser' => $this->registerInitialUser($this->data['user']),
+            ]);
+
+        });
+
+
     }
 
 }

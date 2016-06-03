@@ -62,11 +62,7 @@ class Authenticate
      */
     protected function setActionConstants()
     {
-        define('GUARD_ADD', 1);
-        define('GUARD_DELETE', 2);
-        define('GUARD_GET', 3);
-        define('GUARD_UPDATE', 4);
-        define('GUARD_SAVE', 5);
+
     }
 
     /**

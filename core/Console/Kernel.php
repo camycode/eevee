@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\Controller\Make::class,
         Commands\Route\Make::class,
         Commands\Permission\Parse::class,
+        Commands\System\Install::class,
     ];
 
     /**

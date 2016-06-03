@@ -168,7 +168,7 @@ class Permission extends Model
      *
      * @return Status
      */
-    public function getRolePermissions($role_id, $archive = false)
+    public function getPermissions($role_id, $archive = false)
     {
         $items = $this->table()->where('role_id', $role_id)->lists('permission_id');
 
@@ -189,7 +189,7 @@ class Permission extends Model
      *
      * @throws \Exception
      */
-    public function saveRolePermissions($role_id, $role_parent, array $permissions)
+    public function savePermissions($role_id, $role_parent, array $permissions)
     {
 
         $permissions = array_unique($permissions);

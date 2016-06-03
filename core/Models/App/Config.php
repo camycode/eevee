@@ -5,17 +5,22 @@ namespace Core\Models\App;
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
 
-class Resource extends Model
+class Config extends Model
 {
 
     protected $fields = ['id','created_at','updated_at'];
 
-    // 初始化Resource记录
-    protected function initializeResource()
+    /**
+     * 数据初始化
+     *
+     * @return  void
+     */
+    protected function initializeConfig()
     {
 
         $initialized = [
             'id' => $this->id(),
+            'app_id' => APP_ID,
         ];
 
         $this->timestamps($initialized, true);
@@ -23,8 +28,17 @@ class Resource extends Model
         $this->data = array_merge($initialized, $this->data);
     }
 
-    // Resource数据校验
-    protected function validateResource(array $ignore = [])
+    /**
+     * 数据校验
+     *
+     * @param  array $ignore
+     *
+     * @return  void
+     *
+     * @throws  \Core\Exceptions\StatusException
+     *
+     */
+    protected function validateConfig(array $ignore = [])
     {
 
         $tableName = $this->tableName();
@@ -33,7 +47,7 @@ class Resource extends Model
 
         ];
 
-        $this->ignore($this->data,$ignore);
+        $this->ignore($rule,$ignore);
 
         $validator = Validator::make($this->data, $rule);
 
@@ -44,8 +58,16 @@ class Resource extends Model
 
     }
 
-    // 获取Resource
-    public function getResource($id)
+    /**
+     * 获取记录
+     *
+     * @param  $id
+     *
+     * @return  Status
+     *
+     * @throws  \Core\Exceptions\StatusException
+     */
+    public function getConfig($id)
     {
 
         if($data = $this->table()->where('id',$id)->first()){
@@ -55,11 +77,17 @@ class Resource extends Model
             return status('success',$data);
         }
 
-        exception('resourceDoesNotExist');
+        exception('configDoesNotExist');
     }
 
-    // 获取Resource组
-    public function getResources(array $params = [])
+    /**
+     * 获取记录组
+     *
+     * @param  array $params
+     *
+     * @return  Status
+     */
+    public function getConfigs(array $params = [])
     {
 
         $data = $this->selector($params);
@@ -69,15 +97,20 @@ class Resource extends Model
         return status('success', $data);
     }
 
-    // 添加Resource记录
-    public function addResource()
+    /**
+     * 添加记录
+     *
+     * @return  Status
+     *
+     */
+    public function addConfig()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validateResource();
+        $this->validateConfig();
 
-        $this->initializeResource();
+        $this->initializeConfig();
 
         return $this->transaction(function(){
 
@@ -85,7 +118,7 @@ class Resource extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getConfig($this->data['id']);
 
             return $status;
 
@@ -93,10 +126,17 @@ class Resource extends Model
 
     }
 
-    // 更新Resource记录
-    public function updateResource($id)
+    /**
+     * 更新记录
+     *
+     * @param  string $id
+     *
+     * @return  Status
+     *
+     */
+    public function updateConfig($id)
     {
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getConfig($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -104,15 +144,17 @@ class Resource extends Model
 
         ];
 
-        $this->validateResource($ignore);
+        $this->validateConfig($ignore);
 
         return $this->transaction(function() use($id){
+
+            $this->timestamps($this->data, false);
 
             $this->filter($this->data, $this->fields);
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getConfig($this->data['id']);
 
             return $status;
 
@@ -120,11 +162,17 @@ class Resource extends Model
 
     }
 
-    // 删除Resource记录
-    public function deleteResource($id)
+    /**
+     * 删除记录
+     *
+     * @param  $id
+     *
+     * @return  Status
+     */
+    public function deleteConfig($id)
     {
 
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getConfig($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 

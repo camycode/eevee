@@ -87,7 +87,7 @@ class Permission extends Model
      *
      * @return  Status
      */
-    public function getPermissions(array $params)
+    public function getPermissions(array $params = [])
     {
 
         $data = $this->selector($params);

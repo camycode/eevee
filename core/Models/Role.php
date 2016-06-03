@@ -119,7 +119,7 @@ class Role extends Model
 
         if ($role = $this->table()->where('id', $id)->first()) {
 
-            $role->permissions = (new RolePermission())->getRolePermissions($id)->data;
+            $role->permissions = (new RolePermission())->getPermissions($id)->data;
 
             $this->guard($role, 'get', GUARD_GET);
 
@@ -137,7 +137,7 @@ class Role extends Model
      *
      * @return Status
      */
-    public function getRoles($params)
+    public function getRoles(array $params = [])
     {
         $roles = $this->selector($params);
 
@@ -170,7 +170,7 @@ class Role extends Model
 
             $this->table()->insert($this->data);
 
-            (new RolePermission())->saveRolePermissions($this->data['id'], $this->data['parent'], $permissions);
+            (new RolePermission())->savePermissions($this->data['id'], $this->data['parent'], $permissions);
 
             $role = $this->getRole($this->data['id']);
 
@@ -211,7 +211,7 @@ class Role extends Model
 
                 $origin->parent = $origin->parent == $this->data['parent'] ? $origin->parent : $this->data['parent'];
 
-                (new RolePermission())->saveRolePermissions($this->data['id'], $this->data['parent'], (array)$this->data['permissions']);
+                (new RolePermission())->savePermissions($this->data['id'], $this->data['parent'], (array)$this->data['permissions']);
 
             }
 

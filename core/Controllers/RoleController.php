@@ -226,7 +226,7 @@ class RoleController extends Controller
      */
     public function getPermissions(Context $context)
     {
-        return $context->response((new RolePermission())->getRolePermissions($context->params('id'), $context->params('archive')));
+        return $context->response((new RolePermission())->getPermissions($context->params('id'), $context->params('archive')));
     }
 
     /**

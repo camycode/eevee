@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 class User extends Model
 {
 
-    protected $fields = ['id', 'username', 'email', 'password', 'role', 'avatar', 'status', 'app_id', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'username', 'email', 'password', 'role_id', 'avatar', 'status', 'app_id', 'created_at', 'updated_at'];
 
     /**
      * 初始化用户
@@ -27,7 +27,7 @@ class User extends Model
     {
         $initialized = [
             'id' => $this->id(),
-            'role' => config('site.user.role', 'member'),
+            'role_id' => config('site.user.role', 'member'),
             'status' => config('site.user.status', 0),
             'avatar' => config('site.user.avatar', 'images/avatar.png'),
             'source' => 'eevee',
@@ -59,7 +59,7 @@ class User extends Model
             array_merge($rule, [
                 'username' => "required|unique:$table|max:255",
                 'email' => "required|email|unique:$table|max:255",
-                'role' => 'required',
+                'role_id' => 'required',
             ]);
 
         }
@@ -73,7 +73,7 @@ class User extends Model
             exception('validateFailed', $validator->errors());
         }
 
-        $this->validateRole((array)$this->data['role']);
+        $this->validateRole((array)$this->data['role_id']);
 
     }
 
@@ -135,14 +135,14 @@ class User extends Model
             exception('userDoesNotExist');
         }
 
-        Permission::guard($user, GUARD_GET, 'get');
+        $this->guard($user, 'get', GUARD_GET);
 
         if (!$password) unset($user->password);
 
         return status('success', $user);
     }
 
-    
+
     /**
      * 验证用户密码
      *
@@ -173,7 +173,7 @@ class User extends Model
 
         $this->initializeUser();
 
-        Permission::guard($this->data, GUARD_ADD, 'add');
+        $this->guard($this->data, 'add', GUARD_ADD);
 
         return $this->transaction(function () {
 

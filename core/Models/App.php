@@ -10,13 +10,38 @@
 
 namespace Core\Models;
 
+use Core\Models\App\Resource;
+use Core\Models\App\Client;
+use Core\Models\App\Config;
 use Core\Models\App\Message;
 use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
 
-    protected $fields = ['id', 'parent', 'name', 'description', 'status', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'name', 'parent', 'description', 'status', 'created_at', 'updated_at'];
+
+    public $resource;
+
+    public $client;
+
+    public $config;
+
+    public $message;
+
+    public function __construct(array $data)
+    {
+        parent::__construct($data);
+
+        $this->resource = new Resource();
+
+        $this->client = new Client();
+
+        $this->config = new Config();
+
+        $this->message = new Message();
+
+    }
 
     /**
      * 数据初始化
@@ -31,10 +56,18 @@ class App extends Model
 
         $initialized = [
             'id' => $this->id(),
+            'name' => '',
+            'parent' => '',
+            'description' => '',
             'status' => STATUS_NORMAL,
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
+            'resources' => [],
+            'clients' => [],
+            'configs' => [],
+            'messages' => [],
         ];
 
-        $this->timestamps($this->data, true);
 
         $this->data = array_merge($initialized, $this->data);
 
@@ -56,7 +89,11 @@ class App extends Model
 
         $rule = [
             'id' => "sometimes|required|unique:$tableName",
-            'name' => "required|unique:$tableName"
+            'name' => "required|unique:$tableName",
+            'resources' => 'sometimes|required|array',
+            'clients' => 'sometimes|required|array',
+            'configs' => 'sometimes|required|array',
+            'messages' => 'sometimes|required|array',
         ];
 
         $this->ignore($rule, $ignore);
@@ -86,13 +123,18 @@ class App extends Model
      * 获取APP
      *
      * @param $id
+     * @param bool $detail 获取详细信息
      *
      * @return Status
      */
-    public function getApp($id)
+    public function getApp($id, $detail = false)
     {
 
         if ($app = $this->table()->where('id', $id)->first()) {
+
+            if($detail){
+                $app->resources
+            }
 
             return status('success', $app);
         }
@@ -134,7 +176,7 @@ class App extends Model
 
         $this->table()->insert($this->data);
 
-        return $this->getApp($this->data['id']);
+        return $this->getApp($this->data['id'], true);
 
     }
 
