@@ -33,6 +33,20 @@ return [
     'put@app/client/version' => ['action' => 'App\Client\VersionController@putVersion', 'permission' => []],
     'delete@app/client/version' => ['action' => 'App\Client\VersionController@deleteVersion', 'permission' => []],
 
+    // 应用资源
+    'get@app/resource' => ['action' => 'App\ResourceController@getResource'],
+    'get@app/resources' => ['action' => 'App\ResourceController@getResources'],
+    'post@app/resource' => ['action' => 'App\ResourceController@postResource'],
+    'put@app/resource' => ['action' => 'App\ResourceController@putResource'],
+    'delete@app/resource' => ['action' => 'App\ResourceController@deleteResource'],
+
+    // 应用权限
+    'get@app/permission' => ['action' => 'App\PermissionController@getPermission'],
+    'get@app/permissions' => ['action' => 'App\PermissionController@getPermissions'],
+    'post@app/permission' => ['action' => 'App\PermissionController@postPermission'],
+    'put@app/permission' => ['action' => 'App\PermissionController@putPermission'],
+    'delete@app/permission' => ['action' => 'App\PermissionController@deletePermission'],
+
     // 用户模块
     'post@user' => ['action' => 'UserController@postUser', 'permission' => 'USER_POST'],
     'get@users' => ['action' => 'UserController@getUsers', 'permission' => 'USER_GET'],
@@ -61,6 +75,5 @@ return [
     'post@system/resource' => ['action' => 'ResourceController@postResource', 'permission' => []],
     'put@system/resource' => ['action' => 'ResourceController@putResource', 'permission' => []],
     'delete@system/resource' => ['action' => 'ResourceController@deleteResource', 'permission' => []],
-
 
 ];

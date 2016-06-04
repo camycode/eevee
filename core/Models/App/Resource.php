@@ -1,11 +1,11 @@
-{!! $StartTag !!}
+<?php 
 
-namespace Core\Models{{ $ModelNamespacePath }};
+namespace Core\Models\App;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
 
-class {{  $ModelName }} extends Model
+class Resource extends Model
 {
 
     protected $fields = ['id','created_at','updated_at'];
@@ -13,34 +13,39 @@ class {{  $ModelName }} extends Model
     /**
      * 数据初始化
      *
-     * @return void
+     * @return  void
      */
-    protected function initialize{{ $ModelName }}()
+    protected function initializeResource()
     {
-        $this->data = array_merge([
+
+        $initialized = [
             'id' => $this->id(),
             'app_id' => APP_ID,
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
-        ], $this->data);
+        ];
+
+        $this->timestamps($initialized, true);
+
+        $this->data = array_merge($initialized, $this->data);
     }
 
     /**
      * 数据校验
      *
-     * @param array $ignore
+     * @param  array $ignore
      *
-     * @return void
+     * @return  void
      *
-     * @throws \Core\Exceptions\StatusException
+     * @throws  \Core\Exceptions\StatusException
      *
      */
-    protected function validate{{ $ModelName }}(array $ignore = [])
+    protected function validateResource(array $ignore = [])
     {
 
         $tableName = $this->tableName();
 
-        $rule = [];
+        $rule = [
+
+        ];
 
         $this->ignore($rule,$ignore);
 
@@ -56,13 +61,13 @@ class {{  $ModelName }} extends Model
     /**
      * 获取记录
      *
-     * @param string $id
+     * @param  $id
      *
-     * @return Status
+     * @return  Status
      *
-     * @throws \Core\Exceptions\StatusException
+     * @throws  \Core\Exceptions\StatusException
      */
-    public function get{{ $ModelName }}($id)
+    public function getResource($id)
     {
 
         if($data = $this->table()->where('id',$id)->first()){
@@ -72,17 +77,17 @@ class {{  $ModelName }} extends Model
             return status('success',$data);
         }
 
-        exception('{{ $ModelNameToLower }}DoesNotExist');
+        exception('resourceDoesNotExist');
     }
 
     /**
      * 获取记录组
      *
-     * @param array $params
+     * @param  array $params
      *
-     * @return Status
+     * @return  Status
      */
-    public function get{{ $ModelName }}s(array $params = [])
+    public function getResources(array $params = [])
     {
 
         $data = $this->selector($params);
@@ -95,17 +100,17 @@ class {{  $ModelName }} extends Model
     /**
      * 添加记录
      *
-     * @return Status
+     * @return  Status
      *
      */
-    public function add{{ $ModelName }}()
+    public function addResource()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validate{{ $ModelName }}();
+        $this->validateResource();
 
-        $this->initialize{{ $ModelName }}();
+        $this->initializeResource();
 
         return $this->transaction(function(){
 
@@ -113,7 +118,7 @@ class {{  $ModelName }} extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->get{{ $ModelName }}($this->data['id']);
+            $status = $this->getResource($this->data['id']);
 
             return $status;
 
@@ -124,14 +129,14 @@ class {{  $ModelName }} extends Model
     /**
      * 更新记录
      *
-     * @param string $id
+     * @param  string $id
      *
-     * @return Status
+     * @return  Status
      *
      */
-    public function update{{ $ModelName }}($id)
+    public function updateResource($id)
     {
-        $origin = $this->get{{ $ModelName }}($id)->data;
+        $origin = $this->getResource($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -139,7 +144,7 @@ class {{  $ModelName }} extends Model
 
         ];
 
-        $this->validate{{ $ModelName }}($ignore);
+        $this->validateResource($ignore);
 
         return $this->transaction(function() use($id){
 
@@ -149,7 +154,7 @@ class {{  $ModelName }} extends Model
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->get{{ $ModelName }}($id);
+            $status = $this->getResource($id);
 
             return $status;
 
@@ -160,14 +165,14 @@ class {{  $ModelName }} extends Model
     /**
      * 删除记录
      *
-     * @param string $id
+     * @param  $id
      *
-     * @return Status
+     * @return  Status
      */
-    public function delete{{ $ModelName }}($id)
+    public function deleteResource($id)
     {
 
-        $origin = $this->get{{ $ModelName }}($id)->data;
+        $origin = $this->getResource($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 
