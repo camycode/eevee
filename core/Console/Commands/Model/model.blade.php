@@ -154,7 +154,7 @@ class {{  $ModelName }} extends Model
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->get{{ $ModelName }}($this->data['id']);
+            $status = $this->get{{ $ModelName }}($id);
 
             return $status;
 

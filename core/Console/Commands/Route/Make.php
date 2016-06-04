@@ -46,7 +46,7 @@ class Make extends Command
         $newRoutes = $this->generateRoutes($name);
 
         foreach ($newRoutes as $newRoute => $value) {
-            
+
             $newRoute = str_replace('/', '\/', $newRoute);
 
             if (preg_match("/$newRoute/i", $routesContent)) {
@@ -82,15 +82,15 @@ class Make extends Command
             $controllerPath .= ucfirst($path) . '/';
         }
 
-        $controllerPath = rtrim($controllerPath, '/') . 'Controller';
+        $controllerNamespacePath = str_replace('/', '\\', rtrim($controllerPath, '/')) . 'Controller';
         $controllerName = ucfirst($paths[count($paths) - 1]);
 
         $routes = [
-            "get@$name" => ['action' => $controllerPath . '@get' . $controllerName, 'permission' => []],
-            "get@$name" . 's' => ['action' => $controllerPath . '@get' . $controllerName . 's', 'permission' => []],
-            "post@$name" => ['action' => $controllerPath . '@post' . $controllerName, 'permission' => []],
-            "put@$name" => ['action' => $controllerPath . '@put' . $controllerName, 'permission' => []],
-            "delete@$name" => ['action' => $controllerPath . '@delete' . $controllerName, 'permission' => []],
+            "get@$name" => ['action' => $controllerNamespacePath . '@get' . $controllerName, 'permission' => []],
+            "get@$name" . 's' => ['action' => $controllerNamespacePath . '@get' . $controllerName . 's', 'permission' => []],
+            "post@$name" => ['action' => $controllerNamespacePath . '@post' . $controllerName, 'permission' => []],
+            "put@$name" => ['action' => $controllerNamespacePath . '@put' . $controllerName, 'permission' => []],
+            "delete@$name" => ['action' => $controllerNamespacePath . '@delete' . $controllerName, 'permission' => []],
         ];
 
         return $routes;
