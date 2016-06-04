@@ -3,20 +3,20 @@
 use Core\Services\Status;
 use Core\Exceptions\StatusException;
 
-/**
- * 设置系统常量
- */
-define('GUARD_ADD', 1);
-define('GUARD_DELETE', 2);
-define('GUARD_GET', 3);
-define('GUARD_UPDATE', 4);
-define('GUARD_SAVE', 5);
 
-define('STATUS_FORBIDDEN', 0);          // 禁用
-define('STATUS_NORMAL', 1);             // 正常
-define('STATUS_VALIDATING', 2);         // 认证中
-define('STATUS_VALIDATED', 3);          // 认证成功
-define('STATUS_VALIDATE_FAILED', 4);    // 认证失败
+define('GUARD_ADD', 'add');                             // 增加
+define('GUARD_DELETE', 'delete');                       // 删除
+define('GUARD_GET', 'get');                             // 获取
+define('GUARD_UPDATE', 'update');                       // 更新
+define('GUARD_SAVE', 'save');                           // 保存
+
+define('STATUS_FORBIDDEN', 'forbidden');                // 禁用
+define('STATUS_PUBLIC', 'public');                      // 正常
+define('STATUS_PRIVATE', 'private');                    // 认证中
+define('STATUS_VALIDATED', 'validated');                // 认证成功
+define('STATUS_VALIDATE_FAILED', 'validate_failed');    // 认证失败
+
+
 /**
  * 返回操作结果集,包含状态码,响应消息和响应数据.
  *
@@ -31,6 +31,17 @@ function status($status, $data = null, $message = null)
     return Status::make($status, $data, $message);
 }
 
+/**
+ * 获取系统默认文案
+ *
+ * @param string $ident
+ *
+ * @return string
+ */
+function text($ident)
+{
+    return trans("system.$ident");
+}
 
 /**
  * 获取响应消息

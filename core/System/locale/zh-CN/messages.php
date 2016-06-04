@@ -19,6 +19,4 @@ return [
     'permissionsMustBeArray' => '权限必须是一个数组',
     'appIdDoesNotExist' => '应用不存在',
     'visitorNotExist' => '访客不存在',
-    'root' => '超级管理员',
-    'guest' => '访客',
 ];

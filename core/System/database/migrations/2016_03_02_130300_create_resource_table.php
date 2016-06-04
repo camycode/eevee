@@ -12,12 +12,12 @@ class CreateResourceTable extends Migration
     {
         Schema::create('resource', function (Blueprint $table) {
             $table->string('id');
-            $table->string('name')->unique();
-            $table->string('parent');
+            $table->string('name');
             $table->string('icon');
             $table->mediumText('description');
             $table->string('source');
             $table->timestamps();
+            $table->unique('name');
             $table->primary('id');
         });
     }

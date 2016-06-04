@@ -87,7 +87,7 @@ class Client extends Model
      *
      * @return  Status
      */
-    public function getClients(array $params)
+    public function getClients(array $params = [])
     {
 
         $data = $this->selector($params);
@@ -154,7 +154,7 @@ class Client extends Model
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getClient($this->data['id']);
+            $status = $this->getClient($id);
 
             return $status;
 

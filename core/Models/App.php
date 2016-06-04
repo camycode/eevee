@@ -32,8 +32,8 @@ class App extends Model
             'id' => $this->id(),
             'name' => '',
             'parent' => '',
-            'description' => '',
-            'status' => STATUS_NORMAL,
+            'description' => text('noDescription'),
+            'status' => STATUS_PUBLIC,
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
         ];
@@ -45,6 +45,8 @@ class App extends Model
 
     /**
      * 验证数据
+     *
+     * 要求数据必须包 id 和 name 字段且分别唯一.
      *
      * @param array $ignore
      *
@@ -60,10 +62,6 @@ class App extends Model
         $rule = [
             'id' => "sometimes|required|unique:$tableName",
             'name' => "required|unique:$tableName",
-            'resources' => 'sometimes|required|array',
-            'clients' => 'sometimes|required|array',
-            'configs' => 'sometimes|required|array',
-            'messages' => 'sometimes|required|array',
         ];
 
         $this->ignore($rule, $ignore);
@@ -73,6 +71,11 @@ class App extends Model
         if ($validator->fails()) {
 
             exception('validateFailed', $validator->errors());
+        }
+
+        if (SYSTEM_IS_INSTALLED) {
+
+            $this->validateAppParent();
         }
 
     }

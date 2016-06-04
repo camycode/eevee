@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class Resource extends Model
 {
 
-    protected $fields = ['id', 'name', 'parent', 'icon', 'description', 'source', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'name', 'icon', 'description', 'source', 'created_at', 'updated_at'];
 
     /**
      * 资源数据初始化
@@ -21,10 +21,14 @@ class Resource extends Model
     {
 
         $initialized = [
-            'source' => 'EEVEE',
+            'id' => $this->id(),
+            'name' => '',
+            'icon' => '',
+            'description' => text('noDescription'),
+            'source' => 'eevee',
+            'created_at' => $this->timestamp(),
+            'updated_at' => $this->timestamp(),
         ];
-
-        $this->timestamps($initialized, true);
 
         $this->data = array_merge($initialized, $this->data);
     }
@@ -129,6 +133,8 @@ class Resource extends Model
     /**
      * 更新资源
      *
+     * 更新资源时自动过滤 id 字段,如果 name 字段与原数据一致即过滤.
+     *
      * @param $id
      *
      * @return Status
@@ -142,7 +148,7 @@ class Resource extends Model
 
         $ignore = ['id'];
 
-        if (isset($this->data['name']) && $this->data['name'] == $origin->name) {
+        if (!isset($this->data['name']) || $this->data['name'] == $origin->name) {
 
             array_push($ignore, 'name');
         }
@@ -153,11 +159,11 @@ class Resource extends Model
 
             $this->timestamps($this->data, false);
 
-            $this->filter($this->data, $this->fields);
+            $this->filter($this->data, $this->fields, ['id']);
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getResource($id);
 
             return $status;
 
