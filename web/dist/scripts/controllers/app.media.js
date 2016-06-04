@@ -1,1 +1,0 @@
-define(["media"],function(){return["$scope",function(n){}]});

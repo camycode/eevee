@@ -1,1 +1,0 @@
-require("babel/register"),module.exports=function(e){require("./build/grunt.js")(e)};

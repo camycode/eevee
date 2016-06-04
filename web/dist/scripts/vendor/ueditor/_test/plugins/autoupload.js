@@ -1,1 +1,0 @@
-module("plugins.autoupload"),test("拖放图片上传",function(){equal("","")}),test("粘贴QQ截图",function(){equal("","")});

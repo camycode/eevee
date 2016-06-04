@@ -1,1 +1,0 @@
-define(["app","jquery"],function(t){t.directive("post.editor",function(t,e){return{restrict:"A",replace:!0,scope:{},templateUrl:"views/posts/editor.html",controller:["$scope",function(t){t.title="文章编辑器",t.closePostEditor=function(){$("#post-editor").addClass("animated slideOutRight")}}]}})});

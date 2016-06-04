@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAII,sBAAM;EACJ,OAAO,EAAC,SAAS;EACjB,UAAU,EAAE,IAAI;EAChB,aAAa,EAAE,IAAI;EAEnB,4BAAO;IACL,UAAU,EAAE,OAAO;EAGrB,gCAAU;IACR,QAAQ,EAAE,QAAQ;IAClB,KAAK,EAAE,IAAI;IAEX,kCAAC;MACC,WAAW,EAAE,IAAI",
-"sources": ["app.post.scss"],
-"names": [],
-"file": "app.post.css"
-}

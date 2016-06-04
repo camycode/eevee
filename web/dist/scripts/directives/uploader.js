@@ -1,1 +1,0 @@
-define(["app","jquery","plupload"],function(e,n,r){e.directive("uploader",function(){return{restrict:"A",replace:!0,scope:{},link:function(e,n,p){var i=new r.Uploader({browse_button:n[0],url:"upload.php"});i.init()}}})});
