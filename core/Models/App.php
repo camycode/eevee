@@ -10,38 +10,12 @@
 
 namespace Core\Models;
 
-use Core\Models\App\Resource;
-use Core\Models\App\Client;
-use Core\Models\App\Config;
-use Core\Models\App\Message;
 use Illuminate\Support\Facades\Validator;
 
 class App extends Model
 {
 
     protected $fields = ['id', 'name', 'parent', 'description', 'status', 'created_at', 'updated_at'];
-
-    public $resource;
-
-    public $client;
-
-    public $config;
-
-    public $message;
-
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->resource = new Resource();
-
-        $this->client = new Client();
-
-        $this->config = new Config();
-
-        $this->message = new Message();
-
-    }
 
     /**
      * 数据初始化
@@ -62,10 +36,6 @@ class App extends Model
             'status' => STATUS_NORMAL,
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
-            'resources' => [],
-            'clients' => [],
-            'configs' => [],
-            'messages' => [],
         ];
 
 
@@ -132,8 +102,8 @@ class App extends Model
 
         if ($app = $this->table()->where('id', $id)->first()) {
 
-            if($detail){
-                
+            if ($detail) {
+
             }
 
             return status('success', $app);
@@ -167,16 +137,21 @@ class App extends Model
 
         $this->initializeApp();
 
-        $this->guard($this->data, ['add' => '*', 'app.parent.transfer' => ['parent' => APP_ID]], GUARD_ADD, function () {
+        $this->guard($this->data, ['add' => '*', 'transfer.parent' => ['parent' => APP_ID]], GUARD_ADD, function () {
 
             $this->validateAppParent();
         });
 
-        $this->filter($this->data, $this->fields);
+        return $this->transaction(function () {
 
-        $this->table()->insert($this->data);
+            $this->filter($this->data, $this->fields);
 
-        return $this->getApp($this->data['id'], true);
+            $this->table()->insert($this->data);
+
+            return $this->getApp($this->data['id'], true);
+
+        });
+
 
     }
 

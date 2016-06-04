@@ -12,7 +12,7 @@ class CreateAppResourceTypeTable extends Migration
     {
         Schema::create('app_resource_type', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_resource_id');
+            $table->string('resource_id');
             $table->string('name');
             $table->text('description');
             $table->primary('id');
