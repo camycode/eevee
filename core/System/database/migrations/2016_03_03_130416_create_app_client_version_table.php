@@ -17,6 +17,9 @@ class CreateAppClientVersionTable extends Migration
             $table->string('client_id');
             $table->string('version');
             $table->text('description');
+            $table->string('status');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->primary(['app_id', 'client_id', 'version']);
             $table->foreign('app_id')->references('id')->on('app');
             $table->foreign('client_id')->references('id')->on('app_client');

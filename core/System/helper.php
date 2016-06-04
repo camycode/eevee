@@ -11,7 +11,8 @@ define('GUARD_UPDATE', 'update');                       // 更新
 define('GUARD_SAVE', 'save');                           // 保存
 
 define('STATUS_FORBIDDEN', 'forbidden');                // 禁用
-define('STATUS_PUBLIC', 'public');                      // 正常
+define('STATUS_ACTIVE', 'active');                      // 使用中
+define('STATUS_PUBLIC', 'public');                      // 公开
 define('STATUS_PRIVATE', 'private');                    // 认证中
 define('STATUS_VALIDATED', 'validated');                // 认证成功
 define('STATUS_VALIDATE_FAILED', 'validate_failed');    // 认证失败

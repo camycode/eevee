@@ -54,7 +54,7 @@ class Make extends Command
 
 
         if (Storage::has(ltrim($ControllerFileName, base_path()))) {
-            
+
             $this->error('Controller ' . $ControllerFileName . ' has exists');
         } else {
 
@@ -70,7 +70,6 @@ class Make extends Command
 
 
     }
-
 
     protected function generateControllerName($name)
     {

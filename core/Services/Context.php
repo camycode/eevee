@@ -29,9 +29,12 @@ class Context
     /**
      * 获取GET参数.
      *
+     * @param null $field
+     * @param string $default
+     * 
      * @return array GET请求参数
      */
-    public function params($field = null, $default = null)
+    public function params($field = null, $default = '')
     {
         return $this->request->query($field, $default);
     }

@@ -19,4 +19,6 @@ return [
     'permissionsMustBeArray' => '权限必须是一个数组',
     'appIdDoesNotExist' => '应用不存在',
     'visitorNotExist' => '访客不存在',
+    'clientDoesNotExist' => '应用客户端不存在',
+    'versionDoesNotExist' => '应用客户端版本不存在',
 ];

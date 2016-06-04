@@ -19,6 +19,19 @@ return [
     'get@apps' => ['action' => 'AppController@getApps'],
     'delete@app' => ['action' => 'AppController@deleteApp'],
 
+    // 应用客户端
+    'get@app/client' => ['action' => 'App\ClientController@getClient', 'permission' => []],
+    'get@app/clients' => ['action' => 'App\ClientController@getClients', 'permission' => []],
+    'post@app/client' => ['action' => 'App\ClientController@postClient', 'permission' => []],
+    'put@app/client' => ['action' => 'App\ClientController@putClient', 'permission' => []],
+    'delete@app/client' => ['action' => 'App\ClientController@deleteClient', 'permission' => []],
+
+    // 应用客户端版本
+    'get@app/client/version' => ['action' => 'App\Client\VersionController@getVersion', 'permission' => []],
+    'get@app/client/versions' => ['action' => 'App\Client\VersionController@getVersions', 'permission' => []],
+    'post@app/client/version' => ['action' => 'App\Client\VersionController@postVersion', 'permission' => []],
+    'put@app/client/version' => ['action' => 'App\Client\VersionController@putVersion', 'permission' => []],
+    'delete@app/client/version' => ['action' => 'App\Client\VersionController@deleteVersion', 'permission' => []],
 
     // 用户模块
     'post@user' => ['action' => 'UserController@postUser', 'permission' => 'USER_POST'],
@@ -49,10 +62,5 @@ return [
     'put@system/resource' => ['action' => 'ResourceController@putResource', 'permission' => []],
     'delete@system/resource' => ['action' => 'ResourceController@deleteResource', 'permission' => []],
 
-    'get@app/client' => ['action' => 'App\ClientController@getClient', 'permission' => []],
-    'get@app/clients' => ['action' => 'App\ClientController@getClients', 'permission' => []],
-    'post@app/client' => ['action' => 'App\ClientController@postClient', 'permission' => []],
-    'put@app/client' => ['action' => 'App\ClientController@putClient', 'permission' => []],
-    'delete@app/client' => ['action' => 'App\ClientController@deleteClient', 'permission' => []],
 
 ];
