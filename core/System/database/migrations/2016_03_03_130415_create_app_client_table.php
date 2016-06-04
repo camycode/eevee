@@ -18,8 +18,8 @@ class CreateAppClientTable extends Migration
             $table->string('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            $table->primary(['id', 'app_id']);
-            $table->unique(['id', 'app_id', 'name']);
+            $table->primary(['id']);
+            $table->unique(['app_id', 'name']);
             $table->foreign('app_id')->references('id')->on('app');
         });
     }
