@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTermTable extends Migration
+class CreateRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,19 +12,19 @@ class CreateTermTable extends Migration
      */
     public function up()
     {
-        Schema::create('term', function (Blueprint $table) {
+        Schema::create('role', function (Blueprint $table) {
             $table->string('id');
             $table->string('app_id');
-            $table->string('user_id');
             $table->string('name');
             $table->mediumText('description');
             $table->string('parent');
+            $table->integer('permission_amount');
             $table->integer('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('id');
             $table->unique(['app_id', 'name']);
-
+            $table->foreign('app_id')->references('id')->on('app');
         });
     }
 
@@ -35,6 +35,6 @@ class CreateTermTable extends Migration
      */
     public function down()
     {
-        Schema::drop('term');
+        Schema::drop('role');
     }
 }

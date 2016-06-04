@@ -14,6 +14,8 @@ class CreateAppConfigTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary(['app_id', 'config_key']);
+            $table->foreign('app_id')->references('id')->on('app');
+
         });
     }
 

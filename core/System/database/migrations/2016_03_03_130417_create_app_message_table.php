@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoleTable extends Migration
+class CreateAppMessageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,14 @@ class CreateRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('app_message', function (Blueprint $table) {
             $table->string('id');
             $table->string('app_id');
-            $table->string('name');
-            $table->mediumText('description');
-            $table->string('parent');
-            $table->integer('permission_amount');
+            $table->string('message');
             $table->integer('status');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps();
             $table->primary('id');
-            $table->unique(['app_id', 'name']);
+            $table->foreign('app_id')->references('id')->on('app');
         });
     }
 
@@ -34,6 +30,7 @@ class CreateRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('role');
+        Schema::drop('app_message');
     }
+
 }

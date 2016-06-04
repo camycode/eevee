@@ -26,6 +26,7 @@ class CreateUserTable extends Migration
             $table->primary('id');
             $table->unique(['app_id', 'email']);
             $table->unique(['app_id', 'username']);
+            $table->foreign('app_id')->references('id')->on('app');
         });
     }
 

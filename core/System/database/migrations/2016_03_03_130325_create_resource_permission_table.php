@@ -13,10 +13,11 @@ class CreateResourcePermissionTable extends Migration
         Schema::create('resource_permission', function (Blueprint $table) {
             $table->string('id');
             $table->string('resource_id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->text('description');
             $table->timestamps();
             $table->primary('id');
+            $table->unique('name');
         });
     }
 

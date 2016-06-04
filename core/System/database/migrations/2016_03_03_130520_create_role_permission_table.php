@@ -16,6 +16,8 @@ class CreateRolePermissionTable extends Migration
             $table->string('role_id');
             $table->string('permission_id');
             $table->primary(['role_id', 'permission_id']);
+            $table->foreign('role_id')->references('id')->on('role');
+            $table->foreign('permission_id')->references('id')->on('app_resource_permission');
         });
     }
 
