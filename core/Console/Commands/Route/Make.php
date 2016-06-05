@@ -45,6 +45,8 @@ class Make extends Command
 
         $newRoutes = $this->generateRoutes($name);
 
+        $bindRoutes = [];
+
         foreach ($newRoutes as $newRoute => $value) {
 
             $newRoute = str_replace('/', '\/', $newRoute);
@@ -53,8 +55,10 @@ class Make extends Command
 
                 $this->warn('Route ' . $newRoute . ' has existed');
 
-                unset($newRoutes[$newRoute]);
             } else {
+
+                $bindRoutes[$newRoute] = $value;
+
                 $this->info('Bind route ' . $newRoute . ' => ' . $value['action']);
             }
         }
@@ -63,7 +67,7 @@ class Make extends Command
 
         View::addLocation(base_path('core/Console/Commands/Route'));
 
-        $routesString = View::make('route', ['routes' => $newRoutes]);
+        $routesString = View::make('route', ['routes' => $bindRoutes]);
 
         Storage::put(str_replace(base_path(), '', $routeConfigFile), $routesContent . $routesString);
 
