@@ -1,30 +1,30 @@
 <?php
 
-namespace Core\Models\App;
+namespace Core\Models\App\Resource;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
 
-class Resource extends Model
+class Type extends Model
 {
 
-    protected $fields = ['id', 'app_id', 'resource_id', 'name', 'description', 'created_at', 'updated_at'];
+    protected $fields = ['id', 'resource_id', 'name', 'description', 'created_at', 'updated_at'];
 
     /**
      * 数据初始化
      *
      * @return  void
      */
-    protected function initializeResource()
+    protected function initializeType()
     {
-
-        $this->data = array_merge([
+        $initialized = [
             'id' => $this->id(),
-            'app_id' => APP_ID,
             'resource_id' => '',
             'name' => '',
             'description' => text('noDescription'),
-        ], $this->data);
+        ];
+
+        $this->data = array_merge($initialized, $this->data);
 
         $this->data['created_at'] = $this->timestamp();
         $this->data['updated_at'] = $this->timestamp();
@@ -40,13 +40,12 @@ class Resource extends Model
      * @throws  \Core\Exceptions\StatusException
      *
      */
-    protected function validateResource(array $ignore = [])
+    protected function validateType(array $ignore = [])
     {
 
         $table = $this->name();
 
         $rule = [
-            'app_id' => 'required',
             'resource_id' => 'required',
             'name' => 'required',
         ];
@@ -71,7 +70,7 @@ class Resource extends Model
      *
      * @throws  \Core\Exceptions\StatusException
      */
-    public function getResource($id)
+    public function getType($id)
     {
 
         if ($data = $this->table()->where('id', $id)->first()) {
@@ -81,7 +80,7 @@ class Resource extends Model
             return status('success', $data);
         }
 
-        exception('resourceDoesNotExist');
+        exception('typeDoesNotExist');
     }
 
     /**
@@ -91,7 +90,7 @@ class Resource extends Model
      *
      * @return  Status
      */
-    public function getResources(array $params = [])
+    public function getTypes(array $params = [])
     {
 
         $data = $this->selector($params);
@@ -107,14 +106,14 @@ class Resource extends Model
      * @return  Status
      *
      */
-    public function addResource()
+    public function addType()
     {
 
         $this->guard($this->data, 'add', GUARD_ADD);
 
-        $this->validateResource();
+        $this->validateType();
 
-        $this->initializeResource();
+        $this->initializeType();
 
         return $this->transaction(function () {
 
@@ -122,7 +121,7 @@ class Resource extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->getResource($this->data['id']);
+            $status = $this->getType($this->data['id']);
 
             return $status;
 
@@ -138,9 +137,9 @@ class Resource extends Model
      * @return  Status
      *
      */
-    public function updateResource($id)
+    public function updateType($id)
     {
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getType($id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -148,7 +147,7 @@ class Resource extends Model
 
         ];
 
-        $this->validateResource($ignore);
+        $this->validateType($ignore);
 
         return $this->transaction(function () use ($id) {
 
@@ -158,7 +157,7 @@ class Resource extends Model
 
             $this->table()->where('id', $id)->update($this->data);
 
-            $status = $this->getResource($id);
+            $status = $this->getType($id);
 
             return $status;
 
@@ -173,10 +172,10 @@ class Resource extends Model
      *
      * @return  Status
      */
-    public function deleteResource($id)
+    public function deleteType($id)
     {
 
-        $origin = $this->getResource($id)->data;
+        $origin = $this->getType($id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 
