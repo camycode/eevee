@@ -8,6 +8,85 @@
  */
 
 return [
+    'APP' => [
+        'name' => '应用',
+        'description' => '项目应用',
+        'icon' => '',
+        'actions' => [
+            'add' => [
+                'name' => '添加应用',
+            ],
+            'update' => [
+                'name' => '编辑应用',
+            ],
+            'get' => [
+                'name' => '获取应用',
+            ],
+            'delete' => [
+                'name' => '删除应用',
+            ],
+        ],
+    ],
+
+    'RESOURCE' => [
+        'name' => '应用资源',
+        'description' => '定义应用资源',
+        'icon' => '',
+        'actions' => [
+            'add' => [
+                'name' => '添加应用资源',
+            ],
+            'update' => [
+                'name' => '编辑应用资源',
+            ],
+            'get' => [
+                'name' => '获取应用资源',
+            ],
+            'delete' => [
+                'name' => '删除应用资源',
+            ],
+        ],
+    ],
+
+    'PERMISSION' => [
+        'name' => '应用权限',
+        'description' => '定义应用权限',
+        'icon' => '',
+        'actions' => [
+            'add' => [
+                'name' => '添加应用权限',
+            ],
+            'update' => [
+                'name' => '编辑应用权限',
+            ],
+            'get' => [
+                'name' => '获取应用权限',
+            ],
+            'delete' => [
+                'name' => '删除应用权限',
+            ],
+        ],
+    ],
+
+    'ROLE' => [
+        'name' => '角色',
+        'description' => '描述',
+        'icon' => '',
+        'actions' => [
+            'add' => [
+                'name' => '添加角色',
+            ],
+            'update' => [
+                'name' => '编辑角色',
+            ],
+            'get' => [
+                'name' => '获取角色',
+            ],
+            'delete' => [
+                'name' => '删除角色',
+            ],
+        ],
+    ],
     'USER' => [
         'name' => '用户',
         'description' => '描述',
@@ -27,17 +106,23 @@ return [
             ],
         ],
     ],
-//    'DASHBOARD' => '面板',
-//    'ROLE' => '角色',
-//    'PERMISSION' => '权限',
-//    'TERM' => '分类',
-//    'POST' => '内容',
-//    'FILE' => '文件',
-//    'FOLDER' => '文件夹',
-//    'MESSAGE' => '沟通',
-//    'SYSTEM' => '系统',
-//    'MEDIA' => '多媒体',
-//    'THEME' => '主题',
-//    'PLUGIN' => '插件',
-//    'HELP' => '帮助',
+    'POST' => [
+        'name' => '文章',
+        'description' => '描述',
+        'icon' => '',
+        'actions' => [
+            'add' => [
+                'name' => '添加文章',
+            ],
+            'update' => [
+                'name' => '编辑文章',
+            ],
+            'get' => [
+                'name' => '获取文章',
+            ],
+            'delete' => [
+                'name' => '删除文章',
+            ],
+        ],
+    ],
 ];

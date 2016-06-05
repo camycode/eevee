@@ -3,25 +3,25 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppClientTable extends Migration
+class CreateClientVersionTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('app_client', function (Blueprint $table) {
-            $table->string('id');
+        Schema::create('client_version', function (Blueprint $table) {
             $table->string('app_id');
-            $table->string('name');
+            $table->string('client_id');
+            $table->string('version');
             $table->text('description');
             $table->string('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            
-            $table->primary(['id']);
-            $table->unique(['app_id', 'name']);
-            $table->foreign('app_id')->references('id')->on('app');
+
+            $table->primary(['app_id', 'client_id', 'version']);
+
+            $table->foreign(['app_id', 'client_id'])->references(['app_id', 'id'])->on('client');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateAppClientTable extends Migration
      */
     public function down()
     {
-        Schema::drop('app_client');
+        Schema::drop('client_version');
     }
 }

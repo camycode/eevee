@@ -3,30 +3,34 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResourceTable extends Migration
+class CreateMessageTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::create('resource', function (Blueprint $table) {
+        Schema::create('message', function (Blueprint $table) {
             $table->string('id');
-            $table->string('name');
-            $table->string('icon');
-            $table->mediumText('description');
-            $table->string('source');
+            $table->string('app_id');
+            $table->string('message');
+            $table->integer('status');
             $table->timestamps();
-            $table->unique('name');
             $table->primary('id');
+            $table->foreign('app_id')->references('id')->on('app');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
-        Schema::drop('resource');
+        Schema::drop('message');
     }
+
 }

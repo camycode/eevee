@@ -22,8 +22,11 @@ class CreateRoleTable extends Migration
             $table->integer('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            $table->primary('id');
+
+            $table->primary(['id','app_id']);
+
             $table->unique(['app_id', 'name']);
+
             $table->foreign('app_id')->references('id')->on('app');
         });
     }
