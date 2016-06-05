@@ -1,8 +1,8 @@
 <?php 
 
-namespace Core\Controllers\App;
+namespace Core\Controllers\App\Resource;
 
-use Core\Models\App\Permission;
+use Core\Models\App\Resource\Permission;
 use Core\Services\Context;
 use Core\Controllers\Controller;
 

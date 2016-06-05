@@ -16,12 +16,17 @@ class CreateAppResourcePermissionTable extends Migration
             $table->string('permission_id');
             $table->string('resource_type');
             $table->string('resource_status');
+            $table->string('name');
+            $table->text('description');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
+
             $table->primary('id');
-            $table->unique('resource_id', 'permission_id');
-            $table->foreign('resource_id')->references('id')->on('app_resource');
+            $table->unique(['resource_id', 'name']);
             $table->foreign('permission_id')->references('id')->on('resource_permission');
-            $table->foreign('resource_type')->references('id')->on('app_resource_type');
-            $table->foreign('resource_status')->references('id')->on('app_resource_status');
+            $table->foreign(['resource_type', 'resource_id'])->references(['id', 'resource_id'])->on('app_resource_type');
+            $table->foreign(['resource_status', 'resource_id'])->references(['id', 'resource_id'])->on('app_resource_status');
+
         });
     }
 

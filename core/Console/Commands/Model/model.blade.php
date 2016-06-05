@@ -17,12 +17,14 @@ class {{  $ModelName }} extends Model
      */
     protected function initialize{{ $ModelName }}()
     {
+
         $this->data = array_merge([
             'id' => $this->id(),
             'app_id' => APP_ID,
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
         ], $this->data);
+
+        $this->data['created_at'] = $this->timestamp();
+        $this->data['updated_at'] = $this->timestamp();
     }
 
     /**

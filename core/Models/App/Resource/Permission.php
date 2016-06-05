@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Core\Models\App;
+namespace Core\Models\App\Resource;
 
 use Core\Models\Model;
 use Illuminate\Support\Facades\Validator;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 class Permission extends Model
 {
 
-    protected $fields = ['id','created_at','updated_at'];
+    protected $fields = ['id', 'resource_id', 'permission_id', 'resource_type', 'resource_status', 'name', 'description', 'created_at', 'updated_at'];
 
     /**
      * 数据初始化
@@ -17,15 +17,19 @@ class Permission extends Model
      */
     protected function initializePermission()
     {
-
         $initialized = [
             'id' => $this->id(),
-            'app_id' => APP_ID,
+            'resource_id' => '',
+            'permission_id' => '',
+            'resource_type' => '',
+            'resource_status' => '',
+            'name' => '',
+            'description' => text('noDescription'),
         ];
 
-        $this->timestamps($initialized, true);
-
         $this->data = array_merge($initialized, $this->data);
+        $this->data['created_at'] = $this->timestamp();
+        $this->data['updated_at'] = $this->timestamp();
     }
 
     /**
@@ -41,17 +45,21 @@ class Permission extends Model
     protected function validatePermission(array $ignore = [])
     {
 
-        $tableName = $this->name();
+        $table = $this->name();
 
         $rule = [
-
+            'resource_id' => 'required',
+            'permission_id' => 'required',
+            'resource_type' => 'required',
+            'resource_status' => 'required',
+            'name' => 'required',
         ];
 
-        $this->ignore($rule,$ignore);
+        $this->ignore($rule, $ignore);
 
         $validator = Validator::make($this->data, $rule);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
 
             exception('validateFailed', $validator->errors());
         }
@@ -61,7 +69,7 @@ class Permission extends Model
     /**
      * 获取记录
      *
-     * @param  $id
+     * @param  string $id
      *
      * @return  Status
      *
@@ -70,11 +78,11 @@ class Permission extends Model
     public function getPermission($id)
     {
 
-        if($data = $this->table()->where('id',$id)->first()){
+        if ($data = $this->table()->where('id', $id)->first()) {
 
             $this->guard($data, 'get', GUARD_GET);
 
-            return status('success',$data);
+            return status('success', $data);
         }
 
         exception('permissionDoesNotExist');
@@ -112,7 +120,7 @@ class Permission extends Model
 
         $this->initializePermission();
 
-        return $this->transaction(function(){
+        return $this->transaction(function () {
 
             $this->filter($this->data, $this->fields);
 
@@ -146,7 +154,7 @@ class Permission extends Model
 
         $this->validatePermission($ignore);
 
-        return $this->transaction(function() use($id){
+        return $this->transaction(function () use ($id) {
 
             $this->timestamps($this->data, false);
 
@@ -165,7 +173,7 @@ class Permission extends Model
     /**
      * 删除记录
      *
-     * @param  $id
+     * @param  string $id
      *
      * @return  Status
      */

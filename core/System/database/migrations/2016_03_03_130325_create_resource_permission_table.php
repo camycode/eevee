@@ -16,8 +16,10 @@ class CreateResourcePermissionTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->timestamps();
+
             $table->primary('id');
             $table->unique('name');
+            $table->foreign('resource_id')->references('id')->on('resource');
         });
     }
 
