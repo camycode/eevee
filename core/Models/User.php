@@ -48,7 +48,7 @@ class User extends Model
      */
     protected function validateUser($ignore = [], $password = false)
     {
-        $table = $this->tableName();
+        $table = $this->name();
 
         $rule = [
             'password' => 'required|min:6'

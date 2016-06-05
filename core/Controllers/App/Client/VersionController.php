@@ -12,7 +12,7 @@ class VersionController extends Controller
     // 获取Version
     public function getVersion(Context $context)
     {
-        return $context->response((new Version())->getVersion($context->params('version'), $context->params('app_id'), $context->params('client_id')));
+        return $context->response((new Version())->getVersion($context->params('version'), $context->params('client_id')));
     }
 
     // 获取Version组
@@ -30,13 +30,13 @@ class VersionController extends Controller
     // 更新Version
     public function putVersion(Context $context)
     {
-        return $context->response((new Version($context->data()))->updateVersion($context->params('version'), $context->params('app_id'), $context->params('client_id')));
+        return $context->response((new Version($context->data()))->updateVersion($context->params('version'), $context->params('client_id')));
     }
 
     // 删除Version
     public function deleteVersion(Context $context)
     {
-        return $context->response((new Version())->deleteVersion($context->params('version'), $context->params('app_id'), $context->params('client_id')));
+        return $context->response((new Version())->deleteVersion($context->params('version'), $context->params('client_id')));
     }
 
 }

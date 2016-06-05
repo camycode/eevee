@@ -38,7 +38,7 @@ class {{  $ModelName }} extends Model
     protected function validate{{ $ModelName }}(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $table = $this->name();
 
         $rule = [];
 

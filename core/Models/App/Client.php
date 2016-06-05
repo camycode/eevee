@@ -44,7 +44,7 @@ class Client extends Model
     protected function validateClient(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
 

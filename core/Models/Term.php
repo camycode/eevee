@@ -28,7 +28,7 @@ class Term extends Model
     protected function validateTerm(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
 

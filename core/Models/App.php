@@ -57,7 +57,7 @@ class App extends Model
     protected function validateApp(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
             'id' => "sometimes|required|unique:$tableName",

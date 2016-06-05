@@ -41,7 +41,7 @@ class Resource extends Model
     protected function validateResource(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
 

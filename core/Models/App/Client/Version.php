@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 class Version extends Model
 {
 
-    protected $fields = ['app_id', 'client_id', 'version', 'description', 'status', 'created_at', 'updated_at'];
+    protected $fields = ['client_id', 'version', 'description', 'status', 'created_at', 'updated_at'];
 
     /**
      * 数据初始化
@@ -19,7 +19,6 @@ class Version extends Model
     {
 
         $initialized = [
-            'app_id' => APP_ID,
             'client_id' => '',
             'version' => '0.0.1',
             'description' => text('noDescription'),
@@ -46,10 +45,11 @@ class Version extends Model
     protected function validateVersion(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
-
+            'client_id' => 'required',
+            'version' => 'required',
         ];
 
         $this->ignore($rule, $ignore);
@@ -61,23 +61,39 @@ class Version extends Model
             exception('validateFailed', $validator->errors());
         }
 
+        $this->validateClientVersion($this->data['client_id'], $this->data['version']);
+    }
+
+    /**
+     * 验证客户端版本是否唯一
+     *
+     * @param $client_id
+     * @param $version
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
+    protected function validateClientVersion($client_id, $version)
+    {
+        if ($this->table()->where('client_id', $client_id)->where('version', $version)->first()) {
+
+            exception('clientVersionIsExist');
+        }
     }
 
     /**
      * 获取记录
      *
      * @param string $version
-     * @param string $app_id
      * @param string $client_id
      *
      * @return Status
      *
      * @throws \Core\Exceptions\StatusException
      */
-    public function getVersion($version, $app_id, $client_id)
+    public function getVersion($version, $client_id)
     {
 
-        if ($data = $this->table()->where('version', $version)->where('app_id', $app_id)->where('client_id', $client_id)->first()) {
+        if ($data = $this->table()->where('version', $version)->where('client_id', $client_id)->first()) {
 
             $this->guard($data, 'get', GUARD_GET);
 
@@ -128,7 +144,7 @@ class Version extends Model
 
             $this->table()->insert($this->data);
 
-            $status = $this->getVersion($this->data['version'], $this->data['app_id'], $this->data['client_id']);
+            $status = $this->getVersion($this->data['version'], $this->data['client_id']);
 
             return $status;
 
@@ -140,17 +156,16 @@ class Version extends Model
      * 更新记录
      *
      * @param  string $version
-     * @param  string $app_id
      * @param  string $client_id
      *
      * @return Status
      *
      * @throws \Exception
      */
-    public function updateVersion($version, $app_id, $client_id)
+    public function updateVersion($version, $client_id)
     {
 
-        $origin = $this->getVersion($version, $app_id, $client_id)->data;
+        $origin = $this->getVersion($version, $client_id)->data;
 
         $this->guard($origin, 'update', GUARD_UPDATE);
 
@@ -159,15 +174,15 @@ class Version extends Model
         $this->validateVersion($ignore);
 
 
-        return $this->transaction(function () use ($version, $app_id, $client_id, $ignore) {
+        return $this->transaction(function () use ($version, $client_id, $ignore) {
 
             $this->timestamps($this->data, false);
 
             $this->filter($this->data, $this->fields, $ignore);
 
-            $this->table()->where('version', $version)->where('app_id', $app_id)->where('client_id', $client_id)->update($this->data);
+            $this->table()->where('version', $version)->where('client_id', $client_id)->update($this->data);
 
-            $status = $this->getVersion($version, $app_id, $client_id);
+            $status = $this->getVersion($version, $client_id);
 
             return $status;
 
@@ -179,19 +194,18 @@ class Version extends Model
      * 删除记录
      *
      * @param string $version
-     * @param string $app_id
      * @param string $client_id
      *
      * @return Status
      */
-    public function deleteVersion($version, $app_id, $client_id)
+    public function deleteVersion($version, $client_id)
     {
 
-        $origin = $this->getVersion($version, $app_id, $client_id)->data;
+        $origin = $this->getVersion($version, $client_id)->data;
 
         $this->guard($origin, 'delete', GUARD_DELETE);
 
-        $this->table()->where('version', $version)->where('app_id', $app_id)->where('client_id', $client_id)->delete();
+        $this->table()->where('version', $version)->where('client_id', $client_id)->delete();
 
         return status('success');
     }

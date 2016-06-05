@@ -62,11 +62,12 @@ class Model
      */
     public function table($name = null)
     {
-        $name = $name ? $name : $this->tableName();
+        $name = $name ? $name : $this->name();
 
         return DB::table($name);
     }
 
+    
     /**
      * 获取模型数据库表命, 模型的数据表名称与模型路径保持一致
      *
@@ -79,9 +80,8 @@ class Model
      *
      * @throws \Exception
      */
-    public function tableName($name = null)
+    public function name($name = null)
     {
-
         if ($name) {
 
             $class = get_called_class();
@@ -111,7 +111,6 @@ class Model
 
             return implode('_', $fields);
         }
-
     }
 
 
@@ -129,7 +128,7 @@ class Model
      */
     public function selector(array $params = [], $tableName = null)
     {
-        $tableName = $tableName ? $tableName : $this->tableName($tableName);
+        $tableName = $tableName ? $tableName : $this->name($tableName);
 
         $query = $this->table($tableName);
 

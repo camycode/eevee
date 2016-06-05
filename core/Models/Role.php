@@ -49,7 +49,7 @@ class Role extends Model
      */
     protected function validateRole(array $ignore = [])
     {
-        $table = $this->tableName();
+        $table = $this->name();
 
         $rule = [
             'app_id' => "required",

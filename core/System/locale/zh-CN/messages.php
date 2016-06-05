@@ -11,7 +11,7 @@ return [
     'databaseOperateError' => '事务异常',
     'updateRolePermissionsError' => '编辑角色权限错误.',
     'deleteRoleSuccess' => '用户删除成功',
-    'roleDoesNotExsit' => '用户不存在',
+    'roleDoesNotExist' => '用户不存在',
     'systemHasInstalled' => '系统已安装',
     'roleParentIsRequired' => '角色父亲不能为空',
     'parentRoleDoesNotExist' => '父角色不存在',
@@ -21,4 +21,5 @@ return [
     'visitorNotExist' => '访客不存在',
     'clientDoesNotExist' => '应用客户端不存在',
     'versionDoesNotExist' => '应用客户端版本不存在',
+    'clientVersionIsExist' => '客户端版本已存在',
 ];

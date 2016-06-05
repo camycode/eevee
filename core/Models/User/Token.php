@@ -22,7 +22,7 @@ class Token extends Model
     protected function validateToken(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $table = $this->name();
 
         $rule = [
 

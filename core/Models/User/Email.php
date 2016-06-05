@@ -28,7 +28,7 @@ class Email extends Model
     protected function validateEmail(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
 

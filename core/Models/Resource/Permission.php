@@ -34,7 +34,7 @@ class Permission extends Model
     protected function validatePermission(array $ignore = [])
     {
 
-        $tableName = $this->tableName();
+        $tableName = $this->name();
 
         $rule = [
             'id' => "required|unique:$tableName",
