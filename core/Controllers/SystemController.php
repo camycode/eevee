@@ -70,6 +70,18 @@ class SystemController extends Controller
     }
 
     /**
+     * 获取系统权限
+     *
+     * @param Context $context
+     * 
+     * @return \Core\Services\Response
+     */
+    public function getResources(Context $context)
+    {
+        return $context->response((new System())->getResources());
+    }
+
+    /**
      * 刷新系统
      */
     public function refresh(Context $context)

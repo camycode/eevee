@@ -12,7 +12,7 @@ namespace Core\Models;
 
 use Core\Models\Model;
 use Core\Models\Resource;
-use Core\Models\Resource\Permission;
+use Core\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class System extends Model
@@ -37,6 +37,14 @@ class System extends Model
      * @var array
      */
     protected $permissions = [];
+
+    /**
+     * 获取系统资源
+     */
+    public function getResources()
+    {
+        return status('success', trans('resources'));
+    }
 
 
     /**
@@ -82,10 +90,10 @@ class System extends Model
             }
         }
 
-        return status('success', [
-            'refresh_resources' => (new Resource($this->resources))->saveResources(),
-            'refresh_permissions' => (new Permission($this->permissions))->savePermissions(),
-        ]);
+//        return status('success', [
+//            'refresh_resources' => (new Resource($this->resources))->saveResources(),
+//            'refresh_permissions' => (new Permission($this->permissions))->savePermissions(),
+//        ]);
     }
 
 }

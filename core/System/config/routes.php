@@ -25,7 +25,7 @@ return [
 
     // 系统资源
     'get@system/resource' => ['action' => 'ResourceController@getResource', 'permission' => []],
-    'get@system/resources' => ['action' => 'ResourceController@getResources', 'permission' => []],
+    'get@system/resources' => ['action' => 'SystemController@getResources'],
 
     // 系统资源
     'get@system/permission' => ['action' => 'ResourceController@getResource', 'permission' => []],
@@ -74,8 +74,6 @@ return [
     'post@auth/register' => ['action' => 'AuthController@register'],
     'post@auth/forgot' => ['action' => 'AuthController@forgot'],
     'post@auth/reset' => ['action' => 'AuthController@reset'],
-
-
 
 
 ];
