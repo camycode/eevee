@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 class App extends Model
 {
 
+    protected $status = ['public','private','forbidden','deleted'];
+
     protected $fields = ['id', 'name', 'parent', 'description', 'status', 'created_at', 'updated_at'];
 
     /**

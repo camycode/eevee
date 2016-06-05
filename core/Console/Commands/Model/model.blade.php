@@ -18,13 +18,14 @@ class {{  $ModelName }} extends Model
     protected function initialize{{ $ModelName }}()
     {
 
-        $this->data = array_merge([
+        $initialized = [
             'id' => $this->id(),
             'app_id' => APP_ID,
-        ], $this->data);
+        ];
 
-        $this->data['created_at'] = $this->timestamp();
-        $this->data['updated_at'] = $this->timestamp();
+        $this->data = array_merge($initialized, $this->data);
+
+        $this->timestamps($this->data, true);
     }
 
     /**
@@ -147,7 +148,7 @@ class {{  $ModelName }} extends Model
 
             $this->timestamps($this->data, false);
 
-            $this->filter($this->data, $this->fields);
+            $this->filter($this->data, $this->fields, $ignore);
 
             $this->table()->where('id', $id)->update($this->data);
 

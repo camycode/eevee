@@ -18,10 +18,12 @@ class CreateResource extends Migration
             $table->text('attribute');
             $table->string('type');
             $table->string('parent');
+            $table->string('icon');
+            $table->string('source');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
 
-            $table->primary('id','app_id');
+            $table->primary(['id','app_id']);
 
             $table->unique(['app_id', 'name']);
 

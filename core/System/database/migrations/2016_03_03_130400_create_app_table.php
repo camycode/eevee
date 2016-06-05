@@ -15,6 +15,7 @@ class CreateAppTable extends Migration
             $table->integer('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            
             $table->primary('id');
             $table->unique('name');
         });

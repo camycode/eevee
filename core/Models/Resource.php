@@ -9,7 +9,19 @@ use Illuminate\Support\Facades\Validator;
 class Resource extends Model
 {
 
-    protected $fields = ['id', 'name', 'icon', 'description', 'source', 'created_at', 'updated_at'];
+    protected $fields = [
+        'id',
+        'app_id',
+        'name',
+        'description',
+        'attribute',
+        'type',
+        'parent',
+        'icon',
+        'source',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * 资源数据初始化
@@ -22,15 +34,19 @@ class Resource extends Model
 
         $initialized = [
             'id' => $this->id(),
+            'app_id' => '',
             'name' => '',
-            'icon' => '',
             'description' => text('noDescription'),
+            'attribute' => [],
+            'type' => 'origin',
+            'parent' => 'self',
+            'icon' => '/images/resource.png',
             'source' => 'eevee',
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
         ];
 
         $this->data = array_merge($initialized, $this->data);
+
+        $this->timestamps($this->data, true);
     }
 
     /**
@@ -44,11 +60,13 @@ class Resource extends Model
     protected function validateResource(array $ignore = [])
     {
 
-        $tableName = $this->name();
+        $table = $this->name();
 
         $rule = [
-            'id' => "required|unique:$tableName",
-            'name' => "required|unique:$tableName",
+            'id' => "required",
+            'app_id' => "required",
+            'name' => "required",
+            'attribute' => "sometimes|required|array",
         ];
 
         $this->ignore($rule, $ignore);
@@ -60,6 +78,44 @@ class Resource extends Model
             exception('validateFailed', $validator->errors());
         }
 
+        $this->validateResourceID($this->data['id'], $this->data['app_id']);
+
+        $this->validateResourceName($this->data['name'], $this->data['app_id']);
+
+    }
+
+    /**
+     * 验证资源ID
+     *
+     * @param string $id
+     * @param string $app_id
+     *
+     * @throws StatusException
+     */
+    protected function validateResourceID($id, $app_id)
+    {
+        if ($this->table()->where('id', $id)->where('app_id', $app_id)->first()) {
+            exception('validateFailed', [
+                'id' => message('resourceIDIsExist'),
+            ]);
+        }
+    }
+
+    /**
+     * 验证资源名称
+     *
+     * @param string $name
+     * @param string $app_id
+     *
+     * @throws StatusException
+     */
+    protected function validateResourceName($name, $app_id)
+    {
+        if ($this->table()->where('name', $name)->where('app_id', $app_id)->first()) {
+            exception('validateFailed', [
+                'name' => message('resourceNameIsExist'),
+            ]);
+        }
     }
 
     /**
@@ -119,6 +175,8 @@ class Resource extends Model
         return $this->transaction(function () {
 
             $this->filter($this->data, $this->fields);
+
+            $this->data['attribute'] = json_encode($this->data['attribute']);
 
             $this->table()->insert($this->data);
 

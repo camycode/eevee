@@ -22,4 +22,10 @@ return [
     'clientDoesNotExist' => '应用客户端不存在',
     'versionDoesNotExist' => '应用客户端版本不存在',
     'clientVersionIsExist' => '客户端版本已存在',
+    'resourceIDIsExist' => '资源ID已经存在',
+    'resourceNameIsExist' => '资源名称已经存在',
+    'resourceDoesNotExist' => '资源不存在',
+    'permissionDoesNotExist'=>'权限不存在',
+    'permissionIDHasExist'=>'权限ID已存在',
+    'permissionNameHasExist'=>'权限名称已存在',
 ];
