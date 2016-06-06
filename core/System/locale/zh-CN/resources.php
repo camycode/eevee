@@ -153,6 +153,16 @@ return [
             'private' => '私有',
             'forbidden' => '禁用',
             'deleted' => '删除',
+            'publish' => '发表中',
+            'check' => '审核中',
+            'failed' => '审核失败',
+        ],
+        'types' => [
+            'article' => '文章',
+            'news' => '新闻',
+            'commodity_description' => '商品描述',
+            'blog' => '博客',
+            'comment' => '评论',
         ],
     ],
 ];

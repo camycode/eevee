@@ -1,29 +1,46 @@
 <?php
-return array (
-  'SYSTEM_CONFIG_MAIL' => '邮箱设置',
-  'SYSTEM_CONFIG_USER' => '访客设置',
-  'SYSTEM_CONFIG_SITE' => '站点设置',
-  'USER_POST' => '添加用户',
-  'USER_DELETE' => '删除用户',
-  'USER_PUT' => '更新用户',
-  'USER_GET' => '获取用户',
-  'POST_POST' => '添加:type',
-  'POST_DELETE' => '删除:type',
-  'POST_PUT' => '更新:type',
-  'POST_GET' => '获取:type',
-  'FILE_UPLOAD' => '上传:type',
-  'FILE_POST' => '添加:type',
-  'FILE_PUT' => '编辑:type',
-  'FILE_DELETE' => '删除:type',
-  'FILE_GET' => '获取:type',
-  'LOG_GET' => '查看:type日志',
-  'LOG_DELETE' => '删除:type日志',
-  'user.post' => '添加用户',
-  'user.get' => '获取用户',
-  'users.get' => '获取用户组',
-  'root' => 'root',
-  'ROLE_POST' => 'ROLE_POST',
-  'ROLE_GET' => 'ROLE_GET',
-  'ROLE_PUT' => 'ROLE_PUT',
-  'ROLE_DELETE' => 'ROLE_DELETE',
+
+
+$permissions = [
+
+    'POST' => [
+        'resource','resource_permission','resource_fileds'
+    ]
+
+];
+
+return array(
+
+    'TERM' => [
+        'permission' => 'AGUD',
+        'fields' => [
+            'id' => 'AGUD',
+            'app_id' => 'AGUD',
+            'parent' => 'AGUD',
+            'name' => 'AGUD',
+            'description' => 'AGUD',
+            'cover' => 'AGUD',
+        ],
+    ],
+    'POST' => [
+        'permission' => 'AGUD',
+        'fields' => [
+            'id' => 'AGUD',
+            'app_id' => 'AGUD',
+            'user_id' => 'AGUD',
+            'term_id' => 'AGUD',  // 不同的角色编辑不同的分类
+            'title' => 'AGUD',
+            'content' => 'AGUD',
+            'type' => 'AGUD', // 不同的角色编辑不同的类型
+            'status' => 'AGUD:public|private|forbidden|deleted', // 不同的角色编辑不同的状态
+            'created_at' => 'AGUD',
+            'updated_at' => 'AGUD',
+        ],
+        'dependencies'=>[
+        ],
+    ],
+    'POST_TERM' => [
+        '1' => 'G', '2' => 'G', '3' => 'G',
+    ],
+
 );
