@@ -11,6 +11,11 @@ return [
     'APP' => [
         'name' => '应用',
         'description' => '项目应用',
+        'fields' => [
+            'id' => 'ID',
+            'name' => '名称',
+            'description' => '描述',
+        ],
         'icon' => '',
         'actions' => [
             'add' => [
