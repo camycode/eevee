@@ -17,8 +17,9 @@ class CreatePermissionTable extends Migration
             $table->text('description');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+            $table->string('source');
 
-            $table->primary(['id','app_id']);
+            $table->primary(['id', 'app_id']);
 
             $table->unique(['app_id', 'name']);
 

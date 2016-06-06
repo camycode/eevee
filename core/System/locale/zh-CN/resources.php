@@ -26,6 +26,12 @@ return [
                 'name' => '删除应用',
             ],
         ],
+        'statuses' => [
+            'public' => '公开',
+            'private' => '私有',
+            'forbidden' => '禁用',
+            'deleted' => '删除',
+        ],
     ],
 
     'RESOURCE' => [
@@ -86,6 +92,13 @@ return [
                 'name' => '删除角色',
             ],
         ],
+        'types' => [],
+        'statuses' => [
+            'public' => '公开',
+            'private' => '私有',
+            'forbidden' => '禁用',
+            'deleted' => '删除',
+        ],
     ],
     'USER' => [
         'name' => '用户',
@@ -105,6 +118,12 @@ return [
                 'name' => '删除用户',
             ],
         ],
+        'statuses' => [
+            'public' => '公开',
+            'private' => '私有',
+            'forbidden' => '禁用',
+            'deleted' => '删除',
+        ],
     ],
     'POST' => [
         'name' => '文章',
@@ -123,6 +142,12 @@ return [
             'delete' => [
                 'name' => '删除文章',
             ],
+        ],
+        'statuses' => [
+            'public' => '公开',
+            'private' => '私有',
+            'forbidden' => '禁用',
+            'deleted' => '删除',
         ],
     ],
 ];

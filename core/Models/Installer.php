@@ -3,18 +3,15 @@
 namespace Core\Models;
 
 use Core\Models\App;
-use Core\Models\App\Resource as AppResource;
-use Core\Models\App\Resource\Permission as AppResourcePermission;
 use Core\Models\User;
 use Core\Models\Role;
 use Core\Models\Role\Permission as RolePermission;
 use Core\Models\Model;
 use Core\Models\System;
 use Core\Models\Resource;
-use Core\Models\Resource\Permission as ResourcePermission;
-use Core\Services\Status;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
+use Core\Exceptions\StatusException;
 
 
 class Installer extends Model
@@ -54,6 +51,28 @@ class Installer extends Model
 
 
     /**
+     * 测试数据库服务器连接
+     *
+     * @return Status
+     */
+    protected function testDatabaseServerConnection()
+    {
+
+    }
+
+
+    /**
+     * 检查目标数据库是否存在
+     *
+     * @return Status
+     */
+    protected function checkDatabaseIsExist()
+    {
+
+    }
+
+
+    /**
      * 创建数据库
      *
      * @param $db_host
@@ -85,17 +104,7 @@ class Installer extends Model
 
 
     /**
-     * 注册资源信息
-     *
-     * @return Status
-     */
-    protected function registerResources()
-    {
-        return (new System())->refreshResourcesAndPermissions();
-    }
-
-    /**
-     * 注册第一个APP
+     * 注册根应用
      *
      * @param array $data
      *
@@ -103,62 +112,145 @@ class Installer extends Model
      */
     protected function registerInitialApp(array $data)
     {
-        $app = (new App($data))->addApp()->data;
-
-        $resources = (new Resource())->getResources()->data;
-        $resourcePermissions = (new ResourcePermission())->data;
-
-        return;
+        return (new App($data))->addApp()->data;
     }
 
-
     /**
-     * 注册第一个角色
+     * 注册根应用资源
      *
-     * @param array $data
+     * @param string $app_id
      *
      * @return Status
      */
-    protected function registerInitialRole(array $data)
+    protected function registerInitialAppResources($app_id)
     {
+        $resources = (new System())->getResources()->data;
 
-        $app = (new App())->getApps()->data[0];
+        $result = ['success' => [], 'failed' => []];
 
-        $data['app_id'] = $app->id;
+        foreach ($resources as $key => $resource) {
 
-        $role = (new Role($data))->addRole()->data;
+            $attribute = [];
 
-        $rolePermission = new RolePermission();
+            if (isset($resource['statuses'])) {
+                $attribute['statuses'] = $resource['statuses'];
+            }
 
-        $appResourcePermissions = (new AppResourcePermission())->getPermissions()->data;
+            try {
 
-        $rolePermissions = [];
+                $status = (new Resource([
+                    'id' => $key,
+                    'app_id' => $app_id,
+                    'name' => isset($resource['name']) ? $resource['name'] : '',
+                    'description' => isset($resource['description']) ? $resource['description'] : text('noDescription'),
+                    'type' => 'origin',
+                    'parent' => $key,
+                    'icon' => isset($resource['icon']) ? $resource['icon'] : '',
+                    'source' => isset($resource['source']) ? $resource['source'] : 'eevee',
+                    'attribute' => $attribute,
+                ]))->addResource()->data;
 
-        foreach ($appResourcePermissions as $permission) {
+                array_push($result['success'], $status);
 
-            array_push($rolePermissions, $permission->id);
+            } catch (StatusException $e) {
+
+                array_push($result['failed'], $status);
+            }
+
+
         }
 
-        $rolePermission->savePermissions($role->id, $role->parent, $rolePermissions);
+        return status('success', $result);
 
-        return (new Role())->getRole($role->id);
     }
 
     /**
-     * 注册第一个用户
+     * 注册根应用权限
      *
+     * @param string $app_id
+     *
+     * @return Status
+     */
+    protected function registerInitialAppPermissions($app_id)
+    {
+        $resources = (new System())->getResources()->data;
+
+        $result = ['success' => [], 'failed' => []];
+
+        foreach ($resources as $key => $resource) {
+
+            if (isset($resource['actions'])) {
+
+                foreach ($resource['actions'] as $action_key => $action_value)
+
+
+                    try {
+
+                        $status = (new Resource([
+                            'id' => strtoupper($key . ':' . $action_key),
+                            'app_id' => $app_id,
+                            'name' => isset($action_value['name']) ? $action_value['name'] : '',
+                            'description' => isset($action_value['description']) ? $action_value['description'] : text('noDescription'),
+                            'source' => isset($resource['source']) ? $resource['source'] : 'eevee',
+                        ]))->addResource()->data;
+
+                        array_push($result['success'], $status);
+
+                    } catch (StatusException $e) {
+
+                        array_push($result['failed'], $status);
+                    }
+
+
+            }
+        }
+
+        return status('success', $result);
+    }
+
+
+    /**
+     * 注册根角色
+     *
+     * @param string $app_id
      * @param array $data
      *
      * @return Status
      */
-    protected function registerInitialUser(array $data)
+    protected function registerInitialAppRole($app_id, array $data)
     {
-        $role = (new Role())->getRoles()->data[0];
 
-        $data['role_id'] = $role->id;
+        $data['app_id'] = $app_id;
 
-        $data['app_id'] = $role->app_id;
+        $data['permissions'] = [];
 
+        $permissions = (new Permission())->getPermissions(['app_id' => $app_id])->$this->data;
+
+        foreach ($permissions as $permission) {
+
+            array_push($data['permissions'], $permission['id']);
+        }
+
+        return (new Role($data))->addRole();
+    }
+
+
+    /**
+     * 注册根用户
+     *
+     * @param string $app_id
+     * @param string $role_id
+     * @param array $data
+     *
+     * @return Status
+     */
+    protected function registerInitialAppUser($app_id, $role_id, array $data)
+    {
+
+        $data['app_id'] = $app_id;
+
+        $data['role_id'] = $role_id;
+        
         return (new User($data))->addUser();
     }
 
