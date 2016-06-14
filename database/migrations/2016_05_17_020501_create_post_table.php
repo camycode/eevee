@@ -14,7 +14,6 @@ class CreatePostTable extends Migration
     {
         Schema::create('post', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_id');
             $table->string('user_id');
             $table->string('term_id');
             $table->string('title');
@@ -24,9 +23,7 @@ class CreatePostTable extends Migration
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app');
             $table->foreign('user_id')->references('id')->on('user');
-            $table->foreign('type')->references('id')->on('app_resource_type');
         });
     }
 

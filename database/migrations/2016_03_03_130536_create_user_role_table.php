@@ -3,8 +3,9 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolePermissionTable extends Migration
+class CreateUserRoleTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -12,12 +13,12 @@ class CreateRolePermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_permission', function (Blueprint $table) {
+        Schema::create('user_role', function (Blueprint $table) {
+            $table->string('user_id');
             $table->string('role_id');
-            $table->string('permission_id');
-            $table->primary(['role_id', 'permission_id']);
+            $table->primary(['user_id', 'role_id']);
+            $table->foreign('user_id')->references('id')->on('user');
             $table->foreign('role_id')->references('id')->on('role');
-            $table->foreign('permission_id')->references('id')->on('permission');
         });
     }
 
@@ -28,7 +29,6 @@ class CreateRolePermissionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('role_permission');
+        Schema::drop('user_role');
     }
-
 }

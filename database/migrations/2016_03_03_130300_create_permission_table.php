@@ -3,30 +3,33 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResourceTable extends Migration
+class CreatePermissionTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::create('resource', function (Blueprint $table) {
+        Schema::create('permission', function (Blueprint $table) {
             $table->string('id');
-            $table->string('name')->unique();
-            $table->string('parent');
-            $table->string('icon');
+            $table->string('name');
             $table->mediumText('description');
-            $table->string('source');
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->primary('id');
+            $table->unique('name');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
-        Schema::drop('resource');
+        Schema::drop('permission');
     }
 }

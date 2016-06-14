@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppClientVersionTable extends Migration
+class CreateClientVersionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,14 @@ class CreateAppClientVersionTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_client_version', function (Blueprint $table) {
+        Schema::create('client_version', function (Blueprint $table) {
             $table->string('client_id');
             $table->string('version');
             $table->text('description');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->primary(['client_id', 'version']);
-            $table->foreign('client_id')->references('id')->on('app_client');
+            $table->foreign('client_id')->references('id')->on('client');
         });
     }
 
@@ -28,6 +30,6 @@ class CreateAppClientVersionTable extends Migration
      */
     public function down()
     {
-        Schema::drop('app_client_version');
+        Schema::drop('client_version');
     }
 }

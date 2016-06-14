@@ -3,19 +3,20 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppResource extends Migration
+class CreateClientTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('app_resource', function (Blueprint $table) {
+        Schema::create('client', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_id');
-            $table->string('resource_id');
+            $table->string('name');
+            $table->string('description');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app');
         });
     }
 
@@ -24,6 +25,6 @@ class CreateAppResource extends Migration
      */
     public function down()
     {
-        Schema::drop('app_resource');
+        Schema::drop('client');
     }
 }

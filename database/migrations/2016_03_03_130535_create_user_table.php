@@ -12,21 +12,17 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_id');
-            $table->string('role_id');
             $table->string('username');
             $table->string('email', 255);
             $table->string('password', 100);
-            $table->string('role');
             $table->string('avatar');
             $table->string('source');
             $table->string('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('id');
-            $table->unique(['app_id', 'email']);
-            $table->unique(['app_id', 'username']);
-            $table->foreign('app_id')->references('id')->on('app');
+            $table->unique('email');
+            $table->unique('username');
         });
     }
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppMessageTable extends Migration
+class CreatePostClassTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class CreateAppMessageTable extends Migration
      */
     public function up()
     {
-        Schema::create('app_message', function (Blueprint $table) {
+        Schema::create('post_class', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_id');
-            $table->string('message');
+            $table->string('name');
+            $table->text('description');
             $table->string('status');
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
             $table->primary('id');
-            $table->foreign('app_id')->references('id')->on('app');
         });
     }
 
@@ -30,7 +30,6 @@ class CreateAppMessageTable extends Migration
      */
     public function down()
     {
-        Schema::drop('app_message');
+        Schema::drop('post_class');
     }
-
 }

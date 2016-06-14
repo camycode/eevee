@@ -14,17 +14,14 @@ class CreateRoleTable extends Migration
     {
         Schema::create('role', function (Blueprint $table) {
             $table->string('id');
-            $table->string('app_id');
             $table->string('name');
             $table->mediumText('description');
             $table->string('parent');
-            $table->integer('permission_amount');
             $table->string('status');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
             $table->primary('id');
-            $table->unique(['app_id', 'name']);
-            $table->foreign('app_id')->references('id')->on('app');
+            $table->unique('name');
         });
     }
 
