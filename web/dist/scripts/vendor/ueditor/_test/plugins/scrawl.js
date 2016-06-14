@@ -1,1 +1,0 @@
-module("plugins.scrawl"),test("检查高亮",function(){var e=te.obj[0];e.focus(),equal(e.queryCommandState("scrawl"),browser.ie&&browser.version<=8?-1:0,"check scrawl state")});

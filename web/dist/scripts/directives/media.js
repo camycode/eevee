@@ -1,1 +1,0 @@
-define(["app","css!../../css/directives/media"],function(e){e.directive("media",function(){return{restrict:"A",replace:!0,scope:{},templateUrl:"views/directives/media.html",controller:["$scope",function(e){console.log("媒体")}]}})});

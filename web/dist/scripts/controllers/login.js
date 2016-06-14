@@ -1,1 +1,0 @@
-define(["user","storage","typing","css!../../css/login"],function(){return["$scope","$state","user","storage","typing",function(n,o,s,t,c){n.account=null,n.password=null,n.login=function(){s.login({account:n.account,password:n.password},function(n){200==n.code?o.go("app.post"):c.tip(n.message,"#account")})}}]});

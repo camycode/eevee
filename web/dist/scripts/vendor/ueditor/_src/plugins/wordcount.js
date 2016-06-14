@@ -1,1 +1,0 @@
-UE.plugins.wordcount=function(){var n=this;n.setOpt("wordCount",!0),n.addListener("contentchange",function(){n.fireEvent("wordcount")});var t;n.addListener("ready",function(){var n=this;domUtils.on(n.body,"keyup",function(o){var e=o.keyCode||o.which,i={16:1,18:1,20:1,37:1,38:1,39:1,40:1};e in i||(clearTimeout(t),t=setTimeout(function(){n.fireEvent("wordcount")},200))})})};

@@ -1,1 +1,0 @@
-var gulp=require("gulp"),fs=require("fs"),console=require("better-console"),install=require("./config/project/install");module.exports=function(){setTimeout(function(){return install.isSetup()?void gulp.start("watch"):(console.log("Starting install..."),void gulp.start("install"))},50)};

@@ -1,1 +1,0 @@
-UE.registerUI("autosave",function(e){var t=null,s=null;e.on("afterautosave",function(){clearTimeout(t),t=setTimeout(function(){s&&e.trigger("hidemessage",s),s=e.trigger("showmessage",{content:e.getLang("autosave.success"),timeout:2e3})},2e3)})});

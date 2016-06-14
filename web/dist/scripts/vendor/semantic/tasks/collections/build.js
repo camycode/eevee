@@ -1,1 +1,0 @@
-module.exports=function(s){var r=require("./../build/javascript"),a=require("./../build/css"),i=require("./../build/assets");s.task("build-javascript","Builds all javascript from source",r),s.task("build-css","Builds all css from source",a),s.task("build-assets","Copies all assets from source",i)};

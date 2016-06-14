@@ -1,1 +1,0 @@
-var del=require("del"),config=require("./config/user"),tasks=require("./config/tasks");module.exports=function(e){return del([config.paths.clean],tasks.settings.del,e)};

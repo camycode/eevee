@@ -1,1 +1,0 @@
-!function(){var i=baidu.editor.utils,t=baidu.editor.ui.UIBase,n=baidu.editor.ui.Breakline=function(i){this.initOptions(i),this.initSeparator()};n.prototype={uiName:"Breakline",initSeparator:function(){this.initUIBase()},getHtmlTpl:function(){return"<br/>"}},i.inherits(n,t)}();
