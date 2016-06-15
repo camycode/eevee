@@ -9,9 +9,9 @@
  * @author 古月(2016/03)
  */
 
-namespace Core\Services;
+namespace App\Services;
 
-use \Core\Models\Status as StatusModel;
+use App\Models\Status as StatusModel;
 
 class Status
 {

@@ -1,20 +1,21 @@
 <?php
 
-namespace Core\Providers;
+namespace App\Providers;
 
-use Core\Services\Context;
+use App\Services\Context;
 use Illuminate\Http\Response;
 use Illuminate\Support\ServiceProvider;
 
 class ContextServiceProvider extends ServiceProvider
 {
+    /**
+     * 注册上下文对象
+     */
     public function register()
     {
         $this->app->bind('App\Services\Context', function ($app) {
 
-          $response = new Response();
-
-          return new Context($app->request, $response);
+          return new Context($app->request, (new Response()));
       });
     }
 }

@@ -16,3 +16,7 @@
 127.0.0.1 - - [14/Jun/2016:16:22:08 +0800] "GET /favicon.ico HTTP/1.1" 200 0 "http://dev.eevee.io/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
 127.0.0.1 - - [14/Jun/2016:16:22:30 +0800] "GET / HTTP/1.1" 200 936 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
 127.0.0.1 - - [14/Jun/2016:16:22:31 +0800] "GET /favicon.ico HTTP/1.1" 200 0 "http://dev.eevee.io/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
+127.0.0.1 - - [15/Jun/2016:11:22:15 +0800] "GET / HTTP/1.1" 500 61210 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
+127.0.0.1 - - [15/Jun/2016:11:22:34 +0800] "GET / HTTP/1.1" 200 936 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
+127.0.0.1 - - [15/Jun/2016:11:22:59 +0800] "GET / HTTP/1.1" 200 934 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
+127.0.0.1 - - [15/Jun/2016:12:11:51 +0800] "GET /api/user HTTP/1.1" 200 12 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
