@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 // $server = array(),
 // $content = null);
 
-class Request
+class API
 {
     protected $app;
 
