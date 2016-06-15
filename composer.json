@@ -22,10 +22,10 @@
       "Plugin\\": "plugins/"
     },
     "classmap": [
-      "core/System/database/"
+      "system/database/"
     ],
     "files": [
-      "core/System/helper.php"
+      "system/helper.php"
     ]
   },
   "autoload-dev": {

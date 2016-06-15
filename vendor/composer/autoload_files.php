@@ -13,5 +13,5 @@ return array(
     '2c102faa651ef8ea5874edb585946bce' => $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
     '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
     'bee9632da3ca00a99623b9c35d0c4f8b' => $vendorDir . '/laravel/lumen-framework/src/helpers.php',
-    'f006cdc30a234a0307db4ef357410a15' => $baseDir . '/core/System/helper.php',
+    '69cd09fc0efd1bb2bf17ffd0e0dc13c2' => $baseDir . '/system/helper.php',
 );

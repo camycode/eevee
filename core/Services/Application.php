@@ -18,7 +18,6 @@ class Application extends Lumen
         'session',
         'database',
         'statuses',
-        'shortcuts',
         'resources',
         'permissions',
         'filesystems',
@@ -52,34 +51,40 @@ class Application extends Lumen
             return $this->storagePath . ($path ? '/' . $path : $path);
         }
 
-        return $this->basePath() . '/Storage' . ($path ? '/' . $path : $path);
+        return $this->basePath() . '/storage' . ($path ? '/' . $path : $path);
     }
 
 
     public function databasePath()
     {
-        return $this->basePath() . '/core/System/database';
+        return $this->basePath('system/database');
     }
 
     public function getConfigurationPath($name = null)
     {
         if (!$name) {
+
             $appConfigDir = ($this->configPath ?: $this->basePath('config')) . '/';
 
             if (file_exists($appConfigDir)) {
+
                 return $appConfigDir;
-            } elseif (file_exists($path = __DIR__ . '/../System/config/')) {
-                return $path;
             }
+
+            return base_path('system/config/');
+
         } else {
+
             $appConfigPath = ($this->configPath ?: $this->basePath('config')) . '/' . $name . '.php';
 
             if (file_exists($appConfigPath)) {
+
                 return $appConfigPath;
-            } elseif (file_exists($path = __DIR__ . '/../System/config/' . $name . '.php')) {
-                return $path;
             }
+
+            return base_path("system/config/$name.php");
         }
+
     }
 
     protected function setConfigures()
@@ -92,22 +97,23 @@ class Application extends Lumen
 
     protected function getLanguagePath()
     {
-        return __DIR__ . '/../System/locale';
+        return base_path('/system/locale');
     }
 
     protected function setPermissionRoutes($routes)
     {
-        $this->group(['prefix' => 'api', 'middleware' => 'auth', 'namespace' => 'Core\Controllers'], function () use ($routes) {
+        $this->group(['middleware' => 'auth', 'namespace' => 'Core\Controllers'], function () use ($routes) {
 
             foreach ($routes as $route => $params) {
 
 
                 list($method, $uri) = explode('@', $route);
 
-
                 if (isset($params['action'])) {
+
                     $this->addRoute(strtoupper($method), $uri, $params['action']);
                 } else {
+
                     throw new \Exception("The route $route action is empty", 1);
                 }
             }
