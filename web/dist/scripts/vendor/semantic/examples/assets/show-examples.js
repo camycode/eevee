@@ -1,0 +1,1 @@
+$(document).ready(function(){$(".ui:not(.container, .grid)").each(function(){$(this).popup({on:"hover",variation:"small inverted",exclusive:!0,content:$(this).attr("class")})})});

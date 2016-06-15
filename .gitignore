@@ -1,8 +1,5 @@
-/web/.sass-cache
-/node_modules
-Homestead.yaml
-Homestead.json
-logs
+*.log
 .idea
-/web/node_modules
-/web/src/.sass-cache
+/apidoc
+/docs
+storage/install.lock

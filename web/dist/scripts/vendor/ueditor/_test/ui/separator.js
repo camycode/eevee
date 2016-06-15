@@ -1,0 +1,1 @@
+module("ui.separator"),test("",function(){equal("","","")});

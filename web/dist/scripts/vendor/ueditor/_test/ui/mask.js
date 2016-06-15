@@ -1,0 +1,1 @@
+module("ui.mask"),test("",function(){equal("","","")});

@@ -1,0 +1,1 @@
+define(["app"],function(e){e.factory("storage",["$http",function(e){var o={},t={cookie:o,set:function(e,o){localStorage.setItem(e,o)},get:function(e){return"undefined"==localStorage[e]?void 0:localStorage[e]},has:function(e){return"undefined"!=typeof localStorage[e]&&"null"!=localStorage[e]},remove:function(e){localStorage.removeItem(e)}};return t}])});

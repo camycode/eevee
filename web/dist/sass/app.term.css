@@ -1,0 +1,45 @@
+/*
+Error: Invalid US-ASCII character "\xE6"
+        on line 22 of app.term.scss
+
+17:     border-radius: 5px;
+18:     padding: 20px 40px 30px 40px;
+19:     border: 1px solid #fafafa;
+20:   }
+21: 
+22:   // 排序样式
+23:   .dd {
+24:     position: relative;
+25:     display: block;
+26:     margin: 0;
+27:     padding: 0;
+
+Backtrace:
+app.term.scss:22
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1299:in `rescue in block in find_encoding_error'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1296:in `block in find_encoding_error'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1295:in `each'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1295:in `each_with_index'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:1295:in `find_encoding_error'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/util.rb:904:in `check_sass_encoding'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:433:in `check_encoding!'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:389:in `_to_tree'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/engine.rb:295:in `render_with_sourcemap'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:209:in `each'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/plugin.rb:82:in `update_stylesheets'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:363:in `watch_or_update'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/base.rb:52:in `parse'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/lib/sass/exec/base.rb:19:in `parse!'
+/usr/local/lib/ruby/gems/2.3.0/gems/sass-3.4.21/bin/scss:13:in `<top (required)>'
+/usr/local/bin/scss:23:in `load'
+/usr/local/bin/scss:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid US-ASCII character \"\xE6\"\A         on line 22 of app.term.scss\A \A 17:     border-radius: 5px;\A 18:     padding: 20px 40px 30px 40px;\A 19:     border: 1px solid #fafafa;\A 20:   }\A 21: \A 22:   // 排序样式\A 23:   .dd {\A 24:     position: relative;\A 25:     display: block;\A 26:     margin: 0;\A 27:     padding: 0;"; }
