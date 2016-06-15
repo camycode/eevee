@@ -20,3 +20,5 @@
 127.0.0.1 - - [15/Jun/2016:11:22:34 +0800] "GET / HTTP/1.1" 200 936 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
 127.0.0.1 - - [15/Jun/2016:11:22:59 +0800] "GET / HTTP/1.1" 200 934 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
 127.0.0.1 - - [15/Jun/2016:12:11:51 +0800] "GET /api/user HTTP/1.1" 200 12 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
+127.0.0.1 - - [15/Jun/2016:13:36:17 +0800] "GET /api/user HTTP/1.1" 500 5528 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"
+127.0.0.1 - - [15/Jun/2016:13:36:33 +0800] "GET /api/user HTTP/1.1" 405 17233 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36" "-"

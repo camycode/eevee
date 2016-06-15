@@ -1,4 +1,4 @@
-gst<?php
+<?php
 
 namespace App\Providers;
 

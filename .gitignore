@@ -1,6 +1,8 @@
+/web/.sass-cache
 /node_modules
 Homestead.yaml
 Homestead.json
 logs
 .idea
 /web/node_modules
+/web/src/.sass-cache
