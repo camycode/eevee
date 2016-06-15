@@ -10,6 +10,7 @@
 */
 
 if (!file_exists('install.lock')) {
+    
 }
 
 
@@ -113,6 +114,21 @@ $app->register(Core\Providers\EventServiceProvider::class);
 $app->register(Core\Providers\StatusServiceProvider::class);
 $app->register(Core\Providers\ContextServiceProvider::class);
 $app->register(Core\Providers\RequestServiceProvider::class);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Load The Application Routes
+|--------------------------------------------------------------------------
+|
+| Next we will include the routes file so that they can all be added to
+| the application. This will provide all of the URLs the application
+| can respond to, as well as the controllers that may handle them.
+|
+*/
+
+require __DIR__.'/system/routes.php';
 
 /*
 |--------------------------------------------------------------------------

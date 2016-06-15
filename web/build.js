@@ -1,7 +1,7 @@
 ({
     appDir: './src',
     baseUrl: './scripts',
-    dir: './dist',
+    dir: './admin',
     mainConfigFile: "./src/scripts/bootstrap.js",
     include: "./src/scripts/main",
     modules: [
