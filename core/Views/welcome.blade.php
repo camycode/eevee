@@ -5,23 +5,69 @@
     <title>EEVEE</title>
 </head>
 <style>
+
+    html, body {
+        height: 100%;
+    }
+
     body {
-        padding:0;
-        margin:0;
-        overflow:hidden;
-        height: 600px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        display: table;
+        font-weight: 100;
+        font-family: 'Lato';
+        position: relative;
     }
+
+    .container {
+        position: absolute;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 40%;
+    }
+
+    .content {
+        text-align: center;
+        display: inline-block;
+        color: #ffc6bb;
+    }
+
+    .title {
+        font-size: 96px;
+    }
+
+    /*body {*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+    /*overflow: hidden;*/
+    /*height: 600px;*/
+    /*}*/
+
     canvas {
-        padding:0;
-        margin:0;
+        padding: 0;
+        margin: 0;
     }
+
     div.btnbg {
-        position:fixed;
-        left:0;
-        top:0;
+        position: fixed;
+        left: 0;
+        top: 0;
     }
 </style>
+
 <body>
+
+<div class="container">
+    <div class="content">
+        <div class="title">EEVEE</div>
+    </div>
+</div>
+
 <canvas id="sakura"></canvas>
 <div class="btnbg">
 </div>
@@ -118,6 +164,10 @@ void main(void) {
     //-0.69315 = ln(0.5)
     distancefade = min(1.0, exp((uFade.x - pdist) * 0.69315 / uFade.y));
 }
+
+
+
+
 </script>
 <script id="sakura_point_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -190,6 +240,10 @@ void main(void) {
 
     gl_FragColor = vec4(col * 0.5, alpha);
 }
+
+
+
+
 </script>
 <!-- effects -->
 <script id="fx_common_vsh" type="x-shader/x_vertex">
@@ -204,6 +258,10 @@ void main(void) {
     texCoord = aPosition.xy * 0.5 + vec2(0.5, 0.5);
     screenCoord = aPosition.xy * vec2(uResolution.z, 1.0);
 }
+
+
+
+
 </script>
 <script id="bg_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -224,6 +282,10 @@ void main(void) {
     col = mix(vec3(0.02, 0.0, 0.03), vec3(0.96, 0.98, 1.0) * 1.5, c);
     gl_FragColor = vec4(col * 0.5, 1.0);
 }
+
+
+
+
 </script>
 <script id="fx_brightbuf_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -240,6 +302,10 @@ void main(void) {
     vec4 col = texture2D(uSrc, texCoord);
     gl_FragColor = vec4(col.rgb * 2.0 - vec3(0.5), 1.0);
 }
+
+
+
+
 </script>
 <script id="fx_dirblur_r4_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -261,6 +327,10 @@ void main(void) {
     col = col + texture2D(uSrc, texCoord - (uBlurDir.xy + uBlurDir.zw) * uDelta);
     gl_FragColor = col / 5.0;
 }
+
+
+
+
 </script>
 <!-- effect fragment shader template -->
 <script id="fx_common_fsh" type="x-shader/x_fragment">
@@ -277,6 +347,10 @@ varying vec2 screenCoord;
 void main(void) {
     gl_FragColor = texture2D(uSrc, texCoord);
 }
+
+
+
+
 </script>
 <!-- post processing -->
 <script id="pp_final_vsh" type="x-shader/x_vertex">
@@ -289,6 +363,10 @@ void main(void) {
     texCoord = aPosition.xy * 0.5 + vec2(0.5, 0.5);
     screenCoord = aPosition.xy * vec2(uResolution.z, 1.0);
 }
+
+
+
+
 </script>
 <script id="pp_final_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -311,14 +389,18 @@ void main(void) {
     gl_FragColor = vec4(col.rgb, 1.0);
     gl_FragColor.a = 1.0;
 }
+
+
+
+
 </script>
 </body>
 <script>
     // Utilities
     var Vector3 = {};
     var Matrix44 = {};
-    Vector3.create = function(x, y, z) {
-        return {'x':x, 'y':y, 'z':z};
+    Vector3.create = function (x, y, z) {
+        return {'x': x, 'y': y, 'z': z};
     };
     Vector3.dot = function (v0, v1) {
         return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
@@ -330,15 +412,15 @@ void main(void) {
     };
     Vector3.normalize = function (v) {
         var l = v.x * v.x + v.y * v.y + v.z * v.z;
-        if(l > 0.00001) {
+        if (l > 0.00001) {
             l = 1.0 / Math.sqrt(l);
             v.x *= l;
             v.y *= l;
             v.z *= l;
         }
     };
-    Vector3.arrayForm = function(v) {
-        if(v.array) {
+    Vector3.arrayForm = function (v) {
+        if (v.array) {
             v.array[0] = v.x;
             v.array[1] = v.y;
             v.array[2] = v.z;
@@ -408,23 +490,23 @@ void main(void) {
 
     //
     var timeInfo = {
-        'start':0, 'prev':0, // Date
-        'delta':0, 'elapsed':0 // Number(sec)
+        'start': 0, 'prev': 0, // Date
+        'delta': 0, 'elapsed': 0 // Number(sec)
     };
 
     //
     var gl;
     var renderSpec = {
-        'width':0,
-        'height':0,
-        'aspect':1,
-        'array':new Float32Array(3),
-        'halfWidth':0,
-        'halfHeight':0,
-        'halfArray':new Float32Array(3)
+        'width': 0,
+        'height': 0,
+        'aspect': 1,
+        'array': new Float32Array(3),
+        'halfWidth': 0,
+        'halfHeight': 0,
+        'halfArray': new Float32Array(3)
         // and some render targets. see setViewport()
     };
-    renderSpec.setSize = function(w, h) {
+    renderSpec.setSize = function (w, h) {
         renderSpec.width = w;
         renderSpec.height = h;
         renderSpec.aspect = renderSpec.width / renderSpec.height;
@@ -447,10 +529,10 @@ void main(void) {
 
     function createRenderTarget(w, h) {
         var ret = {
-            'width':w,
-            'height':h,
-            'sizeArray':new Float32Array([w, h, w / h]),
-            'dtxArray':new Float32Array([1.0 / w, 1.0 / h])
+            'width': w,
+            'height': h,
+            'sizeArray': new Float32Array([w, h, w / h]),
+            'dtxArray': new Float32Array([1.0 / w, 1.0 / h])
         };
         ret.frameBuffer = gl.createFramebuffer();
         ret.renderBuffer = gl.createRenderbuffer();
@@ -483,7 +565,7 @@ void main(void) {
         gl.shaderSource(retsh, shsrc);
         gl.compileShader(retsh);
 
-        if(!gl.getShaderParameter(retsh, gl.COMPILE_STATUS)) {
+        if (!gl.getShaderParameter(retsh, gl.COMPILE_STATUS)) {
             var errlog = gl.getShaderInfoLog(retsh);
             gl.deleteShader(retsh);
             console.error(errlog);
@@ -496,7 +578,7 @@ void main(void) {
         var vsh = compileShader(gl.VERTEX_SHADER, vtxsrc);
         var fsh = compileShader(gl.FRAGMENT_SHADER, frgsrc);
 
-        if(vsh == null || fsh == null) {
+        if (vsh == null || fsh == null) {
             return null;
         }
 
@@ -514,16 +596,16 @@ void main(void) {
             return null;
         }
 
-        if(uniformlist) {
+        if (uniformlist) {
             prog.uniforms = {};
-            for(var i = 0; i < uniformlist.length; i++) {
+            for (var i = 0; i < uniformlist.length; i++) {
                 prog.uniforms[uniformlist[i]] = gl.getUniformLocation(prog, uniformlist[i]);
             }
         }
 
-        if(attrlist) {
+        if (attrlist) {
             prog.attributes = {};
-            for(var i = 0; i < attrlist.length; i++) {
+            for (var i = 0; i < attrlist.length; i++) {
                 var attr = attrlist[i];
                 prog.attributes[attr] = gl.getAttribLocation(prog, attr);
             }
@@ -534,30 +616,32 @@ void main(void) {
 
     function useShader(prog) {
         gl.useProgram(prog);
-        for(var attr in prog.attributes) {
-            gl.enableVertexAttribArray(prog.attributes[attr]);;
+        for (var attr in prog.attributes) {
+            gl.enableVertexAttribArray(prog.attributes[attr]);
+            ;
         }
     }
 
     function unuseShader(prog) {
-        for(var attr in prog.attributes) {
-            gl.disableVertexAttribArray(prog.attributes[attr]);;
+        for (var attr in prog.attributes) {
+            gl.disableVertexAttribArray(prog.attributes[attr]);
+            ;
         }
         gl.useProgram(null);
     }
 
     /////
     var projection = {
-        'angle':60,
-        'nearfar':new Float32Array([0.1, 100.0]),
-        'matrix':Matrix44.createIdentity()
+        'angle': 60,
+        'nearfar': new Float32Array([0.1, 100.0]),
+        'matrix': Matrix44.createIdentity()
     };
     var camera = {
-        'position':Vector3.create(0, 0, 100),
-        'lookat':Vector3.create(0, 0, 0),
-        'up':Vector3.create(0, 1, 0),
-        'dof':Vector3.create(10.0, 4.0, 8.0),
-        'matrix':Matrix44.createIdentity()
+        'position': Vector3.create(0, 0, 100),
+        'lookat': Vector3.create(0, 0, 0),
+        'up': Vector3.create(0, 1, 0),
+        'dof': Vector3.create(10.0, 4.0, 8.0),
+        'matrix': Matrix44.createIdentity()
     };
 
     var pointFlower = {};
@@ -615,7 +699,7 @@ void main(void) {
     function createPointFlowers() {
         // get point sizes
         var prm = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE);
-        renderSpec.pointSize = {'min':prm[0], 'max':prm[1]};
+        renderSpec.pointSize = {'min': prm[0], 'max': prm[1]};
 
         var vtxsrc = document.getElementById("sakura_point_vsh").textContent;
         var frgsrc = document.getElementById("sakura_point_fsh").textContent;
@@ -646,7 +730,7 @@ void main(void) {
 
         unuseShader(pointFlower.program);
 
-        for(var i = 0; i < pointFlower.numFlowers; i++) {
+        for (var i = 0; i < pointFlower.numFlowers; i++) {
             pointFlower.particles[i] = new BlossomParticle();
         }
     }
@@ -664,8 +748,10 @@ void main(void) {
         var PI2 = Math.PI * 2.0;
         var tmpv3 = Vector3.create(0, 0, 0);
         var tmpv = 0;
-        var symmetryrand = function() {return (Math.random() * 2.0 - 1.0);};
-        for(var i = 0; i < pointFlower.numFlowers; i++) {
+        var symmetryrand = function () {
+            return (Math.random() * 2.0 - 1.0);
+        };
+        for (var i = 0; i < pointFlower.numFlowers; i++) {
             var tmpprtcl = pointFlower.particles[i];
 
             //velocity
@@ -707,9 +793,9 @@ void main(void) {
         var PI2 = Math.PI * 2.0;
         var limit = [pointFlower.area.x, pointFlower.area.y, pointFlower.area.z];
         var repeatPos = function (prt, cmp, limit) {
-            if(Math.abs(prt.position[cmp]) - prt.size * 0.5 > limit) {
+            if (Math.abs(prt.position[cmp]) - prt.size * 0.5 > limit) {
                 //out of area
-                if(prt.position[cmp] > 0) {
+                if (prt.position[cmp] > 0) {
                     prt.position[cmp] -= limit * 2.0;
                 }
                 else {
@@ -719,12 +805,12 @@ void main(void) {
         };
         var repeatEuler = function (prt, cmp) {
             prt.euler[cmp] = prt.euler[cmp] % PI2;
-            if(prt.euler[cmp] < 0.0) {
+            if (prt.euler[cmp] < 0.0) {
                 prt.euler[cmp] += PI2;
             }
         };
 
-        for(var i = 0; i < pointFlower.numFlowers; i++) {
+        for (var i = 0; i < pointFlower.numFlowers; i++) {
             var prtcl = pointFlower.particles[i];
             prtcl.update(timeInfo.delta, timeInfo.elapsed);
             repeatPos(prtcl, 0, pointFlower.area.x);
@@ -743,13 +829,15 @@ void main(void) {
         }
 
         // sort
-        pointFlower.particles.sort(function(p0, p1){return p0.zkey - p1.zkey;});
+        pointFlower.particles.sort(function (p0, p1) {
+            return p0.zkey - p1.zkey;
+        });
 
         // update data
         var ipos = pointFlower.positionArrayOffset;
         var ieuler = pointFlower.eulerArrayOffset;
         var imisc = pointFlower.miscArrayOffset;
-        for(var i = 0; i < pointFlower.numFlowers; i++) {
+        for (var i = 0; i < pointFlower.numFlowers; i++) {
             var prtcl = pointFlower.particles[i];
             pointFlower.dataArray[ipos] = prtcl.position[0];
             pointFlower.dataArray[ipos + 1] = prtcl.position[1];
@@ -786,7 +874,7 @@ void main(void) {
         gl.vertexAttribPointer(prog.attributes.aMisc, 2, gl.FLOAT, false, 0, pointFlower.miscArrayOffset * Float32Array.BYTES_PER_ELEMENT);
 
         // doubler
-        for(var i = 1; i < 2; i++) {
+        for (var i = 1; i < 2; i++) {
             var zpos = i * -2.0;
             pointFlower.offset[0] = pointFlower.area.x * -1.0;
             pointFlower.offset[1] = pointFlower.area.y * -1.0;
@@ -795,19 +883,19 @@ void main(void) {
             gl.drawArrays(gl.POINT, 0, pointFlower.numFlowers);
 
             pointFlower.offset[0] = pointFlower.area.x * -1.0;
-            pointFlower.offset[1] = pointFlower.area.y *  1.0;
+            pointFlower.offset[1] = pointFlower.area.y * 1.0;
             pointFlower.offset[2] = pointFlower.area.z * zpos;
             gl.uniform3fv(prog.uniforms.uOffset, pointFlower.offset);
             gl.drawArrays(gl.POINT, 0, pointFlower.numFlowers);
 
-            pointFlower.offset[0] = pointFlower.area.x *  1.0;
+            pointFlower.offset[0] = pointFlower.area.x * 1.0;
             pointFlower.offset[1] = pointFlower.area.y * -1.0;
             pointFlower.offset[2] = pointFlower.area.z * zpos;
             gl.uniform3fv(prog.uniforms.uOffset, pointFlower.offset);
             gl.drawArrays(gl.POINT, 0, pointFlower.numFlowers);
 
-            pointFlower.offset[0] = pointFlower.area.x *  1.0;
-            pointFlower.offset[1] = pointFlower.area.y *  1.0;
+            pointFlower.offset[0] = pointFlower.area.x * 1.0;
+            pointFlower.offset[1] = pointFlower.area.y * 1.0;
             pointFlower.offset[2] = pointFlower.area.z * zpos;
             gl.uniform3fv(prog.uniforms.uOffset, pointFlower.offset);
             gl.drawArrays(gl.POINT, 0, pointFlower.numFlowers);
@@ -832,11 +920,11 @@ void main(void) {
     function createEffectProgram(vtxsrc, frgsrc, exunifs, exattrs) {
         var ret = {};
         var unifs = ['uResolution', 'uSrc', 'uDelta'];
-        if(exunifs) {
+        if (exunifs) {
             unifs = unifs.concat(exunifs);
         }
         var attrs = ['aPosition'];
-        if(exattrs) {
+        if (exattrs) {
             attrs = attrs.concat(exattrs);
         }
 
@@ -846,8 +934,8 @@ void main(void) {
         ret.dataArray = new Float32Array([
             -1.0, -1.0,
             1.0, -1.0,
-            -1.0,  1.0,
-            1.0,  1.0
+            -1.0, 1.0,
+            1.0, 1.0
         ]);
         ret.buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, ret.buffer);
@@ -870,7 +958,7 @@ void main(void) {
         useShader(prog);
         gl.uniform3fv(prog.uniforms.uResolution, renderSpec.array);
 
-        if(srctex != null) {
+        if (srctex != null) {
             gl.uniform2fv(prog.uniforms.uDelta, srctex.dtxArray);
             gl.uniform1i(prog.uniforms.uSrc, 0);
 
@@ -945,7 +1033,7 @@ void main(void) {
         var bindRT = function (rt, isclear) {
             gl.bindFramebuffer(gl.FRAMEBUFFER, rt.frameBuffer);
             gl.viewport(0, 0, rt.width, rt.height);
-            if(isclear) {
+            if (isclear) {
                 gl.clearColor(0, 0, 0, 0);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
             }
@@ -958,7 +1046,7 @@ void main(void) {
         unuseEffect(effectLib.mkBrightBuf);
 
         // make bloom
-        for(var i = 0; i < 2; i++) {
+        for (var i = 0; i < 2; i++) {
             var p = 1.5 + 1 * i;
             var s = 2.0 + 1 * i;
             bindRT(renderSpec.wHalfRT1, true);
@@ -1031,7 +1119,7 @@ void main(void) {
     function onResize(e) {
         makeCanvasFullScreen(document.getElementById("sakura"));
         setViewports();
-        if(sceneStandBy) {
+        if (sceneStandBy) {
             initScene();
         }
     }
@@ -1044,7 +1132,7 @@ void main(void) {
 
         var rtfunc = function (rtname, rtw, rth) {
             var rt = renderSpec[rtname];
-            if(rt) deleteRenderTarget(rt);
+            if (rt) deleteRenderTarget(rt);
             renderSpec[rtname] = createRenderTarget(rtw, rth);
         };
         rtfunc('mainRT', renderSpec.width, renderSpec.height);
@@ -1061,14 +1149,14 @@ void main(void) {
     var animating = true;
     function toggleAnimation(elm) {
         animating ^= true;
-        if(animating) animate();
-        if(elm) {
-            elm.innerHTML = animating? "Stop":"Start";
+        if (animating) animate();
+        if (elm) {
+            elm.innerHTML = animating ? "Stop" : "Start";
         }
     }
 
     function stepAnimation() {
-        if(!animating) animate();
+        if (!animating) animate();
     }
 
     function animate() {
@@ -1077,25 +1165,25 @@ void main(void) {
         timeInfo.delta = (curdate - timeInfo.prev) / 1000.0;
         timeInfo.prev = curdate;
 
-        if(animating) requestAnimationFrame(animate);
+        if (animating) requestAnimationFrame(animate);
         render();
     }
 
     function makeCanvasFullScreen(canvas) {
         var b = document.body;
         var d = document.documentElement;
-        fullw = Math.max(b.clientWidth , b.scrollWidth, d.scrollWidth, d.clientWidth);
-        fullh = Math.max(b.clientHeight , b.scrollHeight, d.scrollHeight, d.clientHeight);
+        fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
+        fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
         canvas.width = fullw;
         canvas.height = fullh;
     }
 
-    window.addEventListener('load', function(e) {
+    window.addEventListener('load', function (e) {
         var canvas = document.getElementById("sakura");
         try {
             makeCanvasFullScreen(canvas);
             gl = canvas.getContext('experimental-webgl');
-        } catch(e) {
+        } catch (e) {
             alert("WebGL not supported." + e);
             console.error(e);
             return;
@@ -1114,7 +1202,9 @@ void main(void) {
 
     //set window.requestAnimationFrame
     (function (w, r) {
-        w['r'+r] = w['r'+r] || w['webkitR'+r] || w['mozR'+r] || w['msR'+r] || w['oR'+r] || function(c){ w.setTimeout(c, 1000 / 60); };
+        w['r' + r] = w['r' + r] || w['webkitR' + r] || w['mozR' + r] || w['msR' + r] || w['oR' + r] || function (c) {
+                    w.setTimeout(c, 1000 / 60);
+                };
     })(window, 'equestAnimationFrame');
 </script>
 </html>
