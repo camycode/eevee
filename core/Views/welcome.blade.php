@@ -41,12 +41,12 @@
         font-size: 96px;
     }
 
-    /*body {*/
-    /*padding: 0;*/
-    /*margin: 0;*/
-    /*overflow: hidden;*/
-    /*height: 600px;*/
-    /*}*/
+    body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        height: 600px;
+    }
 
     canvas {
         padding: 0;
@@ -58,13 +58,179 @@
         left: 0;
         top: 0;
     }
+
+    @font-face {
+        font-family: 'Monoton';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Monoton'), local('Monoton-Regular'), url(http://themes.googleusercontent.com/static/fonts/monoton/v4/AKI-lyzyNHXByGHeOcds_w.woff) format('woff');
+    }
+
+    @font-face {
+        font-family: 'Iceland';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Iceland'), local('Iceland-Regular'), url(http://themes.googleusercontent.com/static/fonts/iceland/v3/F6LYTZLHrG9BNYXRjU7RSw.woff) format('woff');
+    }
+
+    @font-face {
+        font-family: 'Pacifico';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Pacifico Regular'), local('Pacifico-Regular'), url(http://themes.googleusercontent.com/static/fonts/pacifico/v5/yunJt0R8tCvMyj_V4xSjafesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+    }
+
+    @font-face {
+        font-family: 'PressStart';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Press Start 2P'), local('PressStart2P-Regular'), url(http://themes.googleusercontent.com/static/fonts/pressstart2p/v2/8Lg6LX8-ntOHUQnvQ0E7o3dD2UuwsmbX3BOp4SL_VwM.woff) format('woff');
+    }
+
+    @font-face {
+        font-family: 'Audiowide';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Audiowide'), local('Audiowide-Regular'), url(http://themes.googleusercontent.com/static/fonts/audiowide/v2/8XtYtNKEyyZh481XVWfVOj8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    }
+
+    @font-face {
+        font-family: 'Vampiro One';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Vampiro One'), local('VampiroOne-Regular'), url(http://themes.googleusercontent.com/static/fonts/vampiroone/v3/Ho2Xld8UbQyBA8XLxF1_NYbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+    }
+
+    body {
+        background-color: #222222;
+    }
+
+    #container {
+        width: 500px;
+        margin: auto;
+    }
+
+    /*neeeeoooon*/
+    p {
+        text-align: center;
+        font-size: 7em;
+        margin: 20px 0 20px 0;
+    }
+
+    a {
+        text-decoration: none;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    p:nth-child(1) a {
+        color: #fff;
+        /*font-family: Monoton;*/
+    }
+
+    p:nth-child(1) a {
+        -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
+        -moz-animation: neon1 1.5s ease-in-out infinite alternate;
+        animation: neon1 1.5s ease-in-out infinite alternate;
+    }
+
+    p a:hover {
+        color: #ffffff;
+    }
+
+    /*glow for webkit*/
+    @-webkit-keyframes neon1 {
+        from {
+            text-shadow: 0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #fff,
+            0 0 40px #ffc6bb,
+            0 0 70px #ffc6bb,
+            0 0 80px #ffc6bb,
+            0 0 100px #ffc6bb,
+            0 0 150px #ffc6bb;
+        }
+        to {
+            text-shadow: 0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #fff,
+            0 0 20px #ffc6bb,
+            0 0 35px #ffc6bb,
+            0 0 40px #ffc6bb,
+            0 0 50px #ffc6bb,
+            0 0 75px #ffc6bb;
+        }
+    }
+
+    /*glow for mozilla*/
+    @-moz-keyframes neon1 {
+        from {
+            text-shadow: 0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #fff,
+            0 0 40px #ffc6bb,
+            0 0 70px #ffc6bb,
+            0 0 80px #ffc6bb,
+            0 0 100px #ffc6bb,
+            0 0 150px #ffc6bb;
+        }
+        to {
+            text-shadow: 0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #fff,
+            0 0 20px #ffc6bb,
+            0 0 35px #ffc6bb,
+            0 0 40px #ffc6bb,
+            0 0 50px #ffc6bb,
+            0 0 75px #ffc6bb;
+        }
+    }
+
+    /*glow*/
+    @keyframes neon1 {
+        from {
+            text-shadow: 0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #fff,
+            0 0 40px #ffc6bb,
+            0 0 70px #ffc6bb,
+            0 0 80px #ffc6bb,
+            0 0 100px #ffc6bb,
+            0 0 150px #ffc6bb;
+        }
+        to {
+            text-shadow: 0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #fff,
+            0 0 20px #ffc6bb,
+            0 0 35px #ffc6bb,
+            0 0 40px #ffc6bb,
+            0 0 50px #ffc6bb,
+            0 0 75px #ffc6bb;
+        }
+    }
+
+    /*REEEEEEEEEEESPONSIVE*/
+    @media (max-width: 650px) {
+
+        #container {
+            width: 100%;
+        }
+
+        p {
+            font-size: 3.5em;
+        }
+
+    }
+
 </style>
 
 <body>
 
 <div class="container">
     <div class="content">
-        <div class="title">EEVEE</div>
+        <p><a class="title">EEVEE</a></p>
     </div>
 </div>
 
@@ -168,6 +334,7 @@ void main(void) {
 
 
 
+
 </script>
 <script id="sakura_point_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -244,6 +411,7 @@ void main(void) {
 
 
 
+
 </script>
 <!-- effects -->
 <script id="fx_common_vsh" type="x-shader/x_vertex">
@@ -258,6 +426,7 @@ void main(void) {
     texCoord = aPosition.xy * 0.5 + vec2(0.5, 0.5);
     screenCoord = aPosition.xy * vec2(uResolution.z, 1.0);
 }
+
 
 
 
@@ -286,6 +455,7 @@ void main(void) {
 
 
 
+
 </script>
 <script id="fx_brightbuf_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -302,6 +472,7 @@ void main(void) {
     vec4 col = texture2D(uSrc, texCoord);
     gl_FragColor = vec4(col.rgb * 2.0 - vec3(0.5), 1.0);
 }
+
 
 
 
@@ -331,6 +502,7 @@ void main(void) {
 
 
 
+
 </script>
 <!-- effect fragment shader template -->
 <script id="fx_common_fsh" type="x-shader/x_fragment">
@@ -351,6 +523,7 @@ void main(void) {
 
 
 
+
 </script>
 <!-- post processing -->
 <script id="pp_final_vsh" type="x-shader/x_vertex">
@@ -363,6 +536,7 @@ void main(void) {
     texCoord = aPosition.xy * 0.5 + vec2(0.5, 0.5);
     screenCoord = aPosition.xy * vec2(uResolution.z, 1.0);
 }
+
 
 
 
@@ -389,6 +563,7 @@ void main(void) {
     gl_FragColor = vec4(col.rgb, 1.0);
     gl_FragColor.a = 1.0;
 }
+
 
 
 
