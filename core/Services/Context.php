@@ -11,16 +11,14 @@
 
 namespace Core\Services;
 
+use Core\Services\Status;
 use Illuminate\Http\Request;
 
 class Context
 {
     public $request;
 
-    public $response;
 
-    public $_params;
-    
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -31,7 +29,20 @@ class Context
      *
      * @return array GET请求参数
      */
-    public function params($field = null, $default = null)
+    public function params()
+    {
+        return $this->request->query();
+    }
+    
+    /**
+     * 获取GET参数.
+     *
+     * @param null $field
+     * @param null $default
+     *
+     * @return array GET请求参数
+     */
+    public function param($field = null, $default = null)
     {
         return $this->request->query($field, $default);
     }
@@ -72,72 +83,30 @@ class Context
     }
 
     /**
-     * 获取请求文件.
-     */
-    public function file()
-    {
-    }
-
-    /**
-     * 响应函数
-     * 以JSON格式输出。
+     * JSON格式响应函数。
      *
      * @param string $result 响应结果
-     * @param int $statusCode HTTP状态码
+     * @param int $httpCode HTTP状态码
      *
      * @return Response
      */
-    public function response($result = '', $statusCode = 200)
+    public function response($result = '', $httpCode = 200)
     {
-        return response(json_encode($result), $statusCode)->header('Content-Type', 'application/json');
+        return response(json_encode($result), $httpCode)->header('Content-Type', 'application/json');
     }
 
     /**
-     * @Author LuoChao
-     * @FunctionName _getParam
-     * @param $paramName
-     * @param null $default
-     * @return null
-     * @explain 过滤sql
+     * 控制器状态响应函数
+     *
+     * @param $status
+     * @param null $data
+     * @param int $httpCode
+     *
+     * @return Status
      */
-    public function _getParam($paramName, $default = null)
+    public function status($status, $data = null, $httpCode = 200)
     {
-        $this->getRequest();
-        $value = $this->getParam($paramName);
-        if ((null == $value) && (null !== $default)) {
-            $value = $default;
-        }
-        return $value;
-    }
-
-    /**
-     * @Author LuoChao
-     * @FunctionName getRequest
-     * @return mixed
-     * @explain 获取所有请求数据
-     */
-    public function getRequest()
-    {
-        $this->_params = $_REQUEST;
-        return $this->_params;
-    }
-
-    /**
-     * @Author LuoChao
-     * @FunctionName getParam
-     * @param $key
-     * @param null $default
-     * @return null
-     * @explain 获取指定value
-     */
-    public function getParam($key, $default = null)
-    {
-        $key = (string) $key;
-        if (isset($this->_params[$key])) {
-            return $this->_params[$key];
-        }
-
-        return $default;
+        return $this->response(Status::make($status, $data), $httpCode);
     }
 
 }
