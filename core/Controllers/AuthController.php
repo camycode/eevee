@@ -3,6 +3,7 @@
 namespace Core\Controllers;
 
 use Core\Models\User;
+use Core\Models\UserToken;
 use Core\Services\Context;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,14 +21,14 @@ class AuthController extends Controller
     // 注册用户默认来源
     const register_default_source = 'eevee';
 
+    // 默认登录方式, 可选值 (auto | username | email)
+    const login_mode = 'auto';
+
     // 登录失败限制次数
-    const login_failed_limit_times = [5, 3, 2, 1];
+    protected $login_failed_limit_times = [5, 3, 2, 1];
 
     // 登录失败锁定时间,单位秒
-    const login_lock_time = [60, 180, 360, 3600];
-
-    // 默认登录方式, 可选值 (auto | username | email)
-    const login_mode = 'username';
+    protected $login_lock_time = [60, 180, 360, 3600];
 
 
     protected function initializeRegisterUser(array $data)
@@ -76,7 +77,7 @@ class AuthController extends Controller
 
     protected function getUserByUsername($username)
     {
-        if ($user = $this->table('user')->where('email', $username)->first()) {
+        if ($user = $this->table('user')->where('username', $username)->first()) {
 
             return $user;
         }
@@ -84,16 +85,32 @@ class AuthController extends Controller
         exception('UsernameOrPasswordIsNotCorrect');
     }
 
-    protected function authLoginPassword($user, $mode)
+    protected function authLoginPassword($user, $password, $mode)
     {
-        if ($user->password != User::encryptPassword($mode)) {
+        if ($user->password != User::encryptPassword($password)) {
 
             exception(ucwords($mode) . 'OrPasswordIsNotCorrect');
         }
     }
 
-    protected function generateUserToken($user)
+    protected function saveUserToken(&$user)
     {
+        $user->user_token = sha1($user->id . $user->password);
+
+        if (UserToken::where('app_id', APP_ID)->where('user_id', $user->id)->first()) {
+
+            UserToken::where('app_id', APP_ID)->where('user_id', $user->id)->update(['app_version' => APP_VERSION, 'user_token', $user->user_token]);
+
+        } else {
+
+            UserToken::create([
+                'app_id' => APP_ID,
+                'app_version' => APP_VERSION,
+                'user_id' => $user->id,
+                'user_token' => $user->user_token,
+            ]);
+
+        }
 
     }
 
@@ -103,15 +120,21 @@ class AuthController extends Controller
 
         $mode = $context->param('mode', self::login_mode);
 
-        $account = $this->data('accoutn');
+        $account = $context->data('account');
+
+        $password = $context->data('password');
 
         if ($mode == 'auto') {
 
             if (filter_var($account, FILTER_VALIDATE_EMAIL)) {
 
+                $mode = 'email';
+
                 $user = $this->getUserByEmail($account);
 
             } else {
+
+                $mode = 'username';
 
                 $user = $this->getUserByUsername($account);
             }
@@ -129,9 +152,9 @@ class AuthController extends Controller
             throw new \Exception('The login mode is not correct.');
         }
 
-        $this->authLoginPassword($user, $mode);
+        $this->authLoginPassword($user, $password, $mode);
 
-        $user->user_token = $this->generateUserToken($user);
+        $this->saveUserToken($user);
 
         unset($user->password);
 

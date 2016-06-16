@@ -7,7 +7,8 @@ class UserToken extends Model
     protected $table = 'user_token';
 
     protected $fillable = [
-        'client_id',
+        'app_id',
+        'app_version',
         'user_id',
         'user_token',
         'created_at',

@@ -61,13 +61,12 @@ class Authenticate
         }
 
 
-
     }
 
     /**
      * 设置系统常量
      */
-    protected function setConst()
+    protected function setConstants()
     {
         define('APP_ID', $this->app_id);
 
@@ -86,6 +85,10 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         $this->request = $request;
+
+        $this->auth();
+
+        $this->setConstants();
 
         return $next($this->request);
 
