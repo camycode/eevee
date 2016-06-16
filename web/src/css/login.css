@@ -52,3 +52,10 @@
 #page-login #wrapper .ui.stacked.segment {
   margin-top: 10px;
 }
+#page-login #wrapper .ui.message {
+  cursor: pointer;
+  padding: 10px 10px;
+}
+#page-login #wrapper .ui.message:hover a {
+  color: #c0c0c0;
+}

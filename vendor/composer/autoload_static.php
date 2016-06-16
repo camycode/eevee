@@ -325,6 +325,8 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
+        'CreateClientTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_16_082946_create_client_table.php',
+        'CreateClientVersionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_16_082953_create_client_version_table.php',
         'CreatePermissionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130335_create_permission_table.php',
         'CreateResourceTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130334_create_resource_table.php',
         'CreateRolePermissionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130431_create_role_permission_table.php',

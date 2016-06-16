@@ -9,8 +9,13 @@ class CreateUserTokenTable extends Migration
     public function up()
     {
         Schema::create('user_token', function (Blueprint $table) {
+            $table->string('app_id');
             $table->string('user_id');
-            $table->string('user_token')->unique();
+            $table->string('user_token');
+            $table->timestamps();
+            $table->primary(['app_id', 'user_id']);
+            $table->unique('user_token');
+            $table->foreign('app_id')->references('id')->on('app')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
@@ -20,5 +25,5 @@ class CreateUserTokenTable extends Migration
     {
         Schema::drop('user_token');
     }
-    
+
 }

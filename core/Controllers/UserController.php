@@ -76,6 +76,8 @@ class UserController extends Controller
 
         $this->validateUser($data);
 
+        $data['password'] = User::encryptPassword($data['password']);
+
         if (User::create($data)) {
 
             return $context->status('success', User::find($data['id']));
@@ -83,5 +85,5 @@ class UserController extends Controller
 
         exception('PostUserFailed');
     }
-    
+
 }

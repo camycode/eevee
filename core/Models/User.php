@@ -21,5 +21,15 @@ class User extends Model
     ];
 
     public $timestamps = true;
+    
+    /**
+     * 密码加密
+     *
+     * @param $origin
+     */
+    public static function encryptPassword($origin)
+    {
+        return sha1($origin);
+    }
 
 }

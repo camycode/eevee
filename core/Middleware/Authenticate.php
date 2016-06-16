@@ -59,6 +59,21 @@ class Authenticate
 
             exception('AppIDIsInvalid');
         }
+
+
+
+    }
+
+    /**
+     * 设置系统常量
+     */
+    protected function setConst()
+    {
+        define('APP_ID', $this->app_id);
+
+        define('APP_VERSION', $this->app_version);
+
+        define('USER_TOKEN', $this->request->header('X-User-Token'));
     }
 
 
@@ -71,8 +86,6 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         $this->request = $request;
-
-        $this->auth();
 
         return $next($this->request);
 
