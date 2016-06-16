@@ -12,6 +12,7 @@
 namespace Core\Services;
 
 use \Core\Models\Status as StatusModel;
+use League\Flysystem\Exception;
 
 class Status
 {
@@ -35,11 +36,14 @@ class Status
     public static function make($status, $data = null)
     {
 
-        self::$statuses = config('statuses');
+        self::$statuses = require_once base_path("system/install/statuses.php");
 
         $result = new StatusModel();
+
         $result->code = self::getCode($status);
+
         $result->message = self::getMessage($status);
+
         $result->data = $data;
 
         return $result;
@@ -77,16 +81,22 @@ class Status
     {
 
         if (is_string($status)) {
+
             if (array_key_exists($status, self::$statuses)) {
+
                 return true;
             }
+
             self::report($status);
         }
 
         if (is_int($status)) {
+
             if (in_array($status, self::$statuses)) {
+
                 return true;
             }
+
             self::report($status);
         }
 
@@ -99,7 +109,7 @@ class Status
      * 状态消息不存在，返回状态名称.
      *
      * @param $status
-     * 
+     *
      * @return string 状态消息
      *
      */
@@ -112,16 +122,23 @@ class Status
      * 获取状态名.
      *
      * @param  int /string $status 状态码或状态名
+     * @return string /false        状态名
      *
-     * @return string/false        状态名
+     * @throws \Exception
      */
     protected static function getStatusName($status)
     {
         if (is_int($status)) {
+
             return array_search($status, self::$statuses);
+
+        } elseif (is_string($status)) {
+
+            return $status;
+
         }
 
-        return $status;
+        throw new \Exception('status name is not a string or int');
     }
 
     /**

@@ -2,12 +2,12 @@
 
 return [
     'success' => 200,
-    'invildUserToken' => 1001,
-    'permissionsFileMissed' => 1002,
-    'databaseOperateError' => 1003,
-    'unknownDatabaseError' => 1005,
-    'validateFailed' => 2001,
-    'userDoesNotExist' => 2002,
-    'invialidAccountOrUsername' => 2003,
-    'roleDoesNotExsit' => 3001,
+    'InvildUserToken' => 1001,
+    'PermissionsFileMissed' => 1002,
+    'DatabaseOperateError' => 1003,
+    'UnknownDatabaseError' => 1005,
+    'ValidateFailed' => 2001,
+    'UserDoesNotExist' => 2002,
+    'InvalidAccountOrUsername' => 2003,
+    'RoleDoesNotExsit' => 3001,
 ];
