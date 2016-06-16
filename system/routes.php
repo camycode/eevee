@@ -4,7 +4,7 @@
 $app->group(['namespace' => 'Core\Controllers'], function ($app) {
 
     $app->get('/', function () use ($app) {
-        return 'Hello EEVEE!';
+        return view('welcome');
     });
 
 });
