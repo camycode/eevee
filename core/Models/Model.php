@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gu
- * Date: 16/6/16
- * Time: 下午12:03
- */
+
+namespace Core\Models;
+
+use Illuminate\Database\Eloquent\Model as BaseModel;
+
+class Model extends BaseModel
+{
+
+}

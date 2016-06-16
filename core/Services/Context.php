@@ -33,7 +33,7 @@ class Context
     {
         return $this->request->query();
     }
-    
+
     /**
      * 获取GET参数.
      *

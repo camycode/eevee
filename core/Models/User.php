@@ -1,7 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gu
- * Date: 16/6/16
- * Time: 下午12:05
- */
+
+namespace Core\Models;
+
+class User extends Model
+{
+    protected $table = 'user';
+
+    protected $timestamps = true;
+
+    protected $fillable = ['id', 'role', 'username', 'email', 'password', 'name', 'avatar', 'source', 'status', 'created_at', 'updated_at'];
+    
+}
