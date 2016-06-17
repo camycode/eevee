@@ -224,13 +224,17 @@
 
     }
 
+    #text {
+        display: none;
+    }
+
 </style>
 
 <body>
 
 <div class="container">
     <div class="content">
-        <p><a class="title">EEVEE</a></p>
+        <p id="text"><a class="title">EEVEE</a></p>
     </div>
 </div>
 
@@ -335,6 +339,9 @@ void main(void) {
 
 
 
+
+
+
 </script>
 <script id="sakura_point_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -412,6 +419,9 @@ void main(void) {
 
 
 
+
+
+
 </script>
 <!-- effects -->
 <script id="fx_common_vsh" type="x-shader/x_vertex">
@@ -426,6 +436,9 @@ void main(void) {
     texCoord = aPosition.xy * 0.5 + vec2(0.5, 0.5);
     screenCoord = aPosition.xy * vec2(uResolution.z, 1.0);
 }
+
+
+
 
 
 
@@ -456,6 +469,9 @@ void main(void) {
 
 
 
+
+
+
 </script>
 <script id="fx_brightbuf_fsh" type="x-shader/x_fragment">
 #ifdef GL_ES
@@ -472,6 +488,9 @@ void main(void) {
     vec4 col = texture2D(uSrc, texCoord);
     gl_FragColor = vec4(col.rgb * 2.0 - vec3(0.5), 1.0);
 }
+
+
+
 
 
 
@@ -503,6 +522,9 @@ void main(void) {
 
 
 
+
+
+
 </script>
 <!-- effect fragment shader template -->
 <script id="fx_common_fsh" type="x-shader/x_fragment">
@@ -524,6 +546,9 @@ void main(void) {
 
 
 
+
+
+
 </script>
 <!-- post processing -->
 <script id="pp_final_vsh" type="x-shader/x_vertex">
@@ -536,6 +561,9 @@ void main(void) {
     texCoord = aPosition.xy * 0.5 + vec2(0.5, 0.5);
     screenCoord = aPosition.xy * vec2(uResolution.z, 1.0);
 }
+
+
+
 
 
 
@@ -563,6 +591,9 @@ void main(void) {
     gl_FragColor = vec4(col.rgb, 1.0);
     gl_FragColor.a = 1.0;
 }
+
+
+
 
 
 
@@ -1377,9 +1408,17 @@ void main(void) {
 
     //set window.requestAnimationFrame
     (function (w, r) {
+
         w['r' + r] = w['r' + r] || w['webkitR' + r] || w['mozR' + r] || w['msR' + r] || w['oR' + r] || function (c) {
                     w.setTimeout(c, 1000 / 60);
                 };
+
+        setTimeout(function () {
+
+            document.getElementById('text').style.display = 'block';
+
+        }, 700);
+
     })(window, 'equestAnimationFrame');
 </script>
 </html>

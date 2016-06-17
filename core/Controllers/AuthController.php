@@ -51,7 +51,6 @@ class AuthController extends Controller
             'id' => 'required|unique:user',
             'username' => 'required|unique:user',
             'email' => 'required|unique:user',
-            'role' => 'required',
         ];
 
         $this->ignore($data, $ignore);
@@ -95,11 +94,11 @@ class AuthController extends Controller
 
     protected function saveUserToken(&$user)
     {
-        $user->user_token = sha1($user->id . $user->password);
+        $user->user_token = sha1($user->id . $user->password . time());
 
         if (UserToken::where('app_id', APP_ID)->where('user_id', $user->id)->first()) {
 
-            UserToken::where('app_id', APP_ID)->where('user_id', $user->id)->update(['app_version' => APP_VERSION, 'user_token', $user->user_token]);
+            UserToken::where('app_id', APP_ID)->where('user_id', $user->id)->update(['app_version' => APP_VERSION, 'user_token' => $user->user_token]);
 
         } else {
 
