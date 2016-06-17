@@ -8,16 +8,28 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    // 用户正常状态
     const user_status_common = 'common';
 
+    // 用户禁用状态
     const user_status_forbidden = 'forbidden';
 
+    // 用户默认头像
     const user_default_avatar = '/images/avatar.png';
 
+    // 用户默认角色
     const user_default_role = 'guest';
 
+    // 用户默认来源
     const user_default_source = 'admin';
 
+    /**
+     * 初始化用户
+     *
+     * @param array $data
+     *
+     * @return mixed
+     */
     protected function initializeUser(array $data)
     {
         $initialize = [
@@ -31,6 +43,14 @@ class UserController extends Controller
         return array_merge($initialize, $data);
     }
 
+    /**
+     * 验证用户
+     *
+     * @param array $data
+     * @param array $ignore
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     protected function validateUser(array $data, array $ignore = [])
     {
 
@@ -52,7 +72,15 @@ class UserController extends Controller
 
     }
 
-
+    /**
+     * 获取用户
+     *
+     * @param Context $context
+     *
+     * @return \Core\Services\Status
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     public function getUser(Context $context)
     {
 
@@ -64,11 +92,27 @@ class UserController extends Controller
         exception('UserDoesNotExist');
     }
 
+    /**
+     * 获取用户组
+     *
+     * @param Context $context
+     *
+     * @return \Core\Services\Status
+     */
     public function getUsers(Context $context)
     {
         return $context->status('success', $this->selector('user', $context->params()));
     }
 
+    /**
+     * 添加用户
+     *
+     * @param Context $context
+     *
+     * @return \Core\Services\Status
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     public function postUser(Context $context)
     {
 

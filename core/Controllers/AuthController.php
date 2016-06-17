@@ -30,7 +30,13 @@ class AuthController extends Controller
     // 登录失败锁定时间,单位秒
     protected $login_lock_time = [60, 180, 360, 3600];
 
-
+    /**
+     * 初始化注册用户
+     *
+     * @param array $data
+     *
+     * @return array
+     */
     protected function initializeRegisterUser(array $data)
     {
         $initialize = [
@@ -44,6 +50,14 @@ class AuthController extends Controller
         return array_merge($initialize, $data);
     }
 
+    /**
+     * 验证注册用户
+     *
+     * @param array $data
+     * @param array $ignore
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     protected function validateRegisterUser(array $data, array $ignore = [])
     {
 
@@ -64,6 +78,15 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * 通过邮箱获取用户
+     *
+     * @param $email
+     *
+     * @return object
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     protected function getUserByEmail($email)
     {
         if ($user = $this->table('user')->where('email', $email)->first()) {
@@ -74,6 +97,15 @@ class AuthController extends Controller
         exception('EmailOrPasswordIsNotCorrect');
     }
 
+    /**
+     * 通过用户名获取用户
+     *
+     * @param $username
+     *
+     * @return object
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     protected function getUserByUsername($username)
     {
         if ($user = $this->table('user')->where('username', $username)->first()) {
@@ -84,6 +116,15 @@ class AuthController extends Controller
         exception('UsernameOrPasswordIsNotCorrect');
     }
 
+    /**
+     * 验证登录密码
+     *
+     * @param object $user
+     * @param string $password
+     * @param string $mode
+     *
+     * @throws \Core\Exceptions\StatusException
+     */
     protected function authLoginPassword($user, $password, $mode)
     {
         if ($user->password != User::encryptPassword($password)) {
@@ -92,6 +133,11 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * 保存用户密钥
+     *
+     * @param object $user
+     */
     protected function saveUserToken(&$user)
     {
         $user->user_token = sha1($user->id . $user->password . time());
@@ -113,7 +159,15 @@ class AuthController extends Controller
 
     }
 
-    
+    /**
+     * 用户登录
+     *
+     * @param Context $context
+     *
+     * @return \Core\Services\Status
+     *
+     * @throws \Exception
+     */
     public function login(Context $context)
     {
 
