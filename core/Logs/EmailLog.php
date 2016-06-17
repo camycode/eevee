@@ -1,7 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gu
- * Date: 16/6/17
- * Time: 下午3:56
- */
+
+namespace Core\Logs;
+
+use Core\Models\Model;
+use Illuminate\Support\Facades\DB;
+
+class EmailLog extends Model
+{
+    protected $table = 'email_log';
+
+    protected $fillable = [
+        'email',
+        'content',
+        'status_code',
+        'status_message',
+        'ip',
+        'send_begin_at',
+        'send_end_at',
+    ];
+
+    public $timestamps = false;
+
+}

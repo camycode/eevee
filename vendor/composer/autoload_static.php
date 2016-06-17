@@ -325,8 +325,11 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
-        'CreateClientTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_16_082946_create_client_table.php',
-        'CreateClientVersionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_16_082953_create_client_version_table.php',
+        'CreateAccessLogTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_17_082857_create_access_log_table.php',
+        'CreateAppTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130360_create_app_table.php',
+        'CreateAppVersionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130361_create_app_version_table.php',
+        'CreateEmailLogTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_17_082845_create_email_log_table.php',
+        'CreateLoginLogTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_06_17_082831_create_login_log_table.php',
         'CreatePermissionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130335_create_permission_table.php',
         'CreateResourceTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130334_create_resource_table.php',
         'CreateRolePermissionTable' => __DIR__ . '/../..' . '/system/database/migrations/2016_03_03_130431_create_role_permission_table.php',
