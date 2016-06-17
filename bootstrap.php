@@ -16,7 +16,7 @@ Dotenv::load(__DIR__ . '/');
 |
 */
 
-$app = new Core\Services\Application(
+$app = new Core\Services\App(
     realpath(__DIR__ . '/')
 );
 

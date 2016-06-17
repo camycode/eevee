@@ -4,6 +4,7 @@ namespace Core\Controllers;
 
 use Core\Models\User;
 use Core\Models\UserToken;
+use Core\Services\Auth;
 use Core\Services\Context;
 use Illuminate\Support\Facades\Validator;
 
@@ -140,7 +141,7 @@ class AuthController extends Controller
      */
     protected function saveUserToken(&$user)
     {
-        $user->user_token = sha1($user->id . $user->password . time());
+        $user->user_token = Auth::encryptUserToken($user->id, $user->password);
 
         if (UserToken::where('app_id', APP_ID)->where('user_id', $user->id)->first()) {
 
@@ -212,6 +213,11 @@ class AuthController extends Controller
         unset($user->password);
 
         return $context->status('success', $user);
+    }
+
+    public function profile(Context $context)
+    {
+        return $context->status('success', Auth::visitor());
     }
 
     public function register(Context $context)

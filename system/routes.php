@@ -12,7 +12,11 @@ $app->group(['middleware' => 'auth', 'namespace' => 'Core\Controllers'], functio
     $app->get('/api/users', 'UserController@getUsers');
     $app->post('/api/user', 'UserController@postUser');
 
+    // 用户登录
     $app->post('/api/auth/login', 'AuthController@login');
+
+    // 获取个人信息
+    $app->get('/api/auth/profile', 'AuthController@profile');
 
 
 });

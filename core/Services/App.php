@@ -4,7 +4,7 @@ namespace Core\Services;
 
 use Laravel\Lumen\Application as Lumen;
 
-class Application extends Lumen
+class App extends Lumen
 {
     /**
      * 定义配置文件
