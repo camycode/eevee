@@ -80,6 +80,7 @@ $app->singleton(
 
 
 $app->routeMiddleware([
+    'access' => Core\Middleware\Access::class,
     'auth' => Core\Middleware\Authenticate::class,
 ]);
 

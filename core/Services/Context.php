@@ -69,6 +69,9 @@ class Context
      * 获取请求数据
      * 只接收JSON格式.
      *
+     * @param null $field
+     * @param null $default
+     * 
      * @return array 请求数据数组
      */
     public function data($field = null, $default = null)

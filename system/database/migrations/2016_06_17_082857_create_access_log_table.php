@@ -12,10 +12,10 @@ class CreateAccessLogTable extends Migration
             $table->string('method');
             $table->string('uri');
             $table->string('request_params');
-            $table->string('request_data');
+            $table->text('request_data');
             $table->integer('status_code');
             $table->string('status_message');
-            $table->string('status_data');
+            $table->text('status_data');
             $table->string('ip');
             $table->timestamp('access_begin_at');
             $table->timestamp('access_end_at');
