@@ -3,6 +3,7 @@
 namespace Core\Controllers;
 
 use Core\Models\User;
+use Core\Services\Auth;
 use Core\Services\Context;
 use Illuminate\Support\Facades\Validator;
 
@@ -83,7 +84,8 @@ class UserController extends Controller
      */
     public function getUser(Context $context)
     {
-
+        Auth::can('get-user');
+        
         if ($user = User::find($context->param('id'))) {
 
             return $context->status('success', $user);
@@ -101,6 +103,8 @@ class UserController extends Controller
      */
     public function getUsers(Context $context)
     {
+        Auth::can('get-user');
+
         return $context->status('success', $this->selector('user', $context->params()));
     }
 
@@ -115,6 +119,8 @@ class UserController extends Controller
      */
     public function postUser(Context $context)
     {
+
+        Auth::can('post-user');
 
         $data = $this->initializeUser($context->data());
 

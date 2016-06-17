@@ -14,7 +14,6 @@ class CreatePermissionTable extends Migration
             $table->string('id');
             $table->string('resource_id');
             $table->string('name');
-            $table->string('type');
             $table->mediumText('description');
             $table->string('source');
             $table->timestamps();

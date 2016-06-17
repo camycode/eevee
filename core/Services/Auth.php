@@ -2,7 +2,6 @@
 
 namespace Core\Services;
 
-use Core\Models\UserToken;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
@@ -86,10 +85,17 @@ class Auth
 
     /**
      * 验证接口权限
+     *
+     * @param string $action 操作动作
+     * @param array $data    校验数据
+     * @param null $callback 回调函数
+     *
+     * @throws \Core\Exceptions\StatusException
      */
-    public static function guard()
+    public static function can($action, $data = [], $callback = null)
     {
 
+//        exception('PermissionDenied');
     }
 
 
