@@ -62,8 +62,8 @@ class Access
 
         $this->access_log['method'] = $request->method();
         $this->access_log['uri'] = $request->path();
-        $this->access_log['request_params'] = $this->getRequestData($request);
-        $this->access_log['request_data'] = json_encode($request->json()->all());
+        $this->access_log['request_params'] = json_encode($request->query());
+        $this->access_log['request_data'] = $this->getRequestData($request);
         $this->access_log['ip'] = $request->ip();
         $this->access_log['access_begin_at'] = date('Y-m-d H:i:s');
 
