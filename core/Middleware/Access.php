@@ -60,14 +60,15 @@ class Access
     public function handle($request, Closure $next)
     {
 
+
+        $response = $next($request);
+
         $this->access_log['method'] = $request->method();
         $this->access_log['uri'] = $request->path();
         $this->access_log['request_params'] = json_encode($request->query());
         $this->access_log['request_data'] = $this->getRequestData($request);
         $this->access_log['ip'] = $request->ip();
         $this->access_log['access_begin_at'] = date('Y-m-d H:i:s');
-
-        $response = $next($request);
 
         $content = $response->getContent();
 

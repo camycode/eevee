@@ -23,5 +23,9 @@ class AccessLog extends Model
     ];
 
     public $timestamps = false;
+
+    protected function saveAccessLogRecord($request,$content)
+    {
+    }
     
 }
