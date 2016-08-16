@@ -295,6 +295,10 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
+            'PhpRbac' => 
+            array (
+                0 => __DIR__ . '/..' . '/owasp/phprbac/PhpRbac/src',
+            ),
         ),
         'D' => 
         array (
