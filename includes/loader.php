@@ -3,13 +3,14 @@
 /**
  * 载入插件
  *
- * @param $app
- * @param $name
- * @param $path
+ * @param string $app
+ * @param string $name
+ * @param string $path
+ * @param bool $prefix
  *
  * @throws Exception
  */
-function load_plugin(&$app, $name, $path)
+function load_plugin(&$app, $name, $path, $prefix = true)
 {
     $file = $path . '/plugin.json';
 
@@ -25,11 +26,23 @@ function load_plugin(&$app, $name, $path)
 
                 if (file_exists($entry)) {
 
-                    $app->group(['prefix' => "api/$name"], function ($app) use ($entry, $app) {
+                    if ($prefix) {
 
-                        require $entry;
+                        $app->group(['prefix' => "api/$name"], function ($app) use ($entry, $app) {
 
-                    });
+                            require $entry;
+
+                        });
+
+                    } else {
+
+                        $app->group(['prefix' => "api"], function ($app) use ($entry, $app) {
+
+                            require $entry;
+
+                        });
+
+                    }
 
 
                 } else {
@@ -52,7 +65,7 @@ function load_plugin(&$app, $name, $path)
 
     } else {
 
-        throw  new Exception('Plugin json file is not defined, where at ' . $dir . '. You may use eevee plugin init to initialize a new plugin.');
+        throw  new Exception('Plugin json file is not defined, where at ' . $path . '. You may use eevee plugin init to initialize a new plugin.');
 
     }
 
@@ -69,14 +82,20 @@ function load_plugin(&$app, $name, $path)
  */
 function load_plugins(&$app)
 {
+
     $dirs = list_dirs(base_path('/content/plugins'));
+
 
     foreach ($dirs as $dir) {
 
         $name = basename($dir);
 
+        if ($name == 'core') {
 
-        load_plugin($app, $name, $dir);
+            break;
+        }
+
+        load_plugin($app, $name, $dir, true);
 
     }
 
@@ -98,7 +117,7 @@ function load_core(&$app)
 {
     include base_path('includes/routes.php');
 
-    load_plugin($app, 'core', base_path('content/plugins/core'));
+    load_plugin($app, 'core', base_path('content/plugins/core'), false);
 
 }
 
