@@ -752,6 +752,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     }
 
     /**
+     * 获取应用的语言文件
      * Get the path to the application's language files.
      *
      * @return string

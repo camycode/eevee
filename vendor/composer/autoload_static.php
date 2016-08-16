@@ -14,14 +14,11 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         'bee9632da3ca00a99623b9c35d0c4f8b' => __DIR__ . '/..' . '/laravel/lumen-framework/src/helpers.php',
-        '69cd09fc0efd1bb2bf17ffd0e0dc13c2' => __DIR__ . '/../..',
+        '1e8f75575c296cf20b088ef7d5ea8279' => __DIR__ . '/../..' . '/includes/helper.php',
+        '3ea96ebd409b85061ed1137ba1627a0f' => __DIR__ . '/../..' . '/includes/loader.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'T' => 
-        array (
-            'Theme\\' => 6,
-        ),
         'S' => 
         array (
             'Symfony\\Component\\Yaml\\' => 23,
@@ -37,10 +34,6 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\Console\\' => 26,
             'Stringy\\' => 8,
-        ),
-        'P' => 
-        array (
-            'Plugin\\' => 7,
         ),
         'M' => 
         array (
@@ -95,10 +88,6 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $prefixDirsPsr4 = array (
-        'Theme\\' => 
-        array (
-            0 => __DIR__ . '/../..',
-        ),
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
@@ -150,10 +139,6 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         'Stringy\\' => 
         array (
             0 => __DIR__ . '/..' . '/danielstjules/stringy/src',
-        ),
-        'Plugin\\' => 
-        array (
-            0 => __DIR__ . '/../..',
         ),
         'Monolog\\' => 
         array (
@@ -277,7 +262,7 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         ),
         'Core\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/core',
+            0 => __DIR__ . '/../..' . '/modules/Core',
         ),
         'Carbon\\' => 
         array (
@@ -325,24 +310,24 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
-        'CreateAccessLogTable' => __DIR__ . '/../..',
-        'CreateAppTable' => __DIR__ . '/../..',
-        'CreateAppVersionTable' => __DIR__ . '/../..',
-        'CreateEmailLogTable' => __DIR__ . '/../..',
-        'CreateLoginLogTable' => __DIR__ . '/../..',
-        'CreatePermissionTable' => __DIR__ . '/../..',
-        'CreateResourceTable' => __DIR__ . '/../..',
-        'CreateRolePermissionTable' => __DIR__ . '/../..',
-        'CreateRoleTable' => __DIR__ . '/../..',
-        'CreateSystemConfigTable' => __DIR__ . '/../..',
-        'CreateSystemMenuTable' => __DIR__ . '/../..',
-        'CreateSystemMessageTable' => __DIR__ . '/../..',
-        'CreateUserConfigTable' => __DIR__ . '/../..',
-        'CreateUserMessageTable' => __DIR__ . '/../..',
-        'CreateUserTable' => __DIR__ . '/../..',
-        'CreateUserTokenTable' => __DIR__ . '/../..',
-        'DatabaseSeeder' => __DIR__ . '/../..',
-        'ExampleTest' => __DIR__ . '/../..' . '/core/Tests/ExampleTest.php',
+        'CreateAccessLogTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_17_082857_create_access_log_table.php',
+        'CreateAppTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130360_create_app_table.php',
+        'CreateAppVersionTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130361_create_app_version_table.php',
+        'CreateEmailLogTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_17_082845_create_email_log_table.php',
+        'CreateLoginLogTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_17_082831_create_login_log_table.php',
+        'CreatePermissionTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130335_create_permission_table.php',
+        'CreateResourceTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130334_create_resource_table.php',
+        'CreateRolePermissionTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130431_create_role_permission_table.php',
+        'CreateRoleTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130430_create_role_table.php',
+        'CreateSystemConfigTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_15_071219_create_system_config_table.php',
+        'CreateSystemMenuTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_15_071308_create_system_menu_table.php',
+        'CreateSystemMessageTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_15_071225_create_system_message_table.php',
+        'CreateUserConfigTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_173436_create_user_config_table.php',
+        'CreateUserMessageTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_173435_create_user_message_table.php',
+        'CreateUserTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130435_create_user_table.php',
+        'CreateUserTokenTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_173434_create_user_token_table.php',
+        'DatabaseSeeder' => __DIR__ . '/../..' . '/modules/Core/Database/seeds/DatabaseSeeder.php',
+        'ExampleTest' => __DIR__ . '/../..' . '/modules/Core/Tests/ExampleTest.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
@@ -784,7 +769,7 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
-        'TestCase' => __DIR__ . '/../..' . '/core/Tests/TestCase.php',
+        'TestCase' => __DIR__ . '/../..' . '/modules/Core/Tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
     );
 

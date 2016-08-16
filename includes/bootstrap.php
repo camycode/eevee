@@ -1,9 +1,10 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 
-Dotenv::load(__DIR__ . 'bootstrap.php/');
+
+Dotenv::load(__DIR__ . '/../');
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ Dotenv::load(__DIR__ . 'bootstrap.php/');
 */
 
 $app = new Core\Services\App(
-    realpath(__DIR__ . 'bootstrap.php/')
+    realpath(__DIR__ . '/../')
 );
 
 
@@ -27,7 +28,7 @@ $app = new Core\Services\App(
 |--------------------------------------------------------------------------
 */
 
-$app->withFacades();
+//$app->withFacades();
 
 
 /*
@@ -52,6 +53,7 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     Core\Exceptions\Handler::class
 );
+
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
@@ -103,7 +105,6 @@ $app->register(Core\Providers\ContextServiceProvider::class);
 $app->register(Core\Providers\RequestServiceProvider::class);
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -115,7 +116,9 @@ $app->register(Core\Providers\RequestServiceProvider::class);
 |
 */
 
-require __DIR__ . '/system/routes.php';
+load_module_routes($app);
+
+//require __DIR__ . '/system/routes.php';
 
 
 return $app;

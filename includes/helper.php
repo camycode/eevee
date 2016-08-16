@@ -97,3 +97,39 @@ function auth($permission, $resource, $user_id, $callback)
 {
 
 }
+
+/**
+ * 遍历目录
+ *
+ * @param string $dir 遍历目标目录路径
+ * @param bool $all 是否递归遍历
+ *
+ * @return array
+ */
+function list_dir($dir, $all = false)
+{
+    $dirs = array();
+
+    if (is_dir($dir)) {
+
+        if ($handler = opendir($dir)) {
+
+            while (($file = readdir($handler)) !== false) {
+
+                $path = $dir . "/" . $file;
+
+                if ((is_dir($path)) && $file != "." && $file != "..") {
+
+                    array_push($dirs, $path);
+
+                    if ($all) {
+                        list_dir("$path/");
+                    }
+                }
+            }
+            closedir($handler);
+        }
+    }
+
+    return $dirs;
+}

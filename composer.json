@@ -17,20 +17,19 @@
   },
   "autoload": {
     "psr-4": {
-      "Core\\": "core/",
-      "Theme\\": "themes/",
-      "Plugin\\": "plugins/"
+      "Core\\": "modules/Core/"
     },
     "classmap": [
-      "system/database/"
+      "modules/Core/Database/"
     ],
     "files": [
-      "system/helper.php"
+      "includes/helper.php",
+      "includes/loader.php"
     ]
   },
   "autoload-dev": {
     "classmap": [
-      "core/Tests/"
+      "modules/Core/Tests/"
     ]
   },
   "config": {

@@ -13,5 +13,6 @@ return array(
     '2c102faa651ef8ea5874edb585946bce' => $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
     '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
     'bee9632da3ca00a99623b9c35d0c4f8b' => $vendorDir . '/laravel/lumen-framework/src/helpers.php',
-    '69cd09fc0efd1bb2bf17ffd0e0dc13c2' => $baseDir . '/system/helper.php',
+    '1e8f75575c296cf20b088ef7d5ea8279' => $baseDir . '/includes/helper.php',
+    '3ea96ebd409b85061ed1137ba1627a0f' => $baseDir . '/includes/loader.php',
 );

@@ -44,7 +44,7 @@ class App extends Lumen
     }
 
     /**
-     * 注册配置文件
+     * 注册系统默认配置文件
      */
     protected function setConfigures()
     {
@@ -57,21 +57,25 @@ class App extends Lumen
     /**
      * 获取语言文件路径
      *
+     * @TODO 需要遍历语言文件
+     *
      * @return string
      */
     protected function getLanguagePath()
     {
-        return base_path('/system/locale');
+        return base_path('/modules/Core/Locale');
     }
 
     /**
      * 获取项目核心文件路径
      *
+     * @TODO 需要确定核心文件用法
+     *
      * @return string
      */
     public function path()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'core';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'modules'. DIRECTORY_SEPARATOR .'Core';
     }
 
     /**
@@ -87,21 +91,25 @@ class App extends Lumen
             return $this->storagePath . ($path ? '/' . $path : $path);
         }
 
-        return $this->basePath() . '/storage' . ($path ? '/' . $path : $path);
+        return $this->basePath() . '/content/storage' . ($path ? '/' . $path : $path);
     }
 
     /**
      * 获取数据库迁移文件路径
      *
+     * @TODO 需遍历数据迁移文件
+     *
      * @return string
      */
     public function databasePath()
     {
-        return $this->basePath('system/database');
+        return $this->basePath('modules/Core/Database');
     }
 
     /**
      * 获取配置文件路径
+     *
+     * @TODO 需要定制每个模块配置文件
      *
      * @param null $name
      *
@@ -111,25 +119,25 @@ class App extends Lumen
     {
         if (!$name) {
 
-            $appConfigDir = ($this->configPath ?: $this->basePath('config')) . '/';
+            $appConfigDir = ($this->configPath ?: $this->basePath('includes/config')) . '/';
 
             if (file_exists($appConfigDir)) {
 
                 return $appConfigDir;
             }
 
-            return base_path('system/config/');
+            return base_path('includes/config/');
 
         } else {
 
-            $appConfigPath = ($this->configPath ?: $this->basePath('config')) . '/' . $name . '.php';
+            $appConfigPath = ($this->configPath ?: $this->basePath('includes/config')) . '/' . $name . '.php';
 
             if (file_exists($appConfigPath)) {
 
                 return $appConfigPath;
             }
 
-            return base_path("system/config/$name.php");
+            return base_path("includes/config/$name.php");
         }
 
     }

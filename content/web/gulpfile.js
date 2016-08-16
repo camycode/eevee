@@ -30,7 +30,7 @@ gulp.task('browser', function () {
     watch(['./src/config.json','./src/scripts/[^bower]*/**/*.js', './src/scripts/*.js', './src/index.html', './src/views/**/*.html', './src/images/**/*.*'], browserSync.reload);
 
     return browserSync.init({
-        startPath: '/web/src/index.html#login',
+        startPath: 'content/web/src/index.html#login',
         proxy : 'http://dev.eevee.io/'
     });
 });
