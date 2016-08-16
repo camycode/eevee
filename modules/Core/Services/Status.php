@@ -36,7 +36,7 @@ class Status
     public static function make($status, $data = null)
     {
 
-        self::$statuses = require_once base_path("system/install/statuses.php");
+        self::$statuses = require_once base_path("content/install/statuses.php");
 
         $result = new StatusModel();
 
