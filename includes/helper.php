@@ -1,5 +1,6 @@
 <?php
 
+use Core\Services\Hook;
 use Core\Services\Status;
 use Core\Exceptions\StatusException;
 
@@ -98,6 +99,44 @@ function auth($permission, $resource, $user_id, $callback)
 
 }
 
+/**
+ * 注册钩子全局对象
+ */
+
+global $hook;
+
+$hook = new Hook();
+
+/**
+ * 触发钩子函数
+ *
+ * @param $tag
+ * @param string $arg
+ */
+function do_action($tag, $arg = '')
+{
+
+    global $hook;
+
+    $hook->do_action($tag, $arg);
+}
+
+/**
+ * 绑定钩子函数
+ *
+ * @param $tag
+ * @param $function_to_add
+ * @param int $priority
+ * @param int $accepted_args
+ */
+function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1)
+{
+
+    global $hook;
+
+    $hook->add_action($tag, $function_to_add, $priority, $accepted_args);
+}
+
 
 /**
  * 遍历目录获取子文件
@@ -166,3 +205,5 @@ function list_dirs($dir, $all = false)
 
     return $dirs;
 }
+
+

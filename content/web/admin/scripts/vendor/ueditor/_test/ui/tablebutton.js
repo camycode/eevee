@@ -1,1 +1,0 @@
-module("ui.table"),test("TableButton/TablePicker",function(){});

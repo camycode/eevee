@@ -22,6 +22,19 @@ $app->get('/', function () use ($app) {
 //});
 
 
+$app->group(['prefix' => 'backend', 'namespace' => 'Core\Controllers'], function ($app) {
+
+
+    // 后台登录
+    $app->get('/login', 'BackendController@getLogin');
+    
+    // 后台管理主界面
+    $app->get('{name}', 'BackendController@getPlugin');
+
+
+});
+
+
 $app->group(['namespace' => 'Core\Controllers'], function ($app) {
 
     $app->get('/api/test', 'UserController@getTest');

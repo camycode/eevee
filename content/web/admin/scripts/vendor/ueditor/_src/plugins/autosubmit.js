@@ -1,1 +1,0 @@
-UE.plugin.register("autosubmit",function(){return{shortcutkey:{autosubmit:"ctrl+13"},commands:{autosubmit:{execCommand:function(){var t=this,i=domUtils.findParentByTagName(t.iframe,"form",!1);if(i){if(t.fireEvent("beforesubmit")===!1)return;t.sync(),i.submit()}}}}}});

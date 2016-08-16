@@ -1,1 +1,0 @@
-UE.plugin.register("serverparam",function(){var e={};return{commands:{serverparam:{execCommand:function(n,i,t){void 0===i||null===i?e={}:utils.isString(i)?void 0===t||null===t?delete e[i]:e[i]=t:utils.isObject(i)?utils.extend(e,i,!0):utils.isFunction(i)&&utils.extend(e,i(),!0)},queryCommandValue:function(){return e||{}}}}}});

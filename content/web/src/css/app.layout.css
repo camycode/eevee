@@ -21,7 +21,6 @@ body > .wrapper {
 #eevee-layout {
   height: 100%;
   overflow: hidden;
-  display: none;
 }
 #eevee-layout #eevee-header {
   position: fixed;

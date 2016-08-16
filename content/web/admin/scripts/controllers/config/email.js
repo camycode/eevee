@@ -1,1 +1,0 @@
-define(["css!../../../css/config/email"],function(){return["$scope","$stateParams",function(n,s){}]});

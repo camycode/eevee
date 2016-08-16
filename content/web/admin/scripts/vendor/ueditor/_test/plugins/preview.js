@@ -1,1 +1,0 @@
-module("plugins.preview"),test("插入代码后预览",function(){equal("","")});
