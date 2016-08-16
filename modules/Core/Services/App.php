@@ -126,9 +126,7 @@ class App extends Lumen
     }
 
     /**
-     * 获取配置文件路径
-     *
-     * @TODO 需要定制每个模块配置文件
+     * 为系统加载默认配置文件提供存放目录路径
      *
      * @param null $name
      *

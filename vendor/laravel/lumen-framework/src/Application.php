@@ -741,6 +741,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     protected function registerTranslationBindings()
     {
         $this->singleton('translator', function () {
+            
             $this->configure('app');
 
             $this->instance('path.lang', $this->getLanguagePath());
