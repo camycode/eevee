@@ -79,7 +79,7 @@ class App extends Lumen
      */
     protected function getLanguagePath()
     {
-        return base_path('/modules/Core/Locale');
+        return base_path('/includes/Core/Locale');
     }
 
     /**
@@ -122,7 +122,7 @@ class App extends Lumen
      */
     public function databasePath()
     {
-        return $this->basePath('modules/Core/Database');
+        return $this->basePath('includes/Core/Database');
     }
 
     /**
@@ -137,18 +137,18 @@ class App extends Lumen
 
         if (!$name) {
 
-            $appConfigDir = ($this->configPath ?: $this->basePath('includes/config')) . '/';
+            $appConfigDir = ($this->configPath ?: $this->basePath('includes/core/Config')) . '/';
 
             if (file_exists($appConfigDir)) {
 
                 return $appConfigDir;
             }
 
-            return base_path('includes/config/');
+            return base_path('includes/core/Config/');
 
         } else {
 
-            $appConfigPath = ($this->configPath ?: $this->basePath('includes/config')) . '/' . $name . '.php';
+            $appConfigPath = ($this->configPath ?: $this->basePath('includes/core/Config')) . '/' . $name . '.php';
 
             if (file_exists($appConfigPath)) {
 
@@ -156,7 +156,7 @@ class App extends Lumen
             }
 
 
-            return base_path("includes/config/$name.php");
+            return base_path("includes/core/Config/$name.php");
         }
 
     }

@@ -19,10 +19,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Core\\": "modules/Core/"
+      "Core\\": "includes/Core/"
     },
     "classmap": [
-      "modules/Core/Database/"
+      "includes/core/Database/"
     ],
     "files": [
       "includes/helper.php",
@@ -31,7 +31,7 @@
   },
   "autoload-dev": {
     "classmap": [
-      "modules/Core/Tests/"
+      "includes/core/Tests/"
     ]
   },
   "config": {

@@ -262,7 +262,7 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         ),
         'Core\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/modules/Core',
+            0 => __DIR__ . '/../..' . '/includes/Core',
         ),
         'Carbon\\' => 
         array (
@@ -321,24 +321,24 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
     );
 
     public static $classMap = array (
-        'CreateAccessLogTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_17_082857_create_access_log_table.php',
-        'CreateAppTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130360_create_app_table.php',
-        'CreateAppVersionTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130361_create_app_version_table.php',
-        'CreateEmailLogTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_17_082845_create_email_log_table.php',
-        'CreateLoginLogTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_17_082831_create_login_log_table.php',
-        'CreatePermissionTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130335_create_permission_table.php',
-        'CreateResourceTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130334_create_resource_table.php',
-        'CreateRolePermissionTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130431_create_role_permission_table.php',
-        'CreateRoleTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130430_create_role_table.php',
-        'CreateSystemConfigTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_15_071219_create_system_config_table.php',
-        'CreateSystemMenuTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_15_071308_create_system_menu_table.php',
-        'CreateSystemMessageTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_06_15_071225_create_system_message_table.php',
-        'CreateUserConfigTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_173436_create_user_config_table.php',
-        'CreateUserMessageTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_173435_create_user_message_table.php',
-        'CreateUserTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_130435_create_user_table.php',
-        'CreateUserTokenTable' => __DIR__ . '/../..' . '/modules/Core/Database/migrations/2016_03_03_173434_create_user_token_table.php',
-        'DatabaseSeeder' => __DIR__ . '/../..' . '/modules/Core/Database/seeds/DatabaseSeeder.php',
-        'ExampleTest' => __DIR__ . '/../..' . '/modules/Core/Tests/ExampleTest.php',
+        'CreateAccessLogTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_06_17_082857_create_access_log_table.php',
+        'CreateAppTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130360_create_app_table.php',
+        'CreateAppVersionTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130361_create_app_version_table.php',
+        'CreateEmailLogTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_06_17_082845_create_email_log_table.php',
+        'CreateLoginLogTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_06_17_082831_create_login_log_table.php',
+        'CreatePermissionTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130335_create_permission_table.php',
+        'CreateResourceTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130334_create_resource_table.php',
+        'CreateRolePermissionTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130431_create_role_permission_table.php',
+        'CreateRoleTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130430_create_role_table.php',
+        'CreateSystemConfigTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_06_15_071219_create_system_config_table.php',
+        'CreateSystemMenuTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_06_15_071308_create_system_menu_table.php',
+        'CreateSystemMessageTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_06_15_071225_create_system_message_table.php',
+        'CreateUserConfigTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_173436_create_user_config_table.php',
+        'CreateUserMessageTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_173435_create_user_message_table.php',
+        'CreateUserTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_130435_create_user_table.php',
+        'CreateUserTokenTable' => __DIR__ . '/../..' . '/includes/core/Database/migrations/2016_03_03_173434_create_user_token_table.php',
+        'DatabaseSeeder' => __DIR__ . '/../..' . '/includes/core/Database/seeds/DatabaseSeeder.php',
+        'ExampleTest' => __DIR__ . '/../..' . '/includes/core/Tests/ExampleTest.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
@@ -780,7 +780,7 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
-        'TestCase' => __DIR__ . '/../..' . '/modules/Core/Tests/TestCase.php',
+        'TestCase' => __DIR__ . '/../..' . '/includes/core/Tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
     );
 
