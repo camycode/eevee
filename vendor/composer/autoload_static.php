@@ -278,6 +278,13 @@ class ComposerStaticInit8487ffca10088f4d5281a22779f43efc
                 0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             ),
         ),
+        'R' => 
+        array (
+            'Requests' => 
+            array (
+                0 => __DIR__ . '/..' . '/rmccue/requests/library',
+            ),
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 
