@@ -57,7 +57,7 @@
             </div>
 
             <div class="ui dropdown item" tabindex="0">
-                <img src="/content/plugins/core/assets/images/avatar.png" alt="" class="ui avatar image">
+                <img src="/content/web/src/images/avatar.png" alt="" class="ui avatar image">
                 <i class="dropdown icon"></i>
                 <div class="user panel menu transition hidden" tabindex="-1">
                     <div class="item" ng-click="userInformation()">个人信息</div>
