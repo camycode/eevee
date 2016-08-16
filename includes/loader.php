@@ -12,60 +12,32 @@
  */
 function load_plugin(&$app, $name, $path, $prefix = true)
 {
-    $file = $path . '/plugin.json';
+    $entry = $path . DIRECTORY_SEPARATOR . 'entry.php';
 
-    if (file_exists($file)) {
+    if (file_exists($entry)) {
 
-        try {
+        if ($prefix) {
 
-            $plugin = json_decode(file_get_contents($file));
+            $app->group(['prefix' => "api/$name"], function ($app) use ($entry, $app) {
 
-            if (isset($plugin->entry)) {
+                require $entry;
 
-                $entry = $path . '/' . $plugin->entry;
+            });
 
-                if (file_exists($entry)) {
+        } else {
 
-                    if ($prefix) {
+            $app->group(['prefix' => "api"], function ($app) use ($entry, $app) {
 
-                        $app->group(['prefix' => "api/$name"], function ($app) use ($entry, $app) {
+                require $entry;
 
-                            require $entry;
+            });
 
-                        });
-
-                    } else {
-
-                        $app->group(['prefix' => "api"], function ($app) use ($entry, $app) {
-
-                            require $entry;
-
-                        });
-
-                    }
-
-
-                } else {
-
-                    throw  new Exception('Plugin entry file is not defined, where at ' . $entry);
-
-                }
-
-
-            } else {
-
-                throw  new Exception('The plugin entry is not defined, where at ' . $file);
-
-            }
-
-        } catch (Exception $e) {
-
-            throw $e;
         }
+
 
     } else {
 
-        throw  new Exception('Plugin json file is not defined, where at ' . $path . '. You may use eevee plugin init to initialize a new plugin.');
+        throw  new Exception('Plugin entry file is not defined, where at ' . $entry);
 
     }
 
