@@ -108,20 +108,6 @@ global $hook;
 $hook = new Hook();
 
 /**
- * 触发钩子函数
- *
- * @param $tag
- * @param string $arg
- */
-function do_action($tag, $arg = '')
-{
-
-    global $hook;
-
-    $hook->do_action($tag, $arg);
-}
-
-/**
  * 绑定钩子函数
  *
  * @param $tag
@@ -137,6 +123,56 @@ function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1)
     $hook->add_action($tag, $function_to_add, $priority, $accepted_args);
 }
 
+/**
+ * 触发钩子函数
+ *
+ * @param $tag
+ * @param string $arg
+ */
+function do_action($tag, $arg = '')
+{
+
+    global $hook;
+
+    $hook->do_action($tag, $arg);
+}
+
+
+/**
+ * 获取GET参数
+ *
+ * @param null $key
+ *
+ * @return null
+ */
+function get_query($key = null)
+{
+    if ($key) {
+        return isset($_GET[$key]) ? $_GET[$key] : null;
+    }
+
+    return $_GET;
+}
+
+/**
+ * 加载样式文件
+ *
+ * @param $path
+ */
+function load_plugin_style($path)
+{
+    echo '<link rel="stylesheet" type="text/css" href="/content/plugins/' . $path . '" />';
+}
+
+/**
+ * 加载脚本文件
+ *
+ * @param $path
+ */
+function load_plugin_script($path)
+{
+    echo '<script type="text/javascript" src="/content/plugins/' . $path . '"></scripts>';
+}
 
 /**
  * 遍历目录获取子文件

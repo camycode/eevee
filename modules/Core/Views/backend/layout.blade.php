@@ -113,7 +113,7 @@
 
         <div id="eevee-view">
 
-            <?php //echo $content ?>
+            <?php echo $content ?>
 
         </div>
 

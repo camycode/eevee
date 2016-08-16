@@ -16,6 +16,8 @@ function load_plugins(&$app)
 
     foreach ($dirs as $dir) {
 
+        $name = basename($dir);
+
         $file = $dir . '/plugin.json';
 
         if (file_exists($file)) {
@@ -30,7 +32,12 @@ function load_plugins(&$app)
 
                     if (file_exists($entry)) {
 
-                        require $entry;
+                        $app->group(['prefix' => "api/$name"], function ($app) use ($entry, $app) {
+
+                            require $entry;
+                            
+                        });
+
 
                     } else {
 
@@ -72,8 +79,8 @@ function load_themes()
  * 模块配置文件存放在每个模块的Config目录下, 注册时以模块名称小写为前缀加点好连接, 如(core.app.key)。
  * 注: 会过滤掉 routes.php 路由注册文件。
  *
- * @param Core\Services\App  $app           应用实例
- * @param string             $module_path   模块路径
+ * @param Core\Services\App $app 应用实例
+ * @param string $module_path 模块路径
  *
  * @return void
  */
