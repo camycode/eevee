@@ -98,15 +98,48 @@ function auth($permission, $resource, $user_id, $callback)
 
 }
 
+
 /**
- * 遍历目录
+ * 遍历目录获取子文件
+ *
+ * @param string $dir 遍历目标目录路径
+ *
+ * @return array
+ */
+function list_files($dir)
+{
+    $files = array();
+
+    if (is_dir($dir)) {
+
+        if ($handler = opendir($dir)) {
+
+            while (($file = readdir($handler)) !== false) {
+
+                $path = $dir . "/" . $file;
+
+                if ((is_file($path)) && $file != "." && $file != "..") {
+
+                    array_push($files, $path);
+                }
+            }
+            closedir($handler);
+        }
+    }
+
+    return $files;
+}
+
+
+/**
+ * 遍历目录获取子目录
  *
  * @param string $dir 遍历目标目录路径
  * @param bool $all 是否递归遍历
  *
  * @return array
  */
-function list_dir($dir, $all = false)
+function list_dirs($dir, $all = false)
 {
     $dirs = array();
 
@@ -123,7 +156,7 @@ function list_dir($dir, $all = false)
                     array_push($dirs, $path);
 
                     if ($all) {
-                        list_dir("$path/");
+                        list_dirs("$path/");
                     }
                 }
             }

@@ -73,6 +73,28 @@ class UserController extends Controller
 
     }
 
+    public function getTest(Context $context)
+    {
+//        Auth::can('get-user');
+//
+//        if ($user = User::find($context->param('id'))) {
+//
+//            return $context->status('success', $user);
+//        }
+//
+//        exception('UserDoesNotExist');
+
+        echo config('app.key');
+        echo '<br>';
+        echo config('core.app.key');
+        echo '<br>';
+        echo config('app.key');
+
+
+//        return response(view('test'));
+    }
+
+
     /**
      * 获取用户
      *
@@ -85,7 +107,7 @@ class UserController extends Controller
     public function getUser(Context $context)
     {
         Auth::can('get-user');
-        
+
         if ($user = User::find($context->param('id'))) {
 
             return $context->status('success', $user);
@@ -120,7 +142,7 @@ class UserController extends Controller
     public function postUser(Context $context)
     {
 
-        Auth::can('post-user');
+        Auth::can('post_user');
 
         $data = $this->initializeUser($context->data());
 

@@ -40,7 +40,6 @@ class App extends Lumen
 
         $this->setConfigures();
 
-//        $this->setPermissionRoutes(config('routes'));
     }
 
     /**
@@ -52,6 +51,23 @@ class App extends Lumen
 
             $this->configure($file);
         }
+    }
+
+    /**
+     * 注册模块配置文件
+     *
+     * @param string $name
+     * @param string $path
+     *
+     */
+    public function setModuleConfigures($name, $path)
+    {
+
+        if (file_exists($path)) {
+           
+            $this->make('config')->set($name, require $path);
+        }
+
     }
 
     /**
@@ -75,11 +91,14 @@ class App extends Lumen
      */
     public function path()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'modules'. DIRECTORY_SEPARATOR .'Core';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'Core';
     }
 
     /**
      * 获取资源存储路径
+     *
+     * 对于资源存储,采用的是统一管理的方案,所有的模块和插件使用 Storage 操作文件系统时,
+     * 默认路径均指向: /content/storage 。
      *
      * @param null $path
      *
@@ -117,6 +136,7 @@ class App extends Lumen
      */
     public function getConfigurationPath($name = null)
     {
+
         if (!$name) {
 
             $appConfigDir = ($this->configPath ?: $this->basePath('includes/config')) . '/';
@@ -136,6 +156,7 @@ class App extends Lumen
 
                 return $appConfigPath;
             }
+
 
             return base_path("includes/config/$name.php");
         }
@@ -174,63 +195,7 @@ class App extends Lumen
 //    }
 
 
-//    protected function registerPluginsRoutes()
-//    {
-//        $plugins = $this->getDirectories(__DIR__ . "/../../plugins");
-//
-//        foreach ($plugins as $plugin) {
-//
-//            $route_file = $plugin['path'] . '/routes.php';
-//
-//            if (file_exists($route_file)) {
-//
-//                $prefix = $plugin['name'] . '/';
-//
-//                $namespace = ucwords($plugin['name']);
-//
-//                $routes = require($route_file);
-//
-//                foreach ($routes as $route => $params) {
-//
-//
-//                    list($method, $uri) = explode('@', $route);
-//
-//
-//                    if (isset($params['action'])) {
-//
-//                        $this->addRoute(strtoupper($method), $prefix . $uri, $namespace . '\\' . $params['action']);
-//
-//                    } else {
-//
-//                        throw new \Exception("The plugin $namespace route $route action is empty", 1);
-//
-//                    }
-//
-//                }
-//            }
-//        }
-//
-//    }
-//
-//    protected function getDirectories($path)
-//    {
-//        $result = [];
-//
-//        $items = scandir($path);
-//
-//        foreach ($items as $item) {
-//
-//            if ($item != '.' && $item != '..') {
-//
-//                if (is_dir($path . '/' . $item)) {
-//
-//                    array_push($result, ['name' => $item, 'path' => $path . '/' . $item]);
-//                }
-//            }
-//        }
-//
-//        return $result;
-//    }
+
 
 
 }

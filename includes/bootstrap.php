@@ -3,7 +3,11 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
-
+/*
+|--------------------------------------------------------------------------
+|载入环境变量文件
+|--------------------------------------------------------------------------
+*/
 Dotenv::load(__DIR__ . '/../');
 
 /*
@@ -107,18 +111,12 @@ $app->register(Core\Providers\RequestServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
-| Load The Application Routes
+| 载入系统模块
 |--------------------------------------------------------------------------
-|
-| Next we will include the routes file so that they can all be added to
-| the application. This will provide all of the URLs the application
-| can respond to, as well as the controllers that may handle them.
-|
+| 接下来会遍历模块(modules)目录, 注册模块路径到应用实例中, 在模块中可以自由定制路由配置,
+| 每一个模块拥有自己的视图, 配置文件,本地化文件和数据库迁移能力。
 */
 
-load_module_routes($app);
-
-//require __DIR__ . '/system/routes.php';
-
+load_modules($app);
 
 return $app;

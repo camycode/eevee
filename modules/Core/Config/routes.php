@@ -6,17 +6,25 @@ $app->get('/', function () use ($app) {
 });
 
 
-$app->group(['middleware' => ['access', 'auth'], 'namespace' => 'Core\Controllers'], function ($app) {
+//$app->group(['middleware' => ['access', 'auth'], 'namespace' => 'Core\Controllers'], function ($app) {
+//
+//    $app->get('/api/user', 'UserController@getUser');
+//    $app->get('/api/users', 'UserController@getUsers');
+//    $app->post('/api/user', 'UserController@postUser');
+//
+//    // 用户登录
+//    $app->post('/api/auth/login', 'AuthController@login');
+//
+//    // 获取个人信息
+//    $app->get('/api/auth/profile', 'AuthController@profile');
+//
+//
+//});
 
-    $app->get('/api/user', 'UserController@getUser');
-    $app->get('/api/users', 'UserController@getUsers');
-    $app->post('/api/user', 'UserController@postUser');
 
-    // 用户登录
-    $app->post('/api/auth/login', 'AuthController@login');
+$app->group(['namespace' => 'Core\Controllers'], function ($app) {
 
-    // 获取个人信息
-    $app->get('/api/auth/profile', 'AuthController@profile');
+    $app->get('/api/test', 'UserController@getTest');
 
 
 });
