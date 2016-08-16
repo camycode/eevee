@@ -1,6 +1,7 @@
 <?php
 
 use Core\Services\Hook;
+use Core\Services\Rbac;
 use Core\Services\Status;
 use Core\Exceptions\StatusException;
 
@@ -106,6 +107,17 @@ function auth($permission, $resource, $user_id, $callback)
 global $hook;
 
 $hook = new Hook();
+
+
+/**
+ * 生成权限校验对象
+ *
+ * @return Rbac
+ */
+function rabc()
+{
+    return new Rbac();
+}
 
 /**
  * 绑定钩子函数
