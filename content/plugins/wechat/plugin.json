@@ -1,8 +1,9 @@
 {
-  "name": "wechat",
+  "name": "core",
   "version": "0.0.1",
   "description": "eevee core module.",
   "entry": "entry.php",
+  "view": "view.php",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eevee-plugins/user.git"

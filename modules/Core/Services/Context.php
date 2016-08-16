@@ -71,7 +71,7 @@ class Context
      *
      * @param null $field
      * @param null $default
-     * 
+     *
      * @return array 请求数据数组
      */
     public function data($field = null, $default = null)
@@ -95,7 +95,7 @@ class Context
      */
     public function response($result = '', $httpCode = 200)
     {
-        return response(json_encode($result), $httpCode)->header('Content-Type', 'application/json');
+        return response($result, $httpCode);
     }
 
     /**
@@ -109,7 +109,7 @@ class Context
      */
     public function status($status, $data = null, $httpCode = 200)
     {
-        return $this->response(Status::make($status, $data), $httpCode);
+        return $this->response(json_encode(Status::make($status, $data)), $httpCode)->header('Content-Type', 'application/json');
     }
 
 }
