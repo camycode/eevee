@@ -8,12 +8,20 @@ global $app;
 
 $app->get('/', function (Context $context) {
 
-    echo 'Hello Core';
+    function hello()
+    {
+
+        echo id();
+    }
+
+    hello();
+
+
 });
 
 
 $app->get('/hello', function (Context $context) {
 
-    return $context->status('success', DB::table('app')->get());
+    return $context->status('success', selector('app', $context->params()));
 
 });
