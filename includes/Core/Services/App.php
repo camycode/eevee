@@ -110,7 +110,7 @@ class App extends Lumen
             return $this->storagePath . ($path ? '/' . $path : $path);
         }
 
-        return $this->basePath() . '/content/storage' . ($path ? '/' . $path : $path);
+        return $this->basePath() . '/content' . ($path ? '/' . $path : $path);
     }
 
     /**
