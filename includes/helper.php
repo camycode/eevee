@@ -162,14 +162,15 @@ function get_query($key = null)
     return $_GET;
 }
 
+
 /**
  * 加载样式文件
  *
  * @param $path
  */
-function load_plugin_style($path)
+function load_style($path)
 {
-    echo '<link rel="stylesheet" type="text/css" href="/content/plugins/' . $path . '" />';
+    echo '<link rel="stylesheet" type="text/css" href="' . $path . '" />';
 }
 
 /**
@@ -177,9 +178,29 @@ function load_plugin_style($path)
  *
  * @param $path
  */
+function load_script($path)
+{
+    echo '<script type="text/javascript" src="' . $path . '"></scripts>';
+}
+
+/**
+ * 加载插件样式文件
+ *
+ * @param $path
+ */
+function load_plugin_style($path)
+{
+    load_style("/content/plugins/$path");
+}
+
+/**
+ * 加载插件脚本文件
+ *
+ * @param $path
+ */
 function load_plugin_script($path)
 {
-    echo '<script type="text/javascript" src="/content/plugins/' . $path . '"></scripts>';
+    load_script("/content/plugins/$path");
 }
 
 /**

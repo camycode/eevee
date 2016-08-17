@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>EEVEE 后台管理</title>
     <link rel="stylesheet" href="/content/web/src/scripts/vendor/semantic/dist/semantic.min.css">
-    <link rel="stylesheet" href="/content/web/src/css/app.layout.css">
+    <link rel="stylesheet" href="/content/web/src/css/app.css">
 
     <style>
         header {
