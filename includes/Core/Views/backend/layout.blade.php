@@ -28,7 +28,7 @@
             float: left;
         }
     </style>
-    <?php do_action('load_plugin_styles'); ?>
+    <?php do_action('load_styles'); ?>
 
 </head>
 
@@ -121,10 +121,11 @@
 
 </div>
 
+<?php do_action('load_append_content'); ?>
 
 </body>
 
-<?php do_action('load_plugin_scripts'); ?>
+<?php do_action('load_scripts'); ?>
 
 </html>
 

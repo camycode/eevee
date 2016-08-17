@@ -1,6 +1,6 @@
 <?php
 
-add_action('load_plugin_styles',function (){
+add_action('load_styles',function (){
 
     load_style('/content/web/src/css/app.post.css');
 
