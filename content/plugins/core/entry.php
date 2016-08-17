@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 
 global $app;
 
-
 $app->get('/', function (Context $context) {
 
     function hello()

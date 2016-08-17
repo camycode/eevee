@@ -265,6 +265,25 @@ function id()
     return md5(sha1(uniqid(mt_rand(1, 1000000))));
 }
 
+/**
+ * 数据验证函数
+ *
+ * @param array $data 验证数据
+ * @param array $rule 验证规则
+ *
+ * @return bool
+ */
+function validate(array $data, array $rule)
+{
+    $validator = \Illuminate\Support\Facades\Validator::make($data, $rule);
+
+    if ($validator->fails()) {
+
+        return $validator->errors();
+    }
+
+    return true;
+}
 
 /**
  * 获取资源的数据表名
