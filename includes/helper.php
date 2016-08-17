@@ -1,10 +1,5 @@
 <?php
 
-use Core\Services\Hook;
-use Core\Services\Rbac;
-use Core\Services\Status;
-use Illuminate\Support\Facades\DB;
-use Core\Exceptions\StatusException;
 
 /**
  * 返回操作结果集,包含状态码,响应消息和响应数据.
@@ -17,7 +12,7 @@ use Core\Exceptions\StatusException;
  */
 function status($status, $data = null)
 {
-    return Status::make($status, $data);
+    return \Core\Services\Status::make($status, $data);
 }
 
 /**
@@ -39,11 +34,11 @@ function message($message)
  * @param array $status
  * @param mixed $data
  *
- * @throws StatusException
+ * @throws \Core\Exceptions\StatusException
  */
 function exception($status, $data = null)
 {
-    throw new StatusException(status($status, $data));
+    throw new \Core\Exceptions\StatusException(status($status, $data));
 }
 
 /**
@@ -107,7 +102,7 @@ function auth($permission, $resource, $user_id, $callback)
 
 global $hook;
 
-$hook = new Hook();
+$hook = new \Core\Services\Hook();
 
 
 /**
@@ -117,7 +112,7 @@ $hook = new Hook();
  */
 function rabc()
 {
-    return new Rbac();
+    return new \Core\Services\Rbac();
 }
 
 /**
@@ -294,7 +289,7 @@ function validate(array $data, array $rule)
  */
 function table($name)
 {
-    return DB::table($name);
+    return \Illuminate\Support\Facades\DB::table($name);
 }
 
 /**
