@@ -39,7 +39,7 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="user icon"></i>
-                                <input id="account-input" type="text" name="text" placeholder="用户名或邮箱">
+                                <input id="account-input" type="text" name="text" placeholder="用户名">
                             </div>
                         </div>
                         <div class="field">

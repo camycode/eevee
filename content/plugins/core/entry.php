@@ -2,9 +2,15 @@
 
 global $app;
 
+include 'system.php';
 include 'app.php';
-
 include 'user.php';
+include 'auth.php';
+include 'tag.php';
+include 'term.php';
+include 'post.php';
+include 'file.php';
+include 'folder.php';
 
 use Core\Services\Context;
 
@@ -32,7 +38,7 @@ $app->get('/', function (Context $context) {
 /**
  * 添加系统配置
  */
-$app->system_config('/system/config', function (Context $context) {
+$app->post('/system/config', function (Context $context) {
 
     $data = $context->data();
 
@@ -285,6 +291,63 @@ $app->delete('/user/{id}', function ($id, Context $context) {
 
 /*
 |--------------------------------------------------------------------------
+| 认证
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * 添加分类
+ */
+$app->post('/login', function (Context $context) {
+
+    $data = $context->data();
+
+    initialize_term($data);
+
+    $check = validate_term($data, true);
+
+    if ($check === true) {
+
+        return $context->status('success', add_term($data));
+    }
+
+    return $context->status('validateError', $check);
+
+});
+
+
+/**
+ * 登录
+ */
+$app->post('/login', function (Context $context) {
+
+
+    if ($user = table('user')->where('username', $context->data('username'))->first()) {
+
+        if (auth_user_password($context->data('password'), $user->password)) {
+
+            $token = save_user_token($context->header('X-App-ID', 'backend'), $context->header('X-App-Version', '1.0.0'), $user->id, $user->password);
+            
+            if ($token !== false) {
+
+                $user->user_token = $token;
+
+                return $context->status('success', $user);
+            }
+        }
+
+        exception('passwordDoesNotCorrect');
+
+    } else {
+
+        exception('userDoesNotExist');
+    };
+
+});
+
+
+/*
+|--------------------------------------------------------------------------
 | 分类
 |--------------------------------------------------------------------------
 */
@@ -378,7 +441,7 @@ $app->delete('/term/{id}', function ($id, Context $context) {
 /**
  * 添加标签
  */
-$app->tag('/tag', function (Context $context) {
+$app->post('/tag', function (Context $context) {
 
     $data = $context->data();
 
@@ -551,7 +614,7 @@ $app->delete('/post/{id}', function ($id, Context $context) {
 /**
  * 添加文件
  */
-$app->file('/file', function (Context $context) {
+$app->post('/file', function (Context $context) {
 
     $data = $context->data();
 
@@ -637,7 +700,7 @@ $app->delete('/file/{id}', function ($id, Context $context) {
 /**
  * 添加文件夹
  */
-$app->folder('/folder', function (Context $context) {
+$app->post('/folder', function (Context $context) {
 
     $data = $context->data();
 

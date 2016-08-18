@@ -116,6 +116,12 @@ function add_user(array $data)
 
     return transaction(function () use ($data) {
 
+        $data['created_at'] = timestamp();
+
+        $data['updated_at'] = timestamp();
+
+        $data['password'] = encrypt_user_password($data['password']);
+
         filter_fields($data, get_user_fields());
 
         table('user')->insert($data);
@@ -143,7 +149,7 @@ function update_user($user_id, array $data)
 
         $data['updated_at'] = timestamp();
 
-        filter_fields($data, get_user_fields(), ['id']);
+        filter_fields($data, get_user_fields(), ['id', 'password']);
 
         table('user')->where('id', $user_id)->update($data);
 

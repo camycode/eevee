@@ -50,19 +50,15 @@ class Context
     /**
      * 获取请求头.
      * @param string $header
-     * @param bool $require
+     * @param string $default
+     *
      * @return string
-     * @throws \Exception
      */
-    public function header($header, $require = false)
+    public function header($header, $default = '')
     {
         $value = $this->request->header($header);
 
-        if (!$value && $require) {
-            throw new \Exception("The request header $header is required.", 1);
-        }
-
-        return $value;
+        return $value ? $value : $default;
     }
 
     /**
