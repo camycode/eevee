@@ -39,6 +39,11 @@ class BackendController extends Controller
     public function getLogin(Context $context)
     {
 
+        if ($context->request->session()->has('access_user')) {
+
+            return redirect('/backend/core');
+        }
+
         return response(view('backend.login'));
 
     }
