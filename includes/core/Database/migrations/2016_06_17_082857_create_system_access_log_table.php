@@ -3,11 +3,11 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccessLogTable extends Migration
+class CreateSystemAccessLogTable extends Migration
 {
     public function up()
     {
-        Schema::create('access_log', function (Blueprint $table) {
+        Schema::create('system_access_log', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('method');
             $table->string('uri');
@@ -25,6 +25,6 @@ class CreateAccessLogTable extends Migration
 
     public function down()
     {
-        Schema::drop('access_log');
+        Schema::drop('system_access_log');
     }
 }

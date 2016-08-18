@@ -132,17 +132,25 @@ function add_app(array $data)
 
 }
 
-function update_app($id, array $data)
+/**
+ * 更新应用
+ *
+ * @param $user_id
+ * @param array $data
+ * @return mixed
+ * @throws Exception
+ */
+function update_app($user_id, array $data)
 {
-    return transaction(function () use ($id, $data) {
+    return transaction(function () use ($user_id, $data) {
 
         $data['updated_at'] = timestamp();
 
         filter_fields($data, get_app_fields(), ['id']);
 
-        table('app')->where('id', $id)->update($data);
+        table('app')->where('id', $user_id)->update($data);
 
-        $app = the_app($id);
+        $app = the_app($user_id);
 
         return $app;
 

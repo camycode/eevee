@@ -3,26 +3,25 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLoginLogTable extends Migration
+class CreateSystemEmailLogTable extends Migration
 {
     public function up()
     {
-        Schema::create('login_log', function (Blueprint $table) {
+        Schema::create('system_email_log', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('account');
-            $table->string('mode');
+            $table->string('email');
+            $table->text('content');
             $table->integer('status_code');
             $table->string('status_message');
             $table->string('ip');
-            $table->string('user_agent');
-            $table->timestamp('login_at');
+            $table->timestamp('send_begin_at');
+            $table->timestamp('send_end_at');
         });
     }
 
 
     public function down()
     {
-        Schema::drop('login_log');
+        Schema::drop('system_email_log');
     }
-
 }

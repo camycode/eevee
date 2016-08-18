@@ -3,11 +3,11 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSystemMessageTable extends Migration
+class CreateSystemNoticeTable extends Migration
 {
     public function up()
     {
-        Schema::create('system_message', function (Blueprint $table) {
+        Schema::create('system_notice', function (Blueprint $table) {
             $table->string('id');
             $table->mediumText('content');
             $table->string('type');
@@ -20,6 +20,6 @@ class CreateSystemMessageTable extends Migration
 
     public function down()
     {
-        Schema::drop('system_message');
+        Schema::drop('system_notice');
     }
 }

@@ -11,6 +11,7 @@ class CreateAppTable extends Migration
             $table->string('id');
             $table->string('name');
             $table->string('description');
+            $table->string('status');
             $table->primary('id');
             $table->unique('name');
             $table->timestamps();
