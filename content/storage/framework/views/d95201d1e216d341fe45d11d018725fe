@@ -34,7 +34,6 @@
 
 <body>
 
-
 <div id="eevee-layout" class="page">
 
     <div id="eevee-header" class="ui menu">
@@ -57,7 +56,7 @@
             </div>
 
             <div class="ui dropdown item" tabindex="0">
-                <img src="/content/web/src/images/avatar.png" alt="" class="ui avatar image">
+                <img src="<?php echo e($access_user['avatar']); ?>" alt="" class="ui avatar image">
                 <i class="dropdown icon"></i>
                 <div class="user panel menu transition hidden" tabindex="-1">
                     <div class="item" ng-click="userInformation()">个人信息</div>
@@ -124,6 +123,9 @@
 <?php do_action('load_append_content'); ?>
 
 </body>
+
+<script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/content/web/src/scripts/vendor/angular/angular.min.js"></script>
 
 <?php do_action('load_scripts'); ?>
 

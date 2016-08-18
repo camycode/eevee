@@ -9,6 +9,10 @@ class BackendController extends Controller
 
     public function getPlugin($name, Context $context)
     {
+        if (!$context->request->session()->has('access_user')) {
+
+            return redirect('/backend/login');
+        }
 
         ob_start();
 
@@ -23,8 +27,12 @@ class BackendController extends Controller
 
         ob_end_clean();
 
+        $access_user = $context->request->session()->get('access_user');
 
-        return response(view('backend.layout', ['content' => $content]));
+        return response(view('backend.layout', [
+            'access_user' => $access_user,
+            'content' => $content,
+        ]));
 
     }
 

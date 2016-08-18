@@ -321,25 +321,34 @@ $app->post('/login', function (Context $context) {
  */
 $app->post('/login', function (Context $context) {
 
-
     if ($user = table('user')->where('username', $context->data('username'))->first()) {
 
-        if (auth_user_password($context->data('password'), $user->password)) {
+        if (!auth_user_password($context->data('password'), $user->password)) {
 
-            $token = save_user_token($context->header('X-App-ID', 'backend'), $context->header('X-App-Version', '1.0.0'), $user->id, $user->password);
-            
-            if ($token !== false) {
-
-                $user->user_token = $token;
-
-                return $context->status('success', $user);
-            }
+            exception('passwordDoesNotCorrect');
         }
 
-        exception('passwordDoesNotCorrect');
+        $token = save_user_token($context->header('X-App-ID', 'backend'), $context->header('X-App-Version', '1.0.0'), $user->id, $user->password);
+
+        if ($token === false) {
+
+            exception('databaseError');
+        }
+
+        unset($user->password);
+
+        if ($context->header('X-App-ID') == 'backend') {
+
+            $context->request->session()->put('access_user', (array)$user);
+        }
+
+        $user->user_token = $token;
+
+        return $context->status('success', $user);
+
 
     } else {
-
+        
         exception('userDoesNotExist');
     };
 

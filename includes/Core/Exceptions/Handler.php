@@ -45,13 +45,14 @@ class Handler extends ExceptionHandler
     {
 
         if ($e instanceof StatusException) {
-            
-            return (new Context($request))->response($e->status);
+
+            return response(json_encode($e->status));
+
 
         } else if ($e instanceof PDOException) {
 
-            return (new Context($request))->response(status('databaseException', $e->getMessage()));
-            
+            return response(json_encode(status('databaseException', $e->getMessage())));
+
         } else {
 
             return parent::render($request, $e);

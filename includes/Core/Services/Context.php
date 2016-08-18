@@ -38,11 +38,11 @@ class Context
      * 获取GET参数.
      *
      * @param null $field
-     * @param null $default
+     * @param mixed $default
      *
      * @return array GET请求参数
      */
-    public function param($field = null, $default = null)
+    public function param($field = null, $default = '')
     {
         return $this->request->query($field, $default);
     }
@@ -50,7 +50,7 @@ class Context
     /**
      * 获取请求头.
      * @param string $header
-     * @param string $default
+     * @param mixed $default
      *
      * @return string
      */
@@ -66,11 +66,11 @@ class Context
      * 只接收JSON格式.
      *
      * @param null $field
-     * @param null $default
+     * @param mixed $default
      *
      * @return array 请求数据数组
      */
-    public function data($field = null, $default = null)
+    public function data($field = null, $default = '')
     {
         $data = $this->request->json()->all();
 

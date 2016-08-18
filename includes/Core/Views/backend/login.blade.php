@@ -70,6 +70,53 @@
 
 </body>
 <script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+
+    $(function () {
+
+        $('#login-btn').click(function () {
+
+            var $accountInput = $('#account-input');
+            var $passwordInput = $('#password-input');
+
+            var account = $accountInput.val();
+            var password = $passwordInput.val();
+
+            $.ajax({
+                url: "/api/login",
+                method: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'username': account,
+                    'password': password
+                }),
+                headers: {
+                    "X-App-ID": "backend",
+                    "X-App-Version": "1.0.0"
+                },
+                success: function (res) {
+
+                    if (res.code == 200) {
+
+                        location.href = '/backend/core';
+                    }else{
+
+                        alert(res.message);
+                    }
+                },
+                error: function () {
+
+                    alert('网络错误');
+                }
+            });
+
+
+        });
+
+    });
+
+</script>
 <?php do_action('load_login_scripts'); ?>
 
 </html>
