@@ -3,3 +3,9 @@
 /apidoc
 /docs
 storage/install.lock
+content/storage/app/*
+content/storage/framework/cache/*
+content/storage/framework/sessions/*
+content/storage/framework/views/*
+content/storage/logs/*
+
