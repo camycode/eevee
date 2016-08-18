@@ -24,7 +24,7 @@ function status($status, $data = null)
  */
 function message($message)
 {
-    return trans("messages.$message");
+    return trans("messages.$message") ? trans("messages.$message") : $message;
 }
 
 /**

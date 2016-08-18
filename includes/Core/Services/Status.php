@@ -59,7 +59,8 @@ class Status
     protected static function getCode($status)
     {
         if (!self::statusExists($status)) {
-            return false;
+            
+            return null;
         }
 
         if (is_string($status)) {

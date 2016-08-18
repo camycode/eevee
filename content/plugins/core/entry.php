@@ -59,3 +59,25 @@ $app->post('/app', function (Context $context) {
 });
 
 
+/**
+ * 更新应用
+ */
+$app->put('/app/{id}', function ($id, Context $context) {
+
+
+    $data = $context->data();
+
+    initialize_app($data);
+
+    $check = validate_app($data, false);
+
+    if ($check === true) {
+
+        return $context->status('success', update_app($id, $data));
+    }
+
+    return $context->status('validateError', $check);
+
+});
+
+

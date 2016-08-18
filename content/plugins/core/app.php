@@ -27,8 +27,6 @@ function initialize_app(array &$data)
         'name' => '',
         'description' => '',
         'status' => 'public',
-        'created_at' => timestamp(),
-        'updated_at' => timestamp(),
     ];
 
     $data = array_merge($initialize, $data);
@@ -65,16 +63,6 @@ function validate_app(array $data, $insert = false)
 function validate_app_version($data)
 {
 
-}
-
-/**
- * 过滤应用数据冗余字段
- *
- * @param array $data
- */
-function filter_app_fields(array &$data)
-{
-    filter_fields($data, get_app_fields());
 }
 
 
@@ -116,7 +104,11 @@ function add_app(array $data)
 
     return transaction(function () use ($data) {
 
-        filter_app_fields($data);
+        $data['created_at'] = timestamp();
+
+        $data['updated_at'] = timestamp();
+
+        filter_fields($data, get_app_fields());
 
         table('app')->insert($data);
 
@@ -127,6 +119,24 @@ function add_app(array $data)
     });
 
 }
+
+function update_app($id, array $data)
+{
+    return transaction(function () use ($id, $data) {
+
+        $data['updated_at'] = timestamp();
+
+        filter_fields($data, get_app_fields(), ['id']);
+
+        table('app')->where('id', $id)->update($data);
+
+        $app = the_app($id);
+
+        return $app;
+
+    });
+}
+
 
 /**
  * 添加应用版本
