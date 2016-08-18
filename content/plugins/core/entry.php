@@ -24,6 +24,23 @@ $app->get('/', function (Context $context) {
 /**
  * 添加应用
  */
+$app->get('/app/{id}', function ($id, Context $context) {
+
+    if ($app = the_app($id)) {
+
+        return $context->status('success', $app);
+
+    } else {
+
+        return $context->status('appDoesNotExist');
+    }
+
+
+});
+
+/**
+ * 添加应用
+ */
 $app->post('/app', function (Context $context) {
 
     $data = $context->data();
@@ -40,3 +57,5 @@ $app->post('/app', function (Context $context) {
     return $context->status('validateError', $check);
 
 });
+
+
