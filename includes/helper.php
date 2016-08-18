@@ -31,7 +31,7 @@ function message($message)
  * 响应异常状态操作
  *
  *
- * @param array $status
+ * @param string / int $status
  * @param mixed $data
  *
  * @throws \Core\Exceptions\StatusException
@@ -72,29 +72,6 @@ function d($var)
     die(json_encode($var));
 }
 
-
-/**
- * 生成插件和主题静态资源链接
- *
- * @param atring $path
- */
-function asset($path)
-{
-    d(__DIR__);
-}
-
-/**
- * 接口权限验证函数
- *
- * @param $permission
- * @param $resource
- * @param $user_id
- * @param $callback
- */
-function auth($permission, $resource, $user_id, $callback)
-{
-
-}
 
 /**
  * 注册钩子全局对象
@@ -286,12 +263,13 @@ function id()
  *
  * @param array $data 验证数据
  * @param array $rule 验证规则
+ * @param array $message 自定制响应消息
  *
  * @return bool
  */
-function validate(array $data, array $rule)
+function validate(array $data, array $rule, array $message = [])
 {
-    $validator = \Illuminate\Support\Facades\Validator::make($data, $rule);
+    $validator = \Illuminate\Support\Facades\Validator::make($data, $rule, $message);
 
     if ($validator->fails()) {
 
@@ -363,13 +341,12 @@ function selector($table, array $params = [])
 /**
  * 过滤掉数据的多余字段.
  *
- * @param  array $data
- * @param  array $fields
- * @param  array $ignore
+ * @param  array $data 原始数据
+ * @param  array $fields 保留字段
+ * @param  array $ignore 强制过滤字段
  *
- * @throws \Core\Exceptions\StatusException
  */
-function fields_filter(array &$data, array $fields, array $ignore = [])
+function filter_fields(array &$data, array $fields, array $ignore = [])
 {
     $fields = array_diff($fields, $ignore);
 
@@ -380,11 +357,6 @@ function fields_filter(array &$data, array $fields, array $ignore = [])
             unset($data[$k]);
         }
 
-    }
-
-    if (!$data) {
-
-        exception('InvalidData');
     }
 
 }
@@ -405,7 +377,7 @@ function transaction($callback)
 
     try {
 
-        $status = $callback($this);
+        $status = $callback();
 
         DB::commit();
 

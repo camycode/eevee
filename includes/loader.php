@@ -57,14 +57,13 @@ function load_plugins(&$app)
 
     $dirs = list_dirs(base_path('/content/plugins'));
 
-
     foreach ($dirs as $dir) {
 
         $name = basename($dir);
 
         if ($name == 'core') {
 
-            break;
+            continue;
         }
 
         load_plugin($app, $name, $dir, true);

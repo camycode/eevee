@@ -1,9 +1,11 @@
 <?php
 
-use Core\Services\Context;
-use Illuminate\Support\Facades\DB;
-
 global $app;
+
+use Core\Services\Context;
+
+include 'app.php';
+
 
 $app->get('/', function (Context $context) {
 
@@ -19,8 +21,22 @@ $app->get('/', function (Context $context) {
 });
 
 
-$app->get('/hello', function (Context $context) {
+/**
+ * 添加应用
+ */
+$app->post('/app', function (Context $context) {
 
-    return $context->status('success', selector('app', $context->params()));
+    $data = $context->data();
+
+    initialize_app($data);
+
+    $check = validate_app($data, true);
+
+    if ($check === true) {
+
+        return $context->status('success', add_app($data));
+    }
+
+    return $context->status('validateError', $check);
 
 });
