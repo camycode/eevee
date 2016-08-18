@@ -80,6 +80,18 @@ function the_app($app_id)
 }
 
 /**
+ * 删除应用
+ *
+ * @param string $app_id
+ *
+ * @return mixed
+ */
+function delete_app($app_id)
+{
+    return table('app')->where('id', $app_id)->delete();
+}
+
+/**
  * 获取应用组
  *
  * @param array $params
