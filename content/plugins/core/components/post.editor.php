@@ -1,3 +1,12 @@
+<?php
+
+add_action('load_scripts', function () {
+
+    load_script('/content/plugins/core/components/post.editor.js');
+});
+
+?>
+
 <div id="directive-post-editor" class="view slide">
 
     <div class="view title ui secondary menu">
@@ -7,10 +16,10 @@
 
         <div class="right menu">
             <div class="item label">
-                <i class="icon checkmark" ng-click="submitPost()"></i>
+                <i class="icon checkmark" id="componentsPostEditorSubmitPostEditorBtn"></i>
             </div>
             <div class="item label">
-                <i class="icon share" ng-click="hidePostEditor()"></i>
+                <i class="icon share" id="componentsPostEditorHidePostEditorBtn"></i>
             </div>
         </div>
     </div>
@@ -37,5 +46,4 @@
         </div>
     </div>
 </div>
-
 

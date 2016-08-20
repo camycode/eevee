@@ -1,8 +1,20 @@
 <?php
 
-add_action('load_styles',function (){
+add_action('load_styles', function () {
 
     load_style('/content/web/src/css/app.post.css');
+
+});
+
+add_action('load_components', function () {
+
+    load_component('post.editor');
+
+});
+
+add_action('load_scripts', function () {
+
+    load_plugin_script('/core/web/post.js');
 
 });
 
@@ -13,12 +25,12 @@ add_action('load_styles',function (){
 
     <div class="ui secondary menu">
         <div class="page item title">
-            {{ title }}
+            文章
         </div>
 
         <div class="page options right menu">
             <div class="item">
-                <i class="ui icon plus" ng-click="openPostEditor()"></i>
+                <i class="ui icon plus" id="openPostEditorBtn"></i>
             </div>
             <div class="item">
                 <i class="ui icon ellipsis vertical"></i>
@@ -133,3 +145,5 @@ add_action('load_styles',function (){
     </div>
     <br>
 </div>
+
+

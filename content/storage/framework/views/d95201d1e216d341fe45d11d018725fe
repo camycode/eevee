@@ -83,9 +83,9 @@
             <li class="item">
                 <a href="/backend/core?page=user"><i class="user icon"></i>用户</a>
             </li>
-            <li class="item">
-                <a href="/backend/core?page=role"><i class="spy icon"></i>角色</a>
-            </li>
+            <?php /*<li class="item">*/ ?>
+            <?php /*<a href="/backend/core?page=role"><i class="spy icon"></i>角色</a>*/ ?>
+            <?php /*</li>*/ ?>
             <li class="item">
                 <a href="/backend/core?page=theme"><i class="paint brush icon"></i>主题</a>
             </li>
@@ -114,18 +114,19 @@
 
             <?php echo $content ?>
 
+
+            <?php do_action('load_components'); ?>
+
         </div>
 
     </section>
 
 </div>
 
-<?php do_action('load_append_content'); ?>
+<script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/content/plugins/core/web/components.js"></script>
 
 </body>
-
-<script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/content/web/src/scripts/vendor/angular/angular.min.js"></script>
 
 <?php do_action('load_scripts'); ?>
 

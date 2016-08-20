@@ -67,7 +67,7 @@ function trans_name($ident)
  *
  * @param mixed $var
  */
-function d($var)
+function d($var = [])
 {
     die(json_encode($var));
 }
@@ -80,7 +80,6 @@ function d($var)
 global $hook;
 
 $hook = new \Core\Services\Hook();
-
 
 /**
  * 生成权限校验对象
@@ -157,7 +156,7 @@ function load_style($path)
  */
 function load_script($path)
 {
-    echo '<script type="text/javascript" src="' . $path . '"></scripts>';
+    echo '<script type="text/javascript" src="' . $path . '"></script>';
 }
 
 /**
@@ -178,6 +177,28 @@ function load_plugin_style($path)
 function load_plugin_script($path)
 {
     load_script("/content/plugins/$path");
+}
+
+
+/**
+ * 加载视图组件
+ *
+ * @param $name
+ * @throws Exception
+ */
+function load_component($name)
+{
+    $file = base_path("content/plugins/core/components/$name.php");
+
+    if (file_exists($file)) {
+
+        include $file;
+
+    } else {
+
+        throw new \Exception('The component is not exist at: ' . $file);
+
+    }
 }
 
 /**
@@ -216,11 +237,10 @@ function list_files($dir)
  * 遍历目录获取子目录
  *
  * @param string $dir 遍历目标目录路径
- * @param bool $all 是否递归遍历
  *
  * @return array
  */
-function list_dirs($dir, $all = false)
+function list_dirs($dir)
 {
     $dirs = array();
 
@@ -236,9 +256,6 @@ function list_dirs($dir, $all = false)
 
                     array_push($dirs, $path);
 
-                    if ($all) {
-                        list_dirs("$path/");
-                    }
                 }
             }
             closedir($handler);

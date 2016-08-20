@@ -42,7 +42,7 @@ class Context
      *
      * @return array GET请求参数
      */
-    public function param($field = null, $default = '')
+    public function param($field = null, $default = null)
     {
         return $this->request->query($field, $default);
     }
@@ -54,7 +54,7 @@ class Context
      *
      * @return string
      */
-    public function header($header, $default = '')
+    public function header($header, $default = null)
     {
         $value = $this->request->header($header);
 
@@ -70,7 +70,7 @@ class Context
      *
      * @return array 请求数据数组
      */
-    public function data($field = null, $default = '')
+    public function data($field = null, $default = null)
     {
         $data = $this->request->json()->all();
 

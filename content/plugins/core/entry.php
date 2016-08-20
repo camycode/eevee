@@ -51,7 +51,7 @@ $app->post('/system/config', function (Context $context) {
         return $context->status('success', add_system_config($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -73,7 +73,7 @@ $app->put('/system/config/{id}', function ($id, Context $context) {
         return $context->status('success', update_system_config($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -137,7 +137,7 @@ $app->post('/app', function (Context $context) {
         return $context->status('success', add_app($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -159,7 +159,7 @@ $app->put('/app/{id}', function ($id, Context $context) {
         return $context->status('success', update_app($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -224,7 +224,7 @@ $app->post('/user', function (Context $context) {
         return $context->status('success', add_user($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -246,7 +246,7 @@ $app->put('/user/{id}', function ($id, Context $context) {
         return $context->status('success', update_user($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -311,7 +311,7 @@ $app->post('/login', function (Context $context) {
         return $context->status('success', add_term($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -325,14 +325,14 @@ $app->post('/login', function (Context $context) {
 
         if (!auth_user_password($context->data('password'), $user->password)) {
 
-            exception('passwordDoesNotCorrect');
+            exception('InvalidAccountOrUsername');
         }
 
         $token = save_user_token($context->header('X-App-ID', 'backend'), $context->header('X-App-Version', '1.0.0'), $user->id, $user->password);
 
         if ($token === false) {
 
-            exception('databaseError');
+            exception('DatabaseError');
         }
 
         unset($user->password);
@@ -349,7 +349,7 @@ $app->post('/login', function (Context $context) {
 
     } else {
         
-        exception('userDoesNotExist');
+        exception('UserDoesNotExist');
     };
 
 });
@@ -377,7 +377,7 @@ $app->post('/term', function (Context $context) {
         return $context->status('success', add_term($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -399,7 +399,7 @@ $app->put('/term/{id}', function ($id, Context $context) {
         return $context->status('success', update_term($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -463,7 +463,7 @@ $app->post('/tag', function (Context $context) {
         return $context->status('success', add_tag($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -485,7 +485,7 @@ $app->put('/tag/{id}', function ($id, Context $context) {
         return $context->status('success', update_tag($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -549,7 +549,7 @@ $app->post('/post', function (Context $context) {
         return $context->status('success', add_post($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -571,7 +571,7 @@ $app->put('/post/{id}', function ($id, Context $context) {
         return $context->status('success', update_post($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -636,7 +636,7 @@ $app->post('/file', function (Context $context) {
         return $context->status('success', add_file($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -658,7 +658,7 @@ $app->put('/file/{id}', function ($id, Context $context) {
         return $context->status('success', update_file($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -722,7 +722,7 @@ $app->post('/folder', function (Context $context) {
         return $context->status('success', add_folder($data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
@@ -744,7 +744,7 @@ $app->put('/folder/{id}', function ($id, Context $context) {
         return $context->status('success', update_folder($id, $data));
     }
 
-    return $context->status('validateError', $check);
+    return $context->status('ValidateFailed', $check);
 
 });
 
