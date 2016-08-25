@@ -1,0 +1,18 @@
+{
+  "name": "记账本",
+  "version": "0.0.1",
+  "description": "简单的记账本",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "fourever",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "core": "^1.1.2"
+  }
+}

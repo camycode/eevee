@@ -14,7 +14,7 @@ add_action('load_components', function () {
 
 add_action('load_scripts', function () {
 
-    load_plugin_script('/core/web/post.js');
+    load_plugin_script('/core/web/components/post.js');
 
 });
 

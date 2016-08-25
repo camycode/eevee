@@ -86,6 +86,9 @@
             <?php /*<li class="item">*/ ?>
             <?php /*<a href="/backend/core?page=role"><i class="spy icon"></i>角色</a>*/ ?>
             <?php /*</li>*/ ?>
+
+            <?php do_action('load_side_menus'); ?>
+
             <li class="item">
                 <a href="/backend/core?page=theme"><i class="paint brush icon"></i>主题</a>
             </li>
@@ -123,11 +126,21 @@
 
 </div>
 
-<script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/content/plugins/core/web/components.js"></script>
-
 </body>
 
+<script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/content/web/src/scripts/vendor/angular/angular.min.js"></script>
+<script src="/content/web/src/scripts/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/content/plugins/core/web/components.js"></script>
+<script>
+    var eevee = {
+        config: {
+            app_id: "<?php echo 'backend'; ?>",
+            user_token: "<?php echo ''; ?>",
+            host: 'http://dev.eevee.io'
+        }
+    };
+</script>
 <?php do_action('load_scripts'); ?>
 
 </html>

@@ -6,11 +6,18 @@ add_action('load_styles',function (){
 
 });
 
+add_action('load_scripts',function (){
+
+    load_script('/content/plugins/core/web/pages/user/user.controller.js');
+    load_script('/content/plugins/core/web/services/ajax.js');
+    load_script('/content/plugins/core/web/models/user.js');
+
+});
+
 
 ?>
 
-<div id="app-user" class="page container">
-
+<div id="app-user" class="page container" ng-app="user" ng-controller="userController" ng-show="done">
 
     <div class="ui secondary menu">
         <div class="page item title">
@@ -87,10 +94,8 @@ add_action('load_styles',function (){
             <td class="col-avatar">
                 <img ng-src="{{ user.avatar }}" class="avatar" alt="">
             </td>
-            <td class="col-username">
-                {{ user.username }}
-            </td>
-            <td class="col-email">{{ user.email }}</td>
+            <td class="col-username" ng-bind="user.username"></td>
+            <td class="col-email" ng-bind="user.email"></td>
             <td class="col-role">{{ user.role }}</td>
             <td class="col-status">{{ user.status }}</td>
             <td class="col-date">{{ user.created_at }}</td>
