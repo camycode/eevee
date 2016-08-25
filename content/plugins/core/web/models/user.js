@@ -14,7 +14,8 @@ App.factory('user', ["$http", "ajax", function ($http, ajax) {
 
             return ajax({
                 method: 'GET',
-                url: '/api/user/list'
+                url: '/api/user/list',
+                params : params
             });
         },
         /**

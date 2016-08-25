@@ -26,7 +26,7 @@ function initialize_user(array &$data)
         'id' => id(),
         'avatar' => '/content/web/src/images/avatar.png',
         'source' => 'backend',
-        'status' => 'normal',
+        'status' => '正常',
     ];
 
     $data = array_merge($initialize, $data);

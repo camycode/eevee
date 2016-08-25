@@ -1,12 +1,12 @@
 <?php
 
-add_action('load_styles',function (){
+add_action('load_styles', function () {
 
     load_style('/content/web/src/css/app.user.css');
 
 });
 
-add_action('load_scripts',function (){
+add_action('load_scripts', function () {
 
     load_script('/content/plugins/core/web/pages/user/user.controller.js');
     load_script('/content/plugins/core/web/services/ajax.js');
@@ -17,7 +17,7 @@ add_action('load_scripts',function (){
 
 ?>
 
-<div id="app-user" class="page container" ng-app="user" ng-controller="userController" ng-show="done">
+<div id="app-user" class="page container" ng-app="user" ng-controller="userController">
 
     <div class="ui secondary menu">
         <div class="page item title">
@@ -73,7 +73,8 @@ add_action('load_scripts',function (){
             <th class="col-date" ng-click="sortBy('updated_at')">日期 <i class="icon {{ sort.updated_at || 'sort' }}"</th>
         </tr>
         </thead>
-        <tfoot>
+
+        <tfoot ng-show="users.length > 10">
         <tr>
             <th>
                 <input type="checkbox" value="">
@@ -86,6 +87,7 @@ add_action('load_scripts',function (){
             <th>日期</th>
         </tr>
         </tfoot>
+        
         <tbody>
         <tr ng-repeat="user in users" ng-click="openUserDetailView(user.id)">
             <td class="col-check">
