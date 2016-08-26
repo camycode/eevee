@@ -131,6 +131,7 @@
 <script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/content/web/src/scripts/vendor/angular/angular.min.js"></script>
 <script src="/content/web/src/scripts/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/content/web/src/scripts/vendor/layer/layer.js"></script>
 <script src="/content/plugins/core/web/components.js"></script>
 <script>
     var eevee = {

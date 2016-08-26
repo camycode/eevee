@@ -62,7 +62,7 @@ foreach ($dirs as $dir) {
 
         <?php foreach ($plugins as $plugin): ?>
 
-            <h2><?php echo $plugin['name']; ?></h2>
+            <h3><?php echo $plugin['name']; ?> <small><?php echo $plugin['version']; ?></small></h3>
             <p><?php echo $plugin['description']; ?></p>
 
         <?php endforeach; ?>

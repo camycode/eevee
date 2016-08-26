@@ -202,67 +202,42 @@ function load_component($name)
 }
 
 /**
- * 遍历目录获取子文件
+ * 获取数组指定值
  *
- * @param string $dir 遍历目标目录路径
+ * @param array $array
+ * @param mixed $key
+ * @param null $default
  *
- * @return array
+ * @return mixed|null
  */
-function list_files($dir)
+function array_value(array  $array, $key, $default = null)
 {
-    $files = array();
-
-    if (is_dir($dir)) {
-
-        if ($handler = opendir($dir)) {
-
-            while (($file = readdir($handler)) !== false) {
-
-                $path = $dir . "/" . $file;
-
-                if ((is_file($path)) && $file != "." && $file != "..") {
-
-                    array_push($files, $path);
-                }
-            }
-            closedir($handler);
-        }
-    }
-
-    return $files;
+    return isset($array[$key]) ? $array[$key] : $default;
 }
 
-
 /**
- * 遍历目录获取子目录
+ * 加载边栏菜单
  *
- * @param string $dir 遍历目标目录路径
- *
- * @return array
+ * @param array $menu
+ * @param array $sub_menus
  */
-function list_dirs($dir)
+function load_side_menu(array $menu, array $sub_menus = null)
 {
-    $dirs = array();
 
-    if (is_dir($dir)) {
+    if (!$sub_menus) {
+        echo '<li class="item"><a href="' . array_value($menu, 'link') . '"><i class="' . array_value($menu, 'icon') . '"></i>' . array_value($menu, 'name') . '</a></li>';
+    } else {
+        echo '<li class="item"><a href="' . array_value($menu, 'link') . '"><i class="' . array_value($menu, 'icon') . '"></i>' . array_value($menu, 'name') . '</a>';
+        echo '<ul>';
+        foreach ($sub_menus as $sub_menu) {
 
-        if ($handler = opendir($dir)) {
-
-            while (($file = readdir($handler)) !== false) {
-
-                $path = $dir . "/" . $file;
-
-                if ((is_dir($path)) && $file != "." && $file != "..") {
-
-                    array_push($dirs, $path);
-
-                }
+            if (is_array($sub_menu)) {
+                echo '<li class="item"><a href="' . array_value($sub_menu, 'link') . '">' . array_value($sub_menu, 'name') . '</a></li>';
             }
-            closedir($handler);
         }
+        echo '</ul>';
+        echo '</li>';
     }
-
-    return $dirs;
 }
 
 /**
@@ -417,3 +392,92 @@ function timestamp()
 {
     return date('Y-m-d H:i:s');
 }
+
+
+/**
+ * 遍历目录获取子文件
+ *
+ * @param string $dir 遍历目标目录路径
+ *
+ * @return array
+ */
+function list_files($dir)
+{
+    $files = array();
+
+    if (is_dir($dir)) {
+
+        if ($handler = opendir($dir)) {
+
+            while (($file = readdir($handler)) !== false) {
+
+                $path = $dir . "/" . $file;
+
+                if ((is_file($path)) && $file != "." && $file != "..") {
+
+                    array_push($files, $path);
+                }
+            }
+            closedir($handler);
+        }
+    }
+
+    return $files;
+}
+
+
+/**
+ * 遍历目录获取子目录
+ *
+ * @param string $dir 遍历目标目录路径
+ *
+ * @return array
+ */
+function list_dirs($dir)
+{
+    $dirs = array();
+
+    if (is_dir($dir)) {
+
+        if ($handler = opendir($dir)) {
+
+            while (($file = readdir($handler)) !== false) {
+
+                $path = $dir . "/" . $file;
+
+                if ((is_dir($path)) && $file != "." && $file != "..") {
+
+                    array_push($dirs, $path);
+
+                }
+            }
+            closedir($handler);
+        }
+    }
+
+    return $dirs;
+}
+
+/**
+ * 获取数组最大维度
+ *
+ * @param $array
+ *
+ * @return int
+ */
+function array_depth($array)
+{
+    if (!is_array($array)) return 0;
+    $max_depth = 1;
+    foreach ($array as $value) {
+        if (is_array($value)) {
+            $depth = array_depth($value) + 1;
+
+            if ($depth > $max_depth) {
+                $max_depth = $depth;
+            }
+        }
+    }
+    return $max_depth;
+}
+
