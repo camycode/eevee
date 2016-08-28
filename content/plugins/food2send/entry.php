@@ -9,7 +9,7 @@ add_action('load_side_menus', function () {
         [
             'name' => '外卖配送平台管理',
             'icon' => 'icon folder',
-            'link' => 'http://baidu.com'
+            'link' => 'javascript:;'
         ],
         [
             [

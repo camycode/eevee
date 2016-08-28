@@ -6,7 +6,7 @@ add_action('load_side_menus', function () {
         [
             'name' => '微信公众平台',
             'icon' => 'icon file',
-            'link' => '/backend/core?page=user'
+            'link' => 'javascript:;'
         ],
         [
             [

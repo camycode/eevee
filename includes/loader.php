@@ -1,6 +1,29 @@
 <?php
 
 /**
+ * 载入主题
+ *
+ * @param $app
+ */
+function load_theme(&$app)
+{
+    $entry = base_path('content/themes/default/index.php');
+
+    $uri = ltrim(\Illuminate\Support\Facades\Request::getRequestUri(),'/');
+    
+    $params = explode('/', $uri);
+
+    if (isset($params[0]) && $params[0] != 'api' && $params[0] != 'backend') {
+
+        if (file_exists($entry)) {
+
+            include $entry;
+        }
+    }
+
+}
+
+/**
  * 载入插件
  *
  * @param string $app
@@ -21,7 +44,6 @@ function load_plugin(&$app, $name, $path, $prefix = true)
             $app->group(['prefix' => "api/$name"], function ($app) use ($entry, $app) {
 
                 require $entry;
-
             });
 
         } else {
@@ -29,7 +51,6 @@ function load_plugin(&$app, $name, $path, $prefix = true)
             $app->group(['prefix' => "api"], function ($app) use ($entry, $app) {
 
                 require $entry;
-
             });
 
         }
@@ -38,7 +59,6 @@ function load_plugin(&$app, $name, $path, $prefix = true)
     } else {
 
         throw  new Exception('Plugin entry file is not defined, where at ' . $entry);
-
     }
 
 }
