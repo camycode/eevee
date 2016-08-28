@@ -131,6 +131,9 @@
 <script src="/content/web/src/scripts/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/content/web/src/scripts/vendor/angular/angular.min.js"></script>
 <script src="/content/web/src/scripts/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/content/web/src/scripts/vendor/semantic/dist/semantic.min.js"></script>
+<script src="/content/web/src/scripts/vendor/navgoco/src/jquery.navgoco.min.js"></script>
+<script src="/content/web/src/scripts/vendor/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="/content/web/src/scripts/vendor/layer/layer.js"></script>
 <script src="/content/plugins/core/web/components.js"></script>
 <script>
