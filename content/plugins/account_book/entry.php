@@ -13,7 +13,7 @@ use Core\Services\Context;
 function get_account_book_bill_fields()
 {
 
-    return ['id', 'user_id', 'sum', 'type', 'notes', 'created_at', 'updated_at'];
+    return ['id', 'user_id', 'sum', 'type', 'status', 'notes', 'created_at', 'updated_at'];
 }
 
 /**
@@ -29,10 +29,12 @@ function validate_account_book_bill(array $data)
     $rule = [
         'user_id' => 'required',
         'sum' => 'required',
+        'notes' => 'required',
     ];
 
     $message = [
         'sum.required' => '金额不能为空',
+        'notes.required' => '备注不能为空',
     ];
 
     return validate($data, $rule, $message);
@@ -44,7 +46,7 @@ $app->post('/bill', function (Context $context) {
 
     $data = $context->data();
 
-    if ($result = validate_account_book_bill($data) !== true) {
+    if (($result = validate_account_book_bill($data)) !== true) {
 
         exception('ValidateError', $result);
     };
