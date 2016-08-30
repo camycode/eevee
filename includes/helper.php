@@ -272,11 +272,48 @@ function validate(array $data, array $rule, array $message = [])
 }
 
 /**
+ * 设置数据库连接
+ *
+ * @param string $name
+ * @param array $value
+ */
+function set_connection($name, array $value)
+{
+
+
+    $connections = config('database.connections');
+
+    if (array_value($connections, $name) === null) {
+
+        \Illuminate\Support\Facades\Config::set('database.connections.' . $name, $value);
+
+    } else {
+        exception('DatabaseConnectionHasExist', [
+            'name' => $name
+        ]);
+    }
+
+}
+
+/**
+ * 连接其他数据库服务器, 与 config() 函数配合使用
+ *
+ * @param string $name 配置的名称
+ *
+ * @return \Illuminate\Support\Facades\DB
+ */
+function connection($name)
+{
+    return \Illuminate\Support\Facades\DB::connection($name);
+}
+
+
+/**
  * 获取资源的数据表名
  *
  * @param null $name 指定表明
  *
- * @return DB
+ * @return \Illuminate\Support\Facades\DB
  */
 function table($name)
 {
@@ -289,7 +326,7 @@ function table($name)
  * 支持`order`,`offset`,`limit`,`fields`,`group`,`count`,`first`等条件筛选.
  *
  *
- * @param string $table 数据表名称
+ * @param mixed $table 数据表名称
  * @param array $params 查询参数
  *
  * @return mixed 数据库查询结果
@@ -297,7 +334,7 @@ function table($name)
  */
 function selector($table, array $params = [])
 {
-    $query = table($table);
+    $query = is_string($table) ? table($table) : $table;
 
     foreach ($params as $action => $param) {
 

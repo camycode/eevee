@@ -4,6 +4,7 @@ return [
     'success' => '操作成功',
     'guest' => '访客',
     'root' => '超级管理员',
+    'DatabaseConnectionHasExist' => '数据库连接已存在',
     'AppIDIsInvalid' => '应用ID无效',
     'UserTokenIsInvalid' => '用户密钥无效',
     'ValidateFailed' => '数据校验错误',

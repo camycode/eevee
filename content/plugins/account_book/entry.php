@@ -5,6 +5,22 @@ global $app;
 
 use Core\Services\Context;
 
+
+set_connection('account_book_mysql', [
+    'driver' => 'mysql',
+    'host' => env('DB_HOST', 'localhost'),
+    'port' => env('DB_PORT', 3306),
+    'database' => 'ximuop',
+    'username' => env('DB_USERNAME', 'forge'),
+    'password' => env('DB_PASSWORD', ''),
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => 'xi_',
+    'timezone' => env('DB_TIMEZONE', '+00:00'),
+    'strict' => false,
+]);
+
+
 /**
  * 获取账单字段
  *
@@ -41,6 +57,11 @@ function validate_account_book_bill(array $data)
 
 }
 
+$app->get('/bill/list', function (Context $context) {
+
+    return $context->status('success', selector(connection('account_book_mysql')->table('account_book_bills'), $context->params()));
+
+});
 
 $app->post('/bill', function (Context $context) {
 
@@ -56,7 +77,7 @@ $app->post('/bill', function (Context $context) {
     $data['id'] = id();
     $data['created_at'] = timestamp();
 
-    if (table('account_book_bills')->insert($data)) {
+    if (connection('account_book_mysql')->table('account_book_bills')->insert($data)) {
 
         return $context->status('success');
     } else {
