@@ -15,16 +15,12 @@ include 'folder.php';
 use Core\Services\Context;
 
 
-$app->get('/', function (Context $context) {
+/**
+ * 获取系统配置列表
+ */
+$app->get('/system/config/list', function (Context $context) {
 
-    function hello()
-    {
-
-        echo id();
-    }
-
-    hello();
-
+    return $context->status('success', get_system_config($context->params()));
 
 });
 

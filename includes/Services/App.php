@@ -79,7 +79,7 @@ class App extends Lumen
      */
     protected function getLanguagePath()
     {
-        return base_path('/includes/Core/Locale');
+        return base_path('/includes/Locale');
     }
 
     /**
@@ -91,7 +91,7 @@ class App extends Lumen
      */
     public function path()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'Core';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'includes';
     }
 
     /**
@@ -122,7 +122,7 @@ class App extends Lumen
      */
     public function databasePath()
     {
-        return $this->basePath('includes/Core/Database');
+        return $this->basePath('includes/Database');
     }
 
     /**
@@ -137,18 +137,18 @@ class App extends Lumen
 
         if (!$name) {
 
-            $appConfigDir = ($this->configPath ?: $this->basePath('includes/core/Config')) . '/';
+            $appConfigDir = ($this->configPath ?: $this->basePath('includes/Config')) . '/';
 
             if (file_exists($appConfigDir)) {
 
                 return $appConfigDir;
             }
 
-            return base_path('includes/core/Config/');
+            return base_path('includes/Config/');
 
         } else {
 
-            $appConfigPath = ($this->configPath ?: $this->basePath('includes/core/Config')) . '/' . $name . '.php';
+            $appConfigPath = ($this->configPath ?: $this->basePath('includes/Config')) . '/' . $name . '.php';
 
             if (file_exists($appConfigPath)) {
 
@@ -156,44 +156,9 @@ class App extends Lumen
             }
 
 
-            return base_path("includes/core/Config/$name.php");
+            return base_path("includes/Config/$name.php");
         }
 
     }
-
-
-
-//    protected function setPermissionRoutes($routes)
-//    {
-//        $this->group(['middleware' => 'auth', 'namespace' => 'Core\Controllers'], function () use ($routes) {
-//
-//            foreach ($routes as $route => $params) {
-//
-//
-//                list($method, $uri) = explode('@', $route);
-//
-//                if (isset($params['action'])) {
-//
-//                    $this->addRoute(strtoupper($method), $uri, $params['action']);
-//                } else {
-//
-//                    throw new \Exception("The route $route action is empty", 1);
-//                }
-//            }
-//
-//        });
-//
-//        $this->group(['prefix' => 'api/plugin', 'middleware' => 'auth', 'namespace' => 'Plugin'], function () {
-//
-////            $this->registerPluginsRoutes();
-//
-//        });
-//
-//
-//    }
-
-
-
-
-
+    
 }

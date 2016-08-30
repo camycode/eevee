@@ -49,6 +49,6 @@ return array(
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
-    'Core\\' => array($baseDir . '/includes/Core'),
+    'Core\\' => array($baseDir . '/includes'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

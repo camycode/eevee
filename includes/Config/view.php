@@ -14,7 +14,7 @@ return [
     */
 
     'paths' => [
-        realpath(base_path('includes/core/Views')),
+        realpath(base_path('includes/Views')),
     ],
 
     /*

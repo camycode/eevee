@@ -9,8 +9,8 @@ function load_theme(&$app)
 {
     $entry = base_path('content/themes/default/index.php');
 
-    $uri = ltrim(\Illuminate\Support\Facades\Request::getRequestUri(),'/');
-    
+    $uri = ltrim(\Illuminate\Support\Facades\Request::getRequestUri(), '/');
+
     $params = explode('/', $uri);
 
     if (isset($params[0]) && $params[0] != 'api' && $params[0] != 'backend') {
@@ -107,6 +107,8 @@ function load_plugins(&$app)
 function load_core(&$app)
 {
     include base_path('includes/routes.php');
+
+    include base_path('content/plugins/core/backend.php');
 
     load_plugin($app, 'core', base_path('content/plugins/core'), false);
 
