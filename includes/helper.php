@@ -271,8 +271,31 @@ function validate(array $data, array $rule, array $message = [])
     return true;
 }
 
+
 /**
- * 设置数据库连接
+ * 获取资源的数据表名
+ *
+ * @param null $name 指定表明
+ *
+ * @return \Illuminate\Support\Facades\DB
+ */
+function table($name)
+{
+    return \Illuminate\Support\Facades\DB::table($name);
+}
+
+/**
+ * 获取数据库机构生成器
+ *
+ * @return \Illuminate\Support\Facades\Schema
+ */
+function schema()
+{
+    return \Illuminate\Support\Facades\Schema::class;
+}
+
+/**
+ * 设置其他数据库连接
  *
  * @param string $name
  * @param array $value
@@ -296,7 +319,7 @@ function set_connection($name, array $value)
 }
 
 /**
- * 连接其他数据库服务器, 与 config() 函数配合使用
+ * 连接其他数据库服务器
  *
  * @param string $name 配置的名称
  *
@@ -305,19 +328,6 @@ function set_connection($name, array $value)
 function connection($name)
 {
     return \Illuminate\Support\Facades\DB::connection($name);
-}
-
-
-/**
- * 获取资源的数据表名
- *
- * @param null $name 指定表明
- *
- * @return \Illuminate\Support\Facades\DB
- */
-function table($name)
-{
-    return \Illuminate\Support\Facades\DB::table($name);
 }
 
 /**

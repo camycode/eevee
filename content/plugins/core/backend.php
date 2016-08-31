@@ -5,7 +5,7 @@ global $app;
 use Core\Services\Context;
 
 /**
- * 后台登陆
+ * 用户登陆
  */
 $app->get('/backend/login', function (Context $context) {
 
@@ -19,7 +19,7 @@ $app->get('/backend/login', function (Context $context) {
 });
 
 /**
- * 后台插件页面
+ * 插件视图展示
  */
 $app->get('/backend/{name}', function ($name, Context $context) {
 
@@ -44,6 +44,53 @@ $app->get('/backend/{name}', function ($name, Context $context) {
     $be_access_user = $context->request->session()->get('access_user');
 
     include 'templates/layout.template.php';
+
+});
+
+/**
+ * 插件安装
+ */
+$app->get('/backend/install/plugin/{plugin_name}', function ($plugin_name, Context $context) {
+
+
+    $file = base_path('content/plugins/' . $plugin_name . '/installer.php');
+
+    if (file_exists($file)) {
+
+        $installer = require $file;
+
+        if(is_callable($installer)){
+
+            $status = $installer('uninstall',schema(),$context);
+
+            return $status;
+        }
+
+    }
+
+});
+
+
+/**
+ * 插件卸载
+ */
+$app->get('/backend/uninstall/plugin/{plugin_name}', function ($plugin_name, Context $context) {
+
+
+    $file = base_path('content/plugins/' . $plugin_name . '/uninstaller.php');
+
+    if (file_exists($file)) {
+
+        $installer = require $file;
+
+        if(is_callable($installer)){
+
+            $status = $installer('uninstall',schema(),$context);
+
+            return $status;
+        }
+
+    }
 
 });
 

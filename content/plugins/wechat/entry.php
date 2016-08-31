@@ -19,3 +19,9 @@ add_action('load_side_menus', function () {
             ]
         ]);
 });
+
+
+add_action('install_plugin', function ($installer) {
+
+    
+});
