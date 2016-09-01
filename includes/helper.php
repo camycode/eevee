@@ -297,13 +297,15 @@ function schema()
 /**
  * 设置其他数据库连接
  *
+ * 如果两个连接命名相同,且配置不同,则会抛出异常。
+ *
  * @param string $name
  * @param array $value
+ * @throws Exception
  */
 function set_connection($name, array $value)
 {
-
-
+    
     $connections = config('database.connections');
 
     if (array_value($connections, $name) === null) {
@@ -311,9 +313,12 @@ function set_connection($name, array $value)
         \Illuminate\Support\Facades\Config::set('database.connections.' . $name, $value);
 
     } else {
-        exception('DatabaseConnectionHasExist', [
-            'name' => $name
-        ]);
+
+        if (count(array_diff($connections[$name], $value)) > 0) {
+
+            throw new \Exception("Database connection \"$name\" has exists.");
+        }
+
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-return function ($status, $schema, $context) {
+return function ($info, $schema, $context) {
 
 
     return $context->status('success','ok');
