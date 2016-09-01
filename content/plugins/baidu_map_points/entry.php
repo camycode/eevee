@@ -42,3 +42,45 @@ set_connection('bmp_mysql', [
     'strict' => false,
 ]);
 
+
+global $app;
+
+use \Core\Services\Context;
+
+$app->post('/order', function (Context $context) {
+
+    $fields = ['id', 'name', 'address', 'phone', 'price', 'discount', 'freight', 'lng', 'lat', 'added_on', 'created_at', 'updated_at'];
+
+    $data = $context->data();
+
+    $rule = [
+        'address' => 'required',
+        'freight' => 'required',
+        'added_on' => 'required',
+    ];
+
+    $message = [
+        'address.required' => '送餐地址不能为空',
+        'freight.required' => '运费不能为空',
+        'added_on.required' => '发布日期不能为空',
+    ];
+
+    $check = validate($data, $rule, $message);
+
+    if ($check !== true) {
+
+        exception('ValidateFailed', $check);
+    }
+
+    filter_fields($data, $fields);
+
+    $data['created_at'] = timestamp();
+
+    if ($id = connection('bmp_mysql')->table('orders')->insertGetId($data)) {
+
+    }
+
+    return $context->status('success', connection('bmp_mysql')->table('orders')->where('id', $id)->first());
+
+});
+
