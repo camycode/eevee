@@ -79,6 +79,26 @@ var top_left_navigation = new BMap.NavigationControl();
 map.addControl(top_left_control);
 map.addControl(top_left_navigation);
 
+
+/**
+ * 添加工具栏
+ *
+ * 缩放控件type有四种类型:
+ * BMAP_NAVIGATION_CONTROL_SMALL：仅包含平移和缩放按钮；
+ * BMAP_NAVIGATION_CONTROL_PAN:仅包含平移按钮；
+ * BMAP_NAVIGATION_CONTROL_ZOOM：仅包含缩放按钮
+ */
+
+// 左上角，添加比例尺
+var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});
+
+//左上角，添加默认缩放平移控件
+var top_left_navigation = new BMap.NavigationControl();
+
+//添加控件和比例尺
+map.addControl(top_left_control);
+map.addControl(top_left_navigation);
+
 /**
  * 标注坐标点函数
  *
@@ -127,6 +147,7 @@ function addMarker(x, y, freight, address, distance, callback) {
         if (typeof callback == 'function') {
 
             callback(x, y, freight, address, distance);
+
         }
     }
 
@@ -151,7 +172,6 @@ function addAddressMarker(address, freight, callback) {
         if (point) {
 
             addMarker(point.lng, point.lat, freight, address, null, callback);
-
 
         } else {
 
@@ -187,6 +207,7 @@ var $formClose = $('#form-close');
 //     "input": "address-input",
 //     "location": map
 // });
+
 
 // 表单提交实践
 $submit.click(function () {
@@ -239,7 +260,6 @@ $submit.click(function () {
                 'lng': x,
                 'lat': y,
                 'distance': distance
-
             }),
             headers: {
                 "X-App-ID": "backend",
@@ -295,11 +315,13 @@ $focusForm.click(function () {
 
 });
 
+
 var orders = JSON.parse($('#orders-json').html());
 
 for (var i = 0; i < orders.length; i++) {
 
     addMarker(orders[i].lng, orders[i].lat, orders[i].freight, orders[i].address, orders[i].distance);
+
 }
 
 
