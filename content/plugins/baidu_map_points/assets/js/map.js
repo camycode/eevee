@@ -127,7 +127,7 @@ function addMarker(x, y, freight, address, distance, callback) {
     if (freight) {
 
         // 定义标签
-        var label = new BMap.Label(freight + "元，" + distance + '米', {offset: new BMap.Size(20, -10)});
+        var label = new BMap.Label(freight + "元，" + distance + '米', {offset: new BMap.Size(20, -10)});  
 
         //配置标签到标注点
         marker.setLabel(label);
