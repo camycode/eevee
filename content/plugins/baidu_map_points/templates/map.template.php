@@ -87,7 +87,7 @@ $orders = connection('bmp_mysql')->table('orders')->orderBy('added_on', 'desc')-
         <input id="freight-input" type="text" placeholder="达达运费（元） *">
     </div>
     <div class="field one">
-        <input id="date-input" type="text" placeholder="日期 *">
+        <input id="date-input" type="text" placeholder="日期（XXXX-XX-XX） *">
     </div>
     <div class="field one">
         <input id="total-price-input" type="text" placeholder="订单总价（元）">

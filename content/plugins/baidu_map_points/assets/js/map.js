@@ -75,6 +75,8 @@ var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});
 //左上角，添加默认缩放平移控件
 var top_left_navigation = new BMap.NavigationControl();
 
+
+
 //添加控件和比例尺
 map.addControl(top_left_control);
 map.addControl(top_left_navigation);
@@ -98,6 +100,9 @@ var top_left_navigation = new BMap.NavigationControl();
 //添加控件和比例尺
 map.addControl(top_left_control);
 map.addControl(top_left_navigation);
+
+var submit = false;
+var win = null;
 
 /**
  * 标注坐标点函数
@@ -124,6 +129,7 @@ function addMarker(x, y, freight, address, distance, callback) {
     // 添加标注点到地图中
     map.addOverlay(marker);
 
+
     if (freight) {
 
         // 定义标签
@@ -145,6 +151,16 @@ function addMarker(x, y, freight, address, distance, callback) {
         });
 
         if (typeof callback == 'function') {
+
+
+            // 如果是手动添加则设置动画
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+            setTimeout(function () {
+
+                marker.stop();
+
+            },5000);
 
             callback(x, y, freight, address, distance);
 
@@ -175,7 +191,7 @@ function addAddressMarker(address, freight, callback) {
 
         } else {
 
-            alert("您选择地址没有解析到结果!");
+            layer.alert("输入地址没有解析到结果!");
         }
     }, "上海市");
 
@@ -212,6 +228,15 @@ var $formClose = $('#form-close');
 // 表单提交实践
 $submit.click(function () {
 
+    if(submit){
+
+        return false;
+    }
+
+    win = layer.load(2);
+
+    submit = true;
+    
     var address = $addressInput.val();
     var freight = $freightInput.val();
     var date = $dateInput.val();
@@ -244,7 +269,6 @@ $submit.click(function () {
 
     addAddressMarker(address, freight, function (x, y, freight, address, distance) {
 
-        var win = layer.load(2);
 
         $.ajax({
             url: "/api/baidu_map_points/order",
