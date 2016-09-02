@@ -156,12 +156,6 @@ function addMarker(x, y, freight, address, distance, callback) {
             // 如果是手动添加则设置动画
             marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 
-            setTimeout(function () {
-
-                marker.stop();
-
-            },5000);
-
             callback(x, y, freight, address, distance);
 
         }
@@ -236,7 +230,7 @@ $submit.click(function () {
     win = layer.load(2);
 
     submit = true;
-    
+
     var address = $addressInput.val();
     var freight = $freightInput.val();
     var date = $dateInput.val();
