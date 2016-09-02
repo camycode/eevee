@@ -241,6 +241,10 @@ $submit.click(function () {
 
         layer.msg('送餐地址不能为空');
 
+        layer.close(win);
+
+        submit = false;
+
         return false;
 
     }
@@ -249,6 +253,10 @@ $submit.click(function () {
 
         layer.msg('运费不能为空');
 
+        layer.close(win);
+
+        submit = false;
+
         return false;
 
     }
@@ -256,6 +264,10 @@ $submit.click(function () {
     if ($.trim(date) == '') {
 
         layer.msg('日期不能为空');
+
+        layer.close(win);
+
+        submit = false;
 
         return false;
 
