@@ -287,6 +287,8 @@ $submit.click(function () {
 
                 layer.close(win);
 
+                submit = false;
+
                 if (res.code == 200) {
 
                     $addressInput.val('');
@@ -304,6 +306,8 @@ $submit.click(function () {
             error: function () {
 
                 layer.close(win);
+
+                submit = false;
 
                 layer.alert('网络错误');
             }
