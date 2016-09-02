@@ -186,6 +186,11 @@ function addAddressMarker(address, freight, callback) {
         } else {
 
             layer.alert("输入地址没有解析到结果!");
+
+            layer.close(win);
+
+            submit = false;
+            
         }
     }, "上海市");
 
