@@ -1,8 +1,6 @@
 *.log
 .idea
-
 content/storage/app/*
 !**/.gitkeep
-
 node_modules
 
