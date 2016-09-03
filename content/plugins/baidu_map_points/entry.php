@@ -4,13 +4,13 @@ add_action('load_side_menus', function () {
 
     load_side_menu(
         [
-            'name' => '百度地图定位插件',
+            'name' => '百度地图插件',
             'icon' => 'icon file',
             'link' => 'javascript:;'
         ],
         [
             [
-                'name' => '查看地图',
+                'name' => '顾客分布',
                 'link' => '/backend/baidu_map_points?page=map'
             ],
             [
@@ -84,3 +84,10 @@ $app->post('/order', function (Context $context) {
 
 });
 
+// /api/baidu_map_points/users
+
+$app->get('/users', function (Context $context) {
+
+    return $context->status('success',selector('user'));
+
+});
