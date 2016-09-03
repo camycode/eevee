@@ -190,7 +190,7 @@ function addAddressMarker(address, freight, callback) {
             layer.close(win);
 
             submit = false;
-            
+
         }
     }, "上海市");
 
