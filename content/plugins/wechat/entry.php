@@ -1,7 +1,6 @@
 <?php
 
 add_action('load_side_menus', function () {
-
 	load_side_menu(
 		[
 			'name' => '微信公众平台',
@@ -39,8 +38,10 @@ global $app;
 use Core\Services\Context;
 
 $app->get('/test', function (Context $context) {
+	require_once "pkgs/wechatApi.php";
+	$wechat = new wechatApi();
 
 	return $context->status('success', [
-		"welcome" => 'Hello world!',
+		"code" => 200,
 	]);
 });
