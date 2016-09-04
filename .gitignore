@@ -3,4 +3,5 @@
 content/storage/app/*
 !**/.gitkeep
 node_modules
+.DS_Store
 
